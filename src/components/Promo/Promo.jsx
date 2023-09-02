@@ -1,37 +1,44 @@
 import './Promo.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import React from "react";
-import Slider from "react-slick";
+import {NavLink} from 'react-router-dom';
+import promoBrands from '../../images/promo_brands_s.jpg';
+import Carousel from "../Carousel/Carousel";
 
 export default function Promo() {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1
-  };
   return (
-    <Slider {...settings}>
-      <div>
-        <h3>1</h3>
-      </div>
-      <div>
-        <h3>2</h3>
-      </div>
-      <div>
-        <h3>3</h3>
-      </div>
-      <div>
-        <h3>4</h3>
-      </div>
-      <div>
-        <h3>5</h3>
-      </div>
-      <div>
-        <h3>6</h3>
-      </div>
-    </Slider>
+    <Carousel>
+      <article className="promo-brands">
+        <img className="promo-brands__photo" src={promoBrands} alt={`Изображение товаров новых брендов`}/>
+        <div className="promo-brands__container">
+          <h2 className="promo-brands__container-title">Новые бренды</h2>
+          <p className="promo-brands__container-slogan">Бережное будущее в каждой покупке</p>
+          <p className="promo-brands__container-description">Экологичные, натуральные, минимум упаковки</p>
+          <NavLink className="promo-brands__container-button" to="/profile">
+            Перейти к брендам →
+          </NavLink>
+        </div>
+      </article>
+      <article className="promo-brands">
+        <div className="promo-brands__container">
+          <h2 className="promo-brands__container-title">Новые бренды</h2>
+          <p className="promo-brands__container-slogan">Бережное будущее в каждой покупке</p>
+          <p className="promo-brands__container-description">Экологичные, натуральные, минимум упаковки</p>
+          <NavLink className="promo-brands__container-button" to="/profile">
+            Перейти к брендам →
+          </NavLink>
+        </div>
+        <img className="promo-brands__photo" src={promoBrands} alt={`Изображение товаров новых брендов`}/>
+      </article>
+      <article className="promo-brands">
+        <img className="promo-brands__photo" src={promoBrands} alt={`Изображение товаров новых брендов`}/>
+        <div className="promo-brands__container">
+          <h2 className="promo-brands__container-title">Новые бренды</h2>
+          <p className="promo-brands__container-slogan">Бережное будущее в каждой покупке</p>
+          <p className="promo-brands__container-description">Экологичные, натуральные, минимум упаковки</p>
+          <NavLink className="promo-brands__container-button" to="/profile">
+            Перейти к брендам →
+          </NavLink>
+        </div>
+      </article>
+    </Carousel>
   );
 }
