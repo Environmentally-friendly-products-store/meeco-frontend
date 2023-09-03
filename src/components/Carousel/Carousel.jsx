@@ -5,52 +5,52 @@ import { Children } from 'react';
 import Slider from 'react-slick';
 
 function CustomPrevArrow({ onClick }) {
-	return (
-		<div
-			className="carousel-arrows__custom carousel-arrows__custom_prev"
-			onClick={onClick}
-		>
-			&#129128;
-		</div>
-	);
+  return (
+    <div
+      className="carousel-arrows__custom carousel-arrows__custom_prev"
+      onClick={onClick}
+    >
+      &#129128;
+    </div>
+  );
 }
 
 function CustomNextArrow({ onClick }) {
-	return (
-		<div
-			className="carousel-arrows__custom carousel-arrows__custom_next"
-			onClick={onClick}
-		>
-			&#129130;
-		</div>
-	);
+  return (
+    <div
+      className="carousel-arrows__custom carousel-arrows__custom_next"
+      onClick={onClick}
+    >
+      &#129130;
+    </div>
+  );
 }
 
 export default function Carousel({
-	showArrows = true,
-	showDots = true,
-	slidesToShow = 1,
-	slidesToScroll = 1,
-	autoplay = true,
-	children,
+  showArrows = true,
+  showDots = true,
+  slidesToShow = 1,
+  slidesToScroll = 1,
+  autoplay = true,
+  children,
 }) {
-	const settings = {
-		arrows: showArrows,
-		dots: showDots,
-		infinite: true,
-		slidesToShow,
-		slidesToScroll,
-		autoplay,
-		autoplaySpeed: 5000,
-		speed: 1000,
-		prevArrow: <CustomPrevArrow />,
-		nextArrow: <CustomNextArrow />,
-	};
-	return (
-		<Slider {...settings}>
-			{Children.map(children, (child) => (
-				<div>{child}</div>
-			))}
-		</Slider>
-	);
+  const settings = {
+    arrows: showArrows,
+    dots: showDots,
+    infinite: true,
+    slidesToShow,
+    slidesToScroll,
+    autoplay,
+    autoplaySpeed: 5000,
+    speed: 1000,
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
+  };
+  return (
+    <Slider {...settings}>
+      {Children.map(children, (child) => (
+        <div>{child}</div>
+      ))}
+    </Slider>
+  );
 }

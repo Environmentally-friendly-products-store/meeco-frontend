@@ -1,23 +1,23 @@
 .carousel-arrows__custom {
-	z-index: 1000;
-	font-size: 15px;
-	position: absolute;
-	top: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 30px;
-	height: 30px;
-	transform: translate(0, -50%);
-	cursor: pointer;
-	background: rgba(255, 255, 255, 0.7);
-	border-radius: 50%;
+  z-index: 1000;
+  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
 }
 
 .carousel-arrows__custom_prev {
-	left: 15px;
+  left: 15px;
 }
 
 .carousel-arrows__custom_next {
-	right: 15px;
+  right: 15px;
 }
