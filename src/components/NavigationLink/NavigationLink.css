@@ -1,0 +1,31 @@
+.navigation-link {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.navigation-link__button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.navigation-link__image {
+  width: 20px;
+}
+
+.navigation-link__count_active {
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  background-color: #000;
+  color: #fff;
+  top: 0;
+  right: 2px;
+}

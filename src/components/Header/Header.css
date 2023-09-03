@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.header__link {
+  text-decoration: none;
+}
+
+.header__func {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.header__button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: inherit;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.header__image {
+  max-width: 20px;
+}
