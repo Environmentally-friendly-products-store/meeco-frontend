@@ -1,0 +1,106 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  max-width: 295px;
+  /* максимальное ограничение по ширине будет пересмотрено, когда сверстаю раздел "о новинках" или когда появится дизайн */
+  margin-top: 50px;
+  /* временный отступ */
+}
+
+.product-card__card-container {
+  position: relative;
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
+}
+
+.product-card__like-button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  align-self: end;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+  background: #fff url('../../images/like-icon.svg') 50% / auto auto no-repeat;
+}
+
+.product-card__like-button:hover {
+  opacity: 0.9;
+}
+
+.product-card__like-button_type_liked {
+  background: #fff url('../../images/liked-icon.svg') 50% / auto auto no-repeat;
+}
+
+.product-card__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.product-card__info-container {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  row-gap: 4px;
+}
+
+/* product-card__add-to-cart-button*/
+
+.product-card__add-to-cart-button {
+  border: 0;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.product-card__add-to-cart-button:hover {
+  opacity: 0.9;
+}
+
+/* Главная страница */
+
+.product-card__add-to-cart-button_style_main {
+  width: 100%;
+  padding: 9px 24px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.04);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.57;
+}
+
+/* Каталог */
+
+.product-card__add-to-cart-button_style_catalog {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
+  align-self: end;
+  background: transparent url('../../images/shopping-cart.svg') 50%/100%
+    no-repeat;
+}
+
+.product-card__product-item {
+  /* font-family: Inter; */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.57;
+  margin: 0;
+  grid-column: 1 / 2;
+}
+
+.product-card__product-item_type_price {
+  font-weight: 600;
+}
