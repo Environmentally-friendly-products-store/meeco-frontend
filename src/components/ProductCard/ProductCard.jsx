@@ -70,7 +70,7 @@ function ProductCard({
 
         <p
           className={`product-card__product-item product-card__product-price
-          product-card__product-price_style${sectionWhereUsed}`}
+          product-card__product-price_style_${sectionWhereUsed}`}
         >
           {`${price} ₽`}
         </p>
