@@ -1,0 +1,5 @@
+.novelties {
+  display: flex;
+  column-gap: 32px;
+  justify-content: center;
+}
