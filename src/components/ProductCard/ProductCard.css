@@ -2,10 +2,25 @@
   display: flex;
   flex-direction: column;
   row-gap: 5px;
-  max-width: 295px;
+  /* max-width: 400px; */
   /* максимальное ограничение по ширине будет пересмотрено, когда сверстаю раздел "о новинках" или когда появится дизайн */
   margin-top: 50px;
+  min-width: 200px;
+  flex-grow: 1;
   /* временный отступ */
+  color: #121212;
+}
+
+.product-card_style_popular {
+  max-width: 400px;
+}
+
+.product-card_style_novelty {
+  max-width: 284px;
+}
+
+.product-card_style_catalog {
+  max-width: 200px;
 }
 
 .product-card__card-container {
@@ -14,7 +29,19 @@
   padding: 16px;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 320px;
+  box-sizing: border-box;
+}
+
+.product-card__card-container_style_novelty {
+  min-height: 380px;
+}
+
+.product-card__card-container_style_popular {
+  min-height: 328px;
+}
+
+.product-card__card-container_style_catalog {
+  min-height: 200px;
 }
 
 .product-card__like-button {
@@ -33,7 +60,7 @@
   opacity: 0.9;
 }
 
-.product-card__like-button_type_liked {
+.product-card__like-button_liked {
   background: #fff url('../../images/liked-icon.svg') 50% / auto auto no-repeat;
 }
 
@@ -50,6 +77,9 @@
 .product-card__info-container {
   display: grid;
   grid-template-columns: 1fr max-content;
+}
+
+.product-card__info-container_style_main {
   row-gap: 4px;
 }
 
@@ -81,8 +111,8 @@
 /* Каталог */
 
 .product-card__add-to-cart-button_style_catalog {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   padding: 0;
   grid-column: 2 / 3;
   grid-row: 3 / 4;
@@ -93,14 +123,31 @@
 
 .product-card__product-item {
   /* font-family: Inter; */
-  font-size: 14px;
-  font-style: normal;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.57;
   margin: 0;
   grid-column: 1 / 2;
 }
 
-.product-card__product-item_type_price {
+.product-card__product-name {
+  line-height: 1.75;
+}
+
+.product-card__product-name_style_catalog {
+  line-height: 1.25;
+}
+
+.product-card__product-price {
   font-weight: 600;
+}
+
+.product-card__product-price_style_main {
+  font-size: 14px;
+  line-height: 1.57;
+}
+
+.product-card__product-price_style_catalog {
+  font-size: 20px;
+  line-height: 1;
+  margin-top: 25px;
 }

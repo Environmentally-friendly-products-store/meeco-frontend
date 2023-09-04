@@ -1,23 +1,34 @@
 import { useState } from 'react';
-/* Пока сделан импорт филлерной картинки напрямую в компоненте */
+/* Пока сделан импорт филлерной картинки напрямую в компоненте,
+но в рабочей версии image будет передаваться через пропсы */
 import image from '../../images/product_card_filler_image_s.jpg';
+
 import './ProductCard.css';
 
-function ProductCard({ isOnMainPage, price, /* image, */ name, brand }) {
+function ProductCard({
+  isUsedOnMainPage,
+  sectionWhereUsed,
+  price,
+  /* image, */
+  name,
+  brand,
+}) {
   const [isLiked, setIsLiked] = useState(false);
 
   const onLikeButtonClick = () => {
     setIsLiked(!isLiked);
   };
 
-  /* Можно создать директорию utils и вынести этот код туда */
   const additionalLikeButtonStyles = isLiked
-    ? 'product-card__like-button_type_liked'
+    ? 'product-card__like-button_liked'
     : '';
 
   return (
-    <article className="product-card">
-      <div className="product-card__card-container">
+    <article className={`product-card product-card_style_${sectionWhereUsed}`}>
+      <div
+        className={`product-card__card-container
+        product-card__card-container_style_${sectionWhereUsed}`}
+      >
         <button
           type="button"
           className={`product-card__like-button ${additionalLikeButtonStyles}`}
@@ -28,33 +39,47 @@ function ProductCard({ isOnMainPage, price, /* image, */ name, brand }) {
           src={image}
           alt="название карточки"
         />
-        {isOnMainPage && (
+        {isUsedOnMainPage && (
           <button
             type="button"
-            className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
+            className="product-card__add-to-cart-button
+            product-card__add-to-cart-button_style_main"
           >
             Добавить в корзину
           </button>
         )}
       </div>
 
-      <div className="product-card__info-container">
-        <p className="product-card__product-item">{name}</p>
+      <div
+        className={`product-card__info-container
+        product-card__info-container_style_${sectionWhereUsed}`}
+      >
+        <p
+          className={`product-card__product-item product-card__product-name
+          product-card__product-name_style${sectionWhereUsed}
+            `}
+        >
+          {name}
+        </p>
 
-        {!isOnMainPage && (
+        {!isUsedOnMainPage && (
           <>
             <p className="product-card__product-item">{brand}</p>
           </>
         )}
 
-        <p className="product-card__product-item product-card__product-item_type_price">
+        <p
+          className={`product-card__product-item product-card__product-price
+          product-card__product-price_style${sectionWhereUsed}`}
+        >
           {`${price} ₽`}
         </p>
 
-        {!isOnMainPage && (
+        {!isUsedOnMainPage && (
           <button
             type="button"
-            className="product-card__add-to-cart-button product-card__add-to-cart-button_style_catalog"
+            className="product-card__add-to-cart-button
+            product-card__add-to-cart-button_style_catalog"
           ></button>
         )}
       </div>
