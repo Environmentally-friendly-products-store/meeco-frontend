@@ -1,0 +1,23 @@
+.search-form__string {
+  border: 1px solid grey;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-form__input {
+  border: none;
+  outline: none;
+  color: grey;
+}
+
+.search-form__button {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+  background-image: url('../../images/search.svg');
+  background-size: contain;
+  min-width: 40px;
+  min-height: 40px;
+}

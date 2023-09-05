@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.header__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: inherit;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+
+.header__func {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.header__image {
+  max-width: 20px;
+}
