@@ -1,15 +1,11 @@
 import { useState } from 'react';
-/* Пока сделан импорт филлерной картинки напрямую в компоненте,
-но в рабочей версии image будет передаваться через пропсы */
-import image from '../../images/product_card_filler_image_s.jpg';
-
 import './ProductCard.css';
 
 function ProductCard({
   isUsedOnMainPage,
   sectionWhereUsed,
   price,
-  /* image, */
+  image,
   name,
   brand,
 }) {

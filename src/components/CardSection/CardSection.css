@@ -1,0 +1,27 @@
+.card-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 25px;
+}
+
+.card-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.card-section__title {
+  color: #121212;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.card-section__link {
+  color: #121212;
+  font-size: 16px;
+  text-decoration: none;
+}
