@@ -1,11 +1,16 @@
 import Promo from '../Promo/Promo';
+
 import ProductCard from '../ProductCard/ProductCard';
 import AboutProject from '../AboutProject/AboutProject';
+import CardSection from '../CardSection/CardSection';
+import Novelties from '../Novelties/Novelties';
+import PopularProducts from '../PopularProducts/PopularProducts';
 
 export default function Main() {
   return (
     <>
       <Promo />
+
 
       <ProductCard
         /* Нужно указать, используется ли компонент на mainpage. */
@@ -20,6 +25,13 @@ export default function Main() {
         name={'Название товара'}
         brand={'Бренд'}
       />
+          
+      <CardSection title="Новые поступления">
+        <Novelties />
+      </CardSection>
+      <CardSection title="Популярные товары">
+        <PopularProducts />
+      </CardSection>
 
       <AboutProject />
     </>

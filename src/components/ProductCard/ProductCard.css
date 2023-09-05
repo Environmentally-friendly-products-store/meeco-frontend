@@ -1,27 +1,32 @@
+/* product-card */
+
 .product-card {
   display: flex;
   flex-direction: column;
   row-gap: 5px;
-  /* max-width: 400px; */
-  /* максимальное ограничение по ширине будет пересмотрено, когда сверстаю раздел "о новинках" или когда появится дизайн */
-  margin-top: 50px;
+  max-width: 400px;
   min-width: 200px;
   flex-grow: 1;
-  /* временный отступ */
   color: #121212;
-}
-
-.product-card_style_popular {
-  max-width: 400px;
-}
-
-.product-card_style_novelty {
-  max-width: 284px;
+  box-sizing: border-box;
 }
 
 .product-card_style_catalog {
   max-width: 200px;
 }
+
+/* Ниже костыль, без которого невозможно проставить оступы
+между карточками при использовании библиотеки react-slick */
+
+.slick-slide > div {
+  margin: 0 16px;
+}
+
+.slick-list {
+  margin: 0 -16px;
+}
+
+/* product-card__card-container */
 
 .product-card__card-container {
   position: relative;
@@ -44,6 +49,8 @@
   min-height: 200px;
 }
 
+/* product-card__like-button */
+
 .product-card__like-button {
   width: 24px;
   height: 24px;
@@ -64,6 +71,8 @@
   background: #fff url('../../images/liked-icon.svg') 50% / auto auto no-repeat;
 }
 
+/* product-card__image */
+
 .product-card__image {
   position: absolute;
   top: 0;
@@ -73,6 +82,8 @@
   object-fit: cover;
   z-index: -1;
 }
+
+/* product-card__info-container */
 
 .product-card__info-container {
   display: grid;
@@ -95,8 +106,6 @@
   opacity: 0.9;
 }
 
-/* Главная страница */
-
 .product-card__add-to-cart-button_style_main {
   width: 100%;
   padding: 9px 24px;
@@ -107,8 +116,6 @@
   font-weight: 500;
   line-height: 1.57;
 }
-
-/* Каталог */
 
 .product-card__add-to-cart-button_style_catalog {
   width: 24px;
@@ -121,6 +128,8 @@
     no-repeat;
 }
 
+/* product-card__product-item */
+
 .product-card__product-item {
   /* font-family: Inter; */
   font-size: 16px;
@@ -129,6 +138,8 @@
   grid-column: 1 / 2;
 }
 
+/* product-card__product-name */
+
 .product-card__product-name {
   line-height: 1.75;
 }
@@ -136,6 +147,8 @@
 .product-card__product-name_style_catalog {
   line-height: 1.25;
 }
+
+/* product-card__product-price */
 
 .product-card__product-price {
   font-weight: 600;
