@@ -1,5 +1,6 @@
 import Promo from '../Promo/Promo';
 import ProductCard from '../ProductCard/ProductCard';
+import AboutProject from '../AboutProject/AboutProject';
 
 export default function Main() {
   return (
@@ -19,6 +20,8 @@ export default function Main() {
         name={'Название товара'}
         brand={'Бренд'}
       />
+
+      <AboutProject />
     </>
   );
 }
