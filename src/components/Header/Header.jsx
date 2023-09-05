@@ -12,17 +12,12 @@ function Header() {
       <Logo />
       <div className="header__func">
         <Link to="/" className="header__link">
-          <button
-            className="header__button header__button_type_catalog"
-            type="button"
-          >
-            <img
-              className="header__image"
-              src={catalogPath}
-              alt="Кнопка выбора каталога товаров"
-            ></img>
-            <span className="header__text">Каталог</span>
-          </button>
+          <img
+            className="header__image"
+            src={catalogPath}
+            alt="Кнопка выбора каталога товаров"
+          ></img>
+          <span className="header__text">Каталог</span>
         </Link>
         <SearchForm />
       </div>
