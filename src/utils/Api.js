@@ -10,29 +10,29 @@ const makeRequest = createMakeRequest(baseUrl);
 
 // извлекает token из тела ответа
 const parseToken = (body) => {
-  if (!body.auth_token) {
+  if (!body.access) {
     throw new EcomeError(HTTP_BAD_REQUEST, USER_WRONG_TOKEN_MESSAGE);
   }
-  return { token: body.auth_token };
+  return { token: body.access };
 };
 
-// необходимо согласовать endpoints с backend (пока указаны из таблицы в Miro)
+//  endpoints взяты из Swagger
 /**
  * Регистрация пользовтаеля
  */
 export const register = (firstName, lastName, email, password) =>
   makeRequest('/users', 'POST', {
-    firstName,
-    lastName,
+    first_name: firstName,
+    last_name: lastName,
     email,
     password,
-  }).then(parseToken);
+  });
 
 /**
  * Авторизация пользователя
  */
 export const authorize = (email, password) =>
-  makeRequest('/auth/token/login', 'POST', {
+  makeRequest('/jwt/create', 'POST', {
     password,
     email,
   }).then(parseToken);
