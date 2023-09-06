@@ -1,6 +1,7 @@
 import { useState } from 'react';
-
+import { Routes, Route } from 'react-router-dom';
 import Main from '../Main/Main';
+import Catalog from '../Catalog/Catalog';
 import Header from '../Header/Header';
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
@@ -20,7 +21,10 @@ export default function App() {
   return (
     <>
       <Header onClickRegistration={handleRegistrationPopupOpen} />
-      <Main></Main>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/catalog" element={<Catalog />} />
+      </Routes>
       <Registration
         isPopupOpen={isRegistrationPopupOpen}
         onClosePopup={handleClosePopup}
