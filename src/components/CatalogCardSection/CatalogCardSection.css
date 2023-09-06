@@ -1,0 +1,7 @@
+.catalog-card-section {
+  margin: 0 auto;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(4, max-content);
+  gap: 32px;
+}

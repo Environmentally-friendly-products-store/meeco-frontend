@@ -1,18 +1,18 @@
-import './Novelties.css';
+import './CatalogCardSection.css';
 import ProductCard from '../ProductCard/ProductCard';
 import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function Novelties({ isUsedOnMainPage, requiredLength }) {
+function CatalogCardSection({ isUsedOnMainPage, requiredLength }) {
   const products = sortProducts(temporaryProductsArray, requiredLength);
 
   return (
-    <article className="novelties">
+    <article className="catalog-card-section">
       {products.map((product) => (
         <ProductCard
           key={product.id}
           isUsedOnMainPage={isUsedOnMainPage}
-          sectionWhereUsed={'novelty'}
+          sectionWhereUsed={'catalog'}
           price={product.price}
           image={product.image}
           name={product.name}
@@ -23,4 +23,4 @@ function Novelties({ isUsedOnMainPage, requiredLength }) {
   );
 }
 
-export default Novelties;
+export default CatalogCardSection;
