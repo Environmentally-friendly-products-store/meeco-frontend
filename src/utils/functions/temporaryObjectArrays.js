@@ -23,7 +23,7 @@ const createProductsArray = (quantity) => {
       id: i,
       price: renderInteger(500, 5000),
       image,
-      name: `Товар1${i}`,
+      name: `Товар${i}`,
       brand: `Бренд${i}`,
     });
   }
