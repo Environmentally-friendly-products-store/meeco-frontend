@@ -1,0 +1,21 @@
+.up-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #f9f9f9;
+  background-image: url(../../images/arrow-up.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 1px 5px 5px 0 rgba(0, 0, 0, 0.2);
+  visibility: hidden;
+}
+
+.up-btn_visible {
+  visibility: visible;
+}
