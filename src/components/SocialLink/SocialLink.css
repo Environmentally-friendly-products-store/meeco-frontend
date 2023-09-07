@@ -1,0 +1,34 @@
+.sociallink {
+  display: flex;
+  flex-direction: row;
+}
+
+.sociallink__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 16px;
+}
+
+.sociallink__item {
+display: flex;
+  border-radius: 100px;
+  background:#FFF;
+  width: 36px;
+  height: 36px;
+  padding: 6.325px 6px 5.675px 6px;
+justify-content: center;
+align-items: center;
+}
+
+.sociallink__button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}

@@ -3,8 +3,12 @@ import { Routes, Route } from 'react-router-dom';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
 import Header from '../Header/Header';
+
+import Footer from '../Footer/Footer';
+
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
+
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -20,6 +24,11 @@ export default function App() {
 
   return (
     <>
+
+      <Header />
+      <Main></Main>
+      <Footer />
+
       <Header onClickRegistration={handleRegistrationPopupOpen} />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -35,6 +44,7 @@ export default function App() {
         onClosePopup={handleClosePopup}
         onCloseByOverlay={closePopupByOverlay}
       />
+
     </>
   );
 }
