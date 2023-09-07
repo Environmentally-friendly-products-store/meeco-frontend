@@ -1,17 +1,14 @@
 .navigation-link {
   text-decoration: none;
-  display: inline-block;
-}
-
-.navigation-link__button {
-  position: relative;
   display: flex;
+  position: relative;
   flex-direction: column;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
   background-color: inherit;
   border: none;
   cursor: pointer;
+  color: #000;
 }
 
 .navigation-link__image {
@@ -19,9 +16,10 @@
 }
 
 .navigation-link__count_active {
-  display: block;
+  text-align: center;
   position: absolute;
   border-radius: 50%;
+  line-height: 17px;
   width: 17px;
   height: 17px;
   background-color: #000;

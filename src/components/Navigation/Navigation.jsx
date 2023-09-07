@@ -6,12 +6,12 @@ import favoritePath from '../../images/favorite.svg';
 import shopingCartPath from '../../images/shoppingCart.svg';
 import './Navigation.css';
 
-function Navigation() {
+function Navigation({ onClickRegistration }) {
   return (
     <nav className="navigation">
       <ul className="navigation__list">
-        <li className="navigation__item">
-          <NavigationLink path={'/'} text={'Войти'} image={userPath} />
+        <li className="navigation__item" onClick={onClickRegistration}>
+          <NavigationLink text={'Войти'} image={userPath} />
         </li>
         <li className="navigation__item">
           <NavigationLink path={'/'} text={'Избранное'} image={favoritePath} />
