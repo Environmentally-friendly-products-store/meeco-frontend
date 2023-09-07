@@ -9,7 +9,6 @@ import Footer from '../Footer/Footer';
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 
-
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   const handleRegistrationPopupOpen = () =>
@@ -24,16 +23,12 @@ export default function App() {
 
   return (
     <>
-
-      <Header />
-      <Main></Main>
-      <Footer />
-
       <Header onClickRegistration={handleRegistrationPopupOpen} />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/catalog" element={<Catalog />} />
       </Routes>
+      <Footer />
       <Registration
         isPopupOpen={isRegistrationPopupOpen}
         onClosePopup={handleClosePopup}
@@ -44,7 +39,6 @@ export default function App() {
         onClosePopup={handleClosePopup}
         onCloseByOverlay={closePopupByOverlay}
       />
-
     </>
   );
 }
