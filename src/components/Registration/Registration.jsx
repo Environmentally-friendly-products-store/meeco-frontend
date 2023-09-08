@@ -1,15 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import useForm from '../../hooks/useForm';
 
 function Registration({ isPopupOpen, onCloseByOverlay, onClosePopup }) {
-  let isValid = true;
+  const {
+    values: userState,
+    handleChange: handleInputChange,
+    errors: errorsState,
+    isValid: isFormValid,
+  } = useForm({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    repeatedPassword: '',
+  });
 
   const popupWithFormProps = {
     name: 'registration',
     isOpen: isPopupOpen,
     title: 'Регистрация',
-    isValid: isValid,
+    isValid: isFormValid,
     submitButtonTextContent: 'Зарегистрироваться',
     routerLinkQuestion: 'Уже зарегистрированы?',
     routerLinkText: 'Войти',
@@ -20,60 +32,68 @@ function Registration({ isPopupOpen, onCloseByOverlay, onClosePopup }) {
   return (
     <PopupWithForm {...popupWithFormProps}>
       <input
+        onChange={handleInputChange}
+        value={'' || userState.firstName}
         type="text"
-        name="first-name"
+        name="firstName"
         placeholder="Имя"
-        id="first-name-input"
         className="popup__input popup__input_type_name"
         minLength="2"
         maxLength="32"
         required
       />
-      <span className="popup__error first-name-input-error"></span>
+      <span className="popup__error">{errorsState.firstName}</span>
       <input
+        onChange={handleInputChange}
+        value={'' || userState.lastName}
         type="text"
-        name="second-name"
+        name="lastName"
         placeholder="Фамилия"
-        id="last-name-input"
         className="popup__input popup__input_type_name"
         minLength="2"
-        maxLength="32"
+        maxLength="64"
         required
       />
-      <span className="popup__error last-name-input-error"></span>
+      <span className="popup__error">{errorsState.lastName}</span>
       <input
+        onChange={handleInputChange}
+        value={'' || userState.email}
         type="email"
         name="email"
         placeholder="Email"
-        id="email-input"
         className="popup__input popup__input_type_email"
-        minLength="11"
-        maxLength="114"
+        minLength="8"
+        maxLength="111"
         required
       />
-      <span className="popup__error email-input-error"></span>
+      <span className="popup__error">{errorsState.email}</span>
       <input
+        onChange={handleInputChange}
+        value={'' || userState.password}
         type="password"
         name="password"
         placeholder="Пароль"
-        id="password-input"
         className="popup__input popup__input_type_password"
         minLength="8"
         maxLength="40"
         required
       />
-      <span className="popup__error password-input-error"></span>
+      <span className="popup__error">{errorsState.password}</span>
       <input
+        onChange={handleInputChange}
+        value={'' || userState.repeatedPassword}
         type="password"
-        name="password"
+        name="repeatedPassword"
         placeholder="Повторите пароль"
-        id="password-input"
         className="popup__input popup__input_type_password"
         minLength="8"
         maxLength="40"
         required
       />
-      <span className="popup__error password-input-error"></span>
+      {userState.password !== userState.repeatedPassword &&
+        userState.repeatedPassword !== '' && (
+          <span className="popup__error">Пароли не совпадают</span>
+        )}
       <p className="popup__information">
         Нажимая на кнопку "Зарегистрироваться", вы соглашаетесь с&#160;
         <Link to="/" className="popup__link">
