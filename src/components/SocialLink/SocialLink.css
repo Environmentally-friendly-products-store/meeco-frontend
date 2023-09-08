@@ -12,14 +12,14 @@
 }
 
 .sociallink__item {
-display: flex;
+  display: flex;
   border-radius: 100px;
-  background:#FFF;
+  background: #fff;
   width: 36px;
   height: 36px;
   padding: 6.325px 6px 5.675px 6px;
-justify-content: center;
-align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .sociallink__button {
