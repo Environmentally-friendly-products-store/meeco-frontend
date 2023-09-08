@@ -10,6 +10,10 @@
   margin: 0 auto;
 }
 
+.shopping-cart_style_empty {
+  row-gap: 200px;
+}
+
 .shopping-cart__title {
   margin: 0;
   font-size: 48px;
