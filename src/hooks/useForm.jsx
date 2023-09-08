@@ -9,11 +9,11 @@ function useForm(inputValues = {}) {
   const validationSettings = {
     firstName: {
       regExp: REGEX_NAME,
-      validationError: 'Некорретное имя',
+      validationError: 'Некорректное имя',
     },
     lastName: {
       regExp: REGEX_NAME,
-      validationError: 'Некорретная фамилия',
+      validationError: 'Некорректная фамилия',
     },
     email: {
       regExp: REGEX_EMAIL,
