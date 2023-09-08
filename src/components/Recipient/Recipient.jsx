@@ -19,9 +19,13 @@ function Recipient() {
           />
           <span className="recipient__form-error"></span>
         </div>
-        <div className="recipient__field">
+        <div className="recipient__field-email">
           <label className="recipient__label">Email</label>
-          <input type="text" placeholder="Email" className="recipient__input" />
+          <input
+            type="email"
+            placeholder="Email"
+            className="recipient__input"
+          />
           <span className="recipient__form-error"></span>
         </div>
       </form>

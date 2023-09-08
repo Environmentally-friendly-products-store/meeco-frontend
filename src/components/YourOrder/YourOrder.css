@@ -8,7 +8,7 @@
   border: 1px solid var(--black-300, #cbcbcb);
   background: var(--White, #fff);
   grid-row-start: 2;
-  grid-column-start: 3;
+  grid-column-start: 2;
 }
 
 .yourorder__title {
