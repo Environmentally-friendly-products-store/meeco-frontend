@@ -1,0 +1,22 @@
+.empty-cart__text {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.85x;
+  text-align: center;
+  margin: 0 auto 40px;
+  max-width: 500px;
+}
+
+.empty-cart__button {
+  display: block;
+  max-width: 664px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #121212;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.77;
+  text-decoration: none;
+}

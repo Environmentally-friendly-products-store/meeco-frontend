@@ -18,7 +18,7 @@ function Navigation({ onClickRegistration }) {
         </li>
         <li className="navigation__item">
           <NavigationLink
-            path={'/'}
+            path={'/shopping-cart'}
             text={'Корзина'}
             image={shopingCartPath}
             count={2}

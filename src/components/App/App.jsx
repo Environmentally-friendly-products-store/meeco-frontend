@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
 import Header from '../Header/Header';
-
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import Footer from '../Footer/Footer';
 
 import Registration from '../Registration/Registration';
@@ -27,6 +27,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/catalog" element={<Catalog />} />
+        <Route path="/shopping-cart" element={<ShoppingCart />} />
       </Routes>
       <Footer />
       <Registration
