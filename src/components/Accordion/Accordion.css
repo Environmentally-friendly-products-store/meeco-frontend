@@ -8,9 +8,9 @@
   align-items: center;
 }
 
-.accordion {
+/* .accordion {
   max-width: 664px;
-}
+} */
 
 .accordion__items {
   background: rgba(255, 255, 255, 1);

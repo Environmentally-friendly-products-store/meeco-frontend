@@ -8,6 +8,7 @@ import Footer from '../Footer/Footer';
 
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
+import MainProductPage from '../MainProductPage/MainProductPage';
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/catalog" element={<Catalog />} />
       </Routes>
       <Footer />
+      <MainProductPage />
       <Registration
         isPopupOpen={isRegistrationPopupOpen}
         onClosePopup={handleClosePopup}

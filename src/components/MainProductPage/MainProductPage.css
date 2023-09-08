@@ -1,0 +1,136 @@
+.product-page {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+.product-page__sliders {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  gap: 10px;
+}
+
+.product-page__main-slider {
+  width: calc(100% - 20px);
+}
+
+.product-page__nav-slider {
+  width: calc(100% - 20px);
+}
+
+.product-page__main-image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.product-page__nav-image {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+.product-page__block {
+  position: relative;
+}
+
+.product-page__button {
+  cursor: pointer;
+}
+
+.product-page__button_type_favorite {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  padding: 10px;
+  background-image: url('../../images/favorite.svg');
+  background-color: #fff;
+  background-size: contain;
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.product-page__info {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-page__brand {
+  margin: 0;
+}
+
+.product-page__name {
+  margin: 0;
+}
+
+.product-page__description {
+  margin: 0;
+}
+
+.product-page__string {
+  display: flex;
+}
+
+.product-page__price {
+  margin: 0;
+  font-size: large;
+  font-weight: 700;
+  color: #000;
+}
+
+.product-page__char {
+  color: grey;
+  font-size: large;
+  font-weight: 900;
+}
+
+.product-page__string {
+  display: flex;
+  gap: 20px;
+}
+
+.product-page__counter {
+  width: calc((100% - 20px) / 4);
+  background-color: grey;
+}
+
+.product-page__button_type_plus {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  padding: 10px;
+  width: calc(100% / 3);
+}
+
+.product-page__button_type_minus {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  padding: 10px;
+  width: calc(100% / 3);
+}
+
+.product-page__count {
+  display: inline-block;
+  text-align: center;
+  width: calc(100% / 3);
+}
+
+.product-page__link_type_shopping-cart {
+  width: calc(100% - ((100% - 20px) / 4));
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  line-height: 35px;
+}
+
+.product-page__link_type_catalog {
+  color: grey;
+  text-decoration: none;
+}
