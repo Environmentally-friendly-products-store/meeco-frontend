@@ -1,0 +1,26 @@
+.yourorder {
+  display: flex;
+  max-width: 432px;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 6px;
+  border: 1px solid var(--black-300, #cbcbcb);
+  background: var(--White, #fff);
+  grid-row-start: 2;
+  grid-column-start: 3;
+}
+
+.yourorder__title {
+  color: var(--black-900, #121212);
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* Button/Large */
+  font-family: Space Grotesk;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34px;
+  margin: 0;
+}

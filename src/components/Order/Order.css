@@ -1,0 +1,26 @@
+.order {
+  width: 1440px;
+  display: grid;
+  grid-template-columns: auto 148px auto;
+  grid-template-rows: auto auto auto auto;
+  margin: 20px 40px 100px 40px;
+  row-gap: 40px;
+}
+
+.order__link {
+  grid-row-start: 4;
+}
+
+.order__title {
+  color: var(--black-900, #121212);
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* H-1 */
+  font-family: Space Grotesk;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 56px; /* 116.667% */
+  letter-spacing: -1px;
+}
