@@ -1,6 +1,18 @@
+import './ShoppingCartItem.css';
+
 import { useState } from 'react';
 
 function ShoppingCardItem({ product }) {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const onLikeButtonClick = () => {
+    setIsLiked(!isLiked);
+  };
+
+  const additionalLikeButtonStyles = isLiked
+    ? 'shopping-cart__button_style_to_favourite_liked'
+    : '';
+
   const [counter, setCounter] = useState(1);
   const [totalItemPrice, setTotalItemPrice] = useState(product.price);
 
@@ -27,10 +39,17 @@ function ShoppingCardItem({ product }) {
       <p className="shopping-cart__product-details">{'Детали(объем, вес)'}</p>
 
       <div className="shopping-cart__product-button-section">
-        <button className="shopping-cart__button shopping-cart__button_style_delete">
+        <button
+          className="shopping-cart__button
+          shopping-cart__button_style_delete"
+        >
           Удалить
         </button>
-        <button className="shopping-cart__button shopping-cart__button_style_to_favourite">
+        <button
+          className={`shopping-cart__button
+          shopping-cart__button_style_to_favourite ${additionalLikeButtonStyles}`}
+          onClick={onLikeButtonClick}
+        >
           Добавить в избранное
         </button>
       </div>
