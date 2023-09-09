@@ -9,7 +9,11 @@
   display: grid;
   grid-template-columns: 1fr 3fr 4fr;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(256, 256, 256, 1);
+  z-index: 1000;
 }
 
 .header__link {

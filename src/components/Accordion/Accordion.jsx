@@ -15,7 +15,7 @@ export default function Accordion() {
     <div className="wrapper">
       <div className="accordion">
         {accordionContent.map((item, index) => (
-          <div className="accordion__items">
+          <div className="accordion__items" key={index}>
             <div className="accordion__item" onClick={() => toggle(index)}>
               <h2 className="accordion__item-title">{item.title}</h2>
               <img
