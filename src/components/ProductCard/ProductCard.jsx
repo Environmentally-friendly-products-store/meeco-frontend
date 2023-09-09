@@ -22,7 +22,7 @@ function ProductCard({
 
   return (
     <article className={`product-card product-card_style_${sectionWhereUsed}`}>
-      <NavLink to="/product">
+      <NavLink className="product-card__link" to="/product">
         <div
           className={`product-card__card-container
         product-card__card-container_style_${sectionWhereUsed}`}
