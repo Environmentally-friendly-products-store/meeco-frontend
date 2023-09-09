@@ -1,23 +1,43 @@
 import './ShoppingCart.css';
-
+import image from '../../images/product_card_filler_image_s.jpg';
 import '../ShoppingCartItem/ShoppingCardItem';
 
 import { NavLink } from 'react-router-dom';
-import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
-import { sortProducts } from '../../utils/functions/sortProducts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
 import EmptyCart from '../EmptyCart/EmptyCart';
 
+import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
+
+/* Массив-затычка */
+
+const products = [
+  {
+    id: 1,
+    price: 2313,
+    image,
+    name: `Товар1`,
+    brand: `Бренд1`,
+  },
+  {
+    id: 2,
+    price: 7824,
+    image,
+    name: `Товар2`,
+    brand: `Бренд2`,
+  },
+];
+
 function ShoppingCart() {
-  const products = sortProducts(temporaryProductsArray, 2);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const onTotalPriceChange = (newValue) => {
-    setTotalPrice(newValue);
+  const onTotalPriceChange = () => {
+    calculateTotalPrice(setTotalPrice);
   };
 
-  /* Пока не понял, как передавать корректные данные в секцию c общей суммой */
+  useEffect(() => {
+    calculateTotalPrice(setTotalPrice);
+  }, []);
 
   return (
     <main

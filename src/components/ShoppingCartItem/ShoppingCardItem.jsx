@@ -1,9 +1,15 @@
 import './ShoppingCartItem.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function ShoppingCardItem({ product }) {
+function ShoppingCardItem({ product, onTotalPriceChange }) {
   const [isLiked, setIsLiked] = useState(false);
+  const [counter, setCounter] = useState(
+    JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)) === null
+      ? 1
+      : JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)).counter
+  );
+  const [totalItemPrice, setTotalItemPrice] = useState(product.price * counter);
 
   const onLikeButtonClick = () => {
     setIsLiked(!isLiked);
@@ -13,21 +19,44 @@ function ShoppingCardItem({ product }) {
     ? 'shopping-cart__button_style_to_favourite_liked'
     : '';
 
-  const [counter, setCounter] = useState(1);
-  const [totalItemPrice, setTotalItemPrice] = useState(product.price);
-
   const increaseCounter = () => {
     setCounter(counter + 1);
     setTotalItemPrice(product.price * (counter + 1));
+    localStorage.setItem(
+      `purchaseItem${product.id}`,
+      JSON.stringify({
+        counter: counter + 1,
+        totalItemPrice: product.price * (counter + 1),
+      })
+    );
+    onTotalPriceChange();
   };
 
   const decreaseCounter = () => {
     setCounter(counter - 1);
     setTotalItemPrice(product.price * (counter - 1));
+    localStorage.setItem(
+      `purchaseItem${product.id}`,
+      JSON.stringify({
+        counter: counter - 1,
+        totalItemPrice: product.price * (counter - 1),
+      })
+    );
+    onTotalPriceChange();
   };
 
+  useEffect(() => {
+    localStorage.setItem(
+      `purchaseItem${product.id}`,
+      JSON.stringify({
+        counter,
+        totalItemPrice,
+      })
+    );
+  }, [counter, totalItemPrice, product.id]);
+
   return (
-    <li className="shopping-cart__product" key={product.id}>
+    <li className="shopping-cart__product">
       <img
         className="shopping-cart__product-image"
         src={product.image}
