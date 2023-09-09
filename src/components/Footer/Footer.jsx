@@ -23,7 +23,7 @@ function Footer() {
           О нас
         </Link>
         <Link to="/" className="footer__link">
-          Политика конфеденциальности
+          Политика конфиденциальности
         </Link>
       </div>
       <div>

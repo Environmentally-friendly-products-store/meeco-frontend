@@ -4,7 +4,7 @@ import TermsOfUse from '../TermsOfUse/TermsOfUse';
 
 export default function Delivery() {
   return (
-    <InfoPage title="Доставка и оплата">
+    <InfoPage title="Доставка и оплата" id="deliveryAndPayments">
       <TermsOfUse title="Как сделать заказ" id="aboutOrder">
         <ol className="delivery__items">
           <li className="delivery__item">

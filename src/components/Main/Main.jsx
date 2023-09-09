@@ -3,7 +3,6 @@ import AboutProject from '../AboutProject/AboutProject';
 import CardSection from '../CardSection/CardSection';
 import Novelties from '../Novelties/Novelties';
 import PopularProducts from '../PopularProducts/PopularProducts';
-import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 
 export default function Main() {
   return (
@@ -15,10 +14,7 @@ export default function Main() {
       <CardSection title="Популярные товары" isUsedOnMainPage={true}>
         <PopularProducts isUsedOnMainPage={true} requiredLength={9} />
       </CardSection>
-
       <AboutProject />
-
-      <TopScrollBtn />
     </>
   );
 }

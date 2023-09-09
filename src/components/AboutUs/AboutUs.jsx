@@ -3,7 +3,7 @@ import InfoPage from '../InfoPage/InfoPage';
 
 export default function AboutUs() {
   return (
-    <InfoPage title="О нас">
+    <InfoPage title="О нас" id="aboutUs">
       <p className="aboutus-description">
         Одним из важных аспектов интернет-магазинов эко товаров является их
         вклад в снижение негативного влияния на окружающую среду. Приобретая

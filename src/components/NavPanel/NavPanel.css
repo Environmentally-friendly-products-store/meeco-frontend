@@ -1,8 +1,9 @@
 .navpanel__container {
+  width: max-content;
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 134px;
+  top: 174px;
   padding-top: 134px;
 }
 
