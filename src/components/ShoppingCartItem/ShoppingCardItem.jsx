@@ -3,7 +3,7 @@ import './ShoppingCartItem.css';
 import { useEffect, useState } from 'react';
 
 function ShoppingCardItem({ product, onTotalPriceChange }) {
-  const [isLiked, setIsLiked] = useState(false);
+  /* const [isLiked, setIsLiked] = useState(false); */
   const [counter, setCounter] = useState(
     JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)) === null
       ? 1
@@ -11,13 +11,13 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
   );
   const [totalItemPrice, setTotalItemPrice] = useState(product.price * counter);
 
-  const onLikeButtonClick = () => {
+  /* const onLikeButtonClick = () => {
     setIsLiked(!isLiked);
-  };
+  }; */
 
-  const additionalLikeButtonStyles = isLiked
+  /* const additionalLikeButtonStyles = isLiked
     ? 'shopping-cart__button_style_to_favourite_liked'
-    : '';
+    : ''; */
 
   const increaseCounter = () => {
     setCounter(counter + 1);
@@ -74,13 +74,13 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
         >
           Удалить
         </button>
-        <button
+        {/* <button
           className={`shopping-cart__button
           shopping-cart__button_style_to_favourite ${additionalLikeButtonStyles}`}
           onClick={onLikeButtonClick}
         >
           Добавить в избранное
-        </button>
+        </button> */}
       </div>
 
       <div className="shopping-card__product-quantity-switch">

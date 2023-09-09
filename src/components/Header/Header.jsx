@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../Logo/Logo.jsx';
 import { Link } from 'react-router-dom';
-import SearchForm from '../SearchForm/SearchForm';
+/* import SearchForm from '../SearchForm/SearchForm'; */
 import Navigation from '../Navigation/Navigation.jsx';
 import catalogPath from '../../images/catalog.svg';
 import './Header.css';
@@ -19,7 +19,7 @@ function Header({ onClickRegistration }) {
           ></img>
           <span className="header__text">Каталог</span>
         </Link>
-        <SearchForm />
+        {/* <SearchForm /> */}
       </div>
       <Navigation onClickRegistration={onClickRegistration} />
     </header>

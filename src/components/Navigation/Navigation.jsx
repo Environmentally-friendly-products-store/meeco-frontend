@@ -2,7 +2,7 @@ import React from 'react';
 
 import NavigationLink from '../NavigationLink/NavigationLink';
 import userPath from '../../images/user.svg';
-import favoritePath from '../../images/favorite.svg';
+/* import favoritePath from '../../images/favorite.svg'; */
 import shopingCartPath from '../../images/shoppingCart.svg';
 import './Navigation.css';
 
@@ -13,9 +13,9 @@ function Navigation({ onClickRegistration }) {
         <li className="navigation__item" onClick={onClickRegistration}>
           <NavigationLink text={'Войти'} image={userPath} />
         </li>
-        <li className="navigation__item">
+        {/* <li className="navigation__item">
           <NavigationLink path={'/'} text={'Избранное'} image={favoritePath} />
-        </li>
+        </li> */}
         <li className="navigation__item">
           <NavigationLink
             path={'/shopping-cart'}

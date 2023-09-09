@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/* import { useState } from 'react'; */
 import './ProductCard.css';
 import { NavLink } from 'react-router-dom';
 
@@ -10,15 +10,15 @@ function ProductCard({
   name,
   brand,
 }) {
-  const [isLiked, setIsLiked] = useState(false);
+  /* const [isLiked, setIsLiked] = useState(false); */
 
-  const onLikeButtonClick = () => {
+  /* const onLikeButtonClick = () => {
     setIsLiked(!isLiked);
-  };
+  }; */
 
-  const additionalLikeButtonStyles = isLiked
+  /* const additionalLikeButtonStyles = isLiked
     ? 'product-card__like-button_liked'
-    : '';
+    : ''; */
 
   return (
     <article className={`product-card product-card_style_${sectionWhereUsed}`}>
@@ -27,11 +27,11 @@ function ProductCard({
           className={`product-card__card-container
         product-card__card-container_style_${sectionWhereUsed}`}
         >
-          <button
-            type="button"
-            className={`product-card__like-button ${additionalLikeButtonStyles}`}
-            onClick={onLikeButtonClick}
-          ></button>
+          {/* <button
+          type="button"
+          className={`product-card__like-button ${additionalLikeButtonStyles}`}
+          onClick={onLikeButtonClick}
+        ></button> */}
           <img
             className="product-card__image"
             src={image}
@@ -40,8 +40,7 @@ function ProductCard({
           {isUsedOnMainPage && (
             <button
               type="button"
-              className="product-card__add-to-cart-button
-            product-card__add-to-cart-button_style_main"
+              className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
             >
               Добавить в корзину
             </button>
