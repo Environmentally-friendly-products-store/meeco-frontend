@@ -30,7 +30,7 @@ export default function App() {
   return (
     <div className="app">
       <Header onClickRegistration={handleRegistrationPopupOpen} />
-      <main className="main">
+      <main>
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/catalog" element={<Catalog />} />
