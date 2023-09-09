@@ -84,12 +84,12 @@
 
 .shopping-cart__button_style_delete::before {
   background: url('../../images/trash-icon.svg') 50% / 100% no-repeat;
-  left: 0px;
+  left: 0;
 }
 
 .shopping-cart__button_style_to_favourite::before {
   background: url('../../images/like-icon.svg') 50% / 100% no-repeat;
-  left: 0px;
+  left: 0;
 }
 
 .shopping-cart__button_style_to_favourite_liked::before {
@@ -99,7 +99,7 @@
 .shopping-cart__button_style_reset::after {
   background: url('../../images/close-button_theme_pale.svg') 50% / 100%
     no-repeat;
-  right: 0px;
+  right: 0;
 }
 
 .shopping-card__product-quantity-switch {
