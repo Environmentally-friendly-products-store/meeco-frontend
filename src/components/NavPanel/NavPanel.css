@@ -1,0 +1,18 @@
+.navpanel__container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  padding-top: 24px;
+}
+
+.navpanel__link {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.571;
+  color: rgba(0, 0, 0, 1);
+}
+
+.navpanel__link + .navpanel__link {
+  padding-top: 12px;
+}

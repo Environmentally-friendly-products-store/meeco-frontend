@@ -10,7 +10,7 @@ function Footer() {
       <Logo />
       <div className="footer__menu">
         <p className="footer__menu-title">Покупателям</p>
-        <Link to="/" className="footer__link">
+        <Link to="/delivery" className="footer__link">
           Доставка и оплата
         </Link>
         <Link to="/" className="footer__link">

@@ -9,7 +9,6 @@ export default function Main() {
   return (
     <>
       <Promo />
-
       <CardSection title="Новые поступления" isUsedOnMainPage={true}>
         <Novelties isUsedOnMainPage={true} requiredLength={4} />
       </CardSection>
