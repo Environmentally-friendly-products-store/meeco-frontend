@@ -49,10 +49,10 @@ function MainProductPage() {
               alt={'Фотография товара'}
               className="product-page__main-image"
             />
-            <button
+            {/* <button
               type="button"
               className="product-page__button product-page__button_type_favorite"
-            />
+            /> */}
           </div>
           <div className="product-page__block">
             <img
