@@ -19,7 +19,7 @@ function Footer() {
       </div>
       <div className="footer__menu">
         <p className="footer__menu-title">Магазин</p>
-        <Link to="/" className="footer__link">
+        <Link to="/about-us" className="footer__link">
           О нас
         </Link>
         <Link to="/" className="footer__link">

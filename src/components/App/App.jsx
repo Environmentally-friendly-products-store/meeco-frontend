@@ -11,6 +11,7 @@ import Login from '../Login/Login';
 import MainProductPage from '../MainProductPage/MainProductPage';
 import Delivery from '../Delivery/Delivery';
 import useScrollToTop from '../../hooks/useScrollToTop';
+import AboutUs from '../AboutUs/AboutUs';
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/product" element={<MainProductPage />} />
           <Route path="/shopping-cart" element={<ShoppingCart />} />
           <Route path="/delivery" element={<Delivery />} />
+          <Route path="/about-us" element={<AboutUs />} />
         </Routes>
       </main>
       <Footer />

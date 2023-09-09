@@ -1,8 +1,9 @@
 .navpanel__container {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  padding-top: 24px;
+  position: sticky;
+  top: 134px;
+  padding-top: 134px;
 }
 
 .navpanel__link {

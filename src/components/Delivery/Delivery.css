@@ -37,9 +37,7 @@
   font-weight: 500;
   line-height: 2;
   letter-spacing: -0.6px;
-}
-
-.delivery__item {
+  max-width: 780px;
 }
 
 .delivery__description {
@@ -49,4 +47,5 @@
   font-weight: 500;
   line-height: 2;
   letter-spacing: -0.6px;
+  max-width: 780px;
 }
