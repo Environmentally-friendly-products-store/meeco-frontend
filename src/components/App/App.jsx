@@ -1,17 +1,23 @@
+import './App.css';
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
 import Header from '../Header/Header';
-
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import Footer from '../Footer/Footer';
-
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
+import MainProductPage from '../MainProductPage/MainProductPage';
+import Delivery from '../Delivery/Delivery';
+import useScrollToTop from '../../hooks/useScrollToTop';
+import AboutUs from '../AboutUs/AboutUs';
+import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
+  useScrollToTop();
   const handleRegistrationPopupOpen = () =>
     setIsRegistrationPopupOpen(!isRegistrationPopupOpen);
   const handleClosePopup = () => setIsRegistrationPopupOpen(false);
@@ -23,13 +29,21 @@ export default function App() {
   //дописать функции для открытия/закрытия Login
 
   return (
-    <>
+    <div className="app">
       <Header onClickRegistration={handleRegistrationPopupOpen} />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/catalog" element={<Catalog />} />
-        <Route path="/order" element={<Order />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/product" element={<MainProductPage />} />
+          <Route path="/shopping-cart" element={<ShoppingCart />} />
+          <Route path="/delivery" element={<Delivery />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/order" element={<Order />} />
+        </Routes>
+        <TopScrollBtn />
+      </main>
+      <Footer />
       <Registration
         isPopupOpen={isRegistrationPopupOpen}
         onClosePopup={handleClosePopup}
@@ -40,7 +54,6 @@ export default function App() {
         onClosePopup={handleClosePopup}
         onCloseByOverlay={closePopupByOverlay}
       />
-      <Footer />
-    </>
+    </div>
   );
 }

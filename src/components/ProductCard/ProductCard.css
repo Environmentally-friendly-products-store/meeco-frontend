@@ -11,6 +11,10 @@
   box-sizing: border-box;
 }
 
+.product-card__link {
+  text-decoration: none;
+}
+
 .product-card_style_catalog {
   max-width: 200px;
 }
@@ -28,12 +32,21 @@
 
 /* product-card__card-container */
 
-.product-card__card-container {
+/* .product-card__card-container {
   position: relative;
   display: flex;
   padding: 16px;
   flex-direction: column;
   justify-content: space-between;
+  box-sizing: border-box;
+} */
+
+.product-card__card-container {
+  position: relative;
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: flex-end;
   box-sizing: border-box;
 }
 

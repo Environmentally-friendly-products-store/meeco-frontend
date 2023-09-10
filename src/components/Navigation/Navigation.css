@@ -1,6 +1,12 @@
+/* .navigation {
+  display: flex;
+  gap: 300px;
+} */
+
 .navigation {
   display: flex;
   gap: 300px;
+  justify-self: end;
 }
 
 .navigation__button {

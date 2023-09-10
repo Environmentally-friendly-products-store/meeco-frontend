@@ -1,14 +1,23 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import useForm from '../../hooks/useForm';
 
 function Login({ isPopupOpen, onCloseByOverlay, onClosePopup }) {
-  let isValid = true;
+  const {
+    values: userState,
+    handleChange: handleInputChange,
+    errors: errorsState,
+    isValid: isFormValid,
+  } = useForm({
+    email: '',
+    password: '',
+  });
 
   const popupWithFormProps = {
     name: 'login',
     isOpen: isPopupOpen,
     title: 'Войти',
-    isValid: isValid,
+    isValid: isFormValid,
     submitButtonTextContent: 'Войти',
     routerLinkQuestion: 'Еще не зарегистрированы?',
     routerLinkText: 'Регистрация',
@@ -19,27 +28,29 @@ function Login({ isPopupOpen, onCloseByOverlay, onClosePopup }) {
   return (
     <PopupWithForm {...popupWithFormProps}>
       <input
+        onChange={handleInputChange}
+        value={'' || userState.email}
         type="email"
         name="email"
         placeholder="Email"
-        id="email-input"
         className="popup__input popup__input_type_email"
-        minLength="11"
-        maxLength="114"
+        minLength="8"
+        maxLength="111"
         required
       />
-      <span className="popup__error email-input-error"></span>
+      <span className="popup__error ">{errorsState.email}</span>
       <input
+        onChange={handleInputChange}
+        value={'' || userState.password}
         type="password"
         name="password"
         placeholder="Пароль"
-        id="password-input"
         className="popup__input popup__input_type_password"
         minLength="8"
         maxLength="40"
         required
       />
-      <span className="popup__error password-input-error"></span>
+      <span className="popup__error">{errorsState.password}</span>
     </PopupWithForm>
   );
 }

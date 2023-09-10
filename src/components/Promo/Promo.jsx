@@ -10,7 +10,7 @@ export default function Promo() {
         <img
           className="promo-brands__photo"
           src={promoBrands}
-          alt={`Изображение товаров новых брендов`}
+          alt="Изображение товаров новых брендов"
         />
         <div className="promo-brands__container">
           <h2 className="promo-brands__container-title">Новые бренды</h2>

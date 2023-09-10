@@ -1,5 +1,6 @@
-import { useState } from 'react';
+/* import { useState } from 'react'; */
 import './ProductCard.css';
+import { NavLink } from 'react-router-dom';
 
 function ProductCard({
   isUsedOnMainPage,
@@ -9,42 +10,43 @@ function ProductCard({
   name,
   brand,
 }) {
-  const [isLiked, setIsLiked] = useState(false);
+  /* const [isLiked, setIsLiked] = useState(false); */
 
-  const onLikeButtonClick = () => {
+  /* const onLikeButtonClick = () => {
     setIsLiked(!isLiked);
-  };
+  }; */
 
-  const additionalLikeButtonStyles = isLiked
+  /* const additionalLikeButtonStyles = isLiked
     ? 'product-card__like-button_liked'
-    : '';
+    : ''; */
 
   return (
     <article className={`product-card product-card_style_${sectionWhereUsed}`}>
-      <div
-        className={`product-card__card-container
+      <NavLink className="product-card__link" to="/product">
+        <div
+          className={`product-card__card-container
         product-card__card-container_style_${sectionWhereUsed}`}
-      >
-        <button
+        >
+          {/* <button
           type="button"
           className={`product-card__like-button ${additionalLikeButtonStyles}`}
           onClick={onLikeButtonClick}
-        ></button>
-        <img
-          className="product-card__image"
-          src={image}
-          alt="название карточки"
-        />
-        {isUsedOnMainPage && (
-          <button
-            type="button"
-            className="product-card__add-to-cart-button
-            product-card__add-to-cart-button_style_main"
-          >
-            Добавить в корзину
-          </button>
-        )}
-      </div>
+        ></button> */}
+          <img
+            className="product-card__image"
+            src={image}
+            alt="название карточки"
+          />
+          {isUsedOnMainPage && (
+            <button
+              type="button"
+              className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
+            >
+              Добавить в корзину
+            </button>
+          )}
+        </div>
+      </NavLink>
 
       <div
         className={`product-card__info-container
