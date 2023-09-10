@@ -1,0 +1,101 @@
+.order {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0px 100px 40px;
+  justify-content: space-between;
+}
+
+.order__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.order__order {
+  display: flex;
+  flex-direction: column;
+  margin: 134px 40px 0 0px;
+}
+
+.order__link {
+  display: grid;
+  margin-top: 60px;
+  cursor: pointer;
+}
+
+.order__link-text {
+  display: flex;
+  color: #a7a7a7;
+  /* Body */
+  font-family: Space Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  /* 150% */
+  text-decoration: none;
+}
+
+.order__title {
+  color: var(--black-900, #121212);
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* H-1 */
+  font-family: Space Grotesk;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 56px;
+  /* 116.667% */
+  letter-spacing: -1px;
+}
+
+.order__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 6px;
+  background: var(--black-900, #121212);
+  color: var(--White, #fff);
+  text-align: center;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* Button/Large */
+  font-family: Space Grotesk;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34px;
+  /* 154.545% */
+  width: 434px;
+  height: 72px;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.order__arrow {
+  margin: 0px 16px 0 0;
+}
+
+.order__politic {
+  color: #000;
+  font-family: Space Grotesk;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  /* 166.667% */
+}
+
+.order__politic-text {
+  text-decoration: none;
+  color: #000;
+  font-family: Space Grotesk;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  /* 166.667% */
+}

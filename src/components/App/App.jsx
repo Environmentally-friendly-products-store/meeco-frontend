@@ -13,6 +13,7 @@ import Delivery from '../Delivery/Delivery';
 import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
 import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
+import Order from '../Order/Order';
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/shopping-cart" element={<ShoppingCart />} />
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/order" element={<Order />} />
         </Routes>
         <TopScrollBtn />
       </main>
