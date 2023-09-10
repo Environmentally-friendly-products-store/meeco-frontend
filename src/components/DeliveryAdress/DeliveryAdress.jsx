@@ -1,6 +1,9 @@
 import './DeliveryAdress.css';
+import { useLocation } from 'react-router-dom';
 
 function DeliveryAdress() {
+  const location = useLocation();
+
   return (
     <div className="deliveryadress">
       <h2 className="deliveryadress__title">Адрес доставки</h2>
@@ -8,11 +11,23 @@ function DeliveryAdress() {
         <label className="deliveryadress__label">
           Город, улица, дом, квартира *
         </label>
-        <input
-          type="text"
-          placeholder="Введите адрес"
-          className="deliveryadress__input"
-        />
+        {location.pathname === '/order' && (
+          <input
+            type="text"
+            placeholder="Введите адрес"
+            className="deliveryadress__input"
+          />
+        )}
+
+        {location.pathname === '/thanksfororder' && (
+          <input
+            type="text"
+            placeholder="Введите адрес"
+            className="deliveryadress__input"
+            value="Записанный адрес"
+          />
+        )}
+
         <span className="deliveryadress__form-error"></span>
         <label className="deliveryadress__label">Телефон *</label>
         <input
