@@ -6,8 +6,6 @@
   border-radius: 6px;
   border: 1px solid var(--black-300, #cbcbcb);
   background: var(--White, #fff);
-  grid-row-start: 2;
-  grid-column-start: 1;
 }
 
 .deliveryadress__title {
@@ -15,19 +13,19 @@
   font-feature-settings:
     'clig' off,
     'liga' off;
-  /* Button/Large */
   font-family: Space Grotesk;
   font-size: 22px;
   font-style: normal;
   font-weight: 500;
   line-height: 34px;
-  margin: 24px 0 0px 24px;
+  margin: 24px 0 24px 24px;
 }
 
 .deliveryadress__form {
   display: flex;
   flex-direction: column;
-  margin: 0 24px 0 24px;
+  margin: 0 0px 0 24px;
+  width: 95%;
 }
 
 .deliveryadress__label {
@@ -40,13 +38,14 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  line-height: 24px; /* 150% */
-  margin-top: 24px;
+  line-height: 24px;
+  /* 150% */
+  max-width: 100%;
 }
 
 .deliveryadress__input {
-  width: 697px;
-  height: 46px;
+  max-width: 697px;
+  height: 21px;
   display: flex;
   gap: 8px;
   align-self: stretch;
@@ -58,7 +57,7 @@
 }
 
 .deliveryadress__input:last-of-type {
-  height: 96px;
+  height: 69px;
 }
 
 .deliveryadress__input::placeholder {
@@ -68,8 +67,10 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
+  line-height: 24px;
+  /* 150% */
 }
+
 .deliveryadress__input:last-of-type::placeholder {
   line-height: 20px;
   transform: translateY(-32.5px);

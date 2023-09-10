@@ -1,14 +1,11 @@
 .yourorder {
   display: flex;
   max-width: 432px;
-  padding: 24px;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 6px;
   border: 1px solid var(--black-300, #cbcbcb);
   background: var(--White, #fff);
-  grid-row-start: 2;
-  grid-column-start: 2;
 }
 
 .yourorder__title {
@@ -22,5 +19,41 @@
   font-style: normal;
   font-weight: 500;
   line-height: 34px;
-  margin: 0;
+  margin: 24px 0 0px 24px;
+}
+
+.yourorder__order {
+  list-style-type: none;
+}
+
+.yourorder__total {
+  display: flex;
+  margin: 28px 24px 16px 24px;
+  width: 384px;
+  justify-content: space-between;
+  height: 54px;
+}
+
+.yourorder__total-text {
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 30px;
+  /* 166.667% */
+}
+
+.yourorder__total-summ {
+  color: var(--black-900, #121212);
+  text-align: right;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* Text/18px/Semibold */
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 30px;
+  /* 166.667% */
 }

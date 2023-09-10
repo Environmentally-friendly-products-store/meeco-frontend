@@ -24,10 +24,6 @@ export default function App() {
 
   return (
     <>
-      {/* <Header />
-      <Main></Main>
-      <Footer /> */}
-
       <Header onClickRegistration={handleRegistrationPopupOpen} />
       <Routes>
         <Route path="/" element={<Main />} />
