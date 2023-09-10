@@ -13,7 +13,7 @@ function Order() {
         <DeliveryAdress />
         <Recipient />
         <div className="order__link">
-          <Link to="/chart" className="order__link-text">
+          <Link to="/shopping-cart" className="order__link-text">
             <img className="order__arrow" src={arrowleft} alt="Стрелка" />
             Вернуться в корзину
           </Link>
