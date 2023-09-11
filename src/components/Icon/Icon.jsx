@@ -12,7 +12,7 @@ export default function Icon({ image = '', alt = '', link = '' }) {
   }
 
   return (
-    <Link to={link} className="selectable-link">
+    <Link to={link} className="selectable-link" target="_blank">
       {icon}
     </Link>
   );
