@@ -24,7 +24,6 @@ function DeliveryAdress() {
             type="text"
             placeholder="Введите адрес"
             className="deliveryadress__input"
-            value="Записанный адрес"
           />
         )}
 
