@@ -24,7 +24,7 @@
 .deliveryadress__form {
   display: flex;
   flex-direction: column;
-  margin: 0 0px 0 24px;
+  margin: 0 0 0 24px;
   width: 95%;
 }
 
@@ -52,7 +52,7 @@
   border-radius: 6px;
   border: 1px solid var(--black-300, #cbcbcb);
   background: var(--White, #fff);
-  margin: 8px 0 24px 0px;
+  margin: 8px 0 24px 0;
   padding: 12px 16px;
 }
 
