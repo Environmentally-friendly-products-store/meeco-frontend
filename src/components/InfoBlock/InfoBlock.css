@@ -1,11 +1,11 @@
-.termsofuse {
+.infoblock {
   display: flex;
   flex-direction: column;
   max-width: 896px;
   padding-top: 34px;
 }
 
-.termsofuse__title {
+.infoblock__title {
   margin: 0;
   padding-top: 0;
   font-size: 28px;
@@ -15,7 +15,7 @@
   letter-spacing: -0.6px;
 }
 
-.termsofuse__image {
+.infoblock__image {
   display: block;
   width: 336px;
   height: 60px;

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import Accordion from '../Accordion/Accordion.jsx';
-import { CustomPrevArrow, CustomNextArrow } from '../Carousel/Carousel.jsx';
+import { CustomNextArrow, CustomPrevArrow } from '../Carousel/Carousel.jsx';
 import ProductCardPath from '../../images/product_card_filler_image_s.jpg';
 import './MainProductPage.css';
 

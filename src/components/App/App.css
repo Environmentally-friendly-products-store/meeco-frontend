@@ -18,6 +18,7 @@ input:-webkit-autofill {
 
 .selectable-link {
   transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .selectable-link:hover {
@@ -26,6 +27,7 @@ input:-webkit-autofill {
 
 .selectable-button {
   transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .selectable-button:hover {
