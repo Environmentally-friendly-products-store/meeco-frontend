@@ -76,11 +76,6 @@
   width: 434px;
   height: 72px;
   cursor: pointer;
-  transition: opacity 0.2s linear;
-}
-
-.order__button:hover {
-  opacity: 0.9;
 }
 
 .order__button-link {

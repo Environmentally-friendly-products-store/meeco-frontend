@@ -4,8 +4,15 @@ import arrowleft from '../../images/arrow-left.svg';
 import YourOrder from '../YourOrder/YourOrder';
 import DeliveryAdress from '../DeliveryAdress/DeliveryAdress';
 import Recipient from '../Recipient/Recipient';
+import { useNavigate } from 'react-router-dom';
 
 function Order() {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/thanksfororder', { replace: true });
+  };
+
   return (
     <section className="order">
       <h1 className="order__title">Оформление заказа</h1>
@@ -23,9 +30,12 @@ function Order() {
 
         <div className="order__order">
           <YourOrder />
-          <Link to="/thanksfororder" className="order__button-link">
-            <button className="order__button">Подтвердить заказ</button>
-          </Link>
+          <button
+            onClick={handleButtonClick}
+            className="order__button selectable-button"
+          >
+            Подтвердить заказ
+          </button>
           <p className="order__politic">
             Нажимая кнопку, вы соглашаетесь с{' '}
             <Link className="order__politic-text" to="/">

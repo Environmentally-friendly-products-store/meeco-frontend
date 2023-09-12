@@ -31,7 +31,7 @@ function ThanksForOrder() {
           <DeliveryAdress />
           <Recipient />
           <div className="order__link">
-            <Link to="/shopping-cart" className="order__link-text">
+            <Link to="/catalog" className="order__link-text">
               <img className="order__arrow" src={arrowleft} alt="Стрелка" />
               Продолжить покупки
             </Link>
