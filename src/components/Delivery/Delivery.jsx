@@ -1,11 +1,11 @@
 import './Delivery.css';
 import InfoPage from '../InfoPage/InfoPage';
-import TermsOfUse from '../TermsOfUse/TermsOfUse';
+import InfoBlock from '.././InfoBlock/InfoBlock';
 
 export default function Delivery() {
   return (
     <InfoPage title="Доставка и оплата" id="deliveryAndPayments">
-      <TermsOfUse title="Как сделать заказ" id="aboutOrder">
+      <InfoBlock title="Как сделать заказ" id="aboutOrder">
         <ol className="delivery__items">
           <li className="delivery__item">
             Выберите нужный товар и его количество нажмите кнопку «Добавить в
@@ -44,8 +44,8 @@ export default function Delivery() {
             рекомендуем оформить несколько заказов.
           </li>
         </ol>
-      </TermsOfUse>
-      <TermsOfUse title="Оплата" id="aboutPayment">
+      </InfoBlock>
+      <InfoBlock title="Оплата" id="aboutPayment">
         <p className="delivery__description">
           При оформлении заказа в интернет-магазине возможна только
           онлайн-оплата. Оплата при получении недоступна. Доступные способы
@@ -85,8 +85,8 @@ export default function Delivery() {
           на ваш e-mail сразу же после проведения оплаты. Электронный чек
           содержит все данные о проведенной платежной транзакции.
         </p>
-      </TermsOfUse>
-      <TermsOfUse title="Доставка" id="aboutDelivery">
+      </InfoBlock>
+      <InfoBlock title="Доставка" id="aboutDelivery">
         <p className="delivery__description">
           1. Экспресс-доставка из магазина: Доступные способы оплаты (только по
           предоплате): банковской картой, подарочными картами, возможно
@@ -202,8 +202,8 @@ export default function Delivery() {
           Обращаем ваше внимание, объединение посылок доступно не для всех
           товаров, так как их наличие на складах может отличаться.
         </p>
-      </TermsOfUse>
-      <TermsOfUse title="Возврат" id="aboutReturns">
+      </InfoBlock>
+      <InfoBlock title="Возврат" id="aboutReturns">
         <p className="delivery__description">
           Служба Поддержки Клиентов для Заказов с доставкой по территории
           Российской Федерации 8 800 770 70 21 (работает круглосуточно без
@@ -261,7 +261,7 @@ export default function Delivery() {
             а также иные следы использования товара.
           </li>
         </ol>
-      </TermsOfUse>
+      </InfoBlock>
     </InfoPage>
   );
 }

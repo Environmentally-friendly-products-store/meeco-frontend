@@ -14,20 +14,34 @@ import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
 import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
+
 import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
+
+import Profile from '../Profile/Profile';
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
+import Contacts from '../Contacts/Contacts';
+
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   useScrollToTop();
   const handleRegistrationPopupOpen = () =>
     setIsRegistrationPopupOpen(!isRegistrationPopupOpen);
-  const handleClosePopup = () => setIsRegistrationPopupOpen(false);
+  const handleClosePopup = () => {
+    setIsLoginPopupOpen(false);
+    setIsRegistrationPopupOpen(false);
+    setIsConfirmPopupOpen(false);
+  };
   const closePopupByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
       handleClosePopup();
     }
   };
   //дописать функции для открытия/закрытия Login
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+  const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
 
   return (
     <div className="app">
@@ -41,7 +55,15 @@ export default function App() {
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/order" element={<Order />} />
+
           <Route path="/thanksfororder" element={<ThanksForOrder />} />
+
+          <Route
+            path="/profile"
+            element={<Profile onButtonClick={handleConfirmPopup} />}
+          />
+          <Route path="/contacts" element={<Contacts />} />
+
         </Routes>
         <TopScrollBtn />
       </main>
@@ -50,9 +72,16 @@ export default function App() {
         isPopupOpen={isRegistrationPopupOpen}
         onClosePopup={handleClosePopup}
         onCloseByOverlay={closePopupByOverlay}
+        handleTogglePopup={handleLoginPopup}
       />
       <Login
-        isPopupOpen={isRegistrationPopupOpen}
+        isPopupOpen={isLoginPopupOpen}
+        onClosePopup={handleClosePopup}
+        onCloseByOverlay={closePopupByOverlay}
+        handleTogglePopup={handleRegistrationPopupOpen}
+      />
+      <ConfirmPopup
+        isPopupOpen={isConfirmPopupOpen}
         onClosePopup={handleClosePopup}
         onCloseByOverlay={closePopupByOverlay}
       />
