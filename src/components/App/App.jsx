@@ -16,6 +16,7 @@ import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
 import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
+import Contacts from '../Contacts/Contacts';
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -54,6 +55,7 @@ export default function App() {
             path="/profile"
             element={<Profile onButtonClick={handleConfirmPopup} />}
           />
+          <Route path="/contacts" element={<Contacts />} />
         </Routes>
         <TopScrollBtn />
       </main>

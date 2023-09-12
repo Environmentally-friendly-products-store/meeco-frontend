@@ -1,7 +1,7 @@
 .order {
   display: flex;
   flex-direction: row;
-  margin: 20px 0px 100px 40px;
+  margin: 20px 0 100px 40px;
   justify-content: space-between;
 }
 
@@ -13,7 +13,7 @@
 .order__order {
   display: flex;
   flex-direction: column;
-  margin: 134px 40px 0 0px;
+  margin: 134px 40px 0 0;
 }
 
 .order__link {
@@ -76,7 +76,7 @@
 }
 
 .order__arrow {
-  margin: 0px 16px 0 0;
+  margin: 0 16px 0 0;
 }
 
 .order__politic {

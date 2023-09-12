@@ -1,0 +1,14 @@
+.icon {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  background: rgba(256, 256, 256, 1);
+}
+
+.icon__image {
+  width: 24px;
+  height: 24px;
+}

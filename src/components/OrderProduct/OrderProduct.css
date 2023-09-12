@@ -1,6 +1,6 @@
 .orderproduct {
   list-style-type: none;
-  margin: 24px 0 0px 24px;
+  margin: 24px 0 0 24px;
   padding: 0;
   border-bottom: 1px solid var(--black-300, #cbcbcb);
 }
