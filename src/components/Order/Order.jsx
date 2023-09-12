@@ -21,7 +21,10 @@ function Order() {
           <DeliveryAdress />
           <Recipient />
           <div className="order__link">
-            <Link to="/shopping-cart" className="order__link-text">
+            <Link
+              to="/shopping-cart"
+              className="order__link-text selectable-link"
+            >
               <img className="order__arrow" src={arrowleft} alt="Стрелка" />
               Вернуться в корзину
             </Link>
@@ -38,7 +41,7 @@ function Order() {
           </button>
           <p className="order__politic">
             Нажимая кнопку, вы соглашаетесь с{' '}
-            <Link className="order__politic-text" to="/">
+            <Link className="order__politic-text selectable-link" to="/">
               Политикой конфиденциальности
             </Link>{' '}
           </p>
