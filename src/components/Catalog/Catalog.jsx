@@ -1,10 +1,12 @@
 import CardSection from '../CardSection/CardSection';
 import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
 import { temporaryFiltersArray } from '../../utils/functions/temporaryObjectArrays';
+import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 
 function Catalog() {
   return (
     <>
+      <Breadcrumbs />
       <CardSection
         filters={temporaryFiltersArray}
         quantity={134}
