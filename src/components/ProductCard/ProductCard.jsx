@@ -9,6 +9,8 @@ function ProductCard({
   image,
   name,
   brand,
+  card,
+  onCardClick,
 }) {
   /* const [isLiked, setIsLiked] = useState(false); */
 
@@ -19,10 +21,13 @@ function ProductCard({
   /* const additionalLikeButtonStyles = isLiked
     ? 'product-card__like-button_liked'
     : ''; */
-
   return (
     <article className={`product-card product-card_style_${sectionWhereUsed}`}>
-      <NavLink className="product-card__link" to="/product">
+      <NavLink
+        className="product-card__link"
+        to="/product"
+        onClick={() => onCardClick(card)}
+      >
         <div
           className={`product-card__card-container
         product-card__card-container_style_${sectionWhereUsed}`}

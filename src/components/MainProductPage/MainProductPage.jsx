@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-// import Accordion from '../Accordion/Accordion.jsx';
 import { CustomNextArrow, CustomPrevArrow } from '../Carousel/Carousel.jsx';
-import ProductCardPath from '../../images/product_card_filler_image_s.jpg';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 
-function MainProductPage() {
+function MainProductPage({ card }) {
   const [mainSlider, setMainSlider] = useState(null);
   const [navSlider, setNavSlider] = useState(null);
+  const [counter, setCounter] = useState(card.amount);
+  const increaseCounter = () => {
+    setCounter(counter + 1);
+  };
+  const decreaseCounter = () => {
+    if (counter === 1) {
+      return;
+    }
+    setCounter(counter - 1);
+  };
+
+  const addButtonClick = () => {
+    card.amount = 1;
+    setCounter(card.amount);
+  };
 
   const carouselSettingMain = {
     slidesToShow: 1,
@@ -48,7 +61,7 @@ function MainProductPage() {
           >
             <div className="product-page__block">
               <img
-                src={ProductCardPath}
+                src={card.image}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -59,7 +72,7 @@ function MainProductPage() {
             </div>
             <div className="product-page__block">
               <img
-                src={ProductCardPath}
+                src={card.image}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -70,7 +83,7 @@ function MainProductPage() {
             </div>
             <div className="product-page__block">
               <img
-                src={ProductCardPath}
+                src={card.image}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -81,7 +94,7 @@ function MainProductPage() {
             </div>
             <div className="product-page__block">
               <img
-                src={ProductCardPath}
+                src={card.image}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -92,7 +105,7 @@ function MainProductPage() {
             </div>
             <div className="product-page__block">
               <img
-                src={ProductCardPath}
+                src={card.image}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -103,7 +116,7 @@ function MainProductPage() {
             </div>
             <div className="product-page__block">
               <img
-                src={ProductCardPath}
+                src={card.image}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -119,78 +132,92 @@ function MainProductPage() {
             className="product-page__nav-slider"
           >
             <img
-              src={ProductCardPath}
+              src={card.image}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={ProductCardPath}
+              src={card.image}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={ProductCardPath}
+              src={card.image}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={ProductCardPath}
+              src={card.image}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={ProductCardPath}
+              src={card.image}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={ProductCardPath}
+              src={card.image}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
           </Slider>
           <Link
-            to="/"
-            className="product-page__link product-page__link_type_catalog"
+            to="/catalog"
+            className="product-page__link product-page__link_type_catalogselectable-link"
           >
             &#8592; Вернуться в каталог
           </Link>
         </div>
         <div className="product-page__info">
-          <p className="product-page__brand">Бренд</p>
-          <h2 className="product-page__name">Наименование</h2>
+          <p className="product-page__brand">{card.brand}</p>
+          <h2 className="product-page__name">{card.name}</h2>
           <p className="product-page__price">
-            1 000 <span className="product-page__char">&#8381;</span>
+            {card.price} <span className="product-page__char">&#8381;</span>
           </p>
           <div className="product-page__string">
-            <div className="product-page__counter">
+            <div
+              className={`product-page__counter ${
+                !card.amount && `product-page__counter_inactive`
+              }`}
+            >
               <button
                 type="button"
-                className="product-page__button product-page__button_type_minus"
+                className="product-page__button product-page__button_type_minusselectable-button"
+                onClick={decreaseCounter}
               >
                 &#45;
               </button>
-              <span className="product-page__count">1</span>
+              <span className="product-page__count">{counter}</span>
               <button
                 type="button"
-                className="product-page__button product-page__button_type_plus"
+                className="product-page__button product-page__button_type_plusselectable-button"
+                onClick={increaseCounter}
               >
                 &#43;
               </button>
             </div>
-            <Link
-              to="/"
-              className="product-page__link product-page__link_type_shopping-cart"
-            >
-              Перейти в корзину
-            </Link>
+            {card.amount ? (
+              <Link
+                to="/shopping-cart"
+                className="product-page__link product-page__link_type_shopping-cartselectable-button"
+              >
+                Перейти в корзину
+              </Link>
+            ) : (
+              <button
+                className="product-page__button product-page__button_type_shopping-cart selectable-button"
+                onClick={addButtonClick}
+              >
+                Добавить в корзину
+              </button>
+            )}
           </div>
           <h3 className="product-page__subtitle">Описание</h3>
           <p className="product-page__description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
-          {/* <Accordion /> */}
         </div>
       </section>
     </>

@@ -3,7 +3,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function Novelties({ isUsedOnMainPage, requiredLength }) {
+function Novelties({ isUsedOnMainPage, requiredLength, onCardClick }) {
   const products = sortProducts(temporaryProductsArray, requiredLength);
 
   return (
@@ -17,6 +17,8 @@ function Novelties({ isUsedOnMainPage, requiredLength }) {
           image={product.image}
           name={product.name}
           brand={product.brand}
+          card={product}
+          onCardClick={onCardClick}
         />
       ))}
     </article>

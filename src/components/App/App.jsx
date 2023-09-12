@@ -15,6 +15,9 @@ import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
 import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
+
+import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
+
 import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
@@ -45,20 +48,29 @@ export default function App() {
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
-
+  // Функции по передаче коррекного товара MainProductPage при нажатии на товар в каталогах/главной странице
+  const [selectedCard, setSelectedCard] = useState([]);
+  const handleCardClick = (card) => setSelectedCard(card);
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Header onClickRegistration={handleRegistrationPopupOpen} />
         <main>
           <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/catalog" element={<Catalog />} />
-            <Route path="/product" element={<MainProductPage />} />
+            <Route path="/" element={<Main onCardClick={handleCardClick} />} />
+            <Route
+              path="/catalog"
+              element={<Catalog onCardClick={handleCardClick} />}
+            />
+            <Route
+              path="/product"
+              element={<MainProductPage card={selectedCard} />}
+            />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/delivery" element={<Delivery />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/order" element={<Order />} />
+            <Route path="/thanksfororder" element={<ThanksForOrder />} />{' '}
             <Route
               path="/profile"
               element={<Profile onButtonClick={handleConfirmPopup} />}

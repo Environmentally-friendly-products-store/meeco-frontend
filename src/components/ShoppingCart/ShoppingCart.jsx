@@ -71,7 +71,7 @@ function ShoppingCart() {
             </p>
           </div>
 
-          <NavLink className="shopping-cart__place-order-button" to="/">
+          <NavLink className="shopping-cart__place-order-button" to="/order">
             {/* пока что нет компонента с оформлением заказа, поэтому ссылка на Main */}
             Оформить заказ
           </NavLink>

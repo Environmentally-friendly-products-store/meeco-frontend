@@ -3,7 +3,7 @@ import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
 import { temporaryFiltersArray } from '../../utils/functions/temporaryObjectArrays';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 
-function Catalog() {
+function Catalog({ onCardClick }) {
   return (
     <>
       <Breadcrumbs />
@@ -12,7 +12,11 @@ function Catalog() {
         quantity={134}
         isUsedOnMainPage={false}
       >
-        <CatalogCardSection isUsedOnMainPage={false} requiredLength={12} />
+        <CatalogCardSection
+          isUsedOnMainPage={false}
+          requiredLength={12}
+          onCardClick={onCardClick}
+        />
       </CardSection>
     </>
   );
