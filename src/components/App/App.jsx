@@ -14,9 +14,13 @@ import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
 import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
+
+import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
+
 import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
+
 
 export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -51,11 +55,15 @@ export default function App() {
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/order" element={<Order />} />
+
+          <Route path="/thanksfororder" element={<ThanksForOrder />} />
+
           <Route
             path="/profile"
             element={<Profile onButtonClick={handleConfirmPopup} />}
           />
           <Route path="/contacts" element={<Contacts />} />
+
         </Routes>
         <TopScrollBtn />
       </main>
