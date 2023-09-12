@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { CustomPrevArrow, CustomNextArrow } from '../Carousel/Carousel.jsx';
+import { CustomNextArrow, CustomPrevArrow } from '../Carousel/Carousel.jsx';
 import './MainProductPage.css';
+import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 
 function MainProductPage({ card }) {
   const [mainSlider, setMainSlider] = useState(null);
@@ -49,174 +50,177 @@ function MainProductPage({ card }) {
   };
 
   return (
-    <section className="product-page">
-      <div className="product-page__sliders">
-        <Slider
-          {...carouselSettingMain}
-          ref={(slider) => setMainSlider(slider)}
-          className="product-page__main-slider"
-        >
-          <div className="product-page__block">
-            <img
-              src={card.image}
-              alt={'Фотография товара'}
-              className="product-page__main-image"
-            />
-            {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-          </div>
-          <div className="product-page__block">
-            <img
-              src={card.image}
-              alt={'Фотография товара'}
-              className="product-page__main-image"
-            />
-            {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-          </div>
-          <div className="product-page__block">
-            <img
-              src={card.image}
-              alt={'Фотография товара'}
-              className="product-page__main-image"
-            />
-            {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-          </div>
-          <div className="product-page__block">
-            <img
-              src={card.image}
-              alt={'Фотография товара'}
-              className="product-page__main-image"
-            />
-            {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-          </div>
-          <div className="product-page__block">
-            <img
-              src={card.image}
-              alt={'Фотография товара'}
-              className="product-page__main-image"
-            />
-            {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-          </div>
-          <div className="product-page__block">
-            <img
-              src={card.image}
-              alt={'Фотография товара'}
-              className="product-page__main-image"
-            />
-            {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-          </div>
-        </Slider>
-        <Slider
-          {...carouselSettingNav}
-          ref={(slider) => setNavSlider(slider)}
-          className="product-page__nav-slider"
-        >
-          <img
-            src={card.image}
-            alt={'Фотография товара'}
-            className="product-page__nav-image"
-          />
-          <img
-            src={card.image}
-            alt={'Фотография товара'}
-            className="product-page__nav-image"
-          />
-          <img
-            src={card.image}
-            alt={'Фотография товара'}
-            className="product-page__nav-image"
-          />
-          <img
-            src={card.image}
-            alt={'Фотография товара'}
-            className="product-page__nav-image"
-          />
-          <img
-            src={card.image}
-            alt={'Фотография товара'}
-            className="product-page__nav-image"
-          />
-          <img
-            src={card.image}
-            alt={'Фотография товара'}
-            className="product-page__nav-image"
-          />
-        </Slider>
-        <Link
-          to="/catalog"
-          className="product-page__link product-page__link_type_catalog selectable-link"
-        >
-          &#8592; Вернуться в каталог
-        </Link>
-      </div>
-      <div className="product-page__info">
-        <p className="product-page__brand">{card.brand}</p>
-        <h2 className="product-page__name">{card.name}</h2>
-        <p className="product-page__price">
-          {card.price} <span className="product-page__char">&#8381;</span>
-        </p>
-        <div className="product-page__string">
-          <div
-            className={`product-page__counter ${
-              !card.amount && `product-page__counter_inactive`
-            }`}
+    <>
+      <Breadcrumbs productName={'Твердый шампунь для волос Ecome'} />
+      <section className="product-page">
+        <div className="product-page__sliders">
+          <Slider
+            {...carouselSettingMain}
+            ref={(slider) => setMainSlider(slider)}
+            className="product-page__main-slider"
           >
-            <button
+            <div className="product-page__block">
+              <img
+                src={card.image}
+                alt={'Фотография товара'}
+                className="product-page__main-image"
+              />
+              {/* <button
               type="button"
-              className="product-page__button product-page__button_type_minus selectable-button"
-              onClick={decreaseCounter}
-            >
-              &#45;
-            </button>
-            <span className="product-page__count">{counter}</span>
-            <button
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+            </div>
+            <div className="product-page__block">
+              <img
+                src={card.image}
+                alt={'Фотография товара'}
+                className="product-page__main-image"
+              />
+              {/* <button
               type="button"
-              className="product-page__button product-page__button_type_plus selectable-button"
-              onClick={increaseCounter}
-            >
-              &#43;
-            </button>
-          </div>
-          {card.amount ? (
-            <Link
-              to="/shopping-cart"
-              className="product-page__link product-page__link_type_shopping-cart selectable-button"
-            >
-              Перейти в корзину
-            </Link>
-          ) : (
-            <button
-              className="product-page__button product-page__button_type_shopping-cart selectable-button"
-              onClick={addButtonClick}
-            >
-              Добавить в корзину
-            </button>
-          )}
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+            </div>
+            <div className="product-page__block">
+              <img
+                src={card.image}
+                alt={'Фотография товара'}
+                className="product-page__main-image"
+              />
+              {/* <button
+              type="button"
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+            </div>
+            <div className="product-page__block">
+              <img
+                src={card.image}
+                alt={'Фотография товара'}
+                className="product-page__main-image"
+              />
+              {/* <button
+              type="button"
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+            </div>
+            <div className="product-page__block">
+              <img
+                src={card.image}
+                alt={'Фотография товара'}
+                className="product-page__main-image"
+              />
+              {/* <button
+              type="button"
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+            </div>
+            <div className="product-page__block">
+              <img
+                src={card.image}
+                alt={'Фотография товара'}
+                className="product-page__main-image"
+              />
+              {/* <button
+              type="button"
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+            </div>
+          </Slider>
+          <Slider
+            {...carouselSettingNav}
+            ref={(slider) => setNavSlider(slider)}
+            className="product-page__nav-slider"
+          >
+            <img
+              src={card.image}
+              alt={'Фотография товара'}
+              className="product-page__nav-image"
+            />
+            <img
+              src={card.image}
+              alt={'Фотография товара'}
+              className="product-page__nav-image"
+            />
+            <img
+              src={card.image}
+              alt={'Фотография товара'}
+              className="product-page__nav-image"
+            />
+            <img
+              src={card.image}
+              alt={'Фотография товара'}
+              className="product-page__nav-image"
+            />
+            <img
+              src={card.image}
+              alt={'Фотография товара'}
+              className="product-page__nav-image"
+            />
+            <img
+              src={card.image}
+              alt={'Фотография товара'}
+              className="product-page__nav-image"
+            />
+          </Slider>
+          <Link
+            to="/catalog"
+            className="product-page__link product-page__link_type_catalogselectable-link"
+          >
+            &#8592; Вернуться в каталог
+          </Link>
         </div>
-        <h3 className="product-page__subtitle">Описание</h3>
-        <p className="product-page__description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-      </div>
-    </section>
+        <div className="product-page__info">
+          <p className="product-page__brand">{card.brand}</p>
+          <h2 className="product-page__name">{card.name}</h2>
+          <p className="product-page__price">
+            {card.price} <span className="product-page__char">&#8381;</span>
+          </p>
+          <div className="product-page__string">
+            <div
+              className={`product-page__counter ${
+                !card.amount && `product-page__counter_inactive`
+              }`}
+            >
+              <button
+                type="button"
+                className="product-page__button product-page__button_type_minusselectable-button"
+                onClick={decreaseCounter}
+              >
+                &#45;
+              </button>
+              <span className="product-page__count">{counter}</span>
+              <button
+                type="button"
+                className="product-page__button product-page__button_type_plusselectable-button"
+                onClick={increaseCounter}
+              >
+                &#43;
+              </button>
+            </div>
+            {card.amount ? (
+              <Link
+                to="/shopping-cart"
+                className="product-page__link product-page__link_type_shopping-cartselectable-button"
+              >
+                Перейти в корзину
+              </Link>
+            ) : (
+              <button
+                className="product-page__button product-page__button_type_shopping-cart selectable-button"
+                onClick={addButtonClick}
+              >
+                Добавить в корзину
+              </button>
+            )}
+          </div>
+          <h3 className="product-page__subtitle">Описание</h3>
+          <p className="product-page__description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </div>
+      </section>
+    </>
   );
 }
 

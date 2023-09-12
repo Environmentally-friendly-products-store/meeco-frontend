@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
 import Header from '../Header/Header';
@@ -21,8 +22,13 @@ import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
 
-
 export default function App() {
+  const [currentUser, setCurrentUser] = useState({
+    id: '',
+    email: '',
+    first_name: '',
+    last_name: '',
+  });
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   useScrollToTop();
   const handleRegistrationPopupOpen = () =>
@@ -46,53 +52,52 @@ export default function App() {
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => setSelectedCard(card);
   return (
-    <div className="app">
-      <Header onClickRegistration={handleRegistrationPopupOpen} />
-      <main>
-        <Routes>
-          <Route path="/" element={<Main onCardClick={handleCardClick} />} />
-          <Route
-            path="/catalog"
-            element={<Catalog onCardClick={handleCardClick} />}
-          />
-          <Route
-            path="/product"
-            element={<MainProductPage card={selectedCard} />}
-          />
-          <Route path="/shopping-cart" element={<ShoppingCart />} />
-          <Route path="/delivery" element={<Delivery />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/order" element={<Order />} />
-
-          <Route path="/thanksfororder" element={<ThanksForOrder />} />
-
-          <Route
-            path="/profile"
-            element={<Profile onButtonClick={handleConfirmPopup} />}
-          />
-          <Route path="/contacts" element={<Contacts />} />
-
-        </Routes>
-        <TopScrollBtn />
-      </main>
-      <Footer />
-      <Registration
-        isPopupOpen={isRegistrationPopupOpen}
-        onClosePopup={handleClosePopup}
-        onCloseByOverlay={closePopupByOverlay}
-        handleTogglePopup={handleLoginPopup}
-      />
-      <Login
-        isPopupOpen={isLoginPopupOpen}
-        onClosePopup={handleClosePopup}
-        onCloseByOverlay={closePopupByOverlay}
-        handleTogglePopup={handleRegistrationPopupOpen}
-      />
-      <ConfirmPopup
-        isPopupOpen={isConfirmPopupOpen}
-        onClosePopup={handleClosePopup}
-        onCloseByOverlay={closePopupByOverlay}
-      />
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="app">
+        <Header onClickRegistration={handleRegistrationPopupOpen} />
+        <main>
+          <Routes>
+            <Route path="/" element={<Main onCardClick={handleCardClick} />} />
+            <Route
+              path="/catalog"
+              element={<Catalog onCardClick={handleCardClick} />}
+            />
+            <Route
+              path="/product"
+              element={<MainProductPage card={selectedCard} />}
+            />
+            <Route path="/shopping-cart" element={<ShoppingCart />} />
+            <Route path="/delivery" element={<Delivery />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/thanksfororder" element={<ThanksForOrder />} />{' '}
+            <Route
+              path="/profile"
+              element={<Profile onButtonClick={handleConfirmPopup} />}
+            />
+            <Route path="/contacts" element={<Contacts />} />
+          </Routes>
+          <TopScrollBtn />
+        </main>
+        <Footer />
+        <Registration
+          isPopupOpen={isRegistrationPopupOpen}
+          onClosePopup={handleClosePopup}
+          onCloseByOverlay={closePopupByOverlay}
+          handleTogglePopup={handleLoginPopup}
+        />
+        <Login
+          isPopupOpen={isLoginPopupOpen}
+          onClosePopup={handleClosePopup}
+          onCloseByOverlay={closePopupByOverlay}
+          handleTogglePopup={handleRegistrationPopupOpen}
+        />
+        <ConfirmPopup
+          isPopupOpen={isConfirmPopupOpen}
+          onClosePopup={handleClosePopup}
+          onCloseByOverlay={closePopupByOverlay}
+        />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
