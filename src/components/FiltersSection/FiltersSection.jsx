@@ -59,7 +59,12 @@ import Filter from '../Filter/Filter';
   );
 } */
 
-function FiltersSection({ categories, onFilterButtonClick }) {
+function FiltersSection({
+  categories,
+  onFilterButtonClick,
+  setItem,
+  activeItem,
+}) {
   return (
     <section className="filters-section catalog__filters-section">
       <div className="filters-form">
@@ -68,6 +73,8 @@ function FiltersSection({ categories, onFilterButtonClick }) {
             filterItems={categories}
             filterName={'Категории'}
             onFilterButtonClick={onFilterButtonClick}
+            setItem={setItem}
+            activeItem={activeItem}
           />
         </div>
       </div>

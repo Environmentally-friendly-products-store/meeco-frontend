@@ -23,35 +23,35 @@ function ProductCard({
     : ''; */
   return (
     <article className={`product-card product-card_style_${sectionWhereUsed}`}>
-      <NavLink
-        className="product-card__link"
-        to="/product"
-        onClick={() => onCardClick(card)}
-      >
-        <div
-          className={`product-card__card-container
+      <div
+        className={`product-card__card-container
         product-card__card-container_style_${sectionWhereUsed}`}
+      >
+        <NavLink
+          className="product-card__link"
+          to="/product"
+          onClick={() => onCardClick(card)}
         >
           {/* <button
           type="button"
           className={`product-card__like-button ${additionalLikeButtonStyles}`}
           onClick={onLikeButtonClick}
-        ></button> */}
+          </button> */}
           <img
             className="product-card__image"
             src={image}
             alt="название карточки"
           />
-          {isUsedOnMainPage && (
-            <button
-              type="button"
-              className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
-            >
-              Добавить в корзину
-            </button>
-          )}
-        </div>
-      </NavLink>
+        </NavLink>
+        {isUsedOnMainPage && (
+          <button
+            type="button"
+            className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
+          >
+            Добавить в корзину
+          </button>
+        )}
+      </div>
 
       <div
         className={`product-card__info-container

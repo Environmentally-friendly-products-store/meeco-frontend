@@ -51,6 +51,7 @@ export default function App() {
   // Функции по передаче коррекного товара MainProductPage при нажатии на товар в каталогах/главной странице
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => setSelectedCard(card);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">

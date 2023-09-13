@@ -2,7 +2,12 @@ import './CatalogCardSection.css';
 import ProductCard from '../ProductCard/ProductCard';
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function CatalogCardSection({ isUsedOnMainPage, products, requiredLength }) {
+function CatalogCardSection({
+  isUsedOnMainPage,
+  products,
+  requiredLength,
+  onCardClick,
+}) {
   const sortedProducts = sortProducts(products, requiredLength);
 
   return (
@@ -17,6 +22,7 @@ function CatalogCardSection({ isUsedOnMainPage, products, requiredLength }) {
           name={product.name}
           brand={product.brand}
           card={product}
+          onCardClick={onCardClick}
         />
       ))}
     </article>

@@ -1,5 +1,4 @@
 import './FilterItem.css';
-/* import { useState } from 'react'; */
 
 /* function FilterItem({ filterItem, onFiltersChange }) {
   const [isChecked, setIsChecked] = useState(false);
@@ -28,21 +27,18 @@ import './FilterItem.css';
   );
 } */
 
-function FilterItem({ filterItem, onFilterButtonClick }) {
-  /* const [isActive, setIsActive] = useState(false); */
-
+function FilterItem({ filterItem, onFilterButtonClick, setItem, activeItem }) {
   const onClick = () => {
     onFilterButtonClick(filterItem.name);
-    /* setIsActive(!isActive); */
+    setItem(filterItem);
   };
 
   return (
     <li className="text text_weight_normal">
       <button
-        /* className={`text text_weight_normal filter__list-button ${
-          isActive ? 'filter__list-button_active' : ''
-        }`} */
-        className="text text_weight_normal filter__list-button"
+        className={`text text_weight_normal filter__list-button ${
+          filterItem === activeItem ? 'filter__list-button_active' : ''
+        }`}
         onClick={onClick}
       >
         {filterItem.name}

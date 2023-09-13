@@ -76,14 +76,20 @@ const limit = 12;
   );
 } */
 
-function Catalog() {
+function Catalog({ onCardClick }) {
+  const [activeItem, setActiveItem] = useState(null);
+
   const [counter, setCounter] = useState(1);
 
   const [filters, setFilters] = useState({
-    page: 1,
+    page: counter,
     limit,
     categories: categories.map((category) => category.name),
   });
+
+  const setItem = (item) => {
+    setActiveItem(item);
+  };
 
   const onFilterButtonClick = (name) => {
     const filtersCopy = { ...filters };
@@ -107,6 +113,8 @@ function Catalog() {
       <FiltersSection
         categories={categories}
         onFilterButtonClick={onFilterButtonClick}
+        setItem={setItem}
+        activeItem={activeItem}
       />
 
       <CardSection
@@ -117,6 +125,7 @@ function Catalog() {
           isUsedOnMainPage={false}
           requiredLength={limit * counter}
           products={temporaryProductsArray}
+          onCardClick={onCardClick}
         />
       </CardSection>
       {temporaryProductsArray.length > limit * counter && (

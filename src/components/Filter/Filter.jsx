@@ -2,7 +2,13 @@ import './Filter.css';
 import { useState } from 'react';
 import FilterItem from '../FilterItem/FilterItem';
 
-function Filter({ filterName, filterItems, onFilterButtonClick }) {
+function Filter({
+  filterName,
+  filterItems,
+  onFilterButtonClick,
+  setItem,
+  activeItem,
+}) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const onClick = () => {
@@ -21,6 +27,8 @@ function Filter({ filterName, filterItems, onFilterButtonClick }) {
             filterItem={filterItem}
             key={filterItem.id}
             onFilterButtonClick={onFilterButtonClick}
+            setItem={setItem}
+            activeItem={activeItem}
           />
         ))}
       </ul>

@@ -7,9 +7,10 @@
   padding: 40px;
 }
 
-.catalog__breadcrumbs {
+.catalog .breadcrumbs {
   grid-column: 1/2;
   grid-row: 1/2;
+  padding: 0;
 }
 
 .catalog__filters-section {

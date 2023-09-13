@@ -8,7 +8,7 @@ export default function Breadcrumbs({ productName }) {
       : 'breadcrumb breadcrumb-not-active';
 
   return (
-    <nav className="breadcrumbs catalog__breadcrumbs">
+    <nav className="breadcrumbs">
       <Link to="/" className={breadcrumbClass(false)}>
         Главная
       </Link>
