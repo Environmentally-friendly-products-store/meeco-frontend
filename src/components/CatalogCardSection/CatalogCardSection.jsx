@@ -1,20 +1,19 @@
 import './CatalogCardSection.css';
 import ProductCard from '../ProductCard/ProductCard';
-import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function CatalogCardSection({ isUsedOnMainPage, requiredLength }) {
-  const products = sortProducts(temporaryProductsArray, requiredLength);
+function CatalogCardSection({ isUsedOnMainPage, products, requiredLength }) {
+  const sortedProducts = sortProducts(products, requiredLength);
 
   return (
     <article className="catalog-card-section">
-      {products.map((product) => (
+      {sortedProducts.map((product) => (
         <ProductCard
           key={product.id}
           isUsedOnMainPage={isUsedOnMainPage}
           sectionWhereUsed={'catalog'}
-          price={product.price}
-          image={product.image}
+          price={product.price_per_unit}
+          image={product.image_1_big}
           name={product.name}
           brand={product.brand}
         />

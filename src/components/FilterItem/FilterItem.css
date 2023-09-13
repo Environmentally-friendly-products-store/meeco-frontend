@@ -1,0 +1,37 @@
+/* .filter__checkbox-label {
+  display: flex;
+  column-gap: 12px;
+}
+
+.filter__invisible-checkbox {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(0 0 0 0);
+}
+
+.filter__invisible-checkbox:checked+.filter__visible-checkbox {
+  background: transparent url('../../images/check-icon.svg') 50% / 100% no-repeat;
+}
+
+.filter__visible-checkbox {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid #2b2b2b;
+  border-radius: 4px;
+} */
+
+.filter__list-button {
+  border: 0;
+  background-color: #fff;
+  padding: 0;
+  cursor: pointer;
+}
+
+.filter__list-button_active {
+  border-bottom: 1px solid #000;
+}

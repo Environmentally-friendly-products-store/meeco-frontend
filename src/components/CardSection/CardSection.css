@@ -1,8 +1,10 @@
 .card-section {
-  max-width: 1280px;
-  margin: 0 auto;
   box-sizing: border-box;
-  padding: 25px;
+}
+
+.card-section_style_main {
+  margin: 0 auto;
+  padding: 40px;
 }
 
 .card-section__header {

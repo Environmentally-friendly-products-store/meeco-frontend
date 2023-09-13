@@ -15,8 +15,8 @@ function PopularProducts({ isUsedOnMainPage, requiredLength }) {
             key={product.id}
             isUsedOnMainPage={isUsedOnMainPage}
             sectionWhereUsed={'popular'}
-            price={product.price}
-            image={product.image}
+            price={product.price_per_unit}
+            image={product.image_1_big}
             name={product.name}
             brand={product.brand}
           />
