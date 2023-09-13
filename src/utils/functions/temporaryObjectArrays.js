@@ -16,7 +16,7 @@ const createFilters = (quantity) => {
   return result;
 };
 
-const createProductsArray = (quantity) => {
+export const createProductsArray = (quantity) => {
   let result = [];
   for (let i = 1; result.length < quantity; i++) {
     result.push({

@@ -59,15 +59,15 @@ import Filter from '../Filter/Filter';
   );
 } */
 
-function FiltersSection({ categories, onButtonClick }) {
+function FiltersSection({ categories, onFilterButtonClick }) {
   return (
-    <section className="filters-section">
+    <section className="filters-section catalog__filters-section">
       <div className="filters-form">
         <div className="filters">
           <Filter
             filterItems={categories}
             filterName={'Категории'}
-            onButtonClick={onButtonClick}
+            onFilterButtonClick={onFilterButtonClick}
           />
         </div>
       </div>

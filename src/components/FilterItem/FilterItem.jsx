@@ -28,11 +28,11 @@ import './FilterItem.css';
   );
 } */
 
-function FilterItem({ filterItem, onButtonClick }) {
+function FilterItem({ filterItem, onFilterButtonClick }) {
   /* const [isActive, setIsActive] = useState(false); */
 
   const onClick = () => {
-    onButtonClick(filterItem.name);
+    onFilterButtonClick(filterItem.name);
     /* setIsActive(!isActive); */
   };
 

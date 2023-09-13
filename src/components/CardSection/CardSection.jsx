@@ -63,7 +63,7 @@ function CardSection({ children, isUsedOnMainPage, title, quantity }) {
   return (
     <section
       className={`card-section ${
-        isUsedOnMainPage ? 'card-section_style_main' : ''
+        isUsedOnMainPage ? 'card-section_style_main' : 'catalog__card-section'
       }`}
     >
       {!isUsedOnMainPage && (

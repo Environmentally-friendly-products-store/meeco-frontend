@@ -1,11 +1,17 @@
 import './Catalog.css';
-import { useState } from 'react';
+import { useState /* useEffect */ } from 'react';
 
 import CardSection from '../CardSection/CardSection';
 import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import FiltersSection from '../FiltersSection/FiltersSection';
+import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
+
+/* После фильтрации на стороне бекенда, мы будем получать объект с массивом карточек и отображать их на странцице. Сейчас используется филлер */
+
 import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
+
+/* Данные о категориях будут приходить с базы, сейчас используется филлер */
 
 const categories = [
   {
@@ -25,6 +31,8 @@ const categories = [
     name: 'Еда и напитки',
   },
 ];
+
+const limit = 12;
 
 /* function Catalog() {
   const [filters, setFilters] = useState({
@@ -69,25 +77,37 @@ const categories = [
 } */
 
 function Catalog() {
+  const [counter, setCounter] = useState(1);
+
   const [filters, setFilters] = useState({
     page: 1,
-    limit: 12,
+    limit,
     categories: categories.map((category) => category.name),
   });
 
-  const onButtonClick = (name) => {
+  const onFilterButtonClick = (name) => {
     const filtersCopy = { ...filters };
     filtersCopy.categories = [name];
     setFilters(filtersCopy);
-    /* тут будет отправляться запрос к серверу за карточками нужной категории */
+    /* При клике на название категории будет отправляться запрос к серверу за карточками выбранной категории */
   };
 
-  console.log(filters);
+  const onShowMoreButtonClick = () => {
+    setCounter(counter + 1);
+  };
+
+  /* useEffect(() => {
+    При первой загрузке компонента нам сразу нужно получить массив объектов всех категорий товаров. Здесь будет отправляться запрос к серверу.
+  }, []); */
+
   return (
     <main className="catalog">
       <Breadcrumbs />
 
-      <FiltersSection categories={categories} onButtonClick={onButtonClick} />
+      <FiltersSection
+        categories={categories}
+        onFilterButtonClick={onFilterButtonClick}
+      />
 
       <CardSection
         quantity={temporaryProductsArray.length}
@@ -95,10 +115,13 @@ function Catalog() {
       >
         <CatalogCardSection
           isUsedOnMainPage={false}
-          requiredLength={12}
+          requiredLength={limit * counter}
           products={temporaryProductsArray}
         />
       </CardSection>
+      {temporaryProductsArray.length > limit * counter && (
+        <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
+      )}
     </main>
   );
 }

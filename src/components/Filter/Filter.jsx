@@ -2,7 +2,7 @@ import './Filter.css';
 import { useState } from 'react';
 import FilterItem from '../FilterItem/FilterItem';
 
-function Filter({ filterName, filterItems, onButtonClick }) {
+function Filter({ filterName, filterItems, onFilterButtonClick }) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const onClick = () => {
@@ -20,7 +20,7 @@ function Filter({ filterName, filterItems, onButtonClick }) {
           <FilterItem
             filterItem={filterItem}
             key={filterItem.id}
-            onButtonClick={onButtonClick}
+            onFilterButtonClick={onFilterButtonClick}
           />
         ))}
       </ul>
