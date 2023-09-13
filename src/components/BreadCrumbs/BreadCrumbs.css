@@ -1,0 +1,26 @@
+.breadcrumbs {
+  padding-left: 40px;
+}
+
+.breadcrumb {
+  text-decoration: none;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.67;
+}
+
+.breadcrumb-not-active {
+  color: #605f5f;
+}
+
+.breadcrumb-active {
+  color: #121212;
+  font-weight: 500;
+}
+
+.breadcrumb-arrow {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #605f5f;
+}

@@ -4,7 +4,7 @@ import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArr
 import { sortProducts } from '../../utils/functions/sortProducts';
 import Carousel from '../Carousel/Carousel';
 
-function PopularProducts({ isUsedOnMainPage, requiredLength }) {
+function PopularProducts({ isUsedOnMainPage, requiredLength, onCardClick }) {
   const products = sortProducts(temporaryProductsArray, requiredLength);
 
   return (
@@ -19,6 +19,8 @@ function PopularProducts({ isUsedOnMainPage, requiredLength }) {
             image={product.image_1_big}
             name={product.name}
             brand={product.brand}
+            card={product}
+            onCardClick={onCardClick}
           />
         ))}
       </Carousel>

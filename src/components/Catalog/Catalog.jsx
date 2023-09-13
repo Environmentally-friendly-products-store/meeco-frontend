@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import CardSection from '../CardSection/CardSection';
 import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
+import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import FiltersSection from '../FiltersSection/FiltersSection';
 import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
 
@@ -60,6 +61,7 @@ const categories = [
           isUsedOnMainPage={false}
           requiredLength={12}
           products={temporaryProductsArray}
+          onCardClick={onCardClick}
         />
       </CardSection>
     </main>
@@ -83,6 +85,8 @@ function Catalog() {
   console.log(filters);
   return (
     <main className="catalog">
+      <Breadcrumbs />
+
       <FiltersSection categories={categories} onButtonClick={onButtonClick} />
 
       <CardSection

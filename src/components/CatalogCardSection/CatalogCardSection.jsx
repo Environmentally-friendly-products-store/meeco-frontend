@@ -16,6 +16,7 @@ function CatalogCardSection({ isUsedOnMainPage, products, requiredLength }) {
           image={product.image_1_big}
           name={product.name}
           brand={product.brand}
+          card={product}
         />
       ))}
     </article>

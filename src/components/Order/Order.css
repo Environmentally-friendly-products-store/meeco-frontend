@@ -1,19 +1,24 @@
 .order {
   display: flex;
-  flex-direction: row;
+
+  flex-direction: column;
   margin: 20px 0px 100px 40px;
+
   justify-content: space-between;
 }
 
 .order__content {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .order__order {
   display: flex;
   flex-direction: column;
-  margin: 134px 40px 0 0px;
+  margin: 134px 40px 0 0;
 }
 
 .order__link {
@@ -48,6 +53,7 @@
   line-height: 56px;
   /* 116.667% */
   letter-spacing: -1px;
+  margin: 0 0 -60px 0;
 }
 
 .order__button {
@@ -71,12 +77,15 @@
   /* 154.545% */
   width: 434px;
   height: 72px;
-  margin-top: 40px;
   cursor: pointer;
 }
 
+.order__button-link {
+  text-decoration: none;
+}
+
 .order__arrow {
-  margin: 0px 16px 0 0;
+  margin: 0 16px 0 0;
 }
 
 .order__politic {
