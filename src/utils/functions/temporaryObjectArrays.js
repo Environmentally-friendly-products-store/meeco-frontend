@@ -16,19 +16,20 @@ const createFilters = (quantity) => {
   return result;
 };
 
-const createProductsArray = (quantity) => {
+export const createProductsArray = (quantity) => {
   let result = [];
   for (let i = 1; result.length < quantity; i++) {
     result.push({
       id: i,
-      price: renderInteger(500, 5000),
-      image,
       name: `Товар${i}`,
+      description: `Описание товара${i}`,
       brand: `Бренд${i}`,
+      price_per_unit: renderInteger(500, 5000),
+      image_1_big: image,
     });
   }
   return result;
 };
 
 export const temporaryFiltersArray = createFilters(3);
-export const temporaryProductsArray = createProductsArray(30);
+export const temporaryProductsArray = createProductsArray(36);

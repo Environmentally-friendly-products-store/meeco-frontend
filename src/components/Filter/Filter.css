@@ -1,0 +1,61 @@
+.filter {
+  row-gap: 20px;
+}
+
+.filter_style_general {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(2, auto);
+}
+
+/* .filter_style_price {
+  display: flex;
+  flex-direction: column;
+} */
+
+.filter__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+.filter__list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+.filter__list_hidden {
+  display: none;
+}
+
+.filter__chevron {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  align-self: start;
+  justify-self: top;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+  background: transparent url('../../images/chevron-filters-section.svg') 50% /
+    100% no-repeat;
+}
+
+.filter__chevron_up {
+  transform: rotate(180deg);
+}
+
+.filter__chevron:hover {
+  opacity: 0.5;
+}

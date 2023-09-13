@@ -61,7 +61,7 @@ function MainProductPage({ card }) {
           >
             <div className="product-page__block">
               <img
-                src={card.image}
+                src={card.image_1_big}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -72,7 +72,7 @@ function MainProductPage({ card }) {
             </div>
             <div className="product-page__block">
               <img
-                src={card.image}
+                src={card.image_1_big}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -83,7 +83,7 @@ function MainProductPage({ card }) {
             </div>
             <div className="product-page__block">
               <img
-                src={card.image}
+                src={card.image_1_big}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -94,7 +94,7 @@ function MainProductPage({ card }) {
             </div>
             <div className="product-page__block">
               <img
-                src={card.image}
+                src={card.image_1_big}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -105,7 +105,7 @@ function MainProductPage({ card }) {
             </div>
             <div className="product-page__block">
               <img
-                src={card.image}
+                src={card.image_1_big}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -116,7 +116,7 @@ function MainProductPage({ card }) {
             </div>
             <div className="product-page__block">
               <img
-                src={card.image}
+                src={card.image_1_big}
                 alt={'Фотография товара'}
                 className="product-page__main-image"
               />
@@ -132,32 +132,32 @@ function MainProductPage({ card }) {
             className="product-page__nav-slider"
           >
             <img
-              src={card.image}
+              src={card.image_1_big}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={card.image}
+              src={card.image_1_big}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={card.image}
+              src={card.image_1_big}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={card.image}
+              src={card.image_1_big}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={card.image}
+              src={card.image_1_big}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
             <img
-              src={card.image}
+              src={card.image_1_big}
               alt={'Фотография товара'}
               className="product-page__nav-image"
             />
@@ -173,7 +173,8 @@ function MainProductPage({ card }) {
           <p className="product-page__brand">{card.brand}</p>
           <h2 className="product-page__name">{card.name}</h2>
           <p className="product-page__price">
-            {card.price} <span className="product-page__char">&#8381;</span>
+            {card.price_per_unit}{' '}
+            <span className="product-page__char">&#8381;</span>
           </p>
           <div className="product-page__string">
             <div

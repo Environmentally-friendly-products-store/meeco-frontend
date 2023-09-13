@@ -7,8 +7,8 @@ const calculateTotalPrice = (setter) => {
     if (key.startsWith('purchaseItem')) {
       result += JSON.parse(localStorage.getItem(key)).totalItemPrice;
     }
-    setter(result);
   }
+  setter(result);
 };
 
 export default calculateTotalPrice;

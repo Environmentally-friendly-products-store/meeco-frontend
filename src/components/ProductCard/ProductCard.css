@@ -13,6 +13,7 @@
 
 .product-card__link {
   text-decoration: none;
+  z-index: 2;
 }
 
 .product-card_style_catalog {
@@ -23,11 +24,11 @@
 между карточками при использовании библиотеки react-slick */
 
 .slick-slide > div {
-  margin: 0 16px;
+  margin: 0 40px;
 }
 
 .slick-list {
-  margin: 0 -16px;
+  margin: 0 -40px;
 }
 
 /* product-card__card-container */
@@ -113,6 +114,7 @@
   border: 0;
   cursor: pointer;
   transition: opacity 0.2s linear;
+  z-index: 3;
 }
 
 .product-card__add-to-cart-button:hover {
