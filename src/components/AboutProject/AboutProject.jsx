@@ -11,7 +11,7 @@ export default function AboutProject() {
           Экологичное будущее — это каждый из нас
         </h2>
         <p className="aboutProject__text">Наша миссия:....</p>
-        <NavLink className="aboutProject__button" to="#">
+        <NavLink className="aboutProject__button selectable-button" to="#">
           &#x2192;
         </NavLink>
       </div>

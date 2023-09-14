@@ -28,7 +28,10 @@ function PopupWithForm({
     >
       <div className="popup__block">
         <h2 className="popup__title">{title}</h2>
-        <p className="popup__toggle" onClick={handleTogglePopup}>
+        <p
+          className="popup__toggle selectable-link"
+          onClick={handleTogglePopup}
+        >
           {routerLinkText}
         </p>
         <form
@@ -42,7 +45,7 @@ function PopupWithForm({
             {submitButtonClass && (
               <button
                 type="button"
-                className="popup__button popup__button_type_save"
+                className="popup__button popup__button_type_save selectable-button"
                 onClick={onClose}
               >
                 Остаться
@@ -51,7 +54,7 @@ function PopupWithForm({
             <button
               disabled={!isValid}
               type="submit"
-              className={`popup__button popup__button_type_submit ${submitButtonClass}`}
+              className={`popup__button popup__button_type_submit ${submitButtonClass} selectable-button`}
             >
               {submitButtonTextContent}
             </button>
@@ -59,7 +62,10 @@ function PopupWithForm({
           {name === 'registration' && (
             <p className="popup__information">
               Нажимая на кнопку, вы соглашаетесь с&#160;
-              <Link to="/" className="popup__link popup__link_type_prolicy">
+              <Link
+                to="/"
+                className="popup__link popup__link_type_prolicy selectable-link"
+              >
                 Политикой конфиденциальности
               </Link>
             </p>
@@ -68,7 +74,7 @@ function PopupWithForm({
         <button
           onClick={onClose}
           type="button"
-          className="popup__button popup__button_type_close"
+          className="popup__button popup__button_type_close selectable-button"
           aria-label="Кнопка закрытия окна"
         />
       </div>

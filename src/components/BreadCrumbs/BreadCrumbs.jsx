@@ -9,19 +9,25 @@ export default function Breadcrumbs({ productName }) {
 
   return (
     <nav className="breadcrumbs">
-      <Link to="/" className={breadcrumbClass(false)}>
+      <Link to="/" className={`${breadcrumbClass(false)} selectable-link`}>
         Главная
       </Link>
 
       <span className="breadcrumb-arrow">&gt;</span>
-      <Link to="/catalog" className={breadcrumbClass(!productName)}>
+      <Link
+        to="/catalog"
+        className={`${breadcrumbClass(!productName)} selectable-link`}
+      >
         Каталог
       </Link>
 
       {productName && (
         <>
           <span className="breadcrumb-arrow">&gt;</span>
-          <Link to="/products/{id}/" className={breadcrumbClass(true)}>
+          <Link
+            to="/products/{id}/"
+            className={`${breadcrumbClass(true)} selectable-link`}
+          >
             {productName}
           </Link>
         </>

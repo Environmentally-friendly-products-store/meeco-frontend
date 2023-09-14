@@ -7,7 +7,7 @@ import Slider from 'react-slick';
 export function CustomPrevArrow({ onClick }) {
   return (
     <div
-      className="carousel-arrows__custom carousel-arrows__custom_prev"
+      className="carousel-arrows__custom carousel-arrows__custom_prev selectable-button"
       onClick={onClick}
     >
       &#129128;
@@ -18,7 +18,7 @@ export function CustomPrevArrow({ onClick }) {
 export function CustomNextArrow({ onClick }) {
   return (
     <div
-      className="carousel-arrows__custom carousel-arrows__custom_next"
+      className="carousel-arrows__custom carousel-arrows__custom_next selectable-button"
       onClick={onClick}
     >
       &#129130;

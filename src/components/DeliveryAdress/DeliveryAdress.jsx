@@ -30,7 +30,7 @@ function DeliveryAdress() {
         <span className="deliveryadress__form-error"></span>
         <label className="deliveryadress__label">Телефон *</label>
         <input
-          type="nunber"
+          type="number"
           placeholder="+7 999 999-99-99"
           className="deliveryadress__input"
         />

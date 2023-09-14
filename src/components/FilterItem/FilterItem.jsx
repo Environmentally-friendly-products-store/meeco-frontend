@@ -36,7 +36,7 @@ function FilterItem({ filterItem, onFilterButtonClick, setItem, activeItem }) {
   return (
     <li className="text text_weight_normal">
       <button
-        className={`text text_weight_normal filter__list-button ${
+        className={`text text_weight_normal filter__list-button selectable-link ${
           filterItem === activeItem ? 'filter__list-button_active' : ''
         }`}
         onClick={onClick}

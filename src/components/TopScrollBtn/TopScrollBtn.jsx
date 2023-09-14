@@ -19,7 +19,9 @@ function TopScrollBtn() {
       smooth
       to="#top"
       id="up-btn"
-      className={`up-btn ${isVisible ? 'up-btn_visible' : ''}`}
+      className={`up-btn ${
+        isVisible ? 'up-btn_visible' : ''
+      } selectable-button`}
     ></HashLink>
   );
 }
