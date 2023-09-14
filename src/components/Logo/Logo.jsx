@@ -5,7 +5,7 @@ import './Logo.css';
 
 function Logo() {
   return (
-    <Link to="/" className="logo">
+    <Link to="/" className="logo selectable-button">
       <img
         className="logo__image"
         src={logoPath}

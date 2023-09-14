@@ -20,7 +20,10 @@ export default function Promo() {
           <p className="promo-brands__container-description">
             Экологичные, натуральные, минимум упаковки
           </p>
-          <NavLink className="promo-brands__container-button" to="/profile">
+          <NavLink
+            className="promo-brands__container-button selectable-button"
+            to="/profile"
+          >
             Перейти к брендам →
           </NavLink>
         </div>
@@ -34,7 +37,10 @@ export default function Promo() {
           <p className="promo-brands__container-description">
             Экологичные, натуральные, минимум упаковки
           </p>
-          <NavLink className="promo-brands__container-button" to="/profile">
+          <NavLink
+            className="promo-brands__container-button selectable-button"
+            to="/profile"
+          >
             Перейти к брендам →
           </NavLink>
         </div>
@@ -58,7 +64,10 @@ export default function Promo() {
           <p className="promo-brands__container-description">
             Экологичные, натуральные, минимум упаковки
           </p>
-          <NavLink className="promo-brands__container-button" to="/profile">
+          <NavLink
+            className="promo-brands__container-button selectable-button"
+            to="/profile"
+          >
             Перейти к брендам →
           </NavLink>
         </div>

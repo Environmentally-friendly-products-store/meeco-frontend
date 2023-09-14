@@ -14,7 +14,7 @@ function SearchForm() {
           required
         />
         <button
-          className="search-form__button"
+          className="search-form__button selectable-button"
           type="submit"
           aria-label="Кнопка поиска товаров"
         ></button>

@@ -28,7 +28,7 @@ function ProductCard({
         product-card__card-container_style_${sectionWhereUsed}`}
       >
         <NavLink
-          className="product-card__link"
+          className="product-card__link selectable-button"
           to="/product"
           onClick={() => onCardClick(card)}
         >
@@ -82,7 +82,7 @@ function ProductCard({
           <button
             type="button"
             className="product-card__add-to-cart-button
-            product-card__add-to-cart-button_style_catalog"
+            product-card__add-to-cart-button_style_catalog selectable-button"
           ></button>
         )}
       </div>

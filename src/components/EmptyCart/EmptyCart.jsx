@@ -7,7 +7,7 @@ function EmptyCart() {
       <p className="empty-cart__text">
         Пока корзина пуста, но может быть положим что‑то из каталога?
       </p>
-      <NavLink className="empty-cart__button" to="/catalog">
+      <NavLink className="empty-cart__button selectable-link" to="/catalog">
         Перейти в каталог
       </NavLink>
     </div>

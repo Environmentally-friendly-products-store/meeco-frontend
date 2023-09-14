@@ -16,7 +16,7 @@ function Profile({ onButtonClick }) {
         </p>
         <button
           type="button"
-          className="profile__button"
+          className="profile__button selectable-button"
           onClick={onButtonClick}
           aria-label="Кнопка выхода из профиля"
         >

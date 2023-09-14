@@ -11,7 +11,7 @@ function Header({ onClickRegistration }) {
     <header className="header">
       <Logo />
       <div className="header__func">
-        <Link to="/catalog" className="header__link">
+        <Link to="/catalog" className="header__link selectable-button">
           <img
             className="header__image"
             src={catalogPath}

@@ -86,7 +86,7 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
       <div className="shopping-card__product-quantity-switch">
         <button
           className="shopping-card__product-quantity-switch-button
-        shopping-card__product-quantity-switch-minus"
+        shopping-card__product-quantity-switch-minus selectable-button"
           onClick={decreaseCounter}
           disabled={counter === 1}
         ></button>
@@ -95,7 +95,7 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
         </p>
         <button
           className="shopping-card__product-quantity-switch-button
-        shopping-card__product-quantity-switch-plus"
+        shopping-card__product-quantity-switch-plus selectable-button"
           onClick={increaseCounter}
         ></button>
       </div>

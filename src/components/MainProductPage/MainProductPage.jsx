@@ -164,7 +164,7 @@ function MainProductPage({ card }) {
           </Slider>
           <Link
             to="/catalog"
-            className="product-page__link product-page__link_type_catalogselectable-link"
+            className="product-page__link product-page__link_type_catalog selectable-link"
           >
             &#8592; Вернуться в каталог
           </Link>
@@ -184,7 +184,7 @@ function MainProductPage({ card }) {
             >
               <button
                 type="button"
-                className="product-page__button product-page__button_type_minusselectable-button"
+                className="product-page__button product-page__button_type_minus selectable-button"
                 onClick={decreaseCounter}
               >
                 &#45;
@@ -192,7 +192,7 @@ function MainProductPage({ card }) {
               <span className="product-page__count">{counter}</span>
               <button
                 type="button"
-                className="product-page__button product-page__button_type_plusselectable-button"
+                className="product-page__button product-page__button_type_plus selectable-button"
                 onClick={increaseCounter}
               >
                 &#43;
@@ -201,7 +201,7 @@ function MainProductPage({ card }) {
             {card.amount ? (
               <Link
                 to="/shopping-cart"
-                className="product-page__link product-page__link_type_shopping-cartselectable-button"
+                className="product-page__link product-page__link_type_shopping-cart selectable-button"
               >
                 Перейти в корзину
               </Link>

@@ -10,19 +10,22 @@ function Footer() {
       <Logo />
       <div className="footer__menu">
         <p className="footer__menu-title">Покупателям</p>
-        <HashLink to="/delivery#top" className="footer__link">
+        <HashLink to="/delivery#top" className="footer__link selectable-link">
           Доставка и оплата
         </HashLink>
-        <HashLink to="/contacts#top" className="footer__link">
+        <HashLink to="/contacts#top" className="footer__link selectable-link">
           Контакты
         </HashLink>
       </div>
       <div className="footer__menu">
         <p className="footer__menu-title">Магазин</p>
-        <HashLink to="/about-us#top" className="footer__link">
+        <HashLink to="/about-us#top" className="footer__link selectable-link">
           О нас
         </HashLink>
-        <HashLink to="/privacy-policy#top" className="footer__link">
+        <HashLink
+          to="/privacy-policy#top"
+          className="footer__link selectable-link"
+        >
           Политика конфиденциальности
         </HashLink>
       </div>

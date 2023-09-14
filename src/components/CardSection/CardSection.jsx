@@ -77,7 +77,7 @@ function CardSection({ children, isUsedOnMainPage, title, quantity }) {
       {isUsedOnMainPage && (
         <div className="card-section__header">
           <h2 className="card-section__title">{title}</h2>
-          <NavLink className="card-section__link" to="/catalog">
+          <NavLink className="card-section__link selectable-link" to="/catalog">
             Смотреть всё
           </NavLink>
         </div>
