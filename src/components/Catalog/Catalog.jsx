@@ -1,5 +1,10 @@
 import './Catalog.css';
+
 import { useState /* useEffect */ } from 'react';
+
+/* import { getAllCategories, getProducts } from '../../utils/productsApi'; */
+
+/* import encodeObjToQuery from '../../utils/functions/encodeObjToQuery'; */
 
 import CardSection from '../CardSection/CardSection';
 import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
@@ -33,6 +38,100 @@ const categories = [
 ];
 
 const limit = 12;
+
+function Catalog({ onCardClick }) {
+  /* const [categories, setCategories] = useState([]); */
+
+  const [activeItem, setActiveItem] = useState(null);
+
+  const [counter, setCounter] = useState(1);
+
+  /* const [filters, setFilters] = useState({
+    page: 1,
+    limit: 12,
+    is_favorited: 0,
+    is_in_shopping_cart: 0,
+  }); */
+
+  const [filters, setFilters] = useState({
+    page: counter,
+    limit,
+    categories: categories.map((category) => category.name),
+  });
+
+  /* const [products, setProducts] = useState([]); */
+
+  /* const setAllCategories = async () => {
+    try {
+      const unfilteredCategories = await getAllCategories();
+      const filteredCategories = unfilteredCategories.map(
+        (category) => category.name
+      );
+      setCategories(filteredCategories);
+    } catch (err) {
+      console.log('Ошибка перехвачена');
+    }
+  }; */
+
+  /* const setAllProducts = async () => {
+    try {
+      const products = await getProducts(encodeObjToQuery(filters)).results;
+      setProducts(products);
+    } catch (err) {
+      console.log('Ошибка перехвачена');
+    }
+  }; */
+
+  const setItem = (item) => {
+    setActiveItem(item);
+  };
+
+  const onFilterButtonClick = async (name) => {
+    const filtersCopy = { ...filters };
+    filtersCopy.categories = [name];
+    setFilters(filtersCopy);
+    /* const products = await getProducts(encodeObjToQuery(filtersCopy)).results; */
+    /* setProducts(products); */
+  };
+
+  const onShowMoreButtonClick = () => {
+    setCounter(counter + 1);
+  };
+
+  /* useEffect(() => {
+    setAllCategories();
+    setAllProducts();
+  }, []); */
+
+  return (
+    <main className="catalog">
+      <Breadcrumbs />
+
+      <FiltersSection
+        categories={categories}
+        onFilterButtonClick={onFilterButtonClick}
+        setItem={setItem}
+        activeItem={activeItem}
+      />
+
+      <CardSection
+        quantity={temporaryProductsArray.length}
+        isUsedOnMainPage={false}
+      >
+        <CatalogCardSection
+          isUsedOnMainPage={false}
+          requiredLength={limit * counter}
+          products={temporaryProductsArray}
+          /* products={products} */
+          onCardClick={onCardClick}
+        />
+      </CardSection>
+      {temporaryProductsArray.length > limit * counter && (
+        <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
+      )}
+    </main>
+  );
+}
 
 /* function Catalog() {
   const [filters, setFilters] = useState({
@@ -75,64 +174,5 @@ const limit = 12;
     </main>
   );
 } */
-
-function Catalog({ onCardClick }) {
-  const [activeItem, setActiveItem] = useState(null);
-
-  const [counter, setCounter] = useState(1);
-
-  const [filters, setFilters] = useState({
-    page: counter,
-    limit,
-    categories: categories.map((category) => category.name),
-  });
-
-  const setItem = (item) => {
-    setActiveItem(item);
-  };
-
-  const onFilterButtonClick = (name) => {
-    const filtersCopy = { ...filters };
-    filtersCopy.categories = [name];
-    setFilters(filtersCopy);
-    /* При клике на название категории будет отправляться запрос к серверу за карточками выбранной категории */
-  };
-
-  const onShowMoreButtonClick = () => {
-    setCounter(counter + 1);
-  };
-
-  /* useEffect(() => {
-    При первой загрузке компонента нам сразу нужно получить массив объектов всех категорий товаров. Здесь будет отправляться запрос к серверу.
-  }, []); */
-
-  return (
-    <main className="catalog">
-      <Breadcrumbs />
-
-      <FiltersSection
-        categories={categories}
-        onFilterButtonClick={onFilterButtonClick}
-        setItem={setItem}
-        activeItem={activeItem}
-      />
-
-      <CardSection
-        quantity={temporaryProductsArray.length}
-        isUsedOnMainPage={false}
-      >
-        <CatalogCardSection
-          isUsedOnMainPage={false}
-          requiredLength={limit * counter}
-          products={temporaryProductsArray}
-          onCardClick={onCardClick}
-        />
-      </CardSection>
-      {temporaryProductsArray.length > limit * counter && (
-        <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
-      )}
-    </main>
-  );
-}
 
 export default Catalog;
