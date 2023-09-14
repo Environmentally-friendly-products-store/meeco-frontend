@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useForm from '../../hooks/useForm';
+import { HTTP_SERVER_ERROR } from '../../utils/constants';
 
 function Registration({
   isPopupOpen,
   onCloseByOverlay,
   onClosePopup,
   handleTogglePopup,
+  registerUser,
 }) {
   const {
     values: userState,
     handleChange: handleInputChange,
     errors: errorsState,
+    setErrors,
     isValid: isFormValid,
   } = useForm({
     firstName: '',
@@ -20,6 +23,22 @@ function Registration({
     password: '',
     repeatedPassword: '',
   });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    registerUser(userState).catch((e) => {
+      setServerError('');
+      setErrors({});
+
+      if (e.code === HTTP_SERVER_ERROR) {
+        setServerError(e.error);
+      } else {
+        for (const [key, value] of Object.entries(e.error)) {
+          setErrors({ [key]: value.join(' ') });
+        }
+      }
+    });
+  };
 
   const popupWithFormProps = {
     name: 'registration',
@@ -31,7 +50,10 @@ function Registration({
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,
     togglePopup: handleTogglePopup,
+    onSubmit,
   };
+
+  const [serverError, setServerError] = useState('');
 
   return (
     <PopupWithForm {...popupWithFormProps}>
@@ -99,6 +121,7 @@ function Registration({
         userState.repeatedPassword !== '' && (
           <span className="popup__error">Пароли не совпадают</span>
         )}
+      <span className="popup__error">{serverError}</span>
     </PopupWithForm>
   );
 }

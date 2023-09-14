@@ -1,6 +1,6 @@
 import './App.css';
-import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
@@ -22,6 +22,9 @@ import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
 
+import { register } from '../../utils/Api.js';
+import { setLocalStorageUser } from '../../utils/localStorage';
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
     id: '',
@@ -29,6 +32,7 @@ export default function App() {
     first_name: '',
     last_name: '',
   });
+  const navigate = useRef(useNavigate());
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   useScrollToTop();
   const handleRegistrationPopupOpen = () =>
@@ -51,6 +55,15 @@ export default function App() {
   // Функции по передаче коррекного товара MainProductPage при нажатии на товар в каталогах/главной странице
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => setSelectedCard(card);
+
+  //Регистрация пользователя
+  const registerUser = ({ firstName, lastName, email, password }) => {
+    return register(firstName, lastName, email, password)
+      .then(setLocalStorageUser)
+      .then(() => {
+        navigate.current('/', { replace: true });
+      });
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -86,6 +99,7 @@ export default function App() {
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
           handleTogglePopup={handleLoginPopup}
+          registerUser={registerUser}
         />
         <Login
           isPopupOpen={isLoginPopupOpen}

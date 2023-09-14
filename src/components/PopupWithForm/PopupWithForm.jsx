@@ -34,12 +34,7 @@ function PopupWithForm({
         >
           {routerLinkText}
         </p>
-        <form
-          onSubmit={onSubmit}
-          className="popup__form"
-          name={`${name}`}
-          method="post"
-        >
+        <form className="popup__form" name={`${name}`}>
           {children}
           <div className="popup__buttons">
             {submitButtonClass && (
@@ -55,6 +50,7 @@ function PopupWithForm({
               disabled={!isValid}
               type="submit"
               className={`popup__button popup__button_type_submit ${submitButtonClass} selectable-button`}
+              onClick={onSubmit}
             >
               {submitButtonTextContent}
             </button>
