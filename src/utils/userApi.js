@@ -1,4 +1,4 @@
-import { createMakeRequest, EcomeError } from './MakeRequest';
+import { createMakeRequest, EcomeError } from './makeRequest';
 import {
   baseUrl,
   HTTP_BAD_REQUEST,

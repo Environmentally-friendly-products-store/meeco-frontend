@@ -22,7 +22,7 @@ import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
 
-import { register } from '../../utils/Api.js';
+import { register } from '../../utils/userApi.js';
 import { setLocalStorageUser } from '../../utils/localStorage';
 
 export default function App() {
