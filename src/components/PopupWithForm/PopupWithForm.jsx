@@ -59,7 +59,7 @@ function PopupWithForm({
             <p className="popup__information">
               Нажимая на кнопку, вы соглашаетесь с&#160;
               <Link
-                to="/"
+                to="/privacy-policy"
                 className="popup__link popup__link_type_prolicy selectable-link"
               >
                 Политикой конфиденциальности
