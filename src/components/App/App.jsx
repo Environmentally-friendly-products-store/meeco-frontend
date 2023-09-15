@@ -15,6 +15,7 @@ import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
 import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
+import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy';
 
 import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 
@@ -77,6 +78,7 @@ export default function App() {
               element={<Profile onButtonClick={handleConfirmPopup} />}
             />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Routes>
           <TopScrollBtn />
         </main>

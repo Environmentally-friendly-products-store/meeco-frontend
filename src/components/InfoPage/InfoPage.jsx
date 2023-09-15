@@ -1,7 +1,7 @@
 import './InfoPage.css';
 import NavPanel from '../NavPanel/NavPanel';
 
-export default function Delivery({ title, id, children }) {
+export default function InfoPage({ title, id, children }) {
   return (
     <div className="infopage">
       <div className="infopage__navpanel">
