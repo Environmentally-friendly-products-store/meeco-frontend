@@ -2,7 +2,9 @@ import './Catalog.css';
 
 import { useState /* useEffect */ } from 'react';
 
-/* import { getAllCategories, getProducts } from '../../utils/productsApi'; */
+import /* getAllCategories,
+  getProducts, */
+'../../utils/productsApi';
 
 /* import encodeObjToQuery from '../../utils/functions/encodeObjToQuery'; */
 
@@ -12,11 +14,7 @@ import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import FiltersSection from '../FiltersSection/FiltersSection';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
-/* После фильтрации на стороне бекенда, мы будем получать объект с массивом карточек и отображать их на странцице. Сейчас используется филлер */
-
 import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
-
-/* Данные о категориях будут приходить с базы, сейчас используется филлер */
 
 const categories = [
   {
@@ -48,9 +46,7 @@ function Catalog({ onCardClick }) {
 
   /* const [filters, setFilters] = useState({
     page: 1,
-    limit: 12,
-    is_favorited: 0,
-    is_in_shopping_cart: 0,
+    limit: 12
   }); */
 
   const [filters, setFilters] = useState({
@@ -61,9 +57,9 @@ function Catalog({ onCardClick }) {
 
   /* const [products, setProducts] = useState([]); */
 
-  /* const setAllCategories = async () => {
+  /* const setAllCategories = () => {
     try {
-      const unfilteredCategories = await getAllCategories();
+      const unfilteredCategories = getAllCategories();
       const filteredCategories = unfilteredCategories.map(
         (category) => category.name
       );
@@ -73,9 +69,10 @@ function Catalog({ onCardClick }) {
     }
   }; */
 
-  /* const setAllProducts = async () => {
+  /* const setAllProducts = () => {
     try {
-      const products = await getProducts(encodeObjToQuery(filters)).results;
+      const response = getProducts(encodeObjToQuery(filters));
+      const products = response.results;
       setProducts(products);
     } catch (err) {
       console.log('Ошибка перехвачена');
@@ -86,12 +83,13 @@ function Catalog({ onCardClick }) {
     setActiveItem(item);
   };
 
-  const onFilterButtonClick = async (name) => {
+  const onFilterButtonClick = (name) => {
     const filtersCopy = { ...filters };
     filtersCopy.categories = [name];
     setFilters(filtersCopy);
-    /* const products = await getProducts(encodeObjToQuery(filtersCopy)).results; */
-    /* setProducts(products); */
+    /* const response = getProducts(encodeObjToQuery(filtersCopy));
+    const products = response.results;
+    setProducts(products); */
   };
 
   const onShowMoreButtonClick = () => {

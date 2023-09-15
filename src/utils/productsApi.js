@@ -8,47 +8,49 @@ const makeRequest = createMakeRequest(baseUrl);
  * Запрашивает данные о всех категориях товаров
  */
 export const getAllCategories = () => {
-  makeRequest('/api/v1/categories', 'GET');
+  makeRequest('/categories', 'GET');
 };
 
 /**
  * Запрашивает конкретную категории товаров по id
  */
 export const getCategoryById = (categoryId) => {
-  makeRequest(`/api/v1/categories/${categoryId}`, 'GET');
+  makeRequest(`/categories/${categoryId}`, 'GET');
 };
 
 /**
  * Запрашивает данные о товарах по указанным параметрам
  */
 export const getProducts = (params) => {
-  makeRequest(`/api/v1/products/?${params}`, 'GET');
+  makeRequest(`/products/?${params}`, 'GET');
 };
 
 /**
  * Запрашивает данные о конкретном товаре по id
  */
 export const getProductById = (productId) => {
-  makeRequest(`/api/v1/products/${productId}`, 'GET');
+  makeRequest(`/products/${productId}`, 'GET');
 };
 
 /**
  * Добавляет товар в корзину
  */
 export const addProductToShoppingCart = (productId) => {
-  makeRequest(`/api/v1/products/${productId}/shopping-cart`, 'POST');
+  makeRequest(`/products/${productId}/shopping_cart`, 'POST');
 };
 
 /**
  * Изменяет количество товара в корзине
  */
-export const changeProductQuantityInShoppingCart = (productId) => {
-  makeRequest(`/api/v1/products/${productId}/shopping-cart`, 'PATCH');
+export const changeProductQuantityInShoppingCart = (productId, count) => {
+  makeRequest(`/products/${productId}/shopping_cart`, 'PATCH', {
+    amount: count,
+  });
 };
 
 /**
- * Удаляет товара из корзины
+ * Удаляет товар из корзины
  */
 export const deleteProductFromShoppingCart = (productId) => {
-  makeRequest(`/api/v1/products/${productId}/shopping-cart`, 'DELETE');
+  makeRequest(`/products/${productId}/shopping_cart`, 'DELETE');
 };

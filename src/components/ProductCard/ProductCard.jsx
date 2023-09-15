@@ -2,6 +2,10 @@
 import './ProductCard.css';
 import { NavLink } from 'react-router-dom';
 
+import /* addProductToShoppingCart,
+  deleteProductFromShoppingCart, */
+'../../utils/productsApi';
+
 function ProductCard({
   isUsedOnMainPage,
   sectionWhereUsed,
@@ -10,8 +14,26 @@ function ProductCard({
   name,
   brand,
   card,
+  id,
+  isInShoppingCart,
   onCardClick,
 }) {
+  /*   const onAddToShoppingCartClick = () => {
+    try {
+      addProductToShoppingCart(id);
+    } catch (err) {
+      console.log('Ошибка перехвачена');
+    }
+  };
+
+  const onDeleteFromShoppingCartClick = () => {
+    try {
+      deleteProductFromShoppingCart(id);
+    } catch (err) {
+      console.log('Ошибка перехвачена');
+    }
+  }; */
+
   /* const [isLiked, setIsLiked] = useState(false); */
 
   /* const onLikeButtonClick = () => {
@@ -47,6 +69,11 @@ function ProductCard({
           <button
             type="button"
             className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
+            /* onClick={
+              isInShoppingCart
+                ? onDeleteFromShoppingCartClick
+                : onAddToShoppingCartClick
+            } */
           >
             Добавить в корзину
           </button>
@@ -83,6 +110,11 @@ function ProductCard({
             type="button"
             className="product-card__add-to-cart-button
             product-card__add-to-cart-button_style_catalog selectable-button"
+            /* onClick={
+              isInShoppingCart
+                ? onDeleteFromShoppingCartClick
+                : onAddToShoppingCartClick
+            } */
           ></button>
         )}
       </div>
