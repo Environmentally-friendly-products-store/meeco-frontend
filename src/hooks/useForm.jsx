@@ -28,10 +28,10 @@ function useForm(inputValues = {}) {
 
   const checkPasswords = (values) => {
     if (!values.repeatedPassword) {
-      return;
+      return true;
     }
     const { password, repeatedPassword } = values;
-    return setIsValid(password === repeatedPassword);
+    return password === repeatedPassword;
   };
 
   const checkValidation = (name, value) => {
@@ -51,8 +51,10 @@ function useForm(inputValues = {}) {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: event.target.validationMessage });
-    checkPasswords({ ...values, [name]: value });
-    setIsValid(event.target.closest('.popup__form').checkValidity());
+    const matchPasswords = checkPasswords({ ...values, [name]: value });
+    const isFormValid = event.target.closest('.popup__form').checkValidity();
+    setIsValid(matchPasswords && isFormValid);
+
     if (!event.target.validationMessage) {
       checkValidation(name, value);
     }

@@ -24,7 +24,7 @@ function PopupWithForm({
   return (
     <div
       className={`popup popup_type_${name} ${isOpen && `popup_active`}`}
-      onClick={onCloseByOverlay}
+      onMouseDown={onCloseByOverlay}
     >
       <div className="popup__block">
         <h2 className="popup__title">{title}</h2>

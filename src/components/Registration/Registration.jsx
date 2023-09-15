@@ -54,6 +54,9 @@ function Registration({
   };
 
   const [serverError, setServerError] = useState('');
+  const matchPassword =
+    userState.password !== userState.repeatedPassword &&
+    userState.repeatedPassword !== '';
 
   return (
     <PopupWithForm {...popupWithFormProps}>
@@ -117,11 +120,11 @@ function Registration({
         maxLength="40"
         required
       />
-      {userState.password !== userState.repeatedPassword &&
-        userState.repeatedPassword !== '' && (
-          <span className="popup__error">Пароли не совпадают</span>
-        )}
-      <span className="popup__error">{serverError}</span>
+
+      <span className="popup__error">
+        {matchPassword ? 'Пароли не совпадают' : ''}
+      </span>
+      <span className="popup__server-error">{serverError}</span>
     </PopupWithForm>
   );
 }
