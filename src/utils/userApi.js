@@ -1,4 +1,4 @@
-import { createMakeRequest, EcomeError } from './MakeRequest';
+import { createMakeRequest, EcomeError } from './makeRequest';
 import {
   baseUrl,
   HTTP_BAD_REQUEST,
@@ -16,12 +16,11 @@ const parseToken = (body) => {
   return { token: body.access };
 };
 
-//  endpoints взяты из Swagger
 /**
  * Регистрация пользовтаеля
  */
 export const register = (firstName, lastName, email, password) =>
-  makeRequest('/users', 'POST', {
+  makeRequest('/register/', 'POST', {
     first_name: firstName,
     last_name: lastName,
     email,
