@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -23,8 +23,9 @@ import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
 
-import { register } from '../../utils/userApi.js';
-import { setLocalStorageUser } from '../../utils/localStorage';
+import { authorize, getUserProfile, register } from '../../utils/userApi.js';
+import { setLocalStorageToken } from '../../utils/localStorage';
+import Preloader from '../Preloader/Preloader';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -34,8 +35,14 @@ export default function App() {
     last_name: '',
   });
   const navigate = useRef(useNavigate());
+
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
+  const [token, setToken] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   useScrollToTop();
+
   const handleRegistrationPopupOpen = () =>
     setIsRegistrationPopupOpen(!isRegistrationPopupOpen);
   const handleClosePopup = () => {
@@ -57,14 +64,54 @@ export default function App() {
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => setSelectedCard(card);
 
+  const [isLocalStorageRead, setIsLocalStorageRead] = useState(false);
+  const saveToken = ({ token }) => {
+    setLocalStorageToken(token);
+    setToken(token);
+    setIsLoggedIn(true);
+  };
+
+  //Авторизация пользователя
+  const loginUser = ({ password, email }) => {
+    return authorize(email, password).then(saveToken);
+  };
+
   //Регистрация пользователя
   const registerUser = ({ firstName, lastName, email, password }) => {
-    return register(firstName, lastName, email, password)
-      .then(setLocalStorageUser)
-      .then(() => {
-        navigate.current('/', { replace: true });
-      });
+    return (
+      register(firstName, lastName, email, password)
+        // TODO: добавить автологин, запрос даннных пользователя и сохранение их в localStorage
+        .then(() => loginUser({ password, email }))
+        .finally(() => {
+          navigate.current('/', { replace: true });
+          handleClosePopup();
+        })
+    );
   };
+
+  useEffect(() => {
+    if (!token) {
+      // Окончание загрузки только после окончания чтения из LocalStorage для предотвращения "мигания"
+      isLocalStorageRead && setIsLoading(false);
+      return;
+    }
+    getUserProfile(token)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    // eslint-disable-next-line
+  }, [token]);
+
+  if (isLoading) {
+    return <Preloader />;
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -108,6 +155,7 @@ export default function App() {
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
           handleTogglePopup={handleRegistrationPopupOpen}
+          loginUser={loginUser}
         />
         <ConfirmPopup
           isPopupOpen={isConfirmPopupOpen}

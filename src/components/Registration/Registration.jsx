@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useForm from '../../hooks/useForm';
-import { HTTP_SERVER_ERROR } from '../../utils/constants';
 
 function Registration({
   isPopupOpen,
@@ -30,12 +29,10 @@ function Registration({
       setServerError('');
       setErrors({});
 
-      if (e.code === HTTP_SERVER_ERROR) {
-        setServerError(e.error);
+      if (e.isValidationError()) {
+        setErrors(e.error);
       } else {
-        for (const [key, value] of Object.entries(e.error)) {
-          setErrors({ [key]: value.join(' ') });
-        }
+        setServerError(e.error);
       }
     });
   };

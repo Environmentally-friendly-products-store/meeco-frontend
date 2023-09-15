@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useForm from '../../hooks/useForm';
 
@@ -7,6 +7,7 @@ function Login({
   onCloseByOverlay,
   onClosePopup,
   handleTogglePopup,
+  loginUser,
 }) {
   const {
     values: userState,
@@ -18,6 +19,17 @@ function Login({
     password: '',
   });
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    loginUser(userState)
+      .then(() => {
+        setServerError('');
+      })
+      .catch((e) => {
+        setServerError(e.error);
+      });
+  };
+
   const popupWithFormProps = {
     name: 'login',
     isOpen: isPopupOpen,
@@ -28,7 +40,10 @@ function Login({
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,
     togglePopup: handleTogglePopup,
+    onSubmit,
   };
+
+  const [serverError, setServerError] = useState('');
 
   return (
     <PopupWithForm {...popupWithFormProps}>
@@ -56,6 +71,7 @@ function Login({
         required
       />
       <span className="popup__error">{errorsState.password}</span>
+      <span className="popup__server-error">{serverError}</span>
     </PopupWithForm>
   );
 }

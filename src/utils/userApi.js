@@ -31,7 +31,7 @@ export const register = (firstName, lastName, email, password) =>
  * Авторизация пользователя
  */
 export const authorize = (email, password) =>
-  makeRequest('/jwt/create', 'POST', {
+  makeRequest('/token/', 'POST', {
     password,
     email,
   }).then(parseToken);
