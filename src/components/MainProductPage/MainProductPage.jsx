@@ -1,28 +1,56 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { CustomNextArrow, CustomPrevArrow } from '../Carousel/Carousel.jsx';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
+import {
+  addCardToShoppingCart,
+  changeAmountCardToShoppingCart,
+  deleteCardToShoppingCart,
+} from '../../utils/Api';
 
 function MainProductPage({ card }) {
   const [mainSlider, setMainSlider] = useState(null);
   const [navSlider, setNavSlider] = useState(null);
   const [counter, setCounter] = useState(card.amount);
-  const increaseCounter = () => {
-    setCounter(counter + 1);
-  };
-  const decreaseCounter = () => {
-    if (counter === 1) {
-      return;
-    }
-    setCounter(counter - 1);
-  };
+  // card.is_in_shopping_cart
 
   const addButtonClick = () => {
-    card.amount = 1;
-    setCounter(card.amount);
+    addCardToShoppingCart(card.id).then((card) => {
+      setCounter(card.amount);
+    });
+    // card.amount = 1;
+    // setCounter(card.amount);
   };
+
+  const onChangeCounter = (operator) => {
+    if (counter - 1 === 0 && operator === '-') {
+      // deleteCardToShoppingCart(card.id);
+      setCounter(null);
+      return;
+    }
+    switch (operator) {
+      case '+':
+        return changeAmountCardToShoppingCart(card.id, counter + 1).then(
+          (card) => {
+            setCounter(card.amount);
+          }
+        );
+      case '-':
+        return changeAmountCardToShoppingCart(card.id, counter - 1).then(
+          (card) => {
+            setCounter(card.amount);
+          }
+        );
+      default:
+        return;
+    }
+  };
+
+  useEffect(() => {
+    setCounter(card.amount);
+  }, [card]);
 
   const carouselSettingMain = {
     slidesToShow: 1,
@@ -92,60 +120,12 @@ function MainProductPage({ card }) {
               className="product-page__button product-page__button_type_favorite"
             /> */}
             </div>
-            <div className="product-page__block">
-              <img
-                src={card.image_1_big}
-                alt={'Фотография товара'}
-                className="product-page__main-image"
-              />
-              {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-            </div>
-            <div className="product-page__block">
-              <img
-                src={card.image_1_big}
-                alt={'Фотография товара'}
-                className="product-page__main-image"
-              />
-              {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-            </div>
-            <div className="product-page__block">
-              <img
-                src={card.image_1_big}
-                alt={'Фотография товара'}
-                className="product-page__main-image"
-              />
-              {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-            </div>
           </Slider>
           <Slider
             {...carouselSettingNav}
             ref={(slider) => setNavSlider(slider)}
             className="product-page__nav-slider"
           >
-            <img
-              src={card.image_1_big}
-              alt={'Фотография товара'}
-              className="product-page__nav-image"
-            />
-            <img
-              src={card.image_1_big}
-              alt={'Фотография товара'}
-              className="product-page__nav-image"
-            />
-            <img
-              src={card.image_1_big}
-              alt={'Фотография товара'}
-              className="product-page__nav-image"
-            />
             <img
               src={card.image_1_big}
               alt={'Фотография товара'}
@@ -173,19 +153,19 @@ function MainProductPage({ card }) {
           <p className="product-page__brand">{card.brand}</p>
           <h2 className="product-page__name">{card.name}</h2>
           <p className="product-page__price">
-            {card.price_per_unit}{' '}
+            {card.price_per_unit}
             <span className="product-page__char">&#8381;</span>
           </p>
           <div className="product-page__string">
             <div
               className={`product-page__counter ${
-                !card.amount && `product-page__counter_inactive`
+                !counter && `product-page__counter_inactive`
               }`}
             >
               <button
                 type="button"
                 className="product-page__button product-page__button_type_minus selectable-button"
-                onClick={decreaseCounter}
+                onClick={() => onChangeCounter('-')}
               >
                 &#45;
               </button>
@@ -193,12 +173,12 @@ function MainProductPage({ card }) {
               <button
                 type="button"
                 className="product-page__button product-page__button_type_plus selectable-button"
-                onClick={increaseCounter}
+                onClick={() => onChangeCounter('+')}
               >
                 &#43;
               </button>
             </div>
-            {card.amount ? (
+            {counter ? (
               <Link
                 to="/shopping-cart"
                 className="product-page__link product-page__link_type_shopping-cart selectable-button"

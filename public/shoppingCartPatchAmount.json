@@ -1,0 +1,10 @@
+{
+  "id": 0,
+  "name": "Перчатка",
+  "image_1_icon": "string",
+  "category": 33,
+  "brand": "Экополис",
+  "events": 12,
+  "price_per_unit": 1200,
+  "amount": 3
+}

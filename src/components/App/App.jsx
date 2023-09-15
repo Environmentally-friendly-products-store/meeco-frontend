@@ -22,6 +22,7 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
+import /*getCurrentCard*/ '../../utils/Api';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -51,7 +52,10 @@ export default function App() {
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
   // Функции по передаче коррекного товара MainProductPage при нажатии на товар в каталогах/главной странице
   const [selectedCard, setSelectedCard] = useState([]);
-  const handleCardClick = (card) => setSelectedCard(card);
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    // getCurrentCard(card.id).then((res) => setSelectedCard(res))
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

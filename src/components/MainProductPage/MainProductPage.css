@@ -100,6 +100,7 @@
 
 .product-page__string {
   display: flex;
+  position: relative;
   gap: 20px;
 }
 
@@ -109,7 +110,8 @@
 }
 
 .product-page__counter_inactive {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
 }
 
 .product-page__button_type_plus {
@@ -147,6 +149,30 @@
   text-decoration: none;
   line-height: 35px;
   border: none;
+}
+
+.product-page__button_type_shopping-cart::after {
+  /* width: calc(100% - ((100% - 20px) / 4));
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  line-height: 35px;
+  border: none; */
+  width: 100%;
+  content: 'Добавить в корзину';
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1);
+  transition: width 0.5s ease;
+}
+
+.product-page__button_type_shopping-cart:hover::after {
+  width: calc(100% - ((100% - 20px) / 4));
+  content: 'Добавить в корзину';
 }
 
 .product-page__link_type_shopping-cart {

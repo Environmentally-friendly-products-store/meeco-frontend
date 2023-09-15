@@ -1,0 +1,18 @@
+{
+  "id": 0,
+  "name": "Перчатка",
+  "description": "Лучшая перчатка из экологичной резины",
+  "image_1_big": "https://torgeat.ru/goodimg/_eat/2003/421912/10177114-perchatki-rezinovie-hozyaystvennie-master-fresh-eko.jpeg",
+  "image_1_preview": "string",
+  "image_2_big": "string",
+  "image_2_preview": "string",
+  "image_3_big": "string",
+  "image_3_preview": "string",
+  "is_favorited": true,
+  "is_in_shopping_cart": true,
+  "category": 33,
+  "brand": "Экополис",
+  "events": 12,
+  "price_per_unit": 1200,
+  "amount": 1
+}
