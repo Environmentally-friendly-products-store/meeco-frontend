@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -54,8 +54,19 @@ export default function App() {
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => {
     setSelectedCard(card);
-    // getCurrentCard(card.id).then((res) => setSelectedCard(res))
+    /* Api для отправки карточки конкретного товара:
+    getCurrentCard(card.id)
+      .then((card) => setSelectedCard(card))
+      .catch((err)=> console.log(err))
+    */
   };
+
+  useEffect(() => {
+    // Если карты нет, то взять ее в localStorage
+    if (selectedCard.length === 0 && localStorage.getItem('cardPage')) {
+      setSelectedCard(JSON.parse(localStorage.getItem('cardPage')));
+    }
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

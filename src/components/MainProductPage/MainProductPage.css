@@ -1,3 +1,33 @@
+@keyframes button-moved-left-to-right {
+  from {
+    width: calc(100% - 60px);
+  }
+
+  to {
+    width: calc(100% - ((100% - 20px) / 4));
+  }
+}
+
+@keyframes counter-moved-left-to-right {
+  from {
+    width: 20px;
+  }
+
+  to {
+    width: calc((100% - 20px) / 4.5);
+  }
+}
+
+@keyframes button-moved-right-to-left {
+  from {
+    width: calc(100% - ((100% - 20px) / 4));
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
 .product-page {
   display: flex;
   padding: 20px;
@@ -102,16 +132,17 @@
   display: flex;
   position: relative;
   gap: 20px;
+  height: 35px;
 }
 
 .product-page__counter {
-  width: calc((100% - 20px) / 4);
+  width: calc((100% - 20px) / 4.5);
   display: flex;
+  animation: counter-moved-left-to-right 0.5s ease;
 }
 
 .product-page__counter_inactive {
-  /* display: none; */
-  visibility: hidden;
+  display: none;
 }
 
 .product-page__button_type_plus {
@@ -134,7 +165,6 @@
 
 .product-page__count {
   display: block;
-  vertical-align: middle;
   line-height: 35px;
   text-align: center;
   width: calc(100% / 3);
@@ -142,47 +172,34 @@
 }
 
 .product-page__button_type_shopping-cart {
-  width: calc(100% - ((100% - 20px) / 4));
+  width: 100%;
   text-align: center;
   background-color: #000;
   color: #fff;
   text-decoration: none;
   line-height: 35px;
   border: none;
-}
-
-.product-page__button_type_shopping-cart::after {
-  /* width: calc(100% - ((100% - 20px) / 4));
-  text-align: center;
-  background-color: #000;
-  color: #fff;
-  text-decoration: none;
-  line-height: 35px;
-  border: none; */
-  width: 100%;
-  content: 'Добавить в корзину';
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  height: 100%;
-  background-color: rgba(0, 0, 0, 1);
-  transition: width 0.5s ease;
-}
-
-.product-page__button_type_shopping-cart:hover::after {
-  width: calc(100% - ((100% - 20px) / 4));
-  content: 'Добавить в корзину';
 }
 
 .product-page__link_type_shopping-cart {
-  width: calc(100% - ((100% - 20px) / 4));
+  display: block;
+  animation: button-moved-left-to-right 0.5s ease;
   text-align: center;
   background-color: #000;
   color: #fff;
   text-decoration: none;
   line-height: 35px;
   border: none;
+  width: calc(100% - ((100% - 20px) / 4));
+}
+
+.product-page__button_clicked {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  animation: button-moved-right-to-left 0.5s ease;
 }
 
 .product-page__link_type_catalog {

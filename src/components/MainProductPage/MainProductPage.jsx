@@ -6,51 +6,77 @@ import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import {
   addCardToShoppingCart,
-  changeAmountCardToShoppingCart,
-  deleteCardToShoppingCart,
-} from '../../utils/Api';
+  changeQuantityOfCardInShoppingCart,
+  deleteCardFormShoppingCart,
+} from '../../utils/productPageApi';
 
 function MainProductPage({ card }) {
   const [mainSlider, setMainSlider] = useState(null);
   const [navSlider, setNavSlider] = useState(null);
   const [counter, setCounter] = useState(card.amount);
-  // card.is_in_shopping_cart
+  const [isClicked, setIsClicked] = useState(false);
+  let isLoggedIn = true;
 
-  const addButtonClick = () => {
-    addCardToShoppingCart(card.id).then((card) => {
-      setCounter(card.amount);
-    });
-    // card.amount = 1;
-    // setCounter(card.amount);
+  useEffect(() => {
+    setCounter(card.amount);
+    checkStorage();
+  }, [card]);
+
+  // Для хранения карточки товара в localStorage
+  const checkStorage = () => {
+    if (card.length !== 0) {
+      localStorage.setItem('cardPage', JSON.stringify(card));
+    }
+  };
+  const addToShoppingCardClick = () => {
+    // Чтобы сейчас работал счетчик
+    /*
+      Проверка залогинен ли пользователь
+      if(!isLoggedIn){
+        Либо выводить информацию о том, что необходимо зарегистрироваться
+        Либо кнопка будет неактивна
+      }
+    */
+    setIsClicked(true);
+    setCounter(1);
+    /* Api добавление товара в корзину:
+    addCardToShoppingCart(card.id)
+      .then((card) => {
+        setCounter(card.amount);
+      })
+      .catch((err)=> console.log(err))
+    */
   };
 
   const onChangeCounter = (operator) => {
     if (counter - 1 === 0 && operator === '-') {
-      // deleteCardToShoppingCart(card.id);
+      /* Api удаления товара из корзины:
+      deleteCardFormShoppingCart(card.id)
+        .then(() => setCounter(null))
+        .catch((err) => console.log(err))
+      */
       setCounter(null);
       return;
     }
     switch (operator) {
       case '+':
-        return changeAmountCardToShoppingCart(card.id, counter + 1).then(
-          (card) => {
-            setCounter(card.amount);
-          }
-        );
+        /* Api изменения количества товара в корзине:
+        changeQuantityOfCardInShoppingCart(card.id, counter + 1)
+          .then((res) => setCounter({ amount }))
+          .catch((err) => console.log(err))
+        */
+        return setCounter(counter + 1);
       case '-':
-        return changeAmountCardToShoppingCart(card.id, counter - 1).then(
-          (card) => {
-            setCounter(card.amount);
-          }
-        );
+        /* Api изменения количества товара в корзине:
+          changeQuantityOfCardInShoppingCart(card.id, counter - 1)
+            .then((res) => setCounter({ amount }))
+            .catch((err) => console.log(err))
+        */
+        return setCounter(counter - 1);
       default:
         return;
     }
   };
-
-  useEffect(() => {
-    setCounter(card.amount);
-  }, [card]);
 
   const carouselSettingMain = {
     slidesToShow: 1,
@@ -178,17 +204,21 @@ function MainProductPage({ card }) {
                 &#43;
               </button>
             </div>
+            {/* Проверка card.is_in_shopping_cart*/}
             {counter ? (
               <Link
                 to="/shopping-cart"
-                className="product-page__link product-page__link_type_shopping-cart selectable-button"
+                className={`product-page__link product-page__link_type_shopping-cart`}
               >
                 Перейти в корзину
               </Link>
             ) : (
               <button
-                className="product-page__button product-page__button_type_shopping-cart selectable-button"
-                onClick={addButtonClick}
+                className={`product-page__button product-page__button_type_shopping-cart selectable-button ${
+                  isClicked && `product-page__button_clicked`
+                }`}
+                onClick={addToShoppingCardClick}
+                disabled={isLoggedIn ? false : true}
               >
                 Добавить в корзину
               </button>
@@ -196,6 +226,7 @@ function MainProductPage({ card }) {
           </div>
           <h3 className="product-page__subtitle">Описание</h3>
           <p className="product-page__description">
+            {/* card.description */}
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
