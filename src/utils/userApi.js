@@ -31,7 +31,7 @@ export const register = (firstName, lastName, email, password) =>
  * Авторизация пользователя
  */
 export const authorize = (email, password) =>
-  makeRequest('/jwt/create', 'POST', {
+  makeRequest('/token/', 'POST', {
     password,
     email,
   }).then(parseToken);
@@ -40,4 +40,4 @@ export const authorize = (email, password) =>
  * Запрос данных пользователя
  */
 export const getUserProfile = (token) =>
-  makeRequest('/users/me', 'GET', null, token);
+  makeRequest('/users/me/', 'GET', null, token);

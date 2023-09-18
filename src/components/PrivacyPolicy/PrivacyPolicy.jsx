@@ -2,7 +2,7 @@ import './PrivacyPolicy.css';
 import InfoPage from '../InfoPage/InfoPage';
 import InfoBlock from '.././InfoBlock/InfoBlock';
 
-export default function PrivacyPolicy({ title, id, children }) {
+export default function PrivacyPolicy() {
   return (
     <InfoPage title="Политика конфиденциальности" id="privacypolicy">
       <InfoBlock

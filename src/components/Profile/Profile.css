@@ -1,28 +1,14 @@
-.profile {
-  display: flex;
-  padding-bottom: 200px;
-}
-
-.profile__info {
-  margin: 0 auto;
-}
-
-.profile__title {
-  margin: 0;
-  font-weight: 400;
-  font-size: 42px;
-  margin-bottom: 20px;
-}
-
 .profile__text {
   margin: 0;
-  margin-bottom: 60px;
+  padding-top: 20px;
+  min-height: 53px;
 }
 
 .profile__button {
+  margin-top: 44px;
   background-color: #000;
   border: none;
-  min-width: 250px;
+  max-width: 250px;
   padding: 15px;
   color: #fff;
   font-size: 15px;

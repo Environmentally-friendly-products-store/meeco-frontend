@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -7,26 +7,30 @@ import Catalog from '../Catalog/Catalog';
 import Header from '../Header/Header';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import Footer from '../Footer/Footer';
-import Registration from '../Registration/Registration';
-import Login from '../Login/Login';
 import MainProductPage from '../MainProductPage/MainProductPage';
 import Delivery from '../Delivery/Delivery';
 import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
-import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
 import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy';
 
 import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 
 import Profile from '../Profile/Profile';
-import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
 /* import getCurrentCard '../../utils/Api'; */
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 
-import { register } from '../../utils/userApi.js';
-import { setLocalStorageUser } from '../../utils/localStorage';
+import { authorize, getUserProfile, register } from '../../utils/userApi.js';
+import {
+  getLocalStorageToken,
+  removeLocalStorageToken,
+  setLocalStorageToken,
+} from '../../utils/localStorage';
+import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
+import Registration from '../Registration/Registration';
+import Login from '../Login/Login';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -36,8 +40,13 @@ export default function App() {
     last_name: '',
   });
   const navigate = useRef(useNavigate());
+
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
+  const [token, setToken] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useScrollToTop();
+
   const handleRegistrationPopupOpen = () =>
     setIsRegistrationPopupOpen(!isRegistrationPopupOpen);
   const handleClosePopup = () => {
@@ -79,13 +88,61 @@ export default function App() {
     }
   }, []);
 
+  const saveToken = ({ token }) => {
+    setLocalStorageToken(token);
+    setToken(token);
+    setIsLoggedIn(true);
+  };
+
+  //Авторизация пользователя
+  const loginUser = ({ password, email }) => {
+    return authorize(email, password)
+      .then(saveToken)
+      .then(() => handleClosePopup());
+  };
+
   //Регистрация пользователя
   const registerUser = ({ firstName, lastName, email, password }) => {
     return register(firstName, lastName, email, password)
-      .then(setLocalStorageUser)
+      .then(() => {
+        loginUser({ password, email });
+      })
       .then(() => {
         navigate.current('/', { replace: true });
       });
+  };
+
+  useEffect(() => {
+    setToken(getLocalStorageToken());
+  }, []);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+    getUserProfile(token)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
+      });
+    // eslint-disable-next-line
+  }, [token]);
+
+  const logOut = () => {
+    // eslint-disable-next-line no-unused-expressions
+    removeLocalStorageToken();
+    setToken('');
+    setIsLoggedIn(false);
+    setCurrentUser({
+      id: '',
+      email: '',
+      first_name: '',
+      last_name: '',
+    });
+    navigate.current('/', { replace: true });
   };
 
   return (
@@ -135,11 +192,13 @@ export default function App() {
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
           handleTogglePopup={handleRegistrationPopupOpen}
+          loginUser={loginUser}
         />
         <ConfirmPopup
           isPopupOpen={isConfirmPopupOpen}
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
+          onSubmit={logOut}
         />
         <PopupWithInfo
           isPopupOpen={isPopupWithInfoOpen}

@@ -2,6 +2,7 @@
   display: flex;
   background: rgba(210, 214, 192, 1);
   margin: 40px auto;
+  max-width: 1360px;
 }
 
 .aboutProject__image {

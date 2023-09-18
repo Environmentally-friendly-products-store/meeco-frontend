@@ -1,10 +1,36 @@
 // Константы для обработки 500-й ошибки
-import { HTTP_SERVER_ERROR, SERVER_ERROR_MESSAGE } from './constants';
+import {
+  HTTP_BAD_REQUEST,
+  HTTP_NOT_AUTHORIZED,
+  HTTP_SERVER_ERROR,
+  NOT_AUTHORIZED_MESSAGE,
+  SERVER_ERROR_MESSAGE,
+} from './constants';
 
 // Функция-коструктор для ошибок
 export function EcomeError(code, error) {
-  this.code = code;
-  this.error = error;
+  this._code = code;
+  this.isValidationError = () => code === HTTP_BAD_REQUEST;
+  this._parseValidationError = (error) => {
+    const errorState = {};
+    for (const [key, value] of Object.entries(error)) {
+      errorState[key] = value.join(' ');
+    }
+    return errorState;
+  };
+  this._parseNotAuthorizedError = () => NOT_AUTHORIZED_MESSAGE;
+  this._parseServerError = (error) => error;
+
+  switch (code) {
+    case HTTP_BAD_REQUEST:
+      this.error = this._parseValidationError(error);
+      break;
+    case HTTP_NOT_AUTHORIZED:
+      this.error = this._parseNotAuthorizedError(error);
+      break;
+    default:
+      this.error = this._parseServerError(error);
+  }
 }
 
 export const createMakeRequest =
