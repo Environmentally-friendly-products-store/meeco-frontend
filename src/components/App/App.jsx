@@ -7,25 +7,28 @@ import Catalog from '../Catalog/Catalog';
 import Header from '../Header/Header';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import Footer from '../Footer/Footer';
-import Registration from '../Registration/Registration';
-import Login from '../Login/Login';
 import MainProductPage from '../MainProductPage/MainProductPage';
 import Delivery from '../Delivery/Delivery';
 import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
-import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import Order from '../Order/Order';
 import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy';
 
 import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 
 import Profile from '../Profile/Profile';
-import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
 
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
-import { setLocalStorageToken } from '../../utils/localStorage';
-import Preloader from '../Preloader/Preloader';
+import {
+  getLocalStorageToken,
+  removeLocalStorageToken,
+  setLocalStorageToken,
+} from '../../utils/localStorage';
+import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
+import Registration from '../Registration/Registration';
+import Login from '../Login/Login';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -39,7 +42,6 @@ export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   const [token, setToken] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   useScrollToTop();
 
@@ -64,7 +66,6 @@ export default function App() {
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => setSelectedCard(card);
 
-  const [isLocalStorageRead, setIsLocalStorageRead] = useState(false);
   const saveToken = ({ token }) => {
     setLocalStorageToken(token);
     setToken(token);
@@ -73,7 +74,9 @@ export default function App() {
 
   //Авторизация пользователя
   const loginUser = ({ password, email }) => {
-    return authorize(email, password).then(saveToken);
+    return authorize(email, password)
+      .then(saveToken)
+      .then(() => handleClosePopup());
   };
 
   //Регистрация пользователя
@@ -81,18 +84,21 @@ export default function App() {
     return (
       register(firstName, lastName, email, password)
         // TODO: добавить автологин, запрос даннных пользователя и сохранение их в localStorage
-        .then(() => loginUser({ password, email }))
-        .finally(() => {
+        .then(() => {
+          loginUser({ password, email });
+        })
+        .then(() => {
           navigate.current('/', { replace: true });
-          handleClosePopup();
         })
     );
   };
 
   useEffect(() => {
+    setToken(getLocalStorageToken());
+  }, []);
+
+  useEffect(() => {
     if (!token) {
-      // Окончание загрузки только после окончания чтения из LocalStorage для предотвращения "мигания"
-      isLocalStorageRead && setIsLoading(false);
       return;
     }
     getUserProfile(token)
@@ -102,16 +108,23 @@ export default function App() {
       })
       .catch(() => {
         setIsLoggedIn(false);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
     // eslint-disable-next-line
   }, [token]);
 
-  if (isLoading) {
-    return <Preloader />;
-  }
+  const logOut = () => {
+    // eslint-disable-next-line no-unused-expressions
+    removeLocalStorageToken();
+    setToken('');
+    setIsLoggedIn(false);
+    setCurrentUser({
+      id: '',
+      email: '',
+      first_name: '',
+      last_name: '',
+    });
+    navigate.current('/', { replace: true });
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -161,6 +174,7 @@ export default function App() {
           isPopupOpen={isConfirmPopupOpen}
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
+          onSubmit={logOut}
         />
       </div>
     </CurrentUserContext.Provider>

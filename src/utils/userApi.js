@@ -40,4 +40,4 @@ export const authorize = (email, password) =>
  * Запрос данных пользователя
  */
 export const getUserProfile = (token) =>
-  makeRequest('/users/me', 'GET', null, token);
+  makeRequest('/users/me/', 'GET', null, token);

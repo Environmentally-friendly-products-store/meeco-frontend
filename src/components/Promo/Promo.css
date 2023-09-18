@@ -1,3 +1,8 @@
+.promo {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
 .promo-brands {
   display: flex;
   background: rgba(210, 214, 192, 1);
