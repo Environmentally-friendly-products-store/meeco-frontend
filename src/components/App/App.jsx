@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
