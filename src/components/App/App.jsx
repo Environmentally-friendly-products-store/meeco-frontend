@@ -103,16 +103,13 @@ export default function App() {
 
   //Регистрация пользователя
   const registerUser = ({ firstName, lastName, email, password }) => {
-    return (
-      register(firstName, lastName, email, password)
-        // TODO: добавить автологин, запрос даннных пользователя и сохранение их в localStorage
-        .then(() => {
-          loginUser({ password, email });
-        })
-        .then(() => {
-          navigate.current('/', { replace: true });
-        })
-    );
+    return register(firstName, lastName, email, password)
+      .then(() => {
+        loginUser({ password, email });
+      })
+      .then(() => {
+        navigate.current('/', { replace: true });
+      });
   };
 
   useEffect(() => {
