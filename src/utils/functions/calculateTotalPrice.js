@@ -12,3 +12,11 @@ const calculateTotalPrice = (setter) => {
 };
 
 export default calculateTotalPrice;
+
+/* export const calculateTotalPrice = (totalPriceObject) => {
+  let sum = 0;
+  for (const key in totalPriceObject) {
+    sum += totalPriceObject[key];
+  }
+  return sum;
+}; */

@@ -1,6 +1,6 @@
 import './App.css';
-import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
@@ -25,6 +25,9 @@ import Contacts from '../Contacts/Contacts';
 import /*getCurrentCard*/ '../../utils/Api';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 
+import { register } from '../../utils/userApi.js';
+import { setLocalStorageUser } from '../../utils/localStorage';
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
     id: '',
@@ -32,6 +35,7 @@ export default function App() {
     first_name: '',
     last_name: '',
   });
+  const navigate = useRef(useNavigate());
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   useScrollToTop();
   const handleRegistrationPopupOpen = () =>
@@ -75,6 +79,15 @@ export default function App() {
     }
   }, []);
 
+  //Регистрация пользователя
+  const registerUser = ({ firstName, lastName, email, password }) => {
+    return register(firstName, lastName, email, password)
+      .then(setLocalStorageUser)
+      .then(() => {
+        navigate.current('/', { replace: true });
+      });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -115,6 +128,7 @@ export default function App() {
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
           handleTogglePopup={handleLoginPopup}
+          registerUser={registerUser}
         />
         <Login
           isPopupOpen={isLoginPopupOpen}

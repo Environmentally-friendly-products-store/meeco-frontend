@@ -2,9 +2,9 @@
 import { HTTP_SERVER_ERROR, SERVER_ERROR_MESSAGE } from './constants';
 
 // Функция-коструктор для ошибок
-export function EcomeError(code, message) {
+export function EcomeError(code, error) {
   this.code = code;
-  this.message = message;
+  this.error = error;
 }
 
 export const createMakeRequest =
@@ -32,7 +32,7 @@ export const createMakeRequest =
           if (response.ok) {
             return body;
           }
-          throw new EcomeError(response.status, body.message);
+          throw new EcomeError(response.status, body);
         })
       )
       .catch((error) => {
