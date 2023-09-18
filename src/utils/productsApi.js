@@ -1,4 +1,4 @@
-import { createMakeRequest } from './MakeRequest';
+import { createMakeRequest } from './makeRequest';
 import { baseUrl } from './constants';
 
 // отправляет запрос на сервер по baseUrl

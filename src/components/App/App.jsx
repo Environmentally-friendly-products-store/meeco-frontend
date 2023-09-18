@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -22,7 +22,7 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
-import /*getCurrentCard*/ '../../utils/Api';
+/* import getCurrentCard '../../utils/Api'; */
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 
 import { register } from '../../utils/userApi.js';
