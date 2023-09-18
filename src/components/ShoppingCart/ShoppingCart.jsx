@@ -82,3 +82,82 @@ function ShoppingCart() {
 }
 
 export default ShoppingCart;
+
+/* import './ShoppingCart.css';
+import '../ShoppingCartItem/ShoppingCardItem';
+
+import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import { getProducts } from '../../utils/productsApi';
+import encodeObjToQuery from '../../utils/functions/encodeObjToQuery';
+
+import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
+import EmptyCart from '../EmptyCart/EmptyCart';
+
+import { calculateTotalPrice } from '../../utils/functions/calculateTotalProductsPrice';
+
+function ShoppingCart() {
+  const [products, setProducts] = useState([]);
+
+  const [totalPriceObject, setTotalPriceObject] = useState({});
+
+  const setAllShoppingCartProducts = () => {
+    const response = getProducts(encodeObjToQuery({ is_in_shopping_cart: 1 }));
+    const products = response.results;
+    setProducts(products);
+  };
+
+  const onTotalPriceObjectChange = (id, totalItemPrice) => {
+    setTotalPriceObject({
+      ...totalPriceObject,
+      [id]: totalItemPrice,
+    });
+  };
+
+  useEffect(() => {
+    setAllShoppingCartProducts();
+  }, []);
+
+  return (
+    <main
+      className={`shopping-cart ${
+        products.length < 1 ? 'shopping-cart_style_empty' : ''
+      }`}
+    >
+      <h1 className="shopping-cart__title">Корзина</h1>
+      {products.length < 1 ? (
+        <EmptyCart />
+      ) : (
+        <div className="shopping-cart__products-block">
+          <button className="shopping-cart__button shopping-cart__button_style_reset">
+            Удалить все
+          </button>
+
+          <ul className="shopping-cart__products-list">
+            {products.map((product) => (
+              <ShoppingCardItem
+                key={product.id}
+                product={product}
+                onTotalPriceObjectChange={onTotalPriceObjectChange}
+              />
+            ))}
+          </ul>
+
+          <div className="shopping-cart__total-block">
+            <p className="shopping-cart__total-block-title">Итого</p>
+            <p className="shopping-card__product-price shopping-card__product-price_style_sum">
+              {calculateTotalPrice(totalPriceObject)} ₽
+            </p>
+          </div>
+
+          <NavLink className="shopping-cart__place-order-button" to="/order">
+            Оформить заказ
+          </NavLink>
+        </div>
+      )}
+    </main>
+  );
+}
+
+export default ShoppingCart; */

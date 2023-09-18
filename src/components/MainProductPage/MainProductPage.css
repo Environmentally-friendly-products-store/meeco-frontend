@@ -1,3 +1,33 @@
+@keyframes button-moved-left-to-right {
+  from {
+    width: calc(100% - 60px);
+  }
+
+  to {
+    width: calc(100% - ((100% - 20px) / 4));
+  }
+}
+
+@keyframes counter-moved-left-to-right {
+  from {
+    width: 20px;
+  }
+
+  to {
+    width: calc((100% - 20px) / 4.5);
+  }
+}
+
+@keyframes button-moved-right-to-left {
+  from {
+    width: calc(100% - ((100% - 20px) / 4));
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
 .product-page {
   display: flex;
   padding: 20px;
@@ -25,10 +55,21 @@
   object-fit: cover;
 }
 
+.pruduct-page__nav-images {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
 .product-page__nav-image {
+  width: calc((100% - 60px) / 3);
   aspect-ratio: 1/1;
   object-fit: cover;
   display: block;
+}
+
+.product-page__nav-image_active {
+  border: 2px solid black;
 }
 
 .product-page__block {
@@ -100,12 +141,15 @@
 
 .product-page__string {
   display: flex;
+  position: relative;
   gap: 20px;
+  height: 35px;
 }
 
 .product-page__counter {
-  width: calc((100% - 20px) / 4);
+  width: calc((100% - 20px) / 4.5);
   display: flex;
+  animation: counter-moved-left-to-right 0.5s ease;
 }
 
 .product-page__counter_inactive {
@@ -132,7 +176,6 @@
 
 .product-page__count {
   display: block;
-  vertical-align: middle;
   line-height: 35px;
   text-align: center;
   width: calc(100% / 3);
@@ -140,7 +183,7 @@
 }
 
 .product-page__button_type_shopping-cart {
-  width: calc(100% - ((100% - 20px) / 4));
+  width: 100%;
   text-align: center;
   background-color: #000;
   color: #fff;
@@ -150,13 +193,24 @@
 }
 
 .product-page__link_type_shopping-cart {
-  width: calc(100% - ((100% - 20px) / 4));
+  display: block;
+  animation: button-moved-left-to-right 0.5s ease;
   text-align: center;
   background-color: #000;
   color: #fff;
   text-decoration: none;
   line-height: 35px;
   border: none;
+  width: calc(100% - ((100% - 20px) / 4));
+}
+
+.product-page__button_clicked {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  animation: button-moved-right-to-left 0.5s ease;
 }
 
 .product-page__link_type_catalog {

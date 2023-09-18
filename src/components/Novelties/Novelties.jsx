@@ -18,6 +18,8 @@ function Novelties({ isUsedOnMainPage, requiredLength, onCardClick }) {
           name={product.name}
           brand={product.brand}
           card={product}
+          id={product.id}
+          /* isInShoppingCart={product.is_in_shopping_cart} */
           onCardClick={onCardClick}
         />
       ))}

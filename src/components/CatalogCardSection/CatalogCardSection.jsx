@@ -1,5 +1,6 @@
 import './CatalogCardSection.css';
 import ProductCard from '../ProductCard/ProductCard';
+
 import { sortProducts } from '../../utils/functions/sortProducts';
 
 function CatalogCardSection({
@@ -22,6 +23,8 @@ function CatalogCardSection({
           name={product.name}
           brand={product.brand}
           card={product}
+          id={product.id}
+          isInShoppingCart={product.is_in_shopping_cart}
           onCardClick={onCardClick}
         />
       ))}
