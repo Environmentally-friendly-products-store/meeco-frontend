@@ -10,12 +10,15 @@ import {
   deleteCardFormShoppingCart,
 } from '../../utils/productPageApi';
 
-function MainProductPage({ card }) {
+function MainProductPage({ card, onButtonClick }) {
   const [mainSlider, setMainSlider] = useState(null);
   const [navSlider, setNavSlider] = useState(null);
   const [counter, setCounter] = useState(card.amount);
   const [isClicked, setIsClicked] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   let isLoggedIn = true;
+
+  console.log(isLoggedIn);
 
   useEffect(() => {
     setCounter(card.amount);
@@ -29,10 +32,13 @@ function MainProductPage({ card }) {
     }
   };
   const addToShoppingCardClick = () => {
-    // Чтобы сейчас работал счетчик
+    if (!isLoggedIn) {
+      onButtonClick();
+      return;
+    }
     /*
       Проверка залогинен ли пользователь
-      if(!isLoggedIn){
+
         Либо выводить информацию о том, что необходимо зарегистрироваться
         Либо кнопка будет неактивна
       }
@@ -90,18 +96,24 @@ function MainProductPage({ card }) {
     speed: 1000,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
+    beforeChange: (current, next) => setSelectedIndex(next),
+  };
+  // Для того чтобы выделять выбранную картинку
+  const indexes = {
+    0: 0,
+    1: 1,
+    2: 2,
   };
 
-  const carouselSettingNav = {
-    arrows: false,
-    dots: false,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: false,
-    asNavFor: mainSlider,
-    autoplaySpeed: 5000,
-    speed: 1000,
-  };
+  // const carouselSettingNav = {
+  //   arrows: false,
+  //   dots: false,
+  //   slidesToShow: 3,
+  //   autoplay: false,
+  //   asNavFor: mainSlider,
+  //   autoplaySpeed: 5000,
+  //   speed: 1000,
+  // };
 
   return (
     <>
@@ -147,27 +159,47 @@ function MainProductPage({ card }) {
             /> */}
             </div>
           </Slider>
-          <Slider
-            {...carouselSettingNav}
-            ref={(slider) => setNavSlider(slider)}
-            className="product-page__nav-slider"
-          >
+          <div className="pruduct-page__nav-images">
             <img
+              key={indexes['0']}
+              onClick={() => {
+                setSelectedIndex(indexes['0']);
+                mainSlider.slickGoTo(indexes['0']);
+              }}
               src={card.image_1_big}
               alt={'Фотография товара'}
-              className="product-page__nav-image"
+              className={`product-page__nav-image ${
+                selectedIndex === indexes['0'] &&
+                `product-page__nav-image_active`
+              }`}
             />
             <img
+              key={indexes['1']}
+              onClick={() => {
+                mainSlider.slickGoTo(indexes['1']);
+                setSelectedIndex(indexes['1']);
+              }}
               src={card.image_1_big}
               alt={'Фотография товара'}
-              className="product-page__nav-image"
+              className={`product-page__nav-image ${
+                selectedIndex === indexes['1'] &&
+                `product-page__nav-image_active`
+              }`}
             />
             <img
+              key={indexes['2']}
+              onClick={() => {
+                mainSlider.slickGoTo(indexes['2']);
+                setSelectedIndex(indexes['2']);
+              }}
               src={card.image_1_big}
               alt={'Фотография товара'}
-              className="product-page__nav-image"
+              className={`product-page__nav-image ${
+                selectedIndex === indexes['2'] &&
+                `product-page__nav-image_active`
+              }`}
             />
-          </Slider>
+          </div>
           <Link
             to="/catalog"
             className="product-page__link product-page__link_type_catalog selectable-link"
@@ -218,7 +250,6 @@ function MainProductPage({ card }) {
                   isClicked && `product-page__button_clicked`
                 }`}
                 onClick={addToShoppingCardClick}
-                disabled={isLoggedIn ? false : true}
               >
                 Добавить в корзину
               </button>

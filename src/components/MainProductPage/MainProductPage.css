@@ -55,10 +55,21 @@
   object-fit: cover;
 }
 
+.pruduct-page__nav-images {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
 .product-page__nav-image {
+  width: calc((100% - 60px) / 3);
   aspect-ratio: 1/1;
   object-fit: cover;
   display: block;
+}
+
+.product-page__nav-image_active {
+  border: 2px solid black;
 }
 
 .product-page__block {

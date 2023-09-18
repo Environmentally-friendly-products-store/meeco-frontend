@@ -23,6 +23,7 @@ import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
 import /*getCurrentCard*/ '../../utils/Api';
+import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -39,13 +40,14 @@ export default function App() {
     setIsLoginPopupOpen(false);
     setIsRegistrationPopupOpen(false);
     setIsConfirmPopupOpen(false);
+    setIsPopupWithInfoOpen(false);
   };
   const closePopupByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
       handleClosePopup();
     }
   };
-  //дописать функции для открытия/закрытия Login
+
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
@@ -60,6 +62,11 @@ export default function App() {
       .catch((err)=> console.log(err))
     */
   };
+
+  // Функции для попапа с информацией для страницы товара
+  const [isPopupWithInfoOpen, setIsPopupWithInfoOpen] = useState(false);
+  const handlePopupWithInfo = () =>
+    setIsPopupWithInfoOpen(!isPopupWithInfoOpen);
 
   useEffect(() => {
     // Если карты нет, то взять ее в localStorage
@@ -81,7 +88,12 @@ export default function App() {
             />
             <Route
               path="/product"
-              element={<MainProductPage card={selectedCard} />}
+              element={
+                <MainProductPage
+                  card={selectedCard}
+                  onButtonClick={handlePopupWithInfo}
+                />
+              }
             />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/delivery" element={<Delivery />} />
@@ -114,6 +126,13 @@ export default function App() {
           isPopupOpen={isConfirmPopupOpen}
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
+        />
+        <PopupWithInfo
+          isPopupOpen={isPopupWithInfoOpen}
+          onClosePopup={handleClosePopup}
+          onCloseByOverlay={closePopupByOverlay}
+          handleRegistrationTogglePopup={handleRegistrationPopupOpen}
+          handleLoginTogglePopup={handleLoginPopup}
         />
       </div>
     </CurrentUserContext.Provider>
