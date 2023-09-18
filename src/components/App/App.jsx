@@ -22,6 +22,8 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Contacts from '../Contacts/Contacts';
+import /*getCurrentCard*/ '../../utils/Api';
+import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 
 import { register } from '../../utils/userApi.js';
 import { setLocalStorageUser } from '../../utils/localStorage';
@@ -42,20 +44,40 @@ export default function App() {
     setIsLoginPopupOpen(false);
     setIsRegistrationPopupOpen(false);
     setIsConfirmPopupOpen(false);
+    setIsPopupWithInfoOpen(false);
   };
   const closePopupByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
       handleClosePopup();
     }
   };
-  //дописать функции для открытия/закрытия Login
+
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
   // Функции по передаче коррекного товара MainProductPage при нажатии на товар в каталогах/главной странице
   const [selectedCard, setSelectedCard] = useState([]);
-  const handleCardClick = (card) => setSelectedCard(card);
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    /* Api для отправки карточки конкретного товара:
+    getCurrentCard(card.id)
+      .then((card) => setSelectedCard(card))
+      .catch((err)=> console.log(err))
+    */
+  };
+
+  // Функции для попапа с информацией для страницы товара
+  const [isPopupWithInfoOpen, setIsPopupWithInfoOpen] = useState(false);
+  const handlePopupWithInfo = () =>
+    setIsPopupWithInfoOpen(!isPopupWithInfoOpen);
+
+  useEffect(() => {
+    // Если карты нет, то взять ее в localStorage
+    if (selectedCard.length === 0 && localStorage.getItem('cardPage')) {
+      setSelectedCard(JSON.parse(localStorage.getItem('cardPage')));
+    }
+  }, []);
 
   //Регистрация пользователя
   const registerUser = ({ firstName, lastName, email, password }) => {
@@ -79,7 +101,12 @@ export default function App() {
             />
             <Route
               path="/product"
-              element={<MainProductPage card={selectedCard} />}
+              element={
+                <MainProductPage
+                  card={selectedCard}
+                  onButtonClick={handlePopupWithInfo}
+                />
+              }
             />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/delivery" element={<Delivery />} />
@@ -113,6 +140,13 @@ export default function App() {
           isPopupOpen={isConfirmPopupOpen}
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
+        />
+        <PopupWithInfo
+          isPopupOpen={isPopupWithInfoOpen}
+          onClosePopup={handleClosePopup}
+          onCloseByOverlay={closePopupByOverlay}
+          handleRegistrationTogglePopup={handleRegistrationPopupOpen}
+          handleLoginTogglePopup={handleLoginPopup}
         />
       </div>
     </CurrentUserContext.Provider>
