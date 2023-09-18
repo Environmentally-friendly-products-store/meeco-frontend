@@ -12,5 +12,4 @@ export const HTTP_BAD_REQUEST = 400;
 export const HTTP_NOT_AUTHORIZED = 401;
 
 // Задать baseUrl по умолчанию локально, либо из env-файла: REACT_APP_BASE_URL - название константы в env-файле
-export const { REACT_APP_BASE_URL: baseUrl = 'http://localhost:3000/api/v1' } =
-  process.env;
+export const { REACT_APP_BASE_URL: baseUrl = '/api/v1' } = process.env;
