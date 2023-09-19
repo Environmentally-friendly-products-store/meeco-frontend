@@ -1,7 +1,7 @@
 .promo {
   max-width: 1360px;
   margin: 0 auto;
-  overflow: hidden;
+  padding: 0 40px;
 }
 
 .promo-brands {
