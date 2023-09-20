@@ -1,9 +1,6 @@
 import './ThanksForOrder.css';
 import { Link } from 'react-router-dom';
 import arrowleft from '../../images/arrow-left.svg';
-import YourOrder from '../YourOrder/YourOrder';
-import DeliveryAdress from '../DeliveryAdress/DeliveryAdress';
-import Recipient from '../Recipient/Recipient';
 import checkcircle from '../../images/CheckCircle.svg';
 
 function ThanksForOrder() {
@@ -26,20 +23,11 @@ function ThanksForOrder() {
           alt="Проверено"
         ></img>
       </div>
-      <div className="order__content">
-        <div>
-          <DeliveryAdress />
-          <Recipient />
-          <div className="order__link">
-            <Link to="/catalog" className="order__link-text selectable-link">
-              <img className="order__arrow" src={arrowleft} alt="Стрелка" />
-              Продолжить покупки
-            </Link>
-          </div>
-        </div>
-        <div className="order__order">
-          <YourOrder />
-        </div>
+      <div className="order__link">
+        <Link to="/catalog" className="order__link-text selectable-link">
+          <img className="order__arrow" src={arrowleft} alt="Стрелка" />
+          Продолжить покупки
+        </Link>
       </div>
     </section>
   );
