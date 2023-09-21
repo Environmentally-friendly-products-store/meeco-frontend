@@ -1,10 +1,11 @@
-/* import { useState } from 'react'; */
 import './ProductCard.css';
+/* import { useState } from 'react'; */
 import { NavLink } from 'react-router-dom';
 
-import /* addProductToShoppingCart,
-  deleteProductFromShoppingCart, */
-'../../utils/productsApi';
+/* import {
+  addProductToShoppingCart,
+  changeProductQuantityInShoppingCart,
+} from '../../utils/productsApi'; */
 
 function ProductCard({
   isUsedOnMainPage,
@@ -14,21 +15,21 @@ function ProductCard({
   name,
   brand,
   card,
+  /* amount,
   id,
-  isInShoppingCart,
+  isInShoppingCart, */
   onCardClick,
 }) {
-  /*   const onAddToShoppingCartClick = () => {
-    try {
-      addProductToShoppingCart(id);
-    } catch (err) {
-      console.log('Ошибка перехвачена');
-    }
-  };
+  /* const [counter, setCounter] = useState(amount); */
 
-  const onDeleteFromShoppingCartClick = () => {
+  /* const handleButtonClick = () => {
     try {
-      deleteProductFromShoppingCart(id);
+      if (isInShoppingCart) {
+        setCounter(counter + 1);
+        changeProductQuantityInShoppingCart(id, counter + 1);
+      } else {
+        addProductToShoppingCart(id);
+      }
     } catch (err) {
       console.log('Ошибка перехвачена');
     }
@@ -38,7 +39,7 @@ function ProductCard({
 
   /* const onLikeButtonClick = () => {
     setIsLiked(!isLiked);
-  }; */
+  };
 
   /* const additionalLikeButtonStyles = isLiked
     ? 'product-card__like-button_liked'
@@ -69,11 +70,7 @@ function ProductCard({
           <button
             type="button"
             className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
-            /* onClick={
-              isInShoppingCart
-                ? onDeleteFromShoppingCartClick
-                : onAddToShoppingCartClick
-            } */
+            /* onClick={handleButtonClick} */
           >
             Добавить в корзину
           </button>
@@ -110,11 +107,7 @@ function ProductCard({
             type="button"
             className="product-card__add-to-cart-button
             product-card__add-to-cart-button_style_catalog selectable-button"
-            /* onClick={
-              isInShoppingCart
-                ? onDeleteFromShoppingCartClick
-                : onAddToShoppingCartClick
-            } */
+            /* onClick={handleButtonClick} */
           ></button>
         )}
       </div>

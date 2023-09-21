@@ -1,15 +1,18 @@
 import './ShoppingCartItem.css';
 
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-function ShoppingCardItem({ product, onTotalPriceChange }) {
+function ShoppingCardItem({ product, onTotalPriceChange, onCardClick }) {
   /* const [isLiked, setIsLiked] = useState(false); */
   const [counter, setCounter] = useState(
     JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)) === null
-      ? 1
-      : JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)).counter
+      ? product.amount
+      : JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)).amount
   );
-  const [totalItemPrice, setTotalItemPrice] = useState(product.price * counter);
+  const [totalItemPrice, setTotalItemPrice] = useState(
+    product.price_per_unit * product.amount
+  );
 
   /* const onLikeButtonClick = () => {
     setIsLiked(!isLiked);
@@ -21,12 +24,12 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
 
   const increaseCounter = () => {
     setCounter(counter + 1);
-    setTotalItemPrice(product.price * (counter + 1));
+    setTotalItemPrice(product.price_per_unit * (counter + 1));
     localStorage.setItem(
       `purchaseItem${product.id}`,
       JSON.stringify({
-        counter: counter + 1,
-        totalItemPrice: product.price * (counter + 1),
+        amount: counter + 1,
+        totalItemPrice: product.price_per_unit * (counter + 1),
       })
     );
     onTotalPriceChange();
@@ -34,12 +37,12 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
 
   const decreaseCounter = () => {
     setCounter(counter - 1);
-    setTotalItemPrice(product.price * (counter - 1));
+    setTotalItemPrice(product.price_per_unit * (counter - 1));
     localStorage.setItem(
       `purchaseItem${product.id}`,
       JSON.stringify({
-        counter: counter - 1,
-        totalItemPrice: product.price * (counter - 1),
+        amount: counter - 1,
+        totalItemPrice: product.price_per_unit * (counter - 1),
       })
     );
     onTotalPriceChange();
@@ -49,19 +52,25 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
     localStorage.setItem(
       `purchaseItem${product.id}`,
       JSON.stringify({
-        counter,
+        amount: product.amount,
         totalItemPrice,
       })
     );
-  }, [counter, totalItemPrice, product.id]);
+  }, [product.amount, totalItemPrice, product.id]);
 
   return (
     <li className="shopping-cart__product">
-      <img
-        className="shopping-cart__product-image"
-        src={product.image}
-        alt={product.name}
-      />
+      <NavLink
+        className="shopping-cart__link selectable-button"
+        to="/product"
+        onClick={() => onCardClick({ ...product, amount: counter })}
+      >
+        <img
+          className="shopping-cart__product-image"
+          src={product.image_1_big}
+          alt={product.name}
+        />
+      </NavLink>
 
       <p className="shopping-cart__product-brand">{product.brand}</p>
       <p className="shopping-cart__product-name">{product.name}</p>
@@ -101,7 +110,7 @@ function ShoppingCardItem({ product, onTotalPriceChange }) {
       </div>
 
       <p className="shopping-card__product-price shopping-card__product-price_style_unit">
-        {product.price} ₽
+        {product.price_per_unit} ₽
       </p>
       <p className="shopping-card__product-price shopping-card__product-price_style_sum">
         {totalItemPrice}₽
@@ -123,16 +132,16 @@ import {
 
 function ShoppingCardItem({ product, onTotalPriceObjectChange }) {
   const [totalItemPrice, setTotalItemPrice] = useState(
-    product.price_per_unit * product.amount
+    product.price_per_unit_per_unit * product.amount
   );
 
   const increaseCounter = () => {
     try {
       changeProductQuantityInShoppingCart(product.id, product.amount + 1);
-      setTotalItemPrice(product.price_per_unit * (product.amount + 1));
+      setTotalItemPrice(product.price_per_unit_per_unit * (product.amount + 1));
       onTotalPriceObjectChange(
         product.id,
-        product.price_per_unit * (product.amount + 1)
+        product.price_per_unit_per_unit * (product.amount + 1)
       );
     } catch (err) {
       console.log('Ошибка перехвачена');
@@ -142,10 +151,10 @@ function ShoppingCardItem({ product, onTotalPriceObjectChange }) {
   const decreaseCounter = () => {
     try {
       changeProductQuantityInShoppingCart(product.id, product.amount - 1);
-      setTotalItemPrice(product.price_per_unit * (product.amount - 1));
+      setTotalItemPrice(product.price_per_unit_per_unit * (product.amount - 1));
       onTotalPriceObjectChange(
         product.id,
-        product.price_per_unit * (product.amount - 1)
+        product.price_per_unit_per_unit * (product.amount - 1)
       );
     } catch (err) {
       console.log('Ошибка перехвачена');
@@ -163,7 +172,7 @@ function ShoppingCardItem({ product, onTotalPriceObjectChange }) {
   useEffect(() => {
     onTotalPriceObjectChange(
       product.id,
-      product.price_per_unit * product.amount
+      product.price_per_unit_per_unit * product.amount
     );
   });
 
@@ -207,7 +216,7 @@ function ShoppingCardItem({ product, onTotalPriceObjectChange }) {
       </div>
 
       <p className="shopping-card__product-price shopping-card__product-price_style_unit">
-        {product.price_per_unit} ₽
+        {product.price_per_unit_per_unit} ₽
       </p>
       <p className="shopping-card__product-price shopping-card__product-price_style_sum">
         {totalItemPrice}₽

@@ -2,9 +2,7 @@ import './Catalog.css';
 
 import { useState /* useEffect */ } from 'react';
 
-import /* getAllCategories,
-  getProducts, */
-'../../utils/productsApi';
+/* import { getAllCategories, getProducts } from '../../utils/productsApi'; */
 
 /* import encodeObjToQuery from '../../utils/functions/encodeObjToQuery'; */
 
@@ -57,7 +55,7 @@ function Catalog({ onCardClick }) {
 
   /* const [products, setProducts] = useState([]); */
 
-  /* const setAllCategories = () => {
+  /* const setInitialCategories = () => {
     try {
       const unfilteredCategories = getAllCategories();
       const filteredCategories = unfilteredCategories.map(
@@ -69,10 +67,9 @@ function Catalog({ onCardClick }) {
     }
   }; */
 
-  /* const setAllProducts = () => {
+  /* const setInitialProducts = () => {
     try {
-      const response = getProducts(encodeObjToQuery(filters));
-      const products = response.results;
+      const products = getProducts(encodeObjToQuery(filters));
       setProducts(products);
     } catch (err) {
       console.log('Ошибка перехвачена');
@@ -97,8 +94,8 @@ function Catalog({ onCardClick }) {
   };
 
   /* useEffect(() => {
-    setAllCategories();
-    setAllProducts();
+    setInitialCategories();
+    setInitialProducts();
   }, []); */
 
   return (
