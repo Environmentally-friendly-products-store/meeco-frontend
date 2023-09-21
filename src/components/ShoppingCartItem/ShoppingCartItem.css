@@ -5,12 +5,17 @@
   align-items: center;
 }
 
+.shopping-cart__link {
+  grid-column: 1/2;
+  grid-row: 1/5;
+  margin: 0 32px 0 0;
+}
+
 .shopping-cart__product-image {
   grid-column: 1/2;
   grid-row: 1/5;
   width: 84px;
   height: 100px;
-  margin: 0 32px 0 0;
 }
 
 .shopping-cart__product-brand {

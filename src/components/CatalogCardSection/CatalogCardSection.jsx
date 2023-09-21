@@ -24,6 +24,7 @@ function CatalogCardSection({
           brand={product.brand}
           card={product}
           id={product.id}
+          amount={product.amount}
           isInShoppingCart={product.is_in_shopping_cart}
           onCardClick={onCardClick}
         />

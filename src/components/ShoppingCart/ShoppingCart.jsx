@@ -1,3 +1,4 @@
+/* import { useContext } from 'react'; */
 import './ShoppingCart.css';
 import image from '../../images/product_card_filler_image_s.jpg';
 import '../ShoppingCartItem/ShoppingCardItem';
@@ -8,27 +9,30 @@ import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
 import EmptyCart from '../EmptyCart/EmptyCart';
 
 import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
+/* import { ShoppingCartContext } from '../../contexts/ShoppingCartContext'; */
 
 /* Массив-затычка */
 
 const products = [
   {
     id: 1,
-    price: 2313,
-    image,
+    price_per_unit: 2313,
+    image_1_big: image,
     name: `Товар1`,
     brand: `Бренд1`,
+    amount: 1,
   },
   {
     id: 2,
-    price: 7824,
-    image,
+    price_per_unit: 7824,
+    image_1_big: image,
     name: `Товар2`,
     brand: `Бренд2`,
+    amount: 1,
   },
 ];
 
-function ShoppingCart() {
+function ShoppingCart({ onCardClick }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const onTotalPriceChange = () => {
@@ -60,6 +64,7 @@ function ShoppingCart() {
                 key={product.id}
                 product={product}
                 onTotalPriceChange={onTotalPriceChange}
+                onCardClick={onCardClick}
               />
             ))}
           </ul>
@@ -98,7 +103,9 @@ import EmptyCart from '../EmptyCart/EmptyCart';
 import { calculateTotalPrice } from '../../utils/functions/calculateTotalProductsPrice';
 
 function ShoppingCart() {
-  const [products, setProducts] = useState([]);
+  const shoppingCart = useContext(ShoppingCartContext);
+
+  const [products, setProducts] = useState(shoppingCart.results);
 
   const [totalPriceObject, setTotalPriceObject] = useState({});
 
