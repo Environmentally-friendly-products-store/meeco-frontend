@@ -9,7 +9,6 @@ import './Header.css';
 function Header({ onClickRegistration }) {
   return (
     <header className="header">
-      <Logo />
       <div className="header__func">
         <Link to="/catalog" className="header__link selectable-button">
           <img
@@ -21,7 +20,7 @@ function Header({ onClickRegistration }) {
         </Link>
         {/* <SearchForm /> */}
       </div>
-
+      <Logo />
       <Navigation onClickRegistration={onClickRegistration} />
     </header>
   );

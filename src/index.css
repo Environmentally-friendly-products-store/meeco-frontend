@@ -3,3 +3,7 @@
 html {
   scroll-padding-top: 132px;
 }
+
+body {
+  margin: 0;
+}
