@@ -109,10 +109,7 @@ function Catalog({ onCardClick }) {
         activeItem={activeItem}
       />
 
-      <CardSection
-        quantity={temporaryProductsArray.length}
-        isUsedOnMainPage={false}
-      >
+      <CardSection isUsedOnMainPage={false}>
         <CatalogCardSection
           isUsedOnMainPage={false}
           requiredLength={limit * counter}
