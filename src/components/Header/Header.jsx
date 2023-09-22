@@ -21,6 +21,7 @@ function Header({ onClickRegistration }) {
         </Link>
         {/* <SearchForm /> */}
       </div>
+
       <Navigation onClickRegistration={onClickRegistration} />
     </header>
   );

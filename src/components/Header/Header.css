@@ -38,3 +38,11 @@
 .header__image {
   max-width: 20px;
 }
+
+.header__text {
+  font-family: 'Mulish', Arial, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.33;
+}
