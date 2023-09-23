@@ -4,7 +4,7 @@
   position: relative;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
   background-color: inherit;
   border: none;
   cursor: pointer;
@@ -12,7 +12,8 @@
 }
 
 .navigation-link__image {
-  width: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .navigation-link__count_active {
@@ -20,10 +21,22 @@
   position: absolute;
   border-radius: 50%;
   line-height: 17px;
-  width: 17px;
-  height: 17px;
-  background-color: #000;
-  color: #fff;
-  top: 0;
-  right: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: #726e38;
+  color: rgba(251, 250, 235, 1);
+  top: -5px;
+  right: 9px;
+}
+
+.navigation-link__text {
+  font-family: Mulish, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
 }
