@@ -103,13 +103,9 @@ export default function App() {
 
   //Регистрация пользователя
   const registerUser = ({ firstName, lastName, email, password }) => {
-    return register(firstName, lastName, email, password)
-      .then(() => {
-        loginUser({ password, email });
-      })
-      .then(() => {
-        navigate.current('/', { replace: true });
-      });
+    return register(firstName, lastName, email, password).then(() => {
+      loginUser({ password, email });
+    });
   };
 
   useEffect(() => {
