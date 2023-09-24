@@ -13,8 +13,6 @@ function PopularProducts({ isUsedOnMainPage, requiredLength, onCardClick }) {
         {products.map((product) => (
           <ProductCard
             key={product.id}
-            isUsedOnMainPage={isUsedOnMainPage}
-            sectionWhereUsed={'popular'}
             price={product.price_per_unit}
             image={product.image_1_big}
             name={product.name}

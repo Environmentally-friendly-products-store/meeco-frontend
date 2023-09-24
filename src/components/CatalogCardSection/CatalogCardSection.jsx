@@ -16,8 +16,6 @@ function CatalogCardSection({
       {sortedProducts.map((product) => (
         <ProductCard
           key={product.id}
-          isUsedOnMainPage={isUsedOnMainPage}
-          sectionWhereUsed={'catalog'}
           price={product.price_per_unit}
           image={product.image_1_big}
           name={product.name}

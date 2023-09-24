@@ -8,8 +8,6 @@ import { NavLink } from 'react-router-dom';
 } from '../../utils/productsApi'; */
 
 function ProductCard({
-  isUsedOnMainPage,
-  sectionWhereUsed,
   price,
   image,
   name,
@@ -45,72 +43,49 @@ function ProductCard({
     ? 'product-card__like-button_liked'
     : ''; */
   return (
-    <article className={`product-card product-card_style_${sectionWhereUsed}`}>
-      <div
-        className={`product-card__card-container
-        product-card__card-container_style_${sectionWhereUsed}`}
+    <article className="product-card product-card">
+      <NavLink
+        className="product-card__link selectable-button"
+        to="/product"
+        onClick={() => onCardClick(card)}
       >
-        <NavLink
-          className="product-card__link selectable-button"
-          to="/product"
-          onClick={() => onCardClick(card)}
-        >
-          {/* <button
+        {/* <button
           type="button"
           className={`product-card__like-button ${additionalLikeButtonStyles}`}
           onClick={onLikeButtonClick}
           </button> */}
-          <img
-            className="product-card__image"
-            src={image}
-            alt="название карточки"
-          />
-        </NavLink>
-        {isUsedOnMainPage && (
-          <button
-            type="button"
-            className="product-card__add-to-cart-button product-card__add-to-cart-button_style_main"
-            /* onClick={handleButtonClick} */
-          >
-            Добавить в корзину
-          </button>
-        )}
-      </div>
+        <img
+          className="product-card__image"
+          src={image}
+          alt="название карточки"
+        />
+      </NavLink>
 
-      <div
-        className={`product-card__info-container
-        product-card__info-container_style_${sectionWhereUsed}`}
+      <>
+        <p className="product-card__product-item product-card__product-brand">
+          {/* {brand} */}
+          EcoMe
+        </p>
+      </>
+
+      <p className="product-card__product-item product-card__product-name">
+        {/* {name} */}
+        Набор из 4 видов высокогорного чая в крафтовых пакетах по 150гр,
+        деревянная ложка
+      </p>
+
+      <p className="product-card__product-item product-card__product-price">
+        {/* {`${price} ₽`} */}
+        2360 ₽
+      </p>
+
+      <button
+        type="button"
+        className="product-card__product-item  product-card__add-to-cart-button selectable-button"
+        /* onClick={handleButtonClick} */
       >
-        <p
-          className={`product-card__product-item product-card__product-name
-          product-card__product-name_style${sectionWhereUsed}
-            `}
-        >
-          {name}
-        </p>
-
-        {!isUsedOnMainPage && (
-          <>
-            <p className="product-card__product-item">{brand}</p>
-          </>
-        )}
-
-        <p
-          className={`product-card__product-item product-card__product-price
-          product-card__product-price_style_${sectionWhereUsed}`}
-        >
-          {`${price} ₽`}
-        </p>
-
-        {!isUsedOnMainPage && (
-          <button
-            type="button"
-            className="product-card__add-to-cart-button
-            product-card__add-to-cart-button_style_catalog selectable-button"
-            /* onClick={handleButtonClick} */
-          ></button>
-        )}
-      </div>
+        В корзину
+      </button>
     </article>
   );
 }
