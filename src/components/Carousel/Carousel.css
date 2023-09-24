@@ -6,11 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
-  height: 30px;
   transform: translate(0, -50%);
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.7);
+  background: #fffef6;
   border-radius: 50%;
 }
 
