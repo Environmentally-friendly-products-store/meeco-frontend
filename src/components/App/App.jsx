@@ -144,7 +144,10 @@ export default function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
-        <Header onClickRegistration={handleRegistrationPopupOpen} />
+        <Header
+          onClickRegistration={handleRegistrationPopupOpen}
+          onClickShoppingCart={handleLoginPopup}
+        />
         <main>
           <Routes>
             <Route path="/" element={<Main onCardClick={handleCardClick} />} />

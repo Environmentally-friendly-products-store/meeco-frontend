@@ -42,7 +42,7 @@ function PopupWithInfo({
             Зарегистрироваться
           </span>
         </p>
-        <buttons
+        <button
           onClick={onClosePopup}
           type="button"
           className="popup__button popup__button_type_close selectable-button"
