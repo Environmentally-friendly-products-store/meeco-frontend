@@ -2,6 +2,8 @@ import './ProductCard.css';
 /* import { useState } from 'react'; */
 import { NavLink } from 'react-router-dom';
 
+import stylizePrice from '../../utils/functions/stylizePrice';
+
 /* import {
   addProductToShoppingCart,
   changeProductQuantityInShoppingCart,
@@ -63,20 +65,16 @@ function ProductCard({
 
       <>
         <p className="product-card__product-item product-card__product-brand">
-          {/* {brand} */}
-          EcoMe
+          {brand}
         </p>
       </>
 
       <p className="product-card__product-item product-card__product-name">
-        {/* {name} */}
-        Набор из 4 видов высокогорного чая в крафтовых пакетах по 150гр,
-        деревянная ложка
+        {name}
       </p>
 
       <p className="product-card__product-item product-card__product-price">
-        {/* {`${price} ₽`} */}
-        2360 ₽
+        {`${stylizePrice(price)} ₽`}
       </p>
 
       <button
