@@ -18,5 +18,9 @@
   margin: 0;
   list-style: none;
   display: flex;
-  gap: 50px;
+  gap: 33px;
+}
+
+.navigation__item-user {
+  max-width: 133px;
 }
