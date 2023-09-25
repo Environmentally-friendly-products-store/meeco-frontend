@@ -11,14 +11,14 @@
 
 .carousel-arrows__custom_style_promo {
   background: #fffef6;
-  border-radius: 50%;
   top: 50%;
+  border-radius: 50%;
   transform: translate(0, -50%);
+  cursor: pointer;
 }
 
 .carousel-arrows__custom_style_popular-products {
   bottom: -88px;
-  right: 0;
 }
 
 .carousel-arrows__custom_prev {

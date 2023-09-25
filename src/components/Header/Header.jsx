@@ -3,17 +3,17 @@ import Logo from '../Logo/Logo.jsx';
 import { Link } from 'react-router-dom';
 /* import SearchForm from '../SearchForm/SearchForm'; */
 import Navigation from '../Navigation/Navigation.jsx';
-import catalogPath from '../../images/catalog.svg';
+import catalog from '../../images/catalog.svg';
 import './Header.css';
 
-function Header({ onClickRegistration }) {
+function Header({ onClickRegistration, onClickShoppingCart }) {
   return (
     <header className="header">
       <div className="header__func">
-        <Link to="/catalog" className="header__link selectable-button">
+        <Link to="/catalog" className="header__link">
           <img
             className="header__image"
-            src={catalogPath}
+            src={catalog}
             alt="Кнопка выбора каталога товаров"
           ></img>
           <span className="header__text">Каталог</span>
@@ -21,7 +21,10 @@ function Header({ onClickRegistration }) {
         {/* <SearchForm /> */}
       </div>
       <Logo />
-      <Navigation onClickRegistration={onClickRegistration} />
+      <Navigation
+        onClickRegistration={onClickRegistration}
+        onClickShoppingCart={onClickShoppingCart}
+      />
     </header>
   );
 }

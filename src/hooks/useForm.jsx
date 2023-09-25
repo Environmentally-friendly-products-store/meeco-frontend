@@ -53,7 +53,11 @@ function useForm(inputValues = {}) {
     setErrors({ ...errors, [name]: event.target.validationMessage });
     const matchPasswords = checkPasswords({ ...values, [name]: value });
     const isFormValid = event.target.closest('.popup__form').checkValidity();
-    setIsValid(matchPasswords && isFormValid);
+    const noErrors = Object.values({
+      ...errors,
+      [name]: event.target.validationMessage,
+    }).every((err) => err.length === 0);
+    setIsValid(matchPasswords && isFormValid && noErrors);
 
     if (!event.target.validationMessage) {
       checkValidation(name, value);

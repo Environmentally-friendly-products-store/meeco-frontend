@@ -117,7 +117,6 @@ function Registration({
         maxLength="40"
         required
       />
-
       <span className="popup__error">
         {matchPassword ? 'Пароли не совпадают' : ''}
       </span>

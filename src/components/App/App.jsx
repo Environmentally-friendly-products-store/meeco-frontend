@@ -19,7 +19,6 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
 /* import getCurrentCard '../../utils/Api'; */
-import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
@@ -53,7 +52,6 @@ export default function App() {
     setIsLoginPopupOpen(false);
     setIsRegistrationPopupOpen(false);
     setIsConfirmPopupOpen(false);
-    setIsPopupWithInfoOpen(false);
   };
   const closePopupByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
@@ -75,11 +73,6 @@ export default function App() {
       .catch((err)=> console.log(err))
     */
   };
-
-  // Функции для попапа с информацией для страницы товара
-  const [isPopupWithInfoOpen, setIsPopupWithInfoOpen] = useState(false);
-  const handlePopupWithInfo = () =>
-    setIsPopupWithInfoOpen(!isPopupWithInfoOpen);
 
   useEffect(() => {
     // Если карты нет, то взять ее в localStorage
@@ -144,7 +137,10 @@ export default function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
-        <Header onClickRegistration={handleRegistrationPopupOpen} />
+        <Header
+          onClickRegistration={handleRegistrationPopupOpen}
+          onClickShoppingCart={handleLoginPopup}
+        />
         <main>
           <Routes>
             <Route path="/" element={<Main onCardClick={handleCardClick} />} />
@@ -157,7 +153,8 @@ export default function App() {
               element={
                 <MainProductPage
                   card={selectedCard}
-                  onButtonClick={handlePopupWithInfo}
+                  onButtonClick={handleLoginPopup}
+                  isLoggedIn={isLoggedIn}
                 />
               }
             />
@@ -195,13 +192,6 @@ export default function App() {
           onClosePopup={handleClosePopup}
           onCloseByOverlay={closePopupByOverlay}
           onSubmit={logOut}
-        />
-        <PopupWithInfo
-          isPopupOpen={isPopupWithInfoOpen}
-          onClosePopup={handleClosePopup}
-          onCloseByOverlay={closePopupByOverlay}
-          handleRegistrationTogglePopup={handleRegistrationPopupOpen}
-          handleLoginTogglePopup={handleLoginPopup}
         />
       </div>
     </CurrentUserContext.Provider>
