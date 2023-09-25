@@ -29,13 +29,13 @@
 }
 
 .product-page {
-  padding: 40px 40px 100px;
+  padding: 16px 40px 100px;
 }
 
 .product-page__link_type_catalog {
   display: flex;
   width: 228px;
-  padding: 24px 0 0 16px;
+  padding-top: 24px;
   gap: 12px;
   color: #403f32;
   text-decoration: none;
@@ -48,28 +48,29 @@
 
 .product-page__main {
   display: flex;
+  align-items: flex-start;
   gap: 32px;
-  padding-top: 51px;
+  padding-top: 19px;
 }
 
 .product-page__sliders {
   display: flex;
-  flex-direction: column;
-  width: 50%;
-  max-width: 664px;
-  gap: 28px;
-  overflow: hidden;
+  width: 41%;
+  max-width: 548px;
+  gap: 26px;
 }
 
 .product-page__main-slider {
-  width: 100%;
+  overflow: hidden;
 }
 
 .product-page__nav-slider {
   width: 100%;
+  height: calc(100% - 4px);
 }
 
 .product-page__main-image {
+  max-width: 408px;
   width: 100%;
   border-radius: 12px;
   aspect-ratio: 1/1;
@@ -78,12 +79,12 @@
 
 .pruduct-page__nav-images {
   display: flex;
-  width: 100%;
-  gap: 32px;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 21.15%;
 }
 
 .product-page__nav-image {
-  width: calc((100% - 66px) / 3);
   aspect-ratio: 1/1;
   object-fit: cover;
   display: block;
@@ -117,7 +118,11 @@
 }
 
 .product-page__info {
-  width: 50%;
+  max-width: 780px;
+  width: 57%;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e9d7c1;
 }
 
 .product-page__brand {
@@ -143,7 +148,6 @@
 .product-page__subtitle {
   margin: 0;
   margin-bottom: 16px;
-  padding-bottom: 16px;
   border-bottom: 1px solid #e9d7c1;
   font-size: 18px;
   font-style: normal;
@@ -161,7 +165,7 @@
 
 .product-page__price {
   margin: 0;
-  margin-bottom: 36px;
+  margin-bottom: 39px;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
@@ -173,7 +177,7 @@
   display: flex;
   position: relative;
   gap: 32px;
-  margin-bottom: 36px;
+  margin-bottom: 61px;
   min-height: 56px;
   overflow: hidden;
 }
@@ -251,23 +255,4 @@
   top: 0;
   width: 100%;
   animation: button-moved-right-to-left 0.5s ease;
-}
-
-.product-page__arrow {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  z-index: 2;
-  bottom: 38px;
-  cursor: pointer;
-  background: #fffef6;
-  border-radius: 50%;
-}
-
-.product-page__arrow_prev {
-  right: 104px;
-}
-
-.product-page__arrow_next {
-  right: 32px;
 }

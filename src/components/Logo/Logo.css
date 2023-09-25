@@ -1,5 +1,9 @@
-.logo__image {
+.logo {
+  justify-self: center;
   max-width: 159px;
-  margin: 0 auto;
-  display: block;
+}
+
+.logo__image {
+  width: 100%;
+  max-height: 48px;
 }

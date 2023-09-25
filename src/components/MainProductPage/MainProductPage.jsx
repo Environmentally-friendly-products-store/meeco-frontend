@@ -74,29 +74,29 @@ function MainProductPage({ card, onButtonClick }) {
     }
   };
 
-  const CustomPrevArrow = ({ onClick }) => {
-    return (
-      <div
-        className="product-page__arrow product-page__arrow_prev"
-        onClick={onClick}
-      >
-        <svg
-          width="48"
-          height="48"
-          viewBox="0 0 48 48"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M23.7071 15.2929C24.0976 15.6834 24.0976 16.3166 23.7071 16.7071L17.4142 23H33.6667C34.219 23 34.6667 23.4477 34.6667 24C34.6667 24.5523 34.219 25 33.6667 25H17.4142L23.7071 31.2929C24.0976 31.6834 24.0976 32.3166 23.7071 32.7071C23.3166 33.0976 22.6834 33.0976 22.2929 32.7071L14.2929 24.7071C13.9024 24.3166 13.9024 23.6834 14.2929 23.2929L22.2929 15.2929C22.6834 14.9024 23.3166 14.9024 23.7071 15.2929Z"
-            fill="#A5A38F"
-          />
-        </svg>
-      </div>
-    );
-  };
+  // const CustomPrevArrow = ({ onClick }) => {
+  //   return (
+  //     <div
+  //       className="product-page__arrow product-page__arrow_prev"
+  //       onClick={onClick}
+  //     >
+  //       <svg
+  //         width="48"
+  //         height="48"
+  //         viewBox="0 0 48 48"
+  //         fill="none"
+  //         xmlns="http://www.w3.org/2000/svg"
+  //       >
+  //         <path
+  //           fill-rule="evenodd"
+  //           clip-rule="evenodd"
+  //           d="M23.7071 15.2929C24.0976 15.6834 24.0976 16.3166 23.7071 16.7071L17.4142 23H33.6667C34.219 23 34.6667 23.4477 34.6667 24C34.6667 24.5523 34.219 25 33.6667 25H17.4142L23.7071 31.2929C24.0976 31.6834 24.0976 32.3166 23.7071 32.7071C23.3166 33.0976 22.6834 33.0976 22.2929 32.7071L14.2929 24.7071C13.9024 24.3166 13.9024 23.6834 14.2929 23.2929L22.2929 15.2929C22.6834 14.9024 23.3166 14.9024 23.7071 15.2929Z"
+  //           fill="#A5A38F"
+  //         />
+  //       </svg>
+  //     </div>
+  //   );
+  // };
 
   const CustomNextArrow = ({ onClick }) => {
     return (
@@ -131,8 +131,8 @@ function MainProductPage({ card, onButtonClick }) {
     infinite: true,
     autoplaySpeed: 5000,
     speed: 1000,
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
+    // prevArrow: <CustomPrevArrow />,
+    // nextArrow: <CustomNextArrow />,
     beforeChange: (current, next) => setSelectedIndex(next),
   };
   // Для того чтобы выделять выбранную картинку
@@ -168,45 +168,6 @@ function MainProductPage({ card, onButtonClick }) {
         </Link>
         <div className="product-page__main">
           <div className="product-page__sliders">
-            <Slider
-              {...carouselSettingMain}
-              ref={(slider) => setMainSlider(slider)}
-              className="product-page__main-slider"
-            >
-              <div className="product-page__block">
-                <img
-                  src={card.image_1_big}
-                  alt={'Фотография товара'}
-                  className="product-page__main-image"
-                />
-                {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-              </div>
-              <div className="product-page__block">
-                <img
-                  src={card.image_1_big}
-                  alt={'Фотография товара'}
-                  className="product-page__main-image"
-                />
-                {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-              </div>
-              <div className="product-page__block">
-                <img
-                  src={card.image_1_big}
-                  alt={'Фотография товара'}
-                  className="product-page__main-image"
-                />
-                {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-              </div>
-            </Slider>
             <div className="pruduct-page__nav-images">
               <img
                 key={indexes['0']}
@@ -248,6 +209,45 @@ function MainProductPage({ card, onButtonClick }) {
                 }`}
               />
             </div>
+            <Slider
+              {...carouselSettingMain}
+              ref={(slider) => setMainSlider(slider)}
+              className="product-page__main-slider"
+            >
+              <div className="product-page__block">
+                <img
+                  src={card.image_1_big}
+                  alt={'Фотография товара'}
+                  className="product-page__main-image"
+                />
+                {/* <button
+              type="button"
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+              </div>
+              <div className="product-page__block">
+                <img
+                  src={card.image_1_big}
+                  alt={'Фотография товара'}
+                  className="product-page__main-image"
+                />
+                {/* <button
+              type="button"
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+              </div>
+              <div className="product-page__block">
+                <img
+                  src={card.image_1_big}
+                  alt={'Фотография товара'}
+                  className="product-page__main-image"
+                />
+                {/* <button
+              type="button"
+              className="product-page__button product-page__button_type_favorite"
+            /> */}
+              </div>
+            </Slider>
           </div>
           <div className="product-page__info">
             <p className="product-page__brand">{card.brand}</p>
@@ -327,7 +327,15 @@ function MainProductPage({ card, onButtonClick }) {
             <p className="product-page__description">
               {/* card.description */}
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+              ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum
+              dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+              amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+              amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
         </div>
