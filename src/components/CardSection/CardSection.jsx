@@ -59,29 +59,14 @@ import './CardSection.css';
   );
 } */
 
-function CardSection({ children, isUsedOnMainPage }) {
+function CardSection({ children, title, isUsedOnMainPage }) {
   return (
-    <section
-      className={`card-section ${
-        isUsedOnMainPage ? 'card-section_style_main' : 'catalog__card-section'
-      }`}
-    >
-      {/* {!isUsedOnMainPage && (
-        <div className="card-section__filter-header">
-          <p className="card-section__quantity text text_weight_normal">
-            {quantity} товаров
-          </p>
-        </div>
-      )} */}
-
-      {/* {isUsedOnMainPage && (
+    <section className="card-section">
+      {isUsedOnMainPage && (
         <div className="card-section__header">
           <h2 className="card-section__title">{title}</h2>
-          <NavLink className="card-section__link selectable-link" to="/catalog">
-            Смотреть всё
-          </NavLink>
         </div>
-      )} */}
+      )}
 
       {children}
     </section>
