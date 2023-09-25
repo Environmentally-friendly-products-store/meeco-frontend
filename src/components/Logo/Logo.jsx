@@ -5,9 +5,9 @@ import './Logo.css';
 
 function Logo() {
   return (
-    <Link to="/" className="logo selectable-button">
+    <Link to="/" className="logo">
       <img
-        className="logo__image"
+        className="logo__image selectable-button"
         src={logoPath}
         alt="Логотип интернет-магазина MeEco"
       />
