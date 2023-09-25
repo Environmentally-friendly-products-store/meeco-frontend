@@ -148,7 +148,7 @@ function MainProductPage({ card, onButtonClick }) {
       <section className="product-page">
         <Link
           to="/catalog"
-          className="product-page__link product-page__link_type_catalog selectable-link"
+          className="product-page__link product-page__link_type_catalog"
         >
           <svg
             width="24"
@@ -164,7 +164,7 @@ function MainProductPage({ card, onButtonClick }) {
               fill="#403F32"
             />
           </svg>
-          Вернуться в каталог
+          <span className="product-page__link-text">Вернуться в каталог</span>
         </Link>
         <div className="product-page__main">
           <div className="product-page__sliders">
@@ -263,46 +263,15 @@ function MainProductPage({ card, onButtonClick }) {
               >
                 <button
                   type="button"
-                  className="product-page__button product-page__button_type_minus selectable-button"
+                  className="product-page__button product-page__button_type_minus"
                   onClick={() => onChangeCounter('-')}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4.03516 10H15.7018"
-                      stroke="#A5A38F"
-                      stroke-width="0.9375"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
+                ></button>
                 <span className="product-page__count">{counter}</span>
                 <button
                   type="button"
-                  className="product-page__button product-page__button_type_plus selectable-button"
+                  className="product-page__button product-page__button_type_plus"
                   onClick={() => onChangeCounter('+')}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M10.4692 4.16797C10.4692 3.90909 10.2594 3.69922 10.0005 3.69922C9.7416 3.69922 9.53174 3.90909 9.53174 4.16797V9.53174H4.16797C3.90909 9.53174 3.69922 9.7416 3.69922 10.0005C3.69922 10.2594 3.90909 10.4692 4.16797 10.4692H9.53174V15.8346C9.53174 16.0935 9.7416 16.3034 10.0005 16.3034C10.2594 16.3034 10.4692 16.0935 10.4692 15.8346V10.4692H15.8346C16.0935 10.4692 16.3034 10.2594 16.3034 10.0005C16.3034 9.7416 16.0935 9.53174 15.8346 9.53174H10.4692V4.16797Z"
-                      fill="#A5A38F"
-                    />
-                  </svg>
-                </button>
+                ></button>
               </div>
               {/* Проверка card.is_in_shopping_cart*/}
               {counter ? (

@@ -38,6 +38,11 @@
   cursor: pointer;
   color: #403f32;
   gap: 20px;
+  transition: color 0.5s ease;
+}
+
+.footer__link:hover {
+  color: #726e38;
 }
 
 .footer__email {

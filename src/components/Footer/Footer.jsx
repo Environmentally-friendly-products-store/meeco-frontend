@@ -16,22 +16,19 @@ function Footer() {
       </div>
       <div className="footer__menu">
         <p className="footer__menu-title">Покупателям</p>
-        <HashLink to="/delivery#top" className="footer__link selectable-link">
+        <HashLink to="/delivery#top" className="footer__link">
           Доставка и оплата
         </HashLink>
-        <HashLink to="/contacts#top" className="footer__link selectable-link">
+        <HashLink to="/contacts#top" className="footer__link">
           Контакты
         </HashLink>
       </div>
       <div className="footer__menu">
         <p className="footer__menu-title">Магазин</p>
-        <HashLink to="/about-us#top" className="footer__link selectable-link">
+        <HashLink to="/about-us#top" className="footer__link">
           О нас
         </HashLink>
-        <HashLink
-          to="/privacy-policy#top"
-          className="footer__link selectable-link"
-        >
+        <HashLink to="/privacy-policy#top" className="footer__link ">
           Политика конфиденциальности
         </HashLink>
       </div>
@@ -45,7 +42,7 @@ function Footer() {
       <p className="footer__attribute">
         Изображения&#160;
         <Link
-          className="footer__link footer__link_type_site selectable-link"
+          className="footer__link footer__link_type_site"
           to="https://ru.freepik.com"
           target="_blank"
         >
