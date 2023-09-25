@@ -4,9 +4,7 @@
 
 .card-section__header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
+  margin: 100px 0 40px 0;
 }
 
 .card-section__filter-header {
