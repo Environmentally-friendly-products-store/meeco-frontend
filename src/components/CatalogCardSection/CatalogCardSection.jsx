@@ -3,12 +3,7 @@ import ProductCard from '../ProductCard/ProductCard';
 
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function CatalogCardSection({
-  isUsedOnMainPage,
-  products,
-  requiredLength,
-  onCardClick,
-}) {
+function CatalogCardSection({ products, requiredLength, onCardClick }) {
   const sortedProducts = sortProducts(products, requiredLength);
 
   return (

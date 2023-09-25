@@ -24,12 +24,24 @@
 /* Ниже костыль, без которого невозможно проставить оступы
 между карточками при использовании библиотеки react-slick */
 
-.slick-slide > div {
-  margin: 0 40px;
+.popular-products .slick-slide {
+  display: flex !important;
+  justify-content: center !important;
+  width: 348px !important;
 }
 
-.slick-list {
-  margin: 0 -40px;
+.popular-products .slick-slide > div {
+  width: 100%;
+}
+
+.popular-products .slick-list {
+  max-width: 1390px;
+  margin: 0 auto;
+}
+
+.popular-products .slick-slide > div > div {
+  display: flex !important;
+  justify-content: center !important;
 }
 
 /* product-card__card-container */
