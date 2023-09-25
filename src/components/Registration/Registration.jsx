@@ -43,7 +43,7 @@ function Registration({
     title: 'Регистрация',
     isValid: isFormValid,
     submitButtonTextContent: 'Зарегистрироваться',
-    routerLinkText: 'Я уже зарегистрирован',
+    routerLinkText: 'Я уже зарегистрирован(а). Войти',
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,
     togglePopup: handleTogglePopup,
@@ -55,64 +55,71 @@ function Registration({
     userState.password !== userState.repeatedPassword &&
     userState.repeatedPassword !== '';
 
+  const getLabelClassName = (error) =>
+    `popup__label ${error ? 'popup__label_error' : ''}`;
+
+  const getInputClassName = (error) =>
+    `popup__input ${error ? 'popup__input_error' : ''}`;
+
   return (
     <PopupWithForm {...popupWithFormProps}>
-      <p className="popup__text">Заполните, пожалуйста, несколько полей</p>
-      <label>Имя</label>
+      <label className={getLabelClassName(errorsState.firstName)}>Имя</label>
       <input
         onChange={handleInputChange}
         value={'' || userState.firstName}
         type="text"
         name="firstName"
-        className="popup__input popup__input_type_name"
+        className={getInputClassName(errorsState.firstName)}
         minLength="2"
         maxLength="32"
         required
       />
       <span className="popup__error">{errorsState.firstName}</span>
-      <label>Фамилия</label>
+      <label className={getLabelClassName(errorsState.lastName)}>Фамилия</label>
       <input
         onChange={handleInputChange}
         value={'' || userState.lastName}
         type="text"
         name="lastName"
-        className="popup__input popup__input_type_name"
+        className={getInputClassName(errorsState.lastName)}
         minLength="2"
         maxLength="64"
         required
       />
       <span className="popup__error">{errorsState.lastName}</span>
-      <label>Email</label>
+      <label className={getLabelClassName(errorsState.email)}>Email</label>
       <input
         onChange={handleInputChange}
         value={'' || userState.email}
         type="email"
         name="email"
-        className="popup__input popup__input_type_email"
+        className={getInputClassName(errorsState.email)}
         minLength="8"
         maxLength="111"
         required
       />
       <span className="popup__error">{errorsState.email}</span>
-      <label>Пароль</label>
+      <label className={getLabelClassName(errorsState.password)}>Пароль</label>
       <input
         onChange={handleInputChange}
         value={'' || userState.password}
         type="password"
         name="password"
-        className="popup__input popup__input_type_password"
+        className={getInputClassName(errorsState.password)}
         minLength="8"
         maxLength="40"
         required
       />
       <span className="popup__error">{errorsState.password}</span>
-      <label>Пароль</label>
+      <label className={getLabelClassName(matchPassword)}>
+        Повторите пароль
+      </label>
       <input
         onChange={handleInputChange}
         value={'' || userState.repeatedPassword}
         type="password"
         name="repeatedPassword"
-        className="popup__input popup__input_type_password"
+        className={getInputClassName(matchPassword)}
         minLength="8"
         maxLength="40"
         required
