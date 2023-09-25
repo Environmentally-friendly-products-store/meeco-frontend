@@ -4,17 +4,20 @@ import Carousel from '../Carousel/Carousel';
 import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function PopularProducts({ isUsedOnMainPage, requiredLength, onCardClick }) {
+function PopularProducts({ requiredLength, onCardClick }) {
   const products = sortProducts(temporaryProductsArray, requiredLength);
 
   return (
     <article className="popular-products">
-      <Carousel slidesToShow={3} slidesToScroll={1}>
+      <Carousel
+        slidesToShow={4}
+        slidesToScroll={1}
+        showDots={false}
+        componentName="popular-products"
+      >
         {products.map((product) => (
           <ProductCard
             key={product.id}
-            isUsedOnMainPage={isUsedOnMainPage}
-            sectionWhereUsed={'popular'}
             price={product.price_per_unit}
             image={product.image_1_big}
             name={product.name}

@@ -8,20 +8,12 @@ export default function Main({ onCardClick }) {
   return (
     <>
       <Promo />
-      <CardSection title="Новые поступления" isUsedOnMainPage={true}>
-        <Novelties
-          isUsedOnMainPage={true}
-          requiredLength={4}
-          onCardClick={onCardClick}
-        />
+      <CardSection title="Новинки" isUsedOnMainPage={true}>
+        <Novelties requiredLength={4} onCardClick={onCardClick} />
       </CardSection>
       <AboutProject />
       <CardSection title="Популярные товары" isUsedOnMainPage={true}>
-        <PopularProducts
-          isUsedOnMainPage={true}
-          requiredLength={9}
-          onCardClick={onCardClick}
-        />
+        <PopularProducts requiredLength={5} onCardClick={onCardClick} />
       </CardSection>
     </>
   );

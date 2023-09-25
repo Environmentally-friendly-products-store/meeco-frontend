@@ -4,10 +4,10 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Children } from 'react';
 import Slider from 'react-slick';
 
-export function CustomPrevArrow({ onClick }) {
+export function CustomPrevArrow({ onClick, componentName }) {
   return (
     <div
-      className="carousel-arrows__custom carousel-arrows__custom_prev selectable-button"
+      className={`carousel-arrows__custom carousel-arrows__custom_style_${componentName} carousel-arrows__custom_prev carousel-arrows__custom_prev_style_${componentName} selectable-button`}
       onClick={onClick}
     >
       <svg
@@ -28,10 +28,10 @@ export function CustomPrevArrow({ onClick }) {
   );
 }
 
-export function CustomNextArrow({ onClick }) {
+export function CustomNextArrow({ onClick, componentName }) {
   return (
     <div
-      className="carousel-arrows__custom carousel-arrows__custom_next selectable-button"
+      className={`carousel-arrows__custom carousel-arrows__custom_style_${componentName} carousel-arrows__custom_next carousel-arrows__custom_next_style_${componentName} selectable-button`}
       onClick={onClick}
     >
       <svg
@@ -58,6 +58,7 @@ export default function Carousel({
   slidesToShow = 1,
   slidesToScroll = 1,
   autoplay = true,
+  componentName = null,
   children,
 }) {
   const settings = {
@@ -69,8 +70,8 @@ export default function Carousel({
     autoplay,
     autoplaySpeed: 5000,
     speed: 1000,
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow componentName={componentName} />,
+    nextArrow: <CustomNextArrow componentName={componentName} />,
   };
   return (
     <Slider {...settings}>
