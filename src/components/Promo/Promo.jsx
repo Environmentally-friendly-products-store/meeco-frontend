@@ -6,7 +6,7 @@ import Carousel from '../Carousel/Carousel';
 export default function Promo() {
   return (
     <section className="promo">
-      <Carousel>
+      <Carousel componentName="promo">
         <article className="promo-brands">
           <img
             className="promo-brands__photo"

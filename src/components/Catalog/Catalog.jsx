@@ -17,11 +17,11 @@ import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArr
 const categories = [
   {
     id: 0,
-    name: 'Новинки',
+    name: 'Все',
   },
   {
     id: 1,
-    name: 'Уход и красота',
+    name: 'Красота и гигиена',
   },
   {
     id: 2,
