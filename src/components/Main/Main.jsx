@@ -15,6 +15,7 @@ export default function Main({ onCardClick }) {
           onCardClick={onCardClick}
         />
       </CardSection>
+      <AboutProject />
       <CardSection title="Популярные товары" isUsedOnMainPage={true}>
         <PopularProducts
           isUsedOnMainPage={true}
@@ -22,7 +23,6 @@ export default function Main({ onCardClick }) {
           onCardClick={onCardClick}
         />
       </CardSection>
-      <AboutProject />
     </>
   );
 }
