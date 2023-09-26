@@ -3,7 +3,7 @@
   row-gap: 40px;
   grid-template-columns: auto;
   grid-template-rows: 20px auto auto auto;
-  padding: 8px 40px 100px;
+  padding: 20px 40px 100px;
 }
 
 .catalog .breadcrumbs {
