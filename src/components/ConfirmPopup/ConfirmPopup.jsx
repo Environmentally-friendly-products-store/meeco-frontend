@@ -11,7 +11,7 @@ function ConfirmPopup({
   const popupWithFormProps = {
     name: 'confirm',
     isOpen: isPopupOpen,
-    title: 'Вы точно хотите выйти',
+    title: 'Вы точно хотите выйти?',
     submitButtonTextContent: 'Выйти',
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,

@@ -28,15 +28,27 @@ function PopupWithForm({
       className={`popup popup_type_${name} ${isOpen && `popup_active`}`}
       onMouseDown={onCloseByOverlay}
     >
-      <div className="popup__block">
+      <div
+        className={`popup__block ${
+          name === 'confirm' ? 'popup__block_type_confirm' : ''
+        }`}
+      >
         <div>
           <button
             onClick={onClose}
             type="button"
-            className="popup__button popup__button_type_close selectable-button"
+            className={`popup__button popup__button_type_close ${
+              name === 'confirm' ? 'popup__block_type_close-confirm' : ''
+            } selectable-button`}
             aria-label="Кнопка закрытия окна"
           />
-          <h2 className="popup__title">{title}</h2>
+          <h2
+            className={`popup__title ${
+              name === 'confirm' ? 'popup__title_type_confirm' : ''
+            }`}
+          >
+            {title}
+          </h2>
           <p
             className="popup__toggle selectable-link"
             onClick={handleTogglePopup}
