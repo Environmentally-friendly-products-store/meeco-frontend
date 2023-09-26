@@ -133,7 +133,7 @@
 .popup__button_type_submit {
   border-radius: 12px;
   padding: 12px 16px;
-  min-width: 100%;
+  width: 100%;
   min-height: 56px;
   font-family: Mulish, Arial, sans-serif;
   font-size: 16px;
@@ -156,6 +156,10 @@
   border: 1px solid rgba(205, 205, 198, 1);
   background-color: rgba(250, 250, 250, 1);
   color: rgba(205, 205, 198, 1);
+}
+
+.popup__button_type_login {
+  max-width: 176px;
 }
 
 .popup__buttons {
@@ -229,6 +233,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: 2;
+  margin-bottom: 4px;
 }
 
 .popup__label {

@@ -21,6 +21,8 @@ function PopupWithForm({
     togglePopup();
   };
 
+  const submitButtonSize = name === 'login' ? 'popup__button_type_login ' : '';
+
   return (
     <div
       className={`popup popup_type_${name} ${isOpen && `popup_active`}`}
@@ -57,7 +59,7 @@ function PopupWithForm({
             <button
               disabled={!isValid}
               type="submit"
-              className={`popup__button popup__button_type_submit ${submitButtonClass}`}
+              className={`popup__button popup__button_type_submit ${submitButtonClass} ${submitButtonSize}`}
               onClick={onSubmit}
             >
               {submitButtonTextContent}
