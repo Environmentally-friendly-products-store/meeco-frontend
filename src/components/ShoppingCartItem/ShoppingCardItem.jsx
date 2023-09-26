@@ -3,6 +3,8 @@ import './ShoppingCartItem.css';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import stylizePrice from '../../utils/functions/stylizePrice';
+
 function ShoppingCardItem({ product, onTotalPriceChange, onCardClick }) {
   /* const [isLiked, setIsLiked] = useState(false); */
   const [counter, setCounter] = useState(
@@ -72,25 +74,16 @@ function ShoppingCardItem({ product, onTotalPriceChange, onCardClick }) {
         />
       </NavLink>
 
-      <p className="shopping-cart__product-brand">{product.brand}</p>
-      <p className="shopping-cart__product-name">{product.name}</p>
-      <p className="shopping-cart__product-details">{'Детали(объем, вес)'}</p>
+      <p className="shopping-cart__product-item shopping-cart__product-brand">
+        {product.brand}
+      </p>
+      <p className="shopping-cart__product-item shopping-cart__product-name">
+        {product.name}
+      </p>
 
-      <div className="shopping-cart__product-button-section">
-        <button
-          className="shopping-cart__button
-          shopping-cart__button_style_delete"
-        >
-          Удалить
-        </button>
-        {/* <button
-          className={`shopping-cart__button
-          shopping-cart__button_style_to_favourite ${additionalLikeButtonStyles}`}
-          onClick={onLikeButtonClick}
-        >
-          Добавить в избранное
-        </button> */}
-      </div>
+      <p className="shopping-cart__product-item shopping-card__product-price shopping-cart__product-item_style_unit">
+        {`${stylizePrice(product.price_per_unit)} ₽`}
+      </p>
 
       <div className="shopping-card__product-quantity-switch">
         <button
@@ -99,7 +92,7 @@ function ShoppingCardItem({ product, onTotalPriceChange, onCardClick }) {
           onClick={decreaseCounter}
           disabled={counter === 1}
         ></button>
-        <p className="shopping-card__product-quantity-switch-counter">
+        <p className="shopping-cart__product-item shopping-card__product-quantity-switch-counter">
           {counter}
         </p>
         <button
@@ -109,12 +102,11 @@ function ShoppingCardItem({ product, onTotalPriceChange, onCardClick }) {
         ></button>
       </div>
 
-      <p className="shopping-card__product-price shopping-card__product-price_style_unit">
-        {product.price_per_unit} ₽
+      <p className="shopping-cart__product-item shopping-card__product-price shopping-card__product-price_style_sum">
+        {`${stylizePrice(totalItemPrice)} ₽`}
       </p>
-      <p className="shopping-card__product-price shopping-card__product-price_style_sum">
-        {totalItemPrice}₽
-      </p>
+
+      <button className="shopping-cart__delete-button"></button>
     </li>
   );
 }

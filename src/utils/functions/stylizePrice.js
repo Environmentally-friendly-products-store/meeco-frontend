@@ -3,7 +3,9 @@ const stylizePrice = (price) => {
   if (priceString.length < 4) {
     return priceString;
   }
-  return `${priceString[0]} ${priceString.slice(1)}`;
+  return `${priceString.slice(0, priceString.length - 3)} ${priceString.slice(
+    priceString.length - 3
+  )}`;
 };
 
 export default stylizePrice;

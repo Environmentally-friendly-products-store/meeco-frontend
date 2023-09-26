@@ -5,6 +5,9 @@ import '../ShoppingCartItem/ShoppingCardItem';
 
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
+import stylizePrice from '../../utils/functions/stylizePrice';
+
 import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
 import EmptyCart from '../EmptyCart/EmptyCart';
 
@@ -53,34 +56,33 @@ function ShoppingCart({ onCardClick }) {
       {products.length < 1 ? (
         <EmptyCart />
       ) : (
-        <div className="shopping-cart__products-block">
-          <button className="shopping-cart__button shopping-cart__button_style_reset">
-            Удалить все
-          </button>
+        <>
+          <section className="shopping-cart__products-block">
+            <ul className="shopping-cart__products-list">
+              {products.map((product) => (
+                <ShoppingCardItem
+                  key={product.id}
+                  product={product}
+                  onTotalPriceChange={onTotalPriceChange}
+                  onCardClick={onCardClick}
+                />
+              ))}
+            </ul>
+          </section>
 
-          <ul className="shopping-cart__products-list">
-            {products.map((product) => (
-              <ShoppingCardItem
-                key={product.id}
-                product={product}
-                onTotalPriceChange={onTotalPriceChange}
-                onCardClick={onCardClick}
-              />
-            ))}
-          </ul>
+          <section className="shopping-cart__place-order-block">
+            <div className="shopping-cart__total-block">
+              <p className="shopping-cart__total-block-item">Итого</p>
+              <p className="shopping-cart__total-block-item">{`${stylizePrice(
+                totalPrice
+              )} ₽`}</p>
+            </div>
 
-          <div className="shopping-cart__total-block">
-            <p className="shopping-cart__total-block-title">Итого</p>
-            <p className="shopping-card__product-price shopping-card__product-price_style_sum">
-              {totalPrice} ₽
-            </p>
-          </div>
-
-          <NavLink className="shopping-cart__place-order-button" to="/order">
-            {/* пока что нет компонента с оформлением заказа, поэтому ссылка на Main */}
-            Оформить заказ
-          </NavLink>
-        </div>
+            <NavLink className="shopping-cart__place-order-button" to="/order">
+              Оформить заказ
+            </NavLink>
+          </section>
+        </>
       )}
     </main>
   );
