@@ -34,20 +34,6 @@
   text-align: center;
 }
 
-.about-project__button {
-  margin-top: 20px;
-  padding: 8px 20px 6px 20px;
-  box-sizing: border-box;
-  width: 170px;
-  height: 32px;
-  border-radius: 10px;
-  background: rgba(164, 161, 117, 1);
-  color: rgba(255, 255, 255, 1);
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.143;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: right;
+.about-project__container-button {
+  margin: 28px auto 0 auto;
 }
