@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
                 №152-ФЗ «О персональных данных» (далее - Закон о персональных
                 данных) и определяет порядок обработки персональных данных и
                 меры по обеспечению безопасности персональных данных,
-                предпринимаемые ООО "Водолей" (далее – Оператор)..
+                предпринимаемые ООО "Экоми" (далее – Оператор).
               </li>
               <li className="privacypolicy__item privacypolicy__item-content">
                 Оператор ставит своей важнейшей целью и условием осуществления
@@ -33,7 +33,7 @@ export default function PrivacyPolicy() {
                 Настоящая политика Оператора в отношении обработки персональных
                 данных (далее – Политика) применяется ко всей информации,
                 которую Оператор может получить о посетителях веб-сайта
-                https://vodoley-ural.ru/.
+                http://www.ecome.acceleratorpracticum.ru/.
               </li>
             </ol>
           </li>
@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
                 Веб-сайт – совокупность графических и информационных материалов,
                 а также программ для ЭВМ и баз данных, обеспечивающих их
                 доступность в сети интернет по сетевому адресу
-                https://бvodoley-ural.ru/
+                http://www.ecome.acceleratorpracticum.ru/.
               </li>
               <li className="privacypolicy__item privacypolicy__item-content">
                 Информационная система персональных данных — совокупность
@@ -90,7 +90,7 @@ export default function PrivacyPolicy() {
               <li className="privacypolicy__item privacypolicy__item-content">
                 Персональные данные – любая информация, относящаяся прямо или
                 косвенно к определенному или определяемому Пользователю
-                веб-сайта https://vodoley-ural.ru/.
+                веб-сайта http://www.ecome.acceleratorpracticum.ru/.
               </li>
               <li className="privacypolicy__item privacypolicy__item-content">
                 Персональные данные, разрешенные субъектом персональных данных
