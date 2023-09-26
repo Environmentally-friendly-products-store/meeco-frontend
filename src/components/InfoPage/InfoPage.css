@@ -2,8 +2,7 @@
   display: flex;
   margin: 0 auto;
   width: calc(100% - 2 * 40px);
-  padding-top: 46px;
-  padding-bottom: 52px;
+  padding-top: 64px;
 }
 
 .infopage__content {
@@ -17,14 +16,17 @@
   flex-direction: column;
   max-width: 407px;
   width: 100%;
-  margin-right: 32px;
+  margin-right: 57px;
+  margin-bottom: 241px;
 }
 
 .infopage__content-title {
+  font-family: 'Didact-Gothic', Arial, sans-serif;
   margin: 0;
-  font-size: 48px;
+  font-size: 40px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 1.208;
-  letter-spacing: -1px;
+  font-weight: 400;
+  line-height: 52px;
+  letter-spacing: -0.5px;
+  color: #403f32;
 }

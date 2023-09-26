@@ -6,8 +6,8 @@ function Profile({ onButtonClick }) {
   return (
     <InfoPage title="Профиль" id="profile">
       <p className="profile__text">
-        Здесь вы можете в будущем просмотреть заказы и личные данные: адреса
-        доставки и контакты
+        Здесь вы можете просмотреть заказы и личные данные: адреса доставки и
+        контакты
       </p>
       <button
         type="button"

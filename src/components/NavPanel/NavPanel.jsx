@@ -21,36 +21,38 @@ export default function NavPanel() {
       >
         Контакты
       </HashLink>
-      <HashLink
-        className="navpanel__link selectable-link"
-        smooth
-        to={links.delivery.order}
-      >
-        Как сделать заказ
-      </HashLink>
-      <HashLink
-        className="navpanel__link selectable-link"
-        smooth
-        to={links.delivery.payment}
-      >
-        Оплата
-      </HashLink>
-      <HashLink
-        className="navpanel__link selectable-link"
-        smooth
-        to={links.delivery.delivery}
-      >
-        Доставка
-      </HashLink>
-      <HashLink
-        className="navpanel__link selectable-link"
-        smooth
-        to={links.delivery.returns}
-      >
-        Возврат
-      </HashLink>
+      <div className="navpanel__links">
+        <HashLink
+          className="navpanel__link selectable-link"
+          smooth
+          to={links.delivery.order}
+        >
+          Как сделать заказ
+        </HashLink>
+        <HashLink
+          className="navpanel__link selectable-link"
+          smooth
+          to={links.delivery.payment}
+        >
+          Оплата
+        </HashLink>
+        <HashLink
+          className="navpanel__link selectable-link"
+          smooth
+          to={links.delivery.delivery}
+        >
+          Доставка
+        </HashLink>
+        <HashLink
+          className="navpanel__link selectable-link"
+          smooth
+          to={links.delivery.returns}
+        >
+          Возврат
+        </HashLink>
+      </div>
       <HashLink className="navpanel__link selectable-link" smooth to="/catalog">
-        Вернуться к каталогу
+        Вернуться в каталог
       </HashLink>
     </nav>
   );
