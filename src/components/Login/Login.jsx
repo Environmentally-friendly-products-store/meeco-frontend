@@ -36,7 +36,7 @@ function Login({
     title: 'Авторизация',
     isValid: isFormValid,
     submitButtonTextContent: 'Войти',
-    routerLinkText: 'Я еще не зарегистрирован',
+    routerLinkText: 'Я еще не зарегистрирован(а)',
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,
     togglePopup: handleTogglePopup,
@@ -45,27 +45,33 @@ function Login({
 
   const [serverError, setServerError] = useState('');
 
+  const getLabelClassName = (error) =>
+    `popup__label ${error ? 'popup__label_error' : ''}`;
+
+  const getInputClassName = (error) =>
+    `popup__input ${error ? 'popup__input_error' : ''}`;
+
   return (
     <PopupWithForm {...popupWithFormProps}>
-      <label>Email</label>
+      <label className={getLabelClassName(errorsState.email)}>Email</label>
       <input
         onChange={handleInputChange}
         value={'' || userState.email}
         type="email"
         name="email"
-        className="popup__input popup__input_type_email"
+        className={getInputClassName(errorsState.email)}
         minLength="8"
         maxLength="111"
         required
       />
       <span className="popup__error ">{errorsState.email}</span>
-      <label>Пароль</label>
+      <label className={getLabelClassName(errorsState.password)}>Пароль</label>
       <input
         onChange={handleInputChange}
         value={'' || userState.password}
         type="password"
         name="password"
-        className="popup__input popup__input_type_password"
+        className={getInputClassName(errorsState.password)}
         minLength="8"
         maxLength="40"
         required
