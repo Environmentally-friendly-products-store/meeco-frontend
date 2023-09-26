@@ -26,7 +26,11 @@ function PopupWithForm({
       className={`popup popup_type_${name} ${isOpen && `popup_active`}`}
       onMouseDown={onCloseByOverlay}
     >
-      <div className="popup__block">
+      <div
+        className={`popup__block ${
+          name === 'confirm' ? 'popup__block_type_confirm' : ''
+        }`}
+      >
         <h2 className="popup__title">{title}</h2>
         <p
           className="popup__toggle selectable-link"
@@ -40,7 +44,7 @@ function PopupWithForm({
             {submitButtonClass && (
               <button
                 type="button"
-                className="popup__button popup__button_type_save selectable-button"
+                className="popup__button popup__button_type_save"
                 onClick={onClose}
               >
                 Остаться
@@ -49,7 +53,7 @@ function PopupWithForm({
             <button
               disabled={!isValid}
               type="submit"
-              className={`popup__button popup__button_type_submit ${submitButtonClass} selectable-button`}
+              className={`popup__button popup__button_type_submit ${submitButtonClass}`}
               onClick={onSubmit}
             >
               {submitButtonTextContent}
