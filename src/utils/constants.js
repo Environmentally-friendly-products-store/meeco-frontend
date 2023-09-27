@@ -16,4 +16,4 @@ export const { REACT_APP_BASE_URL: baseUrl = '/api/v1' } = process.env;
 
 const url = baseUrl.startsWith('http') ? new URL(baseUrl) : {};
 
-export const { origin: serverHost = '/' } = url;
+export const { origin: serverHost = '' } = url;
