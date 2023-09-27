@@ -1,22 +1,21 @@
 .empty-cart__text {
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 1.85;
+  color: #21211b;
+  font-family: 'Mulish';
+  font-size: 16px;
+  line-height: 1.5;
   text-align: center;
   margin: 0 auto 40px;
-  max-width: 500px;
 }
 
 .empty-cart__button {
-  display: block;
-  max-width: 664px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 10px 0;
-  background-color: #121212;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.77;
+  color: #fbfaeb;
+  display: flex;
+  width: 199px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background: #a49e4a;
   text-decoration: none;
+  box-sizing: border-box;
+  padding: 12px 16px;
 }

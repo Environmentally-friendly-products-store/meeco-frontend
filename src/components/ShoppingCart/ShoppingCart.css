@@ -8,7 +8,10 @@
 }
 
 .shopping-cart_style_empty {
-  row-gap: 200px;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(2, auto);
+  padding-top: 64px;
+  row-gap: 100px;
 }
 
 .shopping-cart__title {
