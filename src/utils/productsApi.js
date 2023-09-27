@@ -1,5 +1,6 @@
 import { createMakeRequest } from './makeRequest';
 import { baseUrl } from './constants';
+import encodeObjToQuery from './functions/encodeObjToQuery';
 
 // отправляет запрос на сервер по baseUrl
 const makeRequest = createMakeRequest(baseUrl);
@@ -20,9 +21,11 @@ export const getCategoryById = (categoryId) => {
 
 /**
  * Запрашивает данные о товарах по указанным параметрам
+ * @param data {{event: string, category: string, limit: number, page: number}} Объект с данными фильтра
  */
-export const getProducts = (params) => {
-  makeRequest(`/products/?${params}`, 'GET');
+export const getProducts = (data) => {
+  const params = encodeObjToQuery(data);
+  return makeRequest(`/products/?${params}`, 'GET');
 };
 
 /**
@@ -53,4 +56,15 @@ export const changeProductQuantityInShoppingCart = (productId, count) => {
  */
 export const deleteProductFromShoppingCart = (productId) => {
   makeRequest(`/products/${productId}/shopping_cart`, 'DELETE');
+};
+
+/**
+ * Получение новинок товаров
+ */
+export const getNovelties = () => {
+  const data = {
+    limit: 4,
+    event: 'novinki',
+  };
+  return getProducts(data).then((response) => response.results);
 };

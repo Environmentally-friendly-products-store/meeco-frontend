@@ -3,6 +3,7 @@ import './ProductCard.css';
 import { NavLink } from 'react-router-dom';
 
 import stylizePrice from '../../utils/functions/stylizePrice';
+import { serverHost } from '../../utils/constants';
 
 /* import {
   addProductToShoppingCart,
@@ -16,8 +17,8 @@ function ProductCard({
   brand,
   card,
   /* amount,
-  id,
-  isInShoppingCart, */
+                       id,
+                       isInShoppingCart, */
   onCardClick,
 }) {
   /* const [counter, setCounter] = useState(amount); */
@@ -58,7 +59,7 @@ function ProductCard({
           </button> */}
         <img
           className="product-card__image"
-          src={image}
+          src={image.startsWith('http') ? image : `${serverHost}${image}`}
           alt="название карточки"
         />
       </NavLink>
