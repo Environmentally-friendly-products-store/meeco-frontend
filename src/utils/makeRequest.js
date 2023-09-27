@@ -35,7 +35,7 @@ export function EcomeError(code, error) {
 
 export const createMakeRequest =
   (baseUrl) =>
-  (url, method, body, token = null) => {
+  (url, method, body = null, token = null) => {
     const options = {
       method,
       headers: {

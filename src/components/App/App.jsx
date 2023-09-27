@@ -19,7 +19,6 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
 /* import getCurrentCard '../../utils/Api'; */
-
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
   getLocalStorageToken,
@@ -30,6 +29,8 @@ import TopScrollBtn from '../TopScrollBtn/TopScrollBtn';
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
+import { ProductsContext } from '../../contexts/ProductsContext';
+import { getNovelties } from '../../utils/productsApi';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -73,7 +74,11 @@ export default function App() {
       .catch((err)=> console.log(err))
     */
   };
-
+  const [productsContext, setProductsContext] = useState({
+    novelties: [],
+    popular: [],
+    onCardClick: handleCardClick,
+  });
   useEffect(() => {
     // Если карты нет, то взять ее в localStorage
     if (selectedCard.length === 0 && localStorage.getItem('cardPage')) {
@@ -103,6 +108,9 @@ export default function App() {
 
   useEffect(() => {
     setToken(getLocalStorageToken());
+    getNovelties().then((novelties) =>
+      setProductsContext((prevState) => ({ ...prevState, novelties }))
+    );
   }, []);
 
   useEffect(() => {
@@ -135,65 +143,70 @@ export default function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="app">
-        <Header
-          onClickRegistration={handleRegistrationPopupOpen}
-          onClickShoppingCart={handleLoginPopup}
-        />
-        <main>
-          <Routes>
-            <Route path="/" element={<Main onCardClick={handleCardClick} />} />
-            <Route
-              path="/catalog"
-              element={<Catalog onCardClick={handleCardClick} />}
-            />
-            <Route
-              path="/product"
-              element={
-                <MainProductPage
-                  card={selectedCard}
-                  onButtonClick={handleLoginPopup}
-                  isLoggedIn={isLoggedIn}
-                />
-              }
-            />
-            <Route path="/shopping-cart" element={<ShoppingCart />} />
-            <Route path="/delivery" element={<Delivery />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/order" element={<Order />} />
-            <Route path="/thanksfororder" element={<ThanksForOrder />} />{' '}
-            <Route
-              path="/profile"
-              element={<Profile onButtonClick={handleConfirmPopup} />}
-            />
-            <Route path="/contacts" element={<Contacts />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          </Routes>
-          <TopScrollBtn />
-        </main>
-        <Footer />
-        <Registration
-          isPopupOpen={isRegistrationPopupOpen}
-          onClosePopup={handleClosePopup}
-          onCloseByOverlay={closePopupByOverlay}
-          handleTogglePopup={handleLoginPopup}
-          registerUser={registerUser}
-        />
-        <Login
-          isPopupOpen={isLoginPopupOpen}
-          onClosePopup={handleClosePopup}
-          onCloseByOverlay={closePopupByOverlay}
-          handleTogglePopup={handleRegistrationPopupOpen}
-          loginUser={loginUser}
-        />
-        <ConfirmPopup
-          isPopupOpen={isConfirmPopupOpen}
-          onClosePopup={handleClosePopup}
-          onCloseByOverlay={closePopupByOverlay}
-          onSubmit={logOut}
-        />
-      </div>
-    </CurrentUserContext.Provider>
+    <ProductsContext.Provider value={productsContext}>
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="app">
+          <Header
+            onClickRegistration={handleRegistrationPopupOpen}
+            onClickShoppingCart={handleLoginPopup}
+          />
+          <main>
+            <Routes>
+              <Route
+                path="/"
+                element={<Main onCardClick={handleCardClick} />}
+              />
+              <Route
+                path="/catalog"
+                element={<Catalog onCardClick={handleCardClick} />}
+              />
+              <Route
+                path="/product"
+                element={
+                  <MainProductPage
+                    card={selectedCard}
+                    onButtonClick={handleLoginPopup}
+                    isLoggedIn={isLoggedIn}
+                  />
+                }
+              />
+              <Route path="/shopping-cart" element={<ShoppingCart />} />
+              <Route path="/delivery" element={<Delivery />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/order" element={<Order />} />
+              <Route path="/thanksfororder" element={<ThanksForOrder />} />{' '}
+              <Route
+                path="/profile"
+                element={<Profile onButtonClick={handleConfirmPopup} />}
+              />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            </Routes>
+            <TopScrollBtn />
+          </main>
+          <Footer />
+          <Registration
+            isPopupOpen={isRegistrationPopupOpen}
+            onClosePopup={handleClosePopup}
+            onCloseByOverlay={closePopupByOverlay}
+            handleTogglePopup={handleLoginPopup}
+            registerUser={registerUser}
+          />
+          <Login
+            isPopupOpen={isLoginPopupOpen}
+            onClosePopup={handleClosePopup}
+            onCloseByOverlay={closePopupByOverlay}
+            handleTogglePopup={handleRegistrationPopupOpen}
+            loginUser={loginUser}
+          />
+          <ConfirmPopup
+            isPopupOpen={isConfirmPopupOpen}
+            onClosePopup={handleClosePopup}
+            onCloseByOverlay={closePopupByOverlay}
+            onSubmit={logOut}
+          />
+        </div>
+      </CurrentUserContext.Provider>
+    </ProductsContext.Provider>
   );
 }
