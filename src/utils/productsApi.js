@@ -68,3 +68,11 @@ export const getNovelties = () => {
   };
   return getProducts(data).then((response) => response.results);
 };
+
+export const getPopularProducts = () => {
+  const data = {
+    limit: 5,
+    event: 'populyarnoe',
+  };
+  return getProducts(data).then((response) => response.results);
+};

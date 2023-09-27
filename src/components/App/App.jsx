@@ -31,6 +31,7 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import { getNovelties } from '../../utils/productsApi';
+import { getPopularProducts } from '../../utils/productsApi';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -110,6 +111,9 @@ export default function App() {
     setToken(getLocalStorageToken());
     getNovelties().then((novelties) =>
       setProductsContext((prevState) => ({ ...prevState, novelties }))
+    );
+    getPopularProducts().then((popularProducts) =>
+      setProductsContext((prevState) => ({ ...prevState, popularProducts }))
     );
   }, []);
 
