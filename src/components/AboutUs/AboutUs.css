@@ -1,8 +1,36 @@
-.aboutus-description {
-  max-width: 780px;
+.aboutus-container {
+  display: flex;
+  gap: 32px;
+  padding-top: 24px;
+}
+
+.aboutus__description-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.aboutus__description-text {
+  margin: 0;
+  max-width: 548px;
+  font-family: Mulish, Arial, sans-serif;
   font-size: 16px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 2;
-  letter-spacing: -0.6px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.aboutus__image-container {
+  border: 1px solid #e9d7c1;
+  border-radius: 12px;
+  padding: 24px;
+  height: 268px;
+  width: 268px;
+}
+
+.aboutus__image {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
 }
