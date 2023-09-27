@@ -2,8 +2,9 @@ import OrderProduct from '../OrderProduct/OrderProduct';
 import './YourOrder.css';
 import image from '../../images/product_card_filler_image_s.jpg';
 import { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
+import { useNavigate } from 'react-router-dom';
 
 /* Массив-затычка  из корзины*/
 
@@ -25,6 +26,11 @@ const products = [
 ];
 
 function YourOrder() {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/thanksfororder', { replace: true });
+  };
   const [totalPrice, setTotalPrice] = useState(0);
 
   const onTotalPriceChange = () => {
@@ -51,6 +57,21 @@ function YourOrder() {
         <p className="yourorder__total-text">Итого</p>
         <p className="yourorder__total-summ">{totalPrice} &#8381;</p>
       </div>
+      <button
+        onClick={handleButtonClick}
+        className="yourorder__button selectable-button"
+      >
+        Подтвердить заказ
+      </button>
+      <p className="yourorder__politic">
+        Нажимая кнопку, вы соглашаетесь с{' '}
+        <Link
+          className="yourorder__politic-text selectable-link"
+          to="/privacy-policy"
+        >
+          Политикой конфиденциальности
+        </Link>{' '}
+      </p>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 .deliveryadress {
   display: flex;
-  max-width: 778px;
+  /* max-width: 778px; */
   flex-direction: column;
   align-items: flex-start;
   border-radius: 6px;
@@ -44,7 +44,7 @@
 }
 
 .deliveryadress__input {
-  max-width: 697px;
+  /* max-width: 697px; */
   height: 21px;
   display: flex;
   gap: 8px;
