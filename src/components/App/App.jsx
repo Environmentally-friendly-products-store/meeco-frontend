@@ -30,16 +30,9 @@ import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
-import { getNovelties } from '../../utils/productsApi';
-import { getPopularProducts } from '../../utils/productsApi';
+import { getNovelties, getPopularProducts } from '../../utils/productsApi';
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState({
-    id: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-  });
   const navigate = useRef(useNavigate());
 
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -77,6 +70,15 @@ export default function App() {
       .catch((err)=> console.log(err))
     */
   };
+  const [currentUser, setCurrentUser] = useState({
+    id: '',
+    email: '',
+    first_name: '',
+    last_name: '',
+    onClickRegistration: handleRegistrationPopupOpen,
+    onClickLogin: handleLoginPopup,
+  });
+
   const [productsContext, setProductsContext] = useState({
     novelties: [],
     popular: [],
@@ -152,10 +154,7 @@ export default function App() {
     <ProductsContext.Provider value={productsContext}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="app">
-          <Header
-            onClickRegistration={handleRegistrationPopupOpen}
-            onClickShoppingCart={handleLoginPopup}
-          />
+          <Header />
           <main>
             <Routes>
               <Route

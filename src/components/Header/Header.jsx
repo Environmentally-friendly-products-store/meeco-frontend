@@ -6,7 +6,7 @@ import Navigation from '../Navigation/Navigation.jsx';
 import catalog from '../../images/catalog.svg';
 import './Header.css';
 
-function Header({ onClickRegistration, onClickShoppingCart }) {
+function Header() {
   return (
     <header className="header">
       <div className="header__func">
@@ -21,10 +21,7 @@ function Header({ onClickRegistration, onClickShoppingCart }) {
         {/* <SearchForm /> */}
       </div>
       <Logo />
-      <Navigation
-        onClickRegistration={onClickRegistration}
-        onClickShoppingCart={onClickShoppingCart}
-      />
+      <Navigation />
     </header>
   );
 }
