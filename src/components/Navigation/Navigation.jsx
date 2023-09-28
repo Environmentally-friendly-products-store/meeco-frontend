@@ -8,7 +8,7 @@ import shoppingCartActive from '../../images/cart-active.svg';
 import './Navigation.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Navigation({ onClickRegistration, onClickShoppingCart }) {
+function Navigation() {
   const currentUser = useContext(CurrentUserContext);
   const count = 2;
   return (
@@ -33,10 +33,13 @@ function Navigation({ onClickRegistration, onClickShoppingCart }) {
         </ul>
       ) : (
         <ul className="navigation__list">
-          <li className="navigation__item" onClick={onClickRegistration}>
+          <li
+            className="navigation__item"
+            onClick={currentUser.onClickRegistration}
+          >
             <NavigationLink text="Войти" image={userIcon} />
           </li>
-          <li className="navigation__item" onClick={onClickShoppingCart}>
+          <li className="navigation__item" onClick={currentUser.onClickLogin}>
             <NavigationLink
               text={'Корзина'}
               image={count ? shoppingCartActive : shoppingCart}
