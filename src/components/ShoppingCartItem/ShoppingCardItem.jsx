@@ -1,12 +1,48 @@
 import './ShoppingCartItem.css';
+
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
 
-function ShoppingCardItem({ product, onAmountChange, onCardClick }) {
+function ShoppingCardItem({ product, onTotalPriceChange, onCardClick }) {
   const { name, brand, id, price_per_unit, amount, preview_image } = product;
-  const totalItemPrice = price_per_unit * amount;
+  /* const [counter, setCounter] = useState(
+    JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)) === null
+      ? product.amount
+      : JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)).amount
+  ); */
+  const [counter, setCounter] = useState(amount);
+  const [totalItemPrice, setTotalItemPrice] = useState(price_per_unit * amount);
+
+  const increaseCounter = () => {
+    setCounter(counter + 1);
+    setTotalItemPrice(price_per_unit * (counter + 1));
+    /* localStorage.setItem(
+      `purchaseItem${product.id}`,
+      JSON.stringify({
+        amount: counter + 1,
+        totalItemPrice: product.price_per_unit * (counter + 1),
+      })
+    ); */
+    onTotalPriceChange();
+  };
+
+  const decreaseCounter = () => {
+    setCounter(counter - 1);
+    setTotalItemPrice(price_per_unit * (counter - 1));
+    /* localStorage.setItem(
+      `purchaseItem${product.id}`,
+      JSON.stringify({
+        amount: counter - 1,
+        totalItemPrice: product.price_per_unit * (counter - 1),
+      })
+    ); */
+    onTotalPriceChange();
+  };
+
+  /* useEffect(() => {}, []); */
 
   return (
     <li className="shopping-cart__product">
@@ -37,7 +73,7 @@ function ShoppingCardItem({ product, onAmountChange, onCardClick }) {
         <button
           className="shopping-card__product-quantity-switch-button
         shopping-card__product-quantity-switch-minus selectable-button"
-          onClick={() => onAmountChange(id, false)}
+          onClick={decreaseCounter}
           disabled={amount === 1}
         ></button>
         <p className="shopping-cart__product-item shopping-card__product-quantity-switch-counter">
@@ -46,7 +82,7 @@ function ShoppingCardItem({ product, onAmountChange, onCardClick }) {
         <button
           className="shopping-card__product-quantity-switch-button
         shopping-card__product-quantity-switch-plus selectable-button"
-          onClick={() => onAmountChange(id, true)}
+          onClick={increaseCounter}
         ></button>
       </div>
 

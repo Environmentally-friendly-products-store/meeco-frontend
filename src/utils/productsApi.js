@@ -57,8 +57,9 @@ export const changeProductQuantityInShoppingCart = (productId, amount, token) =>
 /**
  * Удаляет товар из корзины
  */
-export const deleteProductFromShoppingCart = (productId, token) =>
+export const deleteProductFromShoppingCart = (productId, token) => {
   makeRequest(`/products/${productId}/shopping_cart/`, 'DELETE', null, token);
+};
 
 /**
  * Получение новинок товаров

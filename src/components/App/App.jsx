@@ -32,7 +32,6 @@ import { ProductsContext } from '../../contexts/ProductsContext';
 import {
   addProductToShoppingCart,
   changeProductQuantityInShoppingCart,
-  deleteProductFromShoppingCart,
   getNovelties,
   getPopularProducts,
   getShoppingCart,
@@ -93,36 +92,18 @@ export default function App() {
 
   const [shoppingCartContext, setShoppingCartContext] = useState({
     shoppingCart: [],
-    totalPrice: 0,
   });
 
-  const setShoppingCart = (shoppingCart) => {
-    const totalPrice = shoppingCart.reduce(
-      (acc, product) => acc + product.amount * product.price_per_unit,
-      0
-    );
-    setShoppingCartContext({
-      shoppingCart,
-      totalPrice,
-    });
-  };
-
-  const findProductInShoppingcart = useCallback(
-    (productId) =>
-      shoppingCartContext.shoppingCart.find(
-        (product) => product.id === productId
-      ),
-    [shoppingCartContext]
-  );
-
-  const onIncreaseProductInShoppingCart = useCallback(
+  const onAddToShoppingCartClick = useCallback(
     (productId) => {
       if (!token) {
         handleLoginPopup();
         return;
       }
 
-      const productFromCart = findProductInShoppingcart(productId);
+      const productFromCart = shoppingCartContext.shoppingCart.find(
+        (product) => product.id === productId
+      );
       const promise = productFromCart
         ? changeProductQuantityInShoppingCart(
             productId,
@@ -131,24 +112,14 @@ export default function App() {
           )
         : addProductToShoppingCart(productId, token);
 
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
-    },
-    [token, shoppingCartContext]
-  );
-
-  const onDecreaseProductInShoppingCart = useCallback(
-    (productId) => {
-      const productFromCart = findProductInShoppingcart(productId);
-      const promise =
-        productFromCart.amount > 1
-          ? changeProductQuantityInShoppingCart(
-              productId,
-              productFromCart.amount - 1,
-              token
-            )
-          : deleteProductFromShoppingCart(productId, token);
-
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+      promise
+        .then(() => getShoppingCart(token))
+        .then((shoppingCart) => {
+          setShoppingCartContext((prevState) => ({
+            ...prevState,
+            shoppingCart,
+          }));
+        });
     },
     [token, shoppingCartContext]
   );
@@ -196,7 +167,9 @@ export default function App() {
       .catch(() => {
         setIsLoggedIn(false);
       });
-    getShoppingCart(token).then(setShoppingCart);
+    getShoppingCart(token).then((shoppingCart) => {
+      setShoppingCartContext((prevState) => ({ ...prevState, shoppingCart }));
+    });
     // eslint-disable-next-line
   }, [token]);
 
@@ -216,11 +189,7 @@ export default function App() {
 
   return (
     <ShoppingCartContext.Provider
-      value={{
-        ...shoppingCartContext,
-        onIncreaseProductInShoppingCart,
-        onDecreaseProductInShoppingCart,
-      }}
+      value={{ ...shoppingCartContext, onAddToShoppingCartClick }}
     >
       <ProductsContext.Provider value={productsContext}>
         <CurrentUserContext.Provider value={currentUser}>
