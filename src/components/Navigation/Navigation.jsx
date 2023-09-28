@@ -1,21 +1,16 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 
 import NavigationLink from '../NavigationLink/NavigationLink';
 import userIcon from '../../images/user.svg';
 /* import favoritePath from '../../images/favorite.svg'; */
-import shoppingCartSvg from '../../images/cart.svg';
-import shoppingCartActiveSvg from '../../images/cart-active.svg';
+import shoppingCart from '../../images/cart.svg';
+import shoppingCartActive from '../../images/cart-active.svg';
 import './Navigation.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 function Navigation() {
   const currentUser = useContext(CurrentUserContext);
-  const { shoppingCart } = useContext(ShoppingCartContext);
-  const count = useMemo(
-    () => shoppingCart.reduce((acc, product) => acc + product.amount, 0),
-    [shoppingCart]
-  );
+  const count = 2;
   return (
     <nav className="navigation">
       {currentUser.id ? (
@@ -31,7 +26,7 @@ function Navigation() {
             <NavigationLink
               path={'/shopping-cart'}
               text={'Корзина'}
-              image={count ? shoppingCartActiveSvg : shoppingCartSvg}
+              image={count ? shoppingCartActive : shoppingCart}
               count={count}
             />
           </li>
@@ -45,7 +40,11 @@ function Navigation() {
             <NavigationLink text="Войти" image={userIcon} />
           </li>
           <li className="navigation__item" onClick={currentUser.onClickLogin}>
-            <NavigationLink text={'Корзина'} image={shoppingCartSvg} />
+            <NavigationLink
+              text={'Корзина'}
+              image={count ? shoppingCartActive : shoppingCart}
+              count={count}
+            />
           </li>
         </ul>
       )}
