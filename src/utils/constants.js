@@ -19,6 +19,6 @@ export const {
     baseUrl = 'http://www.ecome.acceleratorpracticum.ru/api/v1',
 } = process.env;
 
-const url = new URL(baseUrl);
+const url = baseUrl.startsWith('http') ? new URL(baseUrl) : {};
 
-export const { origin: serverHost = '/' } = url;
+export const { origin: serverHost = '' } = url;

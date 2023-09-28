@@ -89,7 +89,6 @@ function PopupWithForm({
                 >
                   c Политикой конфиденциальности
                 </Link>
-                )
               </>
             )}
           </div>

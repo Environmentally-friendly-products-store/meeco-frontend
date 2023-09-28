@@ -41,6 +41,6 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo docker-compose stop
-            sudo docker-compose rm -f frontend
             sudo docker pull ${{ env.FRONTEND_IMAGE }}
             sudo docker-compose up -d
+            sudo docker image prune -f
