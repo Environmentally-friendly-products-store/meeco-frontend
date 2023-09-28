@@ -1,9 +1,8 @@
 import OrderProduct from '../OrderProduct/OrderProduct';
 import './YourOrder.css';
 import image from '../../images/product_card_filler_image_s.jpg';
-import { useEffect, useState } from 'react';
-
-import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
+import { useContext } from 'react';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 /* Массив-затычка  из корзины*/
 
@@ -25,25 +24,14 @@ const products = [
 ];
 
 function YourOrder() {
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { totalPrice } = useContext(ShoppingCartContext);
 
-  const onTotalPriceChange = () => {
-    calculateTotalPrice(setTotalPrice);
-  };
-
-  useEffect(() => {
-    calculateTotalPrice(setTotalPrice);
-  }, []);
   return (
     <div className="yourorder">
       <h2 className="yourorder__title">Ваш заказ</h2>
       <ul className="yourorder__list">
         {products.map((product) => (
-          <OrderProduct
-            key={product.id}
-            product={product}
-            onTotalPriceChange={onTotalPriceChange}
-          />
+          <OrderProduct key={product.id} product={product} />
         ))}
       </ul>
 

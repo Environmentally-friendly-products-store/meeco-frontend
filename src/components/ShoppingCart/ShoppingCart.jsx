@@ -3,28 +3,30 @@ import './ShoppingCart.css';
 import '../ShoppingCartItem/ShoppingCardItem';
 
 import { NavLink } from 'react-router-dom';
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import stylizePrice from '../../utils/functions/stylizePrice';
 
 import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
 import EmptyCart from '../EmptyCart/EmptyCart';
 
-import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 function ShoppingCart({ onCardClick }) {
-  const { shoppingCart } = useContext(ShoppingCartContext);
+  const {
+    shoppingCart,
+    totalPrice,
+    onIncreaseProductInShoppingCart,
+    onDecreaseProductInShoppingCart,
+  } = useContext(ShoppingCartContext);
 
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const onTotalPriceChange = () => {
-    calculateTotalPrice(setTotalPrice);
+  const onAmountChange = (productId, isIncrease) => {
+    if (isIncrease) {
+      onIncreaseProductInShoppingCart(productId);
+    } else {
+      onDecreaseProductInShoppingCart(productId);
+    }
   };
-
-  useEffect(() => {
-    calculateTotalPrice(setTotalPrice);
-  }, []);
 
   return (
     <main
@@ -43,7 +45,7 @@ function ShoppingCart({ onCardClick }) {
                 <ShoppingCardItem
                   key={product.id}
                   product={product}
-                  onTotalPriceChange={onTotalPriceChange}
+                  onAmountChange={onAmountChange}
                   onCardClick={onCardClick}
                 />
               ))}
