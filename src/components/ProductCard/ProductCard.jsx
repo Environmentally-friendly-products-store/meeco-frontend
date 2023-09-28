@@ -1,11 +1,11 @@
 import './ProductCard.css';
-/* import { useState } from 'react'; */
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import stylizePrice from '../../utils/functions/stylizePrice';
-import { serverHost } from '../../utils/constants';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
-import fillerImage from '../../images/product_card_filler_image_s.jpg';
+import stylizePrice from '../../utils/functions/stylizePrice';
+import defineImage from '../../utils/functions/defineImage';
 
 /* import {
   addProductToShoppingCart,
@@ -18,44 +18,18 @@ function ProductCard({
   name,
   brand,
   card,
-  /* amount,
+  /* amount, */
   id,
-  isInShoppingCart, */
+  isInShoppingCart,
   onCardClick,
 }) {
-  const defineSrc = () => {
-    if (image === null) {
-      return fillerImage;
-    } else if (image.startsWith('http')) {
-      return image;
-    } else {
-      return `${serverHost}${image}`;
-    }
-  };
-  /* const [counter, setCounter] = useState(amount); */
-
-  /* const handleButtonClick = () => {
-    try {
-      if (isInShoppingCart) {
-        setCounter(counter + 1);
-        changeProductQuantityInShoppingCart(id, counter + 1);
-      } else {
-        addProductToShoppingCart(id);
-      }
-    } catch (err) {
-      console.log('Ошибка перехвачена');
-    }
-  }; */
-
-  /* const [isLiked, setIsLiked] = useState(false); */
-
-  /* const onLikeButtonClick = () => {
-    setIsLiked(!isLiked);
+  const onAddToShoppingCart = () => {
+    onAddToShoppingCartClick(id);
   };
 
-  /* const additionalLikeButtonStyles = isLiked
-    ? 'product-card__like-button_liked'
-    : ''; */
+  const { shoppingCart, onAddToShoppingCartClick } =
+    useContext(ShoppingCartContext);
+
   return (
     <article className="product-card product-card">
       <NavLink
@@ -63,15 +37,9 @@ function ProductCard({
         to="/product"
         onClick={() => onCardClick(card)}
       >
-        {/* <button
-          type="button"
-          className={`product-card__like-button ${additionalLikeButtonStyles}`}
-          onClick={onLikeButtonClick}
-          </button> */}
         <img
           className="product-card__image"
-          /* src={image.startsWith('http') ? image : `${serverHost}${image}`} */
-          src={defineSrc()}
+          src={defineImage(image)}
           alt="название карточки"
         />
       </NavLink>
@@ -93,7 +61,7 @@ function ProductCard({
       <button
         type="button"
         className="product-card__product-item  product-card__add-to-cart-button selectable-button"
-        /* onClick={handleButtonClick} */
+        onClick={onAddToShoppingCart}
       >
         В корзину
       </button>
