@@ -9,7 +9,7 @@ const makeRequest = createMakeRequest(baseUrl);
  * Запрашивает данные о всех категориях товаров
  */
 export const getAllCategories = () => {
-  makeRequest('/categories', 'GET');
+  return makeRequest('/categories/', 'GET');
 };
 
 /**

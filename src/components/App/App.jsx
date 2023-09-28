@@ -61,6 +61,8 @@ export default function App() {
     }
   };
 
+  /* const getCatalogData = () => {}; */
+
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
@@ -112,8 +114,8 @@ export default function App() {
     getNovelties().then((novelties) =>
       setProductsContext((prevState) => ({ ...prevState, novelties }))
     );
-    getPopularProducts().then((popularProducts) =>
-      setProductsContext((prevState) => ({ ...prevState, popularProducts }))
+    getPopularProducts().then((popular) =>
+      setProductsContext((prevState) => ({ ...prevState, popular }))
     );
   }, []);
 
