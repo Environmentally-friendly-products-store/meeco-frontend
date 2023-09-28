@@ -9,7 +9,7 @@ const makeRequest = createMakeRequest(baseUrl);
  * Запрашивает данные о всех категориях товаров
  */
 export const getAllCategories = () => {
-  makeRequest('/categories', 'GET');
+  return makeRequest('/categories/', 'GET');
 };
 
 /**
@@ -65,6 +65,14 @@ export const getNovelties = () => {
   const data = {
     limit: 4,
     event: 'novinki',
+  };
+  return getProducts(data).then((response) => response.results);
+};
+
+export const getPopularProducts = () => {
+  const data = {
+    limit: 5,
+    event: 'populyarnoe',
   };
   return getProducts(data).then((response) => response.results);
 };

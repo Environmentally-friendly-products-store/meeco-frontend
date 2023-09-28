@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import stylizePrice from '../../utils/functions/stylizePrice';
 import { serverHost } from '../../utils/constants';
 
+import fillerImage from '../../images/product_card_filler_image_s.jpg';
+
 /* import {
   addProductToShoppingCart,
   changeProductQuantityInShoppingCart,
@@ -17,10 +19,19 @@ function ProductCard({
   brand,
   card,
   /* amount,
-                       id,
-                       isInShoppingCart, */
+  id,
+  isInShoppingCart, */
   onCardClick,
 }) {
+  const defineSrc = () => {
+    if (image === null) {
+      return fillerImage;
+    } else if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${serverHost}${image}`;
+    }
+  };
   /* const [counter, setCounter] = useState(amount); */
 
   /* const handleButtonClick = () => {
@@ -59,7 +70,8 @@ function ProductCard({
           </button> */}
         <img
           className="product-card__image"
-          src={image.startsWith('http') ? image : `${serverHost}${image}`}
+          /* src={image.startsWith('http') ? image : `${serverHost}${image}`} */
+          src={defineSrc()}
           alt="название карточки"
         />
       </NavLink>
