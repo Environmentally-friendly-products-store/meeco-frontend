@@ -3,6 +3,7 @@ import {
   HTTP_BAD_REQUEST,
   HTTP_NOT_AUTHORIZED,
   HTTP_SERVER_ERROR,
+  HTTP_NO_CONTENT,
   NOT_AUTHORIZED_MESSAGE,
   SERVER_ERROR_MESSAGE,
   HTTP_NO_CONTENT,
@@ -55,10 +56,10 @@ export const createMakeRequest =
 
     return fetch(`${baseUrl}${url}`, options)
       .then((response) => {
+        if (response.status === HTTP_NO_CONTENT) {
+          return;
+        }
         return response.json().then((body) => {
-          if (response.status === HTTP_NO_CONTENT) {
-            return;
-          }
           if (response.ok) {
             return body;
           }
