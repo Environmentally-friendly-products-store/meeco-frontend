@@ -85,6 +85,7 @@ function PopupWithForm({
                 </p>
                 <Link
                   to="/privacy-policy"
+                  target="_blank"
                   className="popup__link popup__link_type_policy selectable-link"
                 >
                   c Политикой конфиденциальности
