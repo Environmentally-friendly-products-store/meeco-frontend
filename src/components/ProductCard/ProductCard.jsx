@@ -23,12 +23,11 @@ function ProductCard({
   isInShoppingCart,
   onCardClick,
 }) {
+  const { onAddToShoppingCartClick } = useContext(ShoppingCartContext);
+
   const onAddToShoppingCart = () => {
     onAddToShoppingCartClick(id);
   };
-
-  const { shoppingCart, onAddToShoppingCartClick } =
-    useContext(ShoppingCartContext);
 
   return (
     <article className="product-card product-card">

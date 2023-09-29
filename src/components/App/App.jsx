@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -21,7 +21,6 @@ import Contacts from '../Contacts/Contacts';
 /* import getCurrentCard '../../utils/Api'; */
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
-  getLocalStorageToken,
   removeLocalStorageToken,
   setLocalStorageToken,
 } from '../../utils/localStorage';
@@ -31,10 +30,11 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import {
-  getShoppingCart,
+  addProductToShoppingCart,
+  changeProductQuantityInShoppingCart,
   getNovelties,
   getPopularProducts,
-  addProductToShoppingCart,
+  getShoppingCart,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
@@ -46,16 +46,6 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useScrollToTop();
-
-  const handleAddToShoppingCart = async (productId) => {
-    /* if (!isLoggedIn) {
-      handleLoginPopup();
-      return;
-    } */
-    addProductToShoppingCart(productId, localStorage.getItem('token'));
-    const shoppingCart = await getShoppingCart(localStorage.getItem('token'));
-    setShoppingCartContext((prevState) => ({ ...prevState, shoppingCart }));
-  };
 
   const handleRegistrationPopupOpen = () =>
     setIsRegistrationPopupOpen(!isRegistrationPopupOpen);
@@ -102,14 +92,49 @@ export default function App() {
 
   const [shoppingCartContext, setShoppingCartContext] = useState({
     shoppingCart: [],
-    onAddToShoppingCartClick: handleAddToShoppingCart,
   });
+
+  const onAddToShoppingCartClick = useCallback(
+    (productId) => {
+      if (!token) {
+        handleLoginPopup();
+        return;
+      }
+
+      const productFromCart = shoppingCartContext.shoppingCart.find(
+        (product) => product.id === productId
+      );
+      const promise = productFromCart
+        ? changeProductQuantityInShoppingCart(
+            productId,
+            productFromCart.amount + 1,
+            token
+          )
+        : addProductToShoppingCart(productId, token);
+
+      promise
+        .then(() => getShoppingCart(token))
+        .then((shoppingCart) => {
+          setShoppingCartContext((prevState) => ({
+            ...prevState,
+            shoppingCart,
+          }));
+        });
+    },
+    [token, shoppingCartContext]
+  );
 
   useEffect(() => {
     // Если карты нет, то взять ее в localStorage
     if (selectedCard.length === 0 && localStorage.getItem('cardPage')) {
       setSelectedCard(JSON.parse(localStorage.getItem('cardPage')));
     }
+    getNovelties().then((novelties) =>
+      setProductsContext((prevState) => ({ ...prevState, novelties }))
+    );
+    getPopularProducts().then((popular) =>
+      setProductsContext((prevState) => ({ ...prevState, popular }))
+    );
   }, []);
 
   const saveToken = ({ token }) => {
@@ -119,18 +144,16 @@ export default function App() {
   };
 
   //Авторизация пользователя
-  const loginUser = ({ password, email }) => {
-    return authorize(email, password)
+  const loginUser = ({ password, email }) =>
+    authorize(email, password)
       .then(saveToken)
       .then(() => handleClosePopup());
-  };
 
   //Регистрация пользователя
-  const registerUser = ({ firstName, lastName, email, password }) => {
-    return register(firstName, lastName, email, password).then(() => {
+  const registerUser = ({ firstName, lastName, email, password }) =>
+    register(firstName, lastName, email, password).then(() => {
       loginUser({ password, email });
     });
-  };
 
   useEffect(() => {
     if (!token) {
@@ -144,20 +167,10 @@ export default function App() {
       .catch(() => {
         setIsLoggedIn(false);
       });
-    // eslint-disable-next-line
-  }, [token]);
-
-  useEffect(() => {
-    setToken(getLocalStorageToken());
-    getShoppingCart(localStorage.getItem('token')).then((shoppingCart) => {
+    getShoppingCart(token).then((shoppingCart) => {
       setShoppingCartContext((prevState) => ({ ...prevState, shoppingCart }));
     });
-    getNovelties().then((novelties) =>
-      setProductsContext((prevState) => ({ ...prevState, novelties }))
-    );
-    getPopularProducts().then((popular) =>
-      setProductsContext((prevState) => ({ ...prevState, popular }))
-    );
+    // eslint-disable-next-line
   }, [token]);
 
   const logOut = () => {
@@ -175,7 +188,9 @@ export default function App() {
   };
 
   return (
-    <ShoppingCartContext.Provider value={shoppingCartContext}>
+    <ShoppingCartContext.Provider
+      value={{ ...shoppingCartContext, onAddToShoppingCartClick }}
+    >
       <ProductsContext.Provider value={productsContext}>
         <CurrentUserContext.Provider value={currentUser}>
           <div className="app">
