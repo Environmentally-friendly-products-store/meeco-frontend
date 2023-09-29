@@ -116,7 +116,7 @@ function Catalog({ onCardClick }) {
           onCardClick={onCardClick}
         />
       </CardSection>
-      {(filters.page + 1) * PAGE_LIMIT <= productsAmount &&
+      {(counter + 1) * PAGE_LIMIT <= productsAmount &&
         products.length % PAGE_LIMIT === 0 && (
           <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
         )}
