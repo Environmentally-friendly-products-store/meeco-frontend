@@ -18,7 +18,12 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
-/* import getCurrentCard '../../utils/Api'; */
+import {
+  getCurrentCard,
+  addCardToShoppingCart,
+  deleteCardFromShoppingCart,
+  changeAmountCardToShoppingCart,
+} from '../../utils/productPageApi';
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
   getLocalStorageToken,
@@ -70,18 +75,52 @@ export default function App() {
   // Функции по передаче коррекного товара MainProductPage при нажатии на товар в каталогах/главной странице
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => {
-    setSelectedCard(card);
-    /* Api для отправки карточки конкретного товара:
     getCurrentCard(card.id)
-      .then((card) => setSelectedCard(card))
-      .catch((err)=> console.log(err))
-    */
+      .then((product) => {
+        setSelectedCard(product);
+      })
+      .catch((err) => console.log(err));
   };
+
+  const addProductToShoppingCart = (card) => {
+    if (!isLoggedIn) {
+      handleLoginPopup();
+      return;
+    } else {
+      addCardToShoppingCart(card.id, token)
+        .then((res) => {
+          setSelectedCard((prev) => {
+            const updatedCard = { ...prev, ...res };
+            localStorage.setItem('cardPage', JSON.stringify(updatedCard));
+            return updatedCard;
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const deleteProductFromShoppingCart = (card) => {
+    deleteCardFromShoppingCart(card.id, token);
+  };
+
+  const changeProductQuantity = (card, amount) => {
+    changeAmountCardToShoppingCart(card.id, amount, token)
+      .then((res) => {
+        setSelectedCard((prev) => {
+          const updatedCard = { ...prev, ...res };
+          localStorage.setItem('cardPage', JSON.stringify(updatedCard));
+          return updatedCard;
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
   const [productsContext, setProductsContext] = useState({
     novelties: [],
     popular: [],
     onCardClick: handleCardClick,
   });
+
   useEffect(() => {
     // Если карты нет, то взять ее в localStorage
     if (selectedCard.length === 0 && localStorage.getItem('cardPage')) {
@@ -171,7 +210,9 @@ export default function App() {
                 element={
                   <MainProductPage
                     card={selectedCard}
-                    onButtonClick={handleLoginPopup}
+                    onButtonAddClick={addProductToShoppingCart}
+                    onButtonDeleteClick={deleteProductFromShoppingCart}
+                    onButtonChangeClick={changeProductQuantity}
                     isLoggedIn={isLoggedIn}
                   />
                 }

@@ -71,6 +71,7 @@
 
 .product-page__main-slider {
   overflow: hidden;
+  width: 100%;
 }
 
 .product-page__nav-slider {

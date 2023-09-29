@@ -5,6 +5,7 @@ import {
   HTTP_SERVER_ERROR,
   NOT_AUTHORIZED_MESSAGE,
   SERVER_ERROR_MESSAGE,
+  HTTP_NO_CONTENT,
 } from './constants';
 
 // Функция-коструктор для ошибок
@@ -53,14 +54,17 @@ export const createMakeRequest =
     }
 
     return fetch(`${baseUrl}${url}`, options)
-      .then((response) =>
-        response.json().then((body) => {
+      .then((response) => {
+        return response.json().then((body) => {
+          if (response.status === HTTP_NO_CONTENT) {
+            return;
+          }
           if (response.ok) {
             return body;
           }
           throw new EcomeError(response.status, body);
-        })
-      )
+        });
+      })
       .catch((error) => {
         if (error instanceof EcomeError) {
           throw error;

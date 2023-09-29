@@ -58,11 +58,7 @@ function ProductCard({
     : ''; */
   return (
     <article className="product-card product-card">
-      <NavLink
-        className="product-card__link selectable-button"
-        to="/product"
-        onClick={() => onCardClick(card)}
-      >
+      <NavLink className="product-card__link selectable-button" to="/product">
         {/* <button
           type="button"
           className={`product-card__like-button ${additionalLikeButtonStyles}`}
@@ -73,6 +69,7 @@ function ProductCard({
           /* src={image.startsWith('http') ? image : `${serverHost}${image}`} */
           src={defineSrc()}
           alt="название карточки"
+          onClick={() => onCardClick(card)}
         />
       </NavLink>
 

@@ -3,7 +3,7 @@ import ProductCard from '../ProductCard/ProductCard';
 
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function CatalogCardSection({ products, requiredLength }) {
+function CatalogCardSection({ products, requiredLength, onCardClick }) {
   const sortedProducts = sortProducts(products, requiredLength);
 
   return (
@@ -17,6 +17,7 @@ function CatalogCardSection({ products, requiredLength }) {
           brand={product.brand}
           card={product}
           id={product.id}
+          onCardClick={onCardClick}
           /* isInShoppingCart={product.is_in_shopping_cart} */
         />
       ))}

@@ -10,6 +10,7 @@ export const HTTP_SERVER_ERROR = 500;
 export const HTTP_BAD_REQUEST = 400;
 
 export const HTTP_NOT_AUTHORIZED = 401;
+export const HTTP_NO_CONTENT = 204;
 
 export const PAGE_LIMIT = 12;
 
