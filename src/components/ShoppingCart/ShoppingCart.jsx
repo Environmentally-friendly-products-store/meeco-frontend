@@ -18,6 +18,7 @@ function ShoppingCart({ onCardClick }) {
     totalPrice,
     onIncreaseProductInShoppingCart,
     onDecreaseProductInShoppingCart,
+    onDeleteProductFromShoppingCart,
   } = useContext(ShoppingCartContext);
 
   const onAmountChange = (productId, isIncrease) => {
@@ -26,6 +27,10 @@ function ShoppingCart({ onCardClick }) {
     } else {
       onDecreaseProductInShoppingCart(productId);
     }
+  };
+
+  const onDeleteFromShoppingCart = (productId) => {
+    onDeleteProductFromShoppingCart(productId);
   };
 
   return (
@@ -46,6 +51,7 @@ function ShoppingCart({ onCardClick }) {
                   key={product.id}
                   product={product}
                   onAmountChange={onAmountChange}
+                  onDeleteFromShoppingCart={onDeleteFromShoppingCart}
                   onCardClick={onCardClick}
                 />
               ))}

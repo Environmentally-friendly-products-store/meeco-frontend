@@ -4,7 +4,12 @@ import { NavLink } from 'react-router-dom';
 import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
 
-function ShoppingCardItem({ product, onAmountChange, onCardClick }) {
+function ShoppingCardItem({
+  product,
+  onAmountChange,
+  onDeleteFromShoppingCart,
+  onCardClick,
+}) {
   const { name, brand, id, price_per_unit, amount, preview_image } = product;
   const totalItemPrice = price_per_unit * amount;
 
@@ -54,7 +59,10 @@ function ShoppingCardItem({ product, onAmountChange, onCardClick }) {
         {`${stylizePrice(totalItemPrice)} ₽`}
       </p>
 
-      <button className="shopping-cart__delete-button"></button>
+      <button
+        className="shopping-cart__delete-button"
+        onClick={() => onDeleteFromShoppingCart(id)}
+      ></button>
     </li>
   );
 }

@@ -107,7 +107,7 @@ export default function App() {
     });
   };
 
-  const findProductInShoppingcart = useCallback(
+  const findProductInShoppingСart = useCallback(
     (productId) =>
       shoppingCartContext.shoppingCart.find(
         (product) => product.id === productId
@@ -122,7 +122,7 @@ export default function App() {
         return;
       }
 
-      const productFromCart = findProductInShoppingcart(productId);
+      const productFromCart = findProductInShoppingСart(productId);
       const promise = productFromCart
         ? changeProductQuantityInShoppingCart(
             productId,
@@ -138,7 +138,7 @@ export default function App() {
 
   const onDecreaseProductInShoppingCart = useCallback(
     (productId) => {
-      const productFromCart = findProductInShoppingcart(productId);
+      const productFromCart = findProductInShoppingСart(productId);
       const promise =
         productFromCart.amount > 1
           ? changeProductQuantityInShoppingCart(
@@ -148,6 +148,14 @@ export default function App() {
             )
           : deleteProductFromShoppingCart(productId, token);
 
+      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+    },
+    [token, shoppingCartContext]
+  );
+
+  const onDeleteProductFromShoppingCart = useCallback(
+    (productId) => {
+      const promise = deleteProductFromShoppingCart(productId, token);
       promise.then(() => getShoppingCart(token)).then(setShoppingCart);
     },
     [token, shoppingCartContext]
@@ -220,6 +228,7 @@ export default function App() {
         ...shoppingCartContext,
         onIncreaseProductInShoppingCart,
         onDecreaseProductInShoppingCart,
+        onDeleteProductFromShoppingCart,
       }}
     >
       <ProductsContext.Provider value={productsContext}>

@@ -32,7 +32,7 @@ function Navigation() {
               path={'/shopping-cart'}
               text={'Корзина'}
               image={count ? shoppingCartActiveSvg : shoppingCartSvg}
-              count={count}
+              count={count ? count : ''}
             />
           </li>
         </ul>

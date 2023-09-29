@@ -8,13 +8,16 @@ export const USER_WRONG_TOKEN_MESSAGE =
 // Код ошибки
 export const HTTP_SERVER_ERROR = 500;
 export const HTTP_BAD_REQUEST = 400;
-
+export const HTTP_NO_CONTENT = 204;
 export const HTTP_NOT_AUTHORIZED = 401;
 
 export const PAGE_LIMIT = 12;
 
 // Задать baseUrl по умолчанию локально, либо из env-файла: REACT_APP_BASE_URL - название константы в env-файле
-export const { REACT_APP_BASE_URL: baseUrl = '/api/v1' } = process.env;
+export const {
+  REACT_APP_BASE_URL:
+    baseUrl = 'http://www.ecome.acceleratorpracticum.ru/api/v1',
+} = process.env;
 
 const url = baseUrl.startsWith('http') ? new URL(baseUrl) : {};
 
