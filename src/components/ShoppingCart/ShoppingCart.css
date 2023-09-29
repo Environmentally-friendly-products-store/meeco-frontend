@@ -27,6 +27,7 @@
 }
 
 .shopping-cart__products-block {
+  align-self: start;
   display: flex;
   flex-direction: column;
   border-radius: 12px;

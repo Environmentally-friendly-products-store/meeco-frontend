@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -21,7 +21,6 @@ import Contacts from '../Contacts/Contacts';
 /* import getCurrentCard '../../utils/Api'; */
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
-  getLocalStorageToken,
   removeLocalStorageToken,
   setLocalStorageToken,
 } from '../../utils/localStorage';
@@ -30,7 +29,15 @@ import ConfirmPopup from '../ConfirmPopup/ConfirmPopup';
 import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
-import { getNovelties, getPopularProducts } from '../../utils/productsApi';
+import {
+  addProductToShoppingCart,
+  changeProductQuantityInShoppingCart,
+  deleteProductFromShoppingCart,
+  getNovelties,
+  getPopularProducts,
+  getShoppingCart,
+} from '../../utils/productsApi';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -54,8 +61,6 @@ export default function App() {
     }
   };
 
-  /* const getCatalogData = () => {}; */
-
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
@@ -70,6 +75,7 @@ export default function App() {
       .catch((err)=> console.log(err))
     */
   };
+
   const [currentUser, setCurrentUser] = useState({
     id: '',
     email: '',
@@ -84,11 +90,88 @@ export default function App() {
     popular: [],
     onCardClick: handleCardClick,
   });
+
+  const [shoppingCartContext, setShoppingCartContext] = useState({
+    shoppingCart: [],
+    totalPrice: 0,
+  });
+
+  const setShoppingCart = (shoppingCart) => {
+    const totalPrice = shoppingCart.reduce(
+      (acc, product) => acc + product.amount * product.price_per_unit,
+      0
+    );
+    setShoppingCartContext({
+      shoppingCart,
+      totalPrice,
+    });
+  };
+
+  const findProductInShoppingСart = useCallback(
+    (productId) =>
+      shoppingCartContext.shoppingCart.find(
+        (product) => product.id === productId
+      ),
+    [shoppingCartContext]
+  );
+
+  const onIncreaseProductInShoppingCart = useCallback(
+    (productId) => {
+      if (!token) {
+        handleLoginPopup();
+        return;
+      }
+
+      const productFromCart = findProductInShoppingСart(productId);
+      const promise = productFromCart
+        ? changeProductQuantityInShoppingCart(
+            productId,
+            productFromCart.amount + 1,
+            token
+          )
+        : addProductToShoppingCart(productId, token);
+
+      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+    },
+    [token, shoppingCartContext]
+  );
+
+  const onDecreaseProductInShoppingCart = useCallback(
+    (productId) => {
+      const productFromCart = findProductInShoppingСart(productId);
+      const promise =
+        productFromCart.amount > 1
+          ? changeProductQuantityInShoppingCart(
+              productId,
+              productFromCart.amount - 1,
+              token
+            )
+          : deleteProductFromShoppingCart(productId, token);
+
+      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+    },
+    [token, shoppingCartContext]
+  );
+
+  const onDeleteProductFromShoppingCart = useCallback(
+    (productId) => {
+      const promise = deleteProductFromShoppingCart(productId, token);
+      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+    },
+    [token, shoppingCartContext]
+  );
+
   useEffect(() => {
     // Если карты нет, то взять ее в localStorage
     if (selectedCard.length === 0 && localStorage.getItem('cardPage')) {
       setSelectedCard(JSON.parse(localStorage.getItem('cardPage')));
     }
+    getNovelties().then((novelties) =>
+      setProductsContext((prevState) => ({ ...prevState, novelties }))
+    );
+    getPopularProducts().then((popular) =>
+      setProductsContext((prevState) => ({ ...prevState, popular }))
+    );
   }, []);
 
   const saveToken = ({ token }) => {
@@ -98,28 +181,16 @@ export default function App() {
   };
 
   //Авторизация пользователя
-  const loginUser = ({ password, email }) => {
-    return authorize(email, password)
+  const loginUser = ({ password, email }) =>
+    authorize(email, password)
       .then(saveToken)
       .then(() => handleClosePopup());
-  };
 
   //Регистрация пользователя
-  const registerUser = ({ firstName, lastName, email, password }) => {
-    return register(firstName, lastName, email, password).then(() => {
+  const registerUser = ({ firstName, lastName, email, password }) =>
+    register(firstName, lastName, email, password).then(() => {
       loginUser({ password, email });
     });
-  };
-
-  useEffect(() => {
-    setToken(getLocalStorageToken());
-    getNovelties().then((novelties) =>
-      setProductsContext((prevState) => ({ ...prevState, novelties }))
-    );
-    getPopularProducts().then((popular) =>
-      setProductsContext((prevState) => ({ ...prevState, popular }))
-    );
-  }, []);
 
   useEffect(() => {
     if (!token) {
@@ -133,6 +204,7 @@ export default function App() {
       .catch(() => {
         setIsLoggedIn(false);
       });
+    getShoppingCart(token).then(setShoppingCart);
     // eslint-disable-next-line
   }, [token]);
 
@@ -151,67 +223,79 @@ export default function App() {
   };
 
   return (
-    <ProductsContext.Provider value={productsContext}>
-      <CurrentUserContext.Provider value={currentUser}>
-        <div className="app">
-          <Header />
-          <main>
-            <Routes>
-              <Route
-                path="/"
-                element={<Main onCardClick={handleCardClick} />}
-              />
-              <Route
-                path="/catalog"
-                element={<Catalog onCardClick={handleCardClick} />}
-              />
-              <Route
-                path="/product"
-                element={
-                  <MainProductPage
-                    card={selectedCard}
-                    onButtonClick={handleLoginPopup}
-                    isLoggedIn={isLoggedIn}
-                  />
-                }
-              />
-              <Route path="/shopping-cart" element={<ShoppingCart />} />
-              <Route path="/delivery" element={<Delivery />} />
-              <Route path="/about-us" element={<AboutUs />} />
-              <Route path="/order" element={<Order />} />
-              <Route path="/thanksfororder" element={<ThanksForOrder />} />{' '}
-              <Route
-                path="/profile"
-                element={<Profile onButtonClick={handleConfirmPopup} />}
-              />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            </Routes>
-            <TopScrollBtn />
-          </main>
-          <Footer />
-          <Registration
-            isPopupOpen={isRegistrationPopupOpen}
-            onClosePopup={handleClosePopup}
-            onCloseByOverlay={closePopupByOverlay}
-            handleTogglePopup={handleLoginPopup}
-            registerUser={registerUser}
-          />
-          <Login
-            isPopupOpen={isLoginPopupOpen}
-            onClosePopup={handleClosePopup}
-            onCloseByOverlay={closePopupByOverlay}
-            handleTogglePopup={handleRegistrationPopupOpen}
-            loginUser={loginUser}
-          />
-          <ConfirmPopup
-            isPopupOpen={isConfirmPopupOpen}
-            onClosePopup={handleClosePopup}
-            onCloseByOverlay={closePopupByOverlay}
-            onSubmit={logOut}
-          />
-        </div>
-      </CurrentUserContext.Provider>
-    </ProductsContext.Provider>
+    <ShoppingCartContext.Provider
+      value={{
+        ...shoppingCartContext,
+        onIncreaseProductInShoppingCart,
+        onDecreaseProductInShoppingCart,
+        onDeleteProductFromShoppingCart,
+      }}
+    >
+      <ProductsContext.Provider value={productsContext}>
+        <CurrentUserContext.Provider value={currentUser}>
+          <div className="app">
+            <Header />
+            <main>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Main onCardClick={handleCardClick} />}
+                />
+                <Route
+                  path="/catalog"
+                  element={<Catalog onCardClick={handleCardClick} />}
+                />
+                <Route
+                  path="/product"
+                  element={
+                    <MainProductPage
+                      card={selectedCard}
+                      onButtonClick={handleLoginPopup}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  }
+                />
+                <Route path="/shopping-cart" element={<ShoppingCart />} />
+                <Route path="/delivery" element={<Delivery />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/order" element={<Order />} />
+                <Route
+                  path="/thanksfororder"
+                  element={<ThanksForOrder />}
+                />{' '}
+                <Route
+                  path="/profile"
+                  element={<Profile onButtonClick={handleConfirmPopup} />}
+                />
+                <Route path="/contacts" element={<Contacts />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              </Routes>
+              <TopScrollBtn />
+            </main>
+            <Footer />
+            <Registration
+              isPopupOpen={isRegistrationPopupOpen}
+              onClosePopup={handleClosePopup}
+              onCloseByOverlay={closePopupByOverlay}
+              handleTogglePopup={handleLoginPopup}
+              registerUser={registerUser}
+            />
+            <Login
+              isPopupOpen={isLoginPopupOpen}
+              onClosePopup={handleClosePopup}
+              onCloseByOverlay={closePopupByOverlay}
+              handleTogglePopup={handleRegistrationPopupOpen}
+              loginUser={loginUser}
+            />
+            <ConfirmPopup
+              isPopupOpen={isConfirmPopupOpen}
+              onClosePopup={handleClosePopup}
+              onCloseByOverlay={closePopupByOverlay}
+              onSubmit={logOut}
+            />
+          </div>
+        </CurrentUserContext.Provider>
+      </ProductsContext.Provider>
+    </ShoppingCartContext.Provider>
   );
 }

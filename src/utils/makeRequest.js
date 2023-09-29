@@ -3,6 +3,7 @@ import {
   HTTP_BAD_REQUEST,
   HTTP_NOT_AUTHORIZED,
   HTTP_SERVER_ERROR,
+  HTTP_NO_CONTENT,
   NOT_AUTHORIZED_MESSAGE,
   SERVER_ERROR_MESSAGE,
 } from './constants';
@@ -53,14 +54,17 @@ export const createMakeRequest =
     }
 
     return fetch(`${baseUrl}${url}`, options)
-      .then((response) =>
-        response.json().then((body) => {
+      .then((response) => {
+        if (response.status === HTTP_NO_CONTENT) {
+          return;
+        }
+        return response.json().then((body) => {
           if (response.ok) {
             return body;
           }
           throw new EcomeError(response.status, body);
-        })
-      )
+        });
+      })
       .catch((error) => {
         if (error instanceof EcomeError) {
           throw error;
