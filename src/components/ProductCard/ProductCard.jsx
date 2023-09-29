@@ -7,26 +7,11 @@ import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
 
-/* import {
-  addProductToShoppingCart,
-  changeProductQuantityInShoppingCart,
-} from '../../utils/productsApi'; */
-
-function ProductCard({
-  price,
-  image,
-  name,
-  brand,
-  card,
-  /* amount, */
-  id,
-  isInShoppingCart,
-  onCardClick,
-}) {
-  const { onAddToShoppingCartClick } = useContext(ShoppingCartContext);
+function ProductCard({ price, image, name, brand, card, id, onCardClick }) {
+  const { onIncreaseProductInShoppingCart } = useContext(ShoppingCartContext);
 
   const onAddToShoppingCart = () => {
-    onAddToShoppingCartClick(id);
+    onIncreaseProductInShoppingCart(id);
   };
 
   return (
