@@ -6,44 +6,59 @@ function Recipient() {
   const currentUser = useContext(CurrentUserContext);
 
   return (
-    <div className="recipient">
-      <h2 className="recipient__title">Получатель</h2>
-      <form className="recipient__form">
-        <div className="recipient__field">
-          <label className="recipient__label">Имя</label>
+    <>
+      <div className="recipient">
+        <h2 className="deliveryadress__title">Адрес доставки</h2>
+        <form className="recipient__form">
           <input
             type="text"
-            placeholder="Имя"
-            className="recipient__input"
-            value={currentUser.first_name || ''}
-            disabled={true}
+            placeholder="Город, улица, дом, квартира"
+            className="deliveryadress__input"
           />
-          <span className="recipient__form-error"></span>
-        </div>
-        <div className="recipient__field">
-          <label className="recipient__label">Фамилия</label>
+          <span className="deliveryadress__form-error"></span>
+
+          <h2 className="recipient__title">Получатель</h2>
+          <div>
+            <input
+              type="text"
+              placeholder="Имя"
+              className="recipient__input"
+              value={currentUser.first_name || ''}
+              disabled={true}
+            />
+            <input
+              type="nunber"
+              placeholder="Фамилия"
+              className="recipient__input"
+              value={currentUser.last_name || ''}
+              disabled={true}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="recipient__input"
+              value={currentUser.email || ''}
+              disabled={true}
+            />
+
+            <input
+              type="number"
+              placeholder="Телефон *"
+              className="deliveryadress__input"
+            />
+            <span className="deliveryadress__form-error"></span>
+          </div>
+
+          <h2 className="recipient__title">Комментарий к заказу</h2>
           <input
-            type="nunber"
-            placeholder="Фамилия"
-            className="recipient__input"
-            value={currentUser.last_name || ''}
-            disabled={true}
+            type="text"
+            placeholder="Укажите дополнительную информацию к заказу"
+            className="deliveryadress__input"
           />
-          <span className="recipient__form-error"></span>
-        </div>
-        <div className="recipient__field-email">
-          <label className="recipient__label">Email</label>
-          <input
-            type="email"
-            placeholder="Email"
-            className="recipient__input"
-            value={currentUser.email || ''}
-            disabled={true}
-          />
-          <span className="recipient__form-error"></span>
-        </div>
-      </form>
-    </div>
+          <span className="deliveryadress__form-error"></span>
+        </form>
+      </div>
+    </>
   );
 }
 
