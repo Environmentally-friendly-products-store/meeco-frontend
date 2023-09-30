@@ -3,11 +3,6 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
-import {
-  addCardToShoppingCart,
-  changeQuantityOfCardInShoppingCart,
-  deleteCardFromShoppingCart,
-} from '../../utils/productPageApi';
 import { serverHost } from '../../utils/constants';
 
 function MainProductPage({
@@ -17,12 +12,10 @@ function MainProductPage({
   onButtonChangeClick,
 }) {
   const [mainSlider, setMainSlider] = useState(null);
-  const [counter, setCounter] = useState(card.amount);
   const [isClicked, setIsClicked] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    setCounter(card.amount);
     checkStorage();
   }, [card]);
 
@@ -32,48 +25,20 @@ function MainProductPage({
       localStorage.setItem('cardPage', JSON.stringify(card));
     }
   };
-  // const addToShoppingCardClick = () => {
-  //   if (!isLoggedIn) {
-  //     onButtonClick();
-  //     return;
-  //   }
-  //   // setIsClicked(true);
-  //   // setCounter(1);
-  //   addCardToShoppingCart(card.id)
-  //     .then((card) => {
-  //       setCounter(card.amount);
-  //     })
-  //     .catch((err)=> console.log(err))
-  // };
 
   const onChangeCounter = (operator) => {
     if (card.amount - 1 === 0 && operator === '-') {
       onButtonDeleteClick(card);
-      /* Api удаления товара из корзины:
-      deleteCardFormShoppingCart(card.id)
-        .then(() => setCounter(null))
-        .catch((err) => console.log(err))
-      */
-      // setCounter(null);
+      setIsClicked(true);
       return;
     }
     switch (operator) {
       case '+':
         onButtonChangeClick(card, card.amount + 1);
-        /* Api изменения количества товара в корзине:
-        changeQuantityOfCardInShoppingCart(card.id, counter + 1)
-          .then((res) => setCounter({ amount }))
-          .catch((err) => console.log(err))
-        */
-        return setCounter(counter + 1);
+        return;
       case '-':
         onButtonChangeClick(card, card.amount - 1);
-        /* Api изменения количества товара в корзине:
-          changeQuantityOfCardInShoppingCart(card.id, counter - 1)
-            .then((res) => setCounter({ amount }))
-            .catch((err) => console.log(err))
-        */
-        return setCounter(counter - 1);
+        return;
       default:
         return;
     }
@@ -140,8 +105,8 @@ function MainProductPage({
               className="product-page__main-slider"
             >
               {card.images &&
-                card.images.map((image) => (
-                  <div className="product-page__block">
+                card.images.map((image, index) => (
+                  <div className="product-page__block" key={index}>
                     <img
                       src={`${serverHost}${image.big_image}`}
                       alt={'Фотография товара'}
@@ -164,7 +129,8 @@ function MainProductPage({
             <div className="product-page__string">
               <div
                 className={`product-page__counter ${
-                  card.amount === 0 && `product-page__counter_inactive`
+                  (card.amount === 0 || !card.amount) &&
+                  `product-page__counter_inactive`
                 }`}
               >
                 <button
@@ -179,7 +145,6 @@ function MainProductPage({
                   onClick={() => onChangeCounter('+')}
                 ></button>
               </div>
-              {/* Проверка card.is_in_shopping_cart*/}
               {card.is_in_shopping_cart ? (
                 <Link
                   to="/shopping-cart"

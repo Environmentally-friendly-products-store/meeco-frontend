@@ -6,7 +6,6 @@ import {
   HTTP_NO_CONTENT,
   NOT_AUTHORIZED_MESSAGE,
   SERVER_ERROR_MESSAGE,
-  HTTP_NO_CONTENT,
 } from './constants';
 
 // Функция-коструктор для ошибок

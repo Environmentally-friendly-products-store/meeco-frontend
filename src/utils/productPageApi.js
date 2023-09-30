@@ -3,8 +3,8 @@ import { baseUrl } from './constants';
 
 const makeRequest = createMakeRequest(baseUrl);
 
-export const getCurrentCard = (id) => {
-  return makeRequest(`/products/${id}/`, 'GET', null);
+export const getCurrentCard = (id, token = null) => {
+  return makeRequest(`/products/${id}/`, 'GET', null, token);
 };
 
 export const addCardToShoppingCart = (id, token) => {

@@ -25,7 +25,6 @@ function ProductCard({ price, image, name, brand, card, id, onCardClick }) {
           className="product-card__image"
           src={defineImage(image)}
           alt="название карточки"
-          onClick={() => onCardClick(card)}
         />
       </NavLink>
 

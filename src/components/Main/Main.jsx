@@ -9,11 +9,11 @@ export default function Main({ onCardClick }) {
     <>
       <Promo />
       <CardSection title="Новинки" isUsedOnMainPage={true}>
-        <Novelties />
+        <Novelties onCardClick={onCardClick} />
       </CardSection>
       <AboutProject />
       <CardSection title="Популярные товары" isUsedOnMainPage={true}>
-        <PopularProducts />
+        <PopularProducts onCardClick={onCardClick} />
       </CardSection>
     </>
   );

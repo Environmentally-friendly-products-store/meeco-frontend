@@ -45,12 +45,6 @@ import {
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState({
-    id: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-  });
   const navigate = useRef(useNavigate());
 
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
@@ -76,17 +70,21 @@ export default function App() {
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
-  // Функции по передаче коррекного товара MainProductPage при нажатии на товар в каталогах/главной странице
+
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (card) => {
-    getCurrentCard(card.id)
-      .then((product) => {
-        setSelectedCard(product);
-      })
-      .catch((err) => console.log(err));
+    if (isLoggedIn) {
+      getCurrentCard(card.id, token)
+        .then((product) => setSelectedCard(product))
+        .catch((err) => console.log(err));
+    } else {
+      getCurrentCard(card.id)
+        .then((product) => setSelectedCard(product))
+        .catch((err) => console.log(err));
+    }
   };
 
-  const addProductToShoppingCart = (card) => {
+  const addProduct = (card) => {
     if (!isLoggedIn) {
       handleLoginPopup();
       return;
@@ -99,12 +97,25 @@ export default function App() {
             return updatedCard;
           });
         })
+        .then(() => getShoppingCart(token))
+        .then(setShoppingCart)
         .catch((err) => console.log(err));
     }
   };
 
-  const deleteProductFromShoppingCart = (card) => {
-    deleteCardFromShoppingCart(card.id, token);
+  const deleteProduct = (card) => {
+    deleteCardFromShoppingCart(card.id, token)
+      .then(() =>
+        setSelectedCard((product) => {
+          product.amount = 0;
+          product.is_in_shopping_cart = false;
+          localStorage.setItem('cardPage', JSON.stringify(product));
+          return product;
+        })
+      )
+      .then(() => getShoppingCart(token))
+      .then(setShoppingCart)
+      .catch((err) => console.log(err));
   };
 
   const changeProductQuantity = (card, amount) => {
@@ -116,12 +127,23 @@ export default function App() {
           return updatedCard;
         });
       })
+      .then(() => getShoppingCart(token))
+      .then(setShoppingCart)
       .catch((err) => console.log(err));
   };
+
+  const [currentUser, setCurrentUser] = useState({
+    id: '',
+    email: '',
+    first_name: '',
+    last_name: '',
+    onClickRegistration: handleRegistrationPopupOpen,
+    onClickLogin: handleLoginPopup,
+  });
+
   const [productsContext, setProductsContext] = useState({
     novelties: [],
     popular: [],
-    onCardClick: handleCardClick,
   });
 
   const [shoppingCartContext, setShoppingCartContext] = useState({
@@ -283,7 +305,9 @@ export default function App() {
                   element={
                     <MainProductPage
                       card={selectedCard}
-                      onButtonClick={handleLoginPopup}
+                      onButtonAddClick={addProduct}
+                      onButtonDeleteClick={deleteProduct}
+                      onButtonChangeClick={changeProductQuantity}
                       isLoggedIn={isLoggedIn}
                     />
                   }
