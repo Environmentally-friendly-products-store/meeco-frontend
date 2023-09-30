@@ -1,6 +1,7 @@
 import './Catalog.css';
 
 import { useState, useEffect } from 'react';
+import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 
 import { getAllCategories, getProducts } from '../../utils/productsApi';
 
@@ -25,6 +26,8 @@ function Catalog({ onCardClick }) {
   const [categories, setCategories] = useState([]);
 
   const [products, setProducts] = useState([]);
+
+  const [activeItem, setActiveItem] = useState('Все');
 
   const setInitialCategories = async () => {
     try {
@@ -93,34 +96,40 @@ function Catalog({ onCardClick }) {
     }
   };
 
+  const setItem = (item) => {
+    setActiveItem(item);
+  };
+
   useEffect(() => {
     setInitialCategories();
     setInitialProducts();
   }, []);
 
   return (
-    <main className="catalog">
-      <Breadcrumbs />
+    <ActiveItemContext.Provider value={{ activeItem, setItem }}>
+      <main className="catalog">
+        <Breadcrumbs />
 
-      <FiltersSection
-        categories={categories}
-        onFilterButtonClick={onFilterButtonClick}
-        onResetClick={onResetClick}
-      />
-
-      <CardSection isUsedOnMainPage={false}>
-        <CatalogCardSection
-          isUsedOnMainPage={false}
-          requiredLength={PAGE_LIMIT * counter}
-          products={products}
-          onCardClick={onCardClick}
+        <FiltersSection
+          categories={categories}
+          onFilterButtonClick={onFilterButtonClick}
+          onResetClick={onResetClick}
         />
-      </CardSection>
-      {(counter + 1) * PAGE_LIMIT <= productsAmount &&
-        products.length % PAGE_LIMIT === 0 && (
-          <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
-        )}
-    </main>
+
+        <CardSection isUsedOnMainPage={false}>
+          <CatalogCardSection
+            isUsedOnMainPage={false}
+            requiredLength={PAGE_LIMIT * counter}
+            products={products}
+            onCardClick={onCardClick}
+          />
+        </CardSection>
+        {(counter + 1) * PAGE_LIMIT <= productsAmount &&
+          products.length % PAGE_LIMIT === 0 && (
+            <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
+          )}
+      </main>
+    </ActiveItemContext.Provider>
   );
 }
 

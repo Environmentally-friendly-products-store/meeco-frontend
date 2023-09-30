@@ -44,7 +44,7 @@ function ProductCard({ price, image, name, brand, card, id, onCardClick }) {
 
       <button
         type="button"
-        className="product-card__product-item  product-card__add-to-cart-button selectable-button"
+        className="product-card__product-item  product-card__add-to-cart-button"
         onClick={onAddToShoppingCart}
       >
         В корзину
