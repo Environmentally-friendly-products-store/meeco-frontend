@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import { serverHost } from '../../utils/constants';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function MainProductPage({
   card,
   onButtonAddClick,
   onButtonDeleteClick,
   onButtonChangeClick,
+  onCardClick,
 }) {
   const [mainSlider, setMainSlider] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const location = useLocation();
+  const { id } = useParams();
+  const { email } = useContext(CurrentUserContext);
 
   useEffect(() => {
-    checkStorage();
-  }, [card]);
-
-  // Для хранения карточки товара в localStorage
-  const checkStorage = () => {
-    if (card.length !== 0) {
-      localStorage.setItem('cardPage', JSON.stringify(card));
+    if (location.pathname.includes('/product')) {
+      onCardClick(id);
     }
-  };
+  }, [location.pathname, email]);
 
   const onChangeCounter = (operator) => {
     if (card.amount - 1 === 0 && operator === '-') {

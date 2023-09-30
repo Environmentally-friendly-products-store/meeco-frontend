@@ -7,7 +7,7 @@ import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
 
-function ProductCard({ price, image, name, brand, card, id, onCardClick }) {
+function ProductCard({ price, image, name, brand, id }) {
   const { onIncreaseProductInShoppingCart } = useContext(ShoppingCartContext);
 
   const onAddToShoppingCart = () => {
@@ -18,8 +18,7 @@ function ProductCard({ price, image, name, brand, card, id, onCardClick }) {
     <article className="product-card product-card">
       <NavLink
         className="product-card__link selectable-button"
-        to="/product"
-        onClick={() => onCardClick(card)}
+        to={`/product/${id}`}
       >
         <img
           className="product-card__image"
