@@ -34,7 +34,7 @@ export const getProducts = (data, token) => {
  * Запрашивает данные о конкретном товаре по id
  */
 export const getProductById = (productId) => {
-  makeRequest(`/products/${productId}`, 'GET');
+  makeRequest(`/products/${productId}/`, 'GET');
 };
 
 /**

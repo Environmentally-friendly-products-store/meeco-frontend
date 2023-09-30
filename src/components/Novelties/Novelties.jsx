@@ -3,8 +3,8 @@ import ProductCard from '../ProductCard/ProductCard';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
 
-function Novelties() {
-  const { novelties, onCardClick } = useContext(ProductsContext);
+function Novelties({ onCardClick }) {
+  const { novelties } = useContext(ProductsContext);
 
   return (
     <article className="novelties">

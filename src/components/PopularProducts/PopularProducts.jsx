@@ -4,8 +4,8 @@ import Carousel from '../Carousel/Carousel';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
 
-function PopularProducts() {
-  const { popular, onCardClick } = useContext(ProductsContext);
+function PopularProducts({ onCardClick }) {
+  const { popular } = useContext(ProductsContext);
 
   return (
     <article className="popular-products">

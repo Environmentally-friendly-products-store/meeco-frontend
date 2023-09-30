@@ -3,20 +3,25 @@ import { baseUrl } from './constants';
 
 const makeRequest = createMakeRequest(baseUrl);
 
-export const getCurrentCard = (id) => {
-  makeRequest(`/products/${id}`, 'GET', null);
+export const getCurrentCard = (id, token = null) => {
+  return makeRequest(`/products/${id}/`, 'GET', null, token);
 };
 
-export const addCardToShoppingCart = (id) => {
-  makeRequest(`/product/${id}/shopping_cart`, 'POST', null);
+export const addCardToShoppingCart = (id, token) => {
+  return makeRequest(`/products/${id}/shopping_cart/`, 'POST', null, token);
 };
 
-export const changeAmountCardToShoppingCart = (id, count) => {
-  makeRequest(`/product/${id}/shopping_cart`, 'PATCH', {
-    amount: count,
-  });
+export const changeAmountCardToShoppingCart = (id, count, token) => {
+  return makeRequest(
+    `/products/${id}/shopping_cart/`,
+    'PATCH',
+    {
+      amount: count,
+    },
+    token
+  );
 };
 
-export const deleteCardToShoppingCart = (id) => {
-  makeRequest(`/product/${id}/shopping_cart`, 'DELETE', null);
+export const deleteCardFromShoppingCart = (id, token) => {
+  return makeRequest(`/products/${id}/shopping_cart/`, 'DELETE', null, token);
 };
