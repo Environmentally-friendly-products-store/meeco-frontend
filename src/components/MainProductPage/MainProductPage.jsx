@@ -19,7 +19,6 @@ function MainProductPage({
   const location = useLocation();
   const { id } = useParams();
   const { email } = useContext(CurrentUserContext);
-
   useEffect(() => {
     if (location.pathname.includes('/product')) {
       onCardClick(id);
@@ -52,7 +51,6 @@ function MainProductPage({
     infinite: true,
     autoplaySpeed: 5000,
     speed: 1000,
-    beforeChange: (current, next) => setSelectedIndex(next),
   };
 
   return (
@@ -83,7 +81,7 @@ function MainProductPage({
           <div className="product-page__sliders">
             <div className="pruduct-page__nav-images">
               {card.images &&
-                card.images.map((image, index) => (
+                card.images.slice(0, 3).map((image, index) => (
                   <img
                     key={index}
                     src={`${serverHost}${image.preview_image}`}

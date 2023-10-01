@@ -1,12 +1,6 @@
 import './App.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  Route,
-  Routes,
-  useNavigate,
-  useLocation,
-  useParams,
-} from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
