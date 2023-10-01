@@ -1,6 +1,6 @@
 import './Catalog.css';
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 
 import { getAllCategories, getProducts } from '../../utils/productsApi';
@@ -13,47 +13,21 @@ import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
 import { PAGE_LIMIT } from '../../utils/constants';
 
-import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
-
-const FILTERS_TO_GET_All_PRODUCTS = {
-  page: 1,
-  limit: PAGE_LIMIT,
-};
-
 function Catalog({ onCardClick }) {
   const [counter, setCounter] = useState(1);
 
   const [productsAmount, setProductsAmount] = useState(0);
 
-  const [filters, setFilters] = useState(FILTERS_TO_GET_All_PRODUCTS);
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: PAGE_LIMIT,
+  });
 
   const [categories, setCategories] = useState([]);
 
   const [products, setProducts] = useState([]);
 
-  const [activeItem, setActiveItem] = useState('');
-
-  const { isCatalogButtonClicked } = useContext(IsCatalogButtonClickedContext);
-
-  const getProductFunc = async (query, counter, item) => {
-    try {
-      if (item) {
-        setItem(item);
-      }
-
-      if (counter) {
-        setCounter(counter);
-      }
-      setFilters(query);
-      const response = await getProducts(query);
-      const newProductsAmount = response.count;
-      setProductsAmount(newProductsAmount);
-      const newProducts = response.results;
-      setProducts(newProducts);
-    } catch (err) {
-      console.log(err.error.detail);
-    }
-  };
+  const [activeItem, setActiveItem] = useState('Все');
 
   const setInitialCategories = async () => {
     try {
@@ -64,21 +38,50 @@ function Catalog({ onCardClick }) {
     }
   };
 
-  const setInitialProducts = (filters) => {
-    return getProductFunc(filters, null, 'Все');
+  const setInitialProducts = async () => {
+    try {
+      const response = await getProducts(filters);
+      const initialProductsAmount = response.count;
+      setProductsAmount(initialProductsAmount);
+      const initialProducts = response.results;
+      setProducts(initialProducts);
+    } catch (err) {
+      console.log(err.error.detail);
+    }
   };
 
-  const onFilterButtonClick = (name) => {
-    return getProductFunc({ ...filters, category: name }, 1);
+  const onFilterButtonClick = async (name) => {
+    try {
+      setCounter(1);
+      setFilters({ ...filters, category: name });
+      const response = await getProducts({ ...filters, category: name });
+      const newProductsAmount = response.count;
+      setProductsAmount(newProductsAmount);
+      const newProducts = response.results;
+      setProducts(newProducts);
+    } catch (err) {
+      console.log(err.error.detail);
+    }
   };
 
   const onResetClick = async () => {
     try {
       setCounter(1);
-      setFilters(FILTERS_TO_GET_All_PRODUCTS);
-      setInitialProducts(FILTERS_TO_GET_All_PRODUCTS);
+      setFilters({
+        page: 1,
+        limit: PAGE_LIMIT,
+      });
+      const response = await getProducts({
+        page: 1,
+        limit: PAGE_LIMIT,
+      });
+
+      const newProductsAmount = response.count;
+      setProductsAmount(newProductsAmount);
+      const allProducts = response.results;
+      setProducts(allProducts);
     } catch (err) {
-      console.log(err);
+      console.log(err.error.detail);
     }
   };
 
@@ -99,8 +102,8 @@ function Catalog({ onCardClick }) {
 
   useEffect(() => {
     setInitialCategories();
-    setInitialProducts(FILTERS_TO_GET_All_PRODUCTS);
-  }, [isCatalogButtonClicked]);
+    setInitialProducts();
+  }, []);
 
   return (
     <ActiveItemContext.Provider value={{ activeItem, setItem }}>

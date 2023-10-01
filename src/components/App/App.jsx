@@ -44,8 +44,6 @@ import {
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
-import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
-
 export default function App() {
   const navigate = useRef(useNavigate());
 
@@ -152,8 +150,6 @@ export default function App() {
     shoppingCart: [],
     totalPrice: 0,
   });
-
-  const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
 
   const setShoppingCart = (shoppingCart) => {
     const totalPrice = shoppingCart.reduce(
@@ -292,73 +288,69 @@ export default function App() {
     >
       <ProductsContext.Provider value={productsContext}>
         <CurrentUserContext.Provider value={currentUser}>
-          <IsCatalogButtonClickedContext.Provider
-            value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
-          >
-            <div className="app">
-              <Header />
-              <main>
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<Main onCardClick={handleCardClick} />}
-                  />
-                  <Route
-                    path="/catalog"
-                    element={<Catalog onCardClick={handleCardClick} />}
-                  />
-                  <Route
-                    path="/product"
-                    element={
-                      <MainProductPage
-                        card={selectedCard}
-                        onButtonAddClick={addProduct}
-                        onButtonDeleteClick={deleteProduct}
-                        onButtonChangeClick={changeProductQuantity}
-                        isLoggedIn={isLoggedIn}
-                      />
-                    }
-                  />
-                  <Route path="/shopping-cart" element={<ShoppingCart />} />
-                  <Route path="/delivery" element={<Delivery />} />
-                  <Route path="/about-us" element={<AboutUs />} />
-                  <Route path="/order" element={<Order />} />
-                  <Route
-                    path="/thanksfororder"
-                    element={<ThanksForOrder />}
-                  />{' '}
-                  <Route
-                    path="/profile"
-                    element={<Profile onButtonClick={handleConfirmPopup} />}
-                  />
-                  <Route path="/contacts" element={<Contacts />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                </Routes>
-                <TopScrollBtn />
-              </main>
-              <Footer />
-              <Registration
-                isPopupOpen={isRegistrationPopupOpen}
-                onClosePopup={handleClosePopup}
-                onCloseByOverlay={closePopupByOverlay}
-                handleTogglePopup={handleLoginPopup}
-                registerUser={registerUser}
-              />
-              <Login
-                isPopupOpen={isLoginPopupOpen}
-                onClosePopup={handleClosePopup}
-                onCloseByOverlay={closePopupByOverlay}
-                handleTogglePopup={handleRegistrationPopupOpen}
-                loginUser={loginUser}
-              />
-              <ConfirmPopup
-                isPopupOpen={isConfirmPopupOpen}
-                onClosePopup={handleClosePopup}
-                onCloseByOverlay={closePopupByOverlay}
-                onSubmit={logOut}
-              />
-            </div>
-          </IsCatalogButtonClickedContext.Provider>
+          <div className="app">
+            <Header />
+            <main>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Main onCardClick={handleCardClick} />}
+                />
+                <Route
+                  path="/catalog"
+                  element={<Catalog onCardClick={handleCardClick} />}
+                />
+                <Route
+                  path="/product"
+                  element={
+                    <MainProductPage
+                      card={selectedCard}
+                      onButtonAddClick={addProduct}
+                      onButtonDeleteClick={deleteProduct}
+                      onButtonChangeClick={changeProductQuantity}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  }
+                />
+                <Route path="/shopping-cart" element={<ShoppingCart />} />
+                <Route path="/delivery" element={<Delivery />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/order" element={<Order />} />
+                <Route
+                  path="/thanksfororder"
+                  element={<ThanksForOrder />}
+                />{' '}
+                <Route
+                  path="/profile"
+                  element={<Profile onButtonClick={handleConfirmPopup} />}
+                />
+                <Route path="/contacts" element={<Contacts />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              </Routes>
+              <TopScrollBtn />
+            </main>
+            <Footer />
+            <Registration
+              isPopupOpen={isRegistrationPopupOpen}
+              onClosePopup={handleClosePopup}
+              onCloseByOverlay={closePopupByOverlay}
+              handleTogglePopup={handleLoginPopup}
+              registerUser={registerUser}
+            />
+            <Login
+              isPopupOpen={isLoginPopupOpen}
+              onClosePopup={handleClosePopup}
+              onCloseByOverlay={closePopupByOverlay}
+              handleTogglePopup={handleRegistrationPopupOpen}
+              loginUser={loginUser}
+            />
+            <ConfirmPopup
+              isPopupOpen={isConfirmPopupOpen}
+              onClosePopup={handleClosePopup}
+              onCloseByOverlay={closePopupByOverlay}
+              onSubmit={logOut}
+            />
+          </div>
         </CurrentUserContext.Provider>
       </ProductsContext.Provider>
     </ShoppingCartContext.Provider>
