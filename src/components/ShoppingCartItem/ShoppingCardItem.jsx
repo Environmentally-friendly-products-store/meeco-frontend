@@ -8,7 +8,6 @@ function ShoppingCardItem({
   product,
   onAmountChange,
   onDeleteFromShoppingCart,
-  onCardClick,
 }) {
   const { name, brand, id, price_per_unit, amount, preview_image } = product;
   const totalItemPrice = price_per_unit * amount;
@@ -17,8 +16,7 @@ function ShoppingCardItem({
     <li className="shopping-cart__product">
       <NavLink
         className="shopping-cart__link selectable-button"
-        to="/product"
-        onClick={() => onCardClick({ ...product, amount })}
+        to={`/product/${id}`}
       >
         <img
           className="shopping-cart__product-image"

@@ -25,6 +25,12 @@ function MainProductPage({
     }
   }, [location.pathname, email]);
 
+  useEffect(() => {
+    if (card && mainSlider) {
+      mainSlider.slickGoTo(0);
+    }
+  }, [card]);
+
   const onChangeCounter = (operator) => {
     if (card.amount - 1 === 0 && operator === '-') {
       onButtonDeleteClick(card);
@@ -51,6 +57,7 @@ function MainProductPage({
     infinite: true,
     autoplaySpeed: 5000,
     speed: 1000,
+    initialSlide: selectedIndex,
   };
 
   return (
