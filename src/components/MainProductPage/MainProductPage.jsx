@@ -26,7 +26,6 @@ function MainProductPage({
   }, [location.pathname, email]);
 
   useEffect(() => {
-    console.log(card);
     if (card && mainSlider) {
       mainSlider.slickGoTo(0);
     }
