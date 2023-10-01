@@ -41,10 +41,7 @@ function YourOrder() {
         <p className="yourorder__total-text">Итого</p>
         <p className="yourorder__total-summ">{totalPrice} &#8381;</p>
       </div>
-      <button
-        onClick={handleButtonClick}
-        className="yourorder__button selectable-button"
-      >
+      <button onClick={handleButtonClick} className="yourorder__button">
         Подтвердить заказ
       </button>
       <p className="yourorder__politic">
