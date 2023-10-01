@@ -64,7 +64,7 @@ export const deleteProductFromShoppingCart = (productId, token) =>
  * Получение новинок товаров
  */
 export const getShoppingCart = (token) => {
-  const data = { is_in_shopping_cart: 1 };
+  const data = { is_in_shopping_cart: 1, limit: 99999 };
   return getProducts(data, token).then(getResults);
 };
 
