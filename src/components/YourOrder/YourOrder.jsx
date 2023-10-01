@@ -1,8 +1,7 @@
 import OrderProduct from '../OrderProduct/OrderProduct';
 import './YourOrder.css';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 function YourOrder() {
@@ -42,10 +41,7 @@ function YourOrder() {
         <p className="yourorder__total-text">Итого</p>
         <p className="yourorder__total-summ">{totalPrice} &#8381;</p>
       </div>
-      <button
-        onClick={handleButtonClick}
-        className="yourorder__button selectable-button"
-      >
+      <button onClick={handleButtonClick} className="yourorder__button">
         Подтвердить заказ
       </button>
       <p className="yourorder__politic">
@@ -53,6 +49,7 @@ function YourOrder() {
         <Link
           className="yourorder__politic-text selectable-link"
           to="/privacy-policy"
+          target="_blank"
         >
           Политикой конфиденциальности
         </Link>{' '}

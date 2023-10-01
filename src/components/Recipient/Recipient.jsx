@@ -10,14 +10,15 @@ function Recipient() {
       <form className="recipient__form">
         <div className="recipient__deliveryadress">
           <h2 className="recipient__title">Адрес доставки</h2>
-          <input
-            type="text"
-            placeholder="Город, улица, дом, квартира"
-            className="recipient__input"
-          />
-          <span className="recipient__form-error"></span>
-        </div>
 
+          <div className="recipient__field-container">
+            <input type="text" className="recipient__input" required />
+            <label className="recipient__field-placeholder">
+              Город, улица, дом, квартира
+            </label>
+            <span className="recipient__form-error"></span>
+          </div>
+        </div>
         <div className="recipient__recipient">
           <h2 className="recipient__title">Получатель</h2>
           <div className="recipient__field">
@@ -42,23 +43,28 @@ function Recipient() {
               value={currentUser.email || ''}
               disabled={true}
             />
-
-            <input
-              type="number"
-              placeholder="Телефон *"
-              className="recipient__input"
-            />
-            <span className="recipient__form-error"></span>
+            <div className="recipient__field-container">
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                className="recipient__input"
+              />
+              <label className="recipient__field-placeholder">Телефон *</label>
+              <span className="recipient__form-error"></span>
+            </div>
           </div>
         </div>
 
         <div className="recipient__comment">
           <h2 className="recipient__title">Комментарий к заказу</h2>
-          <input
-            type="text"
-            placeholder="Укажите дополнительную информацию к заказу"
-            className="recipient__input"
-          />
+          <div className="recipient__field-container">
+            <input type="text" className="recipient__input" />
+            <label className="recipient__field-placeholder">
+              Укажите дополнительную информацию к заказу
+            </label>
+          </div>
         </div>
       </form>
     </div>
