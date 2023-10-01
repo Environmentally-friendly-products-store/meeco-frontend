@@ -7,7 +7,6 @@ export const sortProducts = (products, requiredLength) => {
     }
 
     result = [...result, products[i]];
-    result.sort((prev, next) => prev.name.localeCompare(next.name));
   }
 
   return result;
