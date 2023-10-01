@@ -1,19 +1,9 @@
 import OrderProduct from '../OrderProduct/OrderProduct';
 import './YourOrder.css';
-import image from '../../images/product_card_filler_image_s.jpg';
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-// import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
 import { useNavigate } from 'react-router-dom';
-import defineImage from '../../utils/functions/defineImage';
-import stylizePrice from '../../utils/functions/stylizePrice';
-
-import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
-import EmptyCart from '../EmptyCart/EmptyCart';
-
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
-
-/* Массив-затычка  из корзины*/
 
 function YourOrder() {
   const navigate = useNavigate();
@@ -27,7 +17,6 @@ function YourOrder() {
     totalPrice,
     onIncreaseProductInShoppingCart,
     onDecreaseProductInShoppingCart,
-    onDeleteProductFromShoppingCart,
   } = useContext(ShoppingCartContext);
 
   const onAmountChange = (productId, isIncrease) => {
@@ -49,7 +38,6 @@ function YourOrder() {
           />
         ))}
       </ul>
-
       <div className="yourorder__total">
         <p className="yourorder__total-text">Итого</p>
         <p className="yourorder__total-summ">{totalPrice} &#8381;</p>

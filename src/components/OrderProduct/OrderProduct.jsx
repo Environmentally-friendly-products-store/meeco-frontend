@@ -1,14 +1,8 @@
 import './OrderProduct.css';
-import { useState } from 'react';
 import defineImage from '../../utils/functions/defineImage';
 
-function OrderProduct({
-  product,
-  onAmountChange,
-
-  onCardClick,
-}) {
-  const { name, brand, id, price_per_unit, amount, preview_image } = product;
+function OrderProduct({ product }) {
+  const { name, price_per_unit, amount, preview_image } = product;
   const totalItemPrice = price_per_unit * amount;
 
   return (

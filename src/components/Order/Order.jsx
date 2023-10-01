@@ -12,8 +12,9 @@ function Order() {
           <img className="order__arrow" src={arrowleft} alt="Стрелка" />
           Вернуться в корзину
         </Link>
-        <h1 className="order__title">Оформление заказа</h1>
       </div>
+      <h1 className="order__title">Оформление заказа</h1>
+
       <div className="order__content">
         <Recipient />
         <YourOrder />

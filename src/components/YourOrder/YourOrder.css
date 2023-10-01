@@ -1,11 +1,14 @@
 .yourorder {
   display: flex;
-  /* max-width: 548px; */
+  width: 548px;
+  flex-basis: auto;
   flex-direction: column;
   align-items: stretch;
   border-radius: 6px;
   border: 1px solid var(--black-300, #cbcbcb);
   background: var(--White, #fff);
+  margin-top: 47px;
+  height: fit-content;
 }
 
 .yourorder__title {
@@ -13,19 +16,16 @@
   font-feature-settings:
     'clig' off,
     'liga' off;
-  /* Button/Large */
   font-family: Mulish;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 32px;
-  /* 133.333% */
   margin: 24px 0 0 24px;
 }
 
 .yourorder__list {
   padding: 0;
-  /* max-width: 500px; */
 }
 
 .yourorder__total {
@@ -53,12 +53,11 @@
   font-feature-settings:
     'clig' off,
     'liga' off;
-  /* Text/18px/Semibold */
-  font-family: Inter;
-  font-size: 18px;
+  font-family: Mulish;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 30px;
+  font-weight: 700;
+  line-height: 32px;
   /* 166.667% */
 }
 

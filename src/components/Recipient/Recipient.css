@@ -1,13 +1,17 @@
 .recipient {
   display: flex;
-  max-width: 778px;
+  width: 690px;
+  flex-basis: auto;
   flex-direction: column;
-  align-items: flex-start;
   border-radius: 6px;
   background: var(--White, #fff);
-  grid-row-start: 3;
-  grid-column-start: 1;
-  margin: -65px 0 0 0px;
+  margin: 0px 0 0 0px;
+}
+
+.recipient__deliveryadress {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
 
 .recipient__title {
@@ -16,168 +20,63 @@
     'clig' off,
     'liga' off;
   /* Button/Large */
-  font-family: Space Grotesk;
-  font-size: 22px;
+  font-family: Mulish;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 34px;
-  margin: 24px 0 0 0px;
+  font-weight: 600;
+  line-height: 24px;
+  margin: 4px 0 20px 0px;
+}
+
+.recipient__recipient {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0 28px 0;
 }
 
 .recipient__form {
   display: flex;
   flex-direction: column;
-
-  /* display: grid;
-  grid-template-columns: 350px 350px;
-  grid-template-rows: auto auto;
-  column-gap: 32px; */
-  max-width: 780px;
-  margin: -22 24px 0 0px;
+  max-width: 664px;
+  margin: 0 24px 0 0px;
 }
 
 .recipient__field {
-  /* display: flex;
-  flex-direction: column; */
   display: grid;
-  grid-template-columns: 350px 350px;
+  grid-template-columns: auto auto;
   grid-template-rows: auto auto;
   column-gap: 32px;
-  width: 349px;
-}
-
-.recipient__field-email {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  width: 732px;
-}
-
-.recipient__label {
-  color: var(--Text-Blue, #3e3e59);
-  font-feature-settings:
-    'clig' off,
-    'liga' off;
-  /* H-3 */
-  font-family: Space Grotesk;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px;
-  /* 150% */
-  margin: 24px 0 8px 0;
+  max-width: 664px;
+  margin: 0px 0 -20px 0;
 }
 
 .recipient__input {
   width: -webkit-fill-available;
-  height: 48px;
+  height: 68px;
   display: flex;
   align-self: stretch;
   border-radius: 6px;
   border: 1px solid var(--black-300, #cbcbcb);
   background: var(--White, #fff);
-  margin: 8px 0 24px 0;
-  padding-left: 16px;
+  margin: 0px 0 24px 0;
+  padding: 0 0 0 16px;
 }
 
-.deliveryadress__input::placeholder {
-  color: var(--black-400, #a7a7a7);
-  /* Body */
-  font-family: Space Grotesk;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-  /* 150% */
+.recipient__input:last-child {
+  height: 92px;
 }
 
-.deliveryadress {
-  display: flex;
-  /* max-width: 778px; */
-  flex-direction: column;
-  align-items: flex-start;
-  border-radius: 6px;
-  background: var(--White, #fff);
-}
-
-.deliveryadress__title {
-  color: var(--black-900, #121212);
-  font-feature-settings:
-    'clig' off,
-    'liga' off;
-  font-family: Space Grotesk;
-  font-size: 22px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 34px;
-  margin: 0px 0 0px 0px;
-}
-
-.deliveryadress__form {
+.recipient__comment {
   display: flex;
   flex-direction: column;
-  margin: 0 0 0 24px;
-  width: 95%;
-}
-
-.deliveryadress__label {
-  color: var(--Text-Blue, #3e3e59);
-  font-feature-settings:
-    'clig' off,
-    'liga' off;
-  /* H-3 */
-  font-family: Space Grotesk;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px;
-  /* 150% */
-  max-width: 100%;
-}
-
-.deliveryadress__input {
-  /* max-width: 697px; */
-  height: 21px;
-  display: flex;
-  gap: 8px;
-  align-self: stretch;
-  border-radius: 6px;
-  border: 1px solid var(--black-300, #cbcbcb);
-  background: var(--White, #fff);
-  margin: 8px 0 24px 0;
-  padding: 12px 16px;
-}
-
-/* .deliveryadress__input:last-of-type {
-  height: 69px;
-} */
-
-.deliveryadress__input::placeholder {
-  color: var(--black-400, #a7a7a7);
-  /* Body */
-  font-family: Space Grotesk;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-  /* 150% */
-}
-
-.deliveryadress__input:last-of-type::placeholder {
-  line-height: 20px;
-  transform: translateY(-32.5px);
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
   margin: 0;
 }
 
-input[type='number'] {
+/* input[type='number'] {
   -moz-appearance: textfield;
 }
 
 input[type='number']:hover,
 input[type='number']:focus {
   -moz-appearance: number-input;
-}
+} */
