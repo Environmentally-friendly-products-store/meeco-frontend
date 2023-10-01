@@ -1,7 +1,9 @@
 import './Promo.css';
-import { NavLink } from 'react-router-dom';
-import promoBrands from '../../images/promo_brands_s.jpg';
+import promoFirstSlide from '../../images/promo-image-1.png';
+import promoSecondSlide from '../../images/promo-image-2.png';
+import promoThirdSlide from '../../images/promo-image-3.png';
 import Carousel from '../Carousel/Carousel';
+import ButtonRight from '../ButtonRight/ButtonRight';
 
 export default function Promo() {
   return (
@@ -10,67 +12,52 @@ export default function Promo() {
         <article className="promo-brands">
           <img
             className="promo-brands__photo"
-            src={promoBrands}
+            src={promoFirstSlide}
             alt="Изображение товаров новых брендов"
           />
           <div className="promo-brands__container">
-            <h2 className="promo-brands__container-title">Новые бренды</h2>
-            <p className="promo-brands__container-slogan">
-              Бережное будущее в каждой покупке
-            </p>
+            <h2 className="promo-brands__container-title">Выгодные дни</h2>
+            <p className="promo-brands__container-slogan">Веревочные сумки</p>
             <p className="promo-brands__container-description">
-              Экологичные, натуральные, минимум упаковки
+              Скидка 20% на вторую сумку из органического хлопка
             </p>
-            <NavLink
-              className="promo-brands__container-button selectable-button"
-              to="/profile"
-            >
-              Перейти к брендам →
-            </NavLink>
+            <div className="promo-brands__container-button">
+              <ButtonRight text="Перейти" path="/catalog" />
+            </div>
           </div>
-        </article>
-        <article className="promo-brands">
-          <div className="promo-brands__container">
-            <h2 className="promo-brands__container-title">Новые бренды</h2>
-            <p className="promo-brands__container-slogan">
-              Бережное будущее в каждой покупке
-            </p>
-            <p className="promo-brands__container-description">
-              Экологичные, натуральные, минимум упаковки
-            </p>
-            <NavLink
-              className="promo-brands__container-button selectable-button"
-              to="/profile"
-            >
-              Перейти к брендам →
-            </NavLink>
-          </div>
-          <img
-            className="promo-brands__photo"
-            src={promoBrands}
-            alt={`Изображение товаров новых брендов`}
-          />
         </article>
         <article className="promo-brands">
           <img
             className="promo-brands__photo"
-            src={promoBrands}
+            src={promoSecondSlide}
             alt={`Изображение товаров новых брендов`}
           />
           <div className="promo-brands__container">
-            <h2 className="promo-brands__container-title">Новые бренды</h2>
-            <p className="promo-brands__container-slogan">
-              Бережное будущее в каждой покупке
-            </p>
+            <h2 className="promo-brands__container-title">Выгодные дни</h2>
+            <p className="promo-brands__container-slogan">3 по цене 2</p>
             <p className="promo-brands__container-description">
-              Экологичные, натуральные, минимум упаковки
+              Биоразлагаемые стаканчики BPA free
             </p>
-            <NavLink
-              className="promo-brands__container-button selectable-button"
-              to="/profile"
-            >
-              Перейти к брендам →
-            </NavLink>
+            <div className="promo-brands__container-button">
+              <ButtonRight text="Перейти" path="/catalog" />
+            </div>
+          </div>
+        </article>
+        <article className="promo-brands">
+          <img
+            className="promo-brands__photo"
+            src={promoThirdSlide}
+            alt={`Изображение товаров новых брендов`}
+          />
+          <div className="promo-brands__container">
+            <h2 className="promo-brands__container-title">Выгодные дни</h2>
+            <p className="promo-brands__container-slogan">Веганское мыло</p>
+            <p className="promo-brands__container-description">
+              Свободно от SLS и консервантов
+            </p>
+            <div className="promo-brands__container-button">
+              <ButtonRight text="Перейти" path="/catalog" />
+            </div>
           </div>
         </article>
       </Carousel>

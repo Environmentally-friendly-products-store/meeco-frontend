@@ -23,7 +23,7 @@ export default function Breadcrumbs({ productName }) {
 
       {productName && (
         <>
-          <span className="breadcrumb-arrow">&gt;</span>
+          <span className="breadcrumb-arrow"></span>
           <Link
             to="/products/{id}/"
             className={`${breadcrumbClass(true)} selectable-link`}

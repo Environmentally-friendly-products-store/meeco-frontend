@@ -1,10 +1,9 @@
 import './Catalog.css';
 
-import { useState /* useEffect */ } from 'react';
+import { useState, useEffect } from 'react';
+import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 
-/* import { getAllCategories, getProducts } from '../../utils/productsApi'; */
-
-/* import encodeObjToQuery from '../../utils/functions/encodeObjToQuery'; */
+import { getAllCategories, getProducts } from '../../utils/productsApi';
 
 import CardSection from '../CardSection/CardSection';
 import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
@@ -12,159 +11,126 @@ import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import FiltersSection from '../FiltersSection/FiltersSection';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
-import { temporaryProductsArray } from '../../utils/functions/temporaryObjectArrays';
-
-const categories = [
-  {
-    id: 0,
-    name: 'Все',
-  },
-  {
-    id: 1,
-    name: 'Красота и гигиена',
-  },
-  {
-    id: 2,
-    name: 'Для дома',
-  },
-  {
-    id: 3,
-    name: 'Еда и напитки',
-  },
-];
-
-const limit = 12;
+import { PAGE_LIMIT } from '../../utils/constants';
 
 function Catalog({ onCardClick }) {
-  /* const [categories, setCategories] = useState([]); */
-
-  const [activeItem, setActiveItem] = useState(null);
-
   const [counter, setCounter] = useState(1);
 
-  /* const [filters, setFilters] = useState({
-    page: 1,
-    limit: 12
-  }); */
+  const [productsAmount, setProductsAmount] = useState(0);
 
   const [filters, setFilters] = useState({
-    page: counter,
-    limit,
-    categories: categories.map((category) => category.name),
+    page: 1,
+    limit: PAGE_LIMIT,
   });
 
-  /* const [products, setProducts] = useState([]); */
+  const [categories, setCategories] = useState([]);
 
-  /* const setInitialCategories = () => {
-    try {
-      const unfilteredCategories = getAllCategories();
-      const filteredCategories = unfilteredCategories.map(
-        (category) => category.name
-      );
-      setCategories(filteredCategories);
-    } catch (err) {
-      console.log('Ошибка перехвачена');
-    }
-  }; */
+  const [products, setProducts] = useState([]);
 
-  /* const setInitialProducts = () => {
+  const [activeItem, setActiveItem] = useState('Все');
+
+  const setInitialCategories = async () => {
     try {
-      const products = getProducts(encodeObjToQuery(filters));
-      setProducts(products);
+      const categories = await getAllCategories();
+      setCategories(categories);
     } catch (err) {
-      console.log('Ошибка перехвачена');
+      console.log(err.error.detail);
     }
-  }; */
+  };
+
+  const setInitialProducts = async () => {
+    try {
+      const response = await getProducts(filters);
+      const initialProductsAmount = response.count;
+      setProductsAmount(initialProductsAmount);
+      const initialProducts = response.results;
+      setProducts(initialProducts);
+    } catch (err) {
+      console.log(err.error.detail);
+    }
+  };
+
+  const onFilterButtonClick = async (name) => {
+    try {
+      setCounter(1);
+      setFilters({ ...filters, category: name });
+      const response = await getProducts({ ...filters, category: name });
+      const newProductsAmount = response.count;
+      setProductsAmount(newProductsAmount);
+      const newProducts = response.results;
+      setProducts(newProducts);
+    } catch (err) {
+      console.log(err.error.detail);
+    }
+  };
+
+  const onResetClick = async () => {
+    try {
+      setCounter(1);
+      setFilters({
+        page: 1,
+        limit: PAGE_LIMIT,
+      });
+      const response = await getProducts({
+        page: 1,
+        limit: PAGE_LIMIT,
+      });
+
+      const newProductsAmount = response.count;
+      setProductsAmount(newProductsAmount);
+      const allProducts = response.results;
+      setProducts(allProducts);
+    } catch (err) {
+      console.log(err.error.detail);
+    }
+  };
+
+  const onShowMoreButtonClick = async () => {
+    try {
+      setCounter(counter + 1);
+      const response = await getProducts({ ...filters, page: counter + 1 });
+      const newProducts = response.results;
+      setProducts([...products, ...newProducts]);
+    } catch (err) {
+      console.log(err.error.detail);
+    }
+  };
 
   const setItem = (item) => {
     setActiveItem(item);
   };
 
-  const onFilterButtonClick = (name) => {
-    const filtersCopy = { ...filters };
-    filtersCopy.categories = [name];
-    setFilters(filtersCopy);
-    /* const response = getProducts(encodeObjToQuery(filtersCopy));
-    const products = response.results;
-    setProducts(products); */
-  };
-
-  const onShowMoreButtonClick = () => {
-    setCounter(counter + 1);
-  };
-
-  /* useEffect(() => {
+  useEffect(() => {
     setInitialCategories();
     setInitialProducts();
-  }, []); */
+  }, []);
 
   return (
-    <main className="catalog">
-      <Breadcrumbs />
+    <ActiveItemContext.Provider value={{ activeItem, setItem }}>
+      <main className="catalog">
+        <Breadcrumbs />
 
-      <FiltersSection
-        categories={categories}
-        onFilterButtonClick={onFilterButtonClick}
-        setItem={setItem}
-        activeItem={activeItem}
-      />
-
-      <CardSection isUsedOnMainPage={false}>
-        <CatalogCardSection
-          isUsedOnMainPage={false}
-          requiredLength={limit * counter}
-          products={temporaryProductsArray}
-          /* products={products} */
-          onCardClick={onCardClick}
+        <FiltersSection
+          categories={categories}
+          onFilterButtonClick={onFilterButtonClick}
+          onResetClick={onResetClick}
         />
-      </CardSection>
-      {temporaryProductsArray.length > limit * counter && (
-        <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
-      )}
-    </main>
+
+        <CardSection isUsedOnMainPage={false}>
+          <CatalogCardSection
+            isUsedOnMainPage={false}
+            requiredLength={PAGE_LIMIT * counter}
+            products={products}
+            onCardClick={onCardClick}
+          />
+        </CardSection>
+        {(counter + 1) * PAGE_LIMIT <= productsAmount &&
+          products.length % PAGE_LIMIT === 0 && (
+            <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
+          )}
+      </main>
+    </ActiveItemContext.Provider>
   );
 }
-
-/* function Catalog() {
-  const [filters, setFilters] = useState({
-    page: 1,
-    limit: 12,
-    categories: [],
-  });
-
-  const onFiltersChange = (name, isChecked) => {
-    const filtersCopy = { ...filters };
-
-    if (isChecked) {
-      filtersCopy.categories.push(name);
-    } else {
-      const index = filtersCopy.categories.indexOf(name);
-      filtersCopy.categories.splice(index, 1);
-    }
-    setFilters(filtersCopy);
-  };
-
-  return (
-    <main className="catalog">
-      <FiltersSection
-        categories={categories}
-        onFiltersChange={onFiltersChange}
-      />
-
-      <CardSection
-        filters={filters}
-        quantity={temporaryProductsArray.length}
-        isUsedOnMainPage={false}
-      >
-        <CatalogCardSection
-          isUsedOnMainPage={false}
-          requiredLength={12}
-          products={temporaryProductsArray}
-          onCardClick={onCardClick}
-        />
-      </CardSection>
-    </main>
-  );
-} */
 
 export default Catalog;

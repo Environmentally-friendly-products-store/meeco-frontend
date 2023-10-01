@@ -45,11 +45,7 @@ function YourOrder() {
       <h2 className="yourorder__title">Ваш заказ</h2>
       <ul className="yourorder__list">
         {products.map((product) => (
-          <OrderProduct
-            key={product.id}
-            product={product}
-            onTotalPriceChange={onTotalPriceChange}
-          />
+          <OrderProduct key={product.id} product={product} />
         ))}
       </ul>
 

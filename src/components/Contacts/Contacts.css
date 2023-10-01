@@ -1,20 +1,20 @@
 .contacts {
   display: flex;
   align-items: center;
-  padding-top: 28px;
+  padding-top: 18px;
+  padding-left: 2px;
 }
 
 .contacts + .contacts {
-  padding-top: 20px;
+  padding-top: 9px;
 }
 
 .contacts__text {
   margin: 0;
   padding-left: 16px;
-  font-family: Space Grotesk;
-  font-size: 16px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 2;
-  letter-spacing: -0.6px;
+  font-family: Mulish, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.33;
 }

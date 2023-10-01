@@ -11,7 +11,7 @@ import MailIcon from '../MailIcon/MailIcon';
 export default function Contacts() {
   return (
     <InfoPage title="Контакты" id="contacts">
-      <InfoBlock title="Круглосуточная поддержка" showImage={false}>
+      <InfoBlock title="Круглосуточная техподдержка" showImage={false}>
         <div className="contacts">
           <PhoneIcon />
           <p className="contacts__text">8 800 900 90 90</p>

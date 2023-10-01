@@ -36,8 +36,11 @@
   background-color: #fff;
   padding: 11px 16px;
   cursor: pointer;
+  transition: background-color 0.6s;
 }
 
+.filter__list-button:focus,
+.filter__list-button:hover,
 .filter__list-button_active {
-  border-bottom: 1px solid #000;
+  background-color: #e3e1b9;
 }
