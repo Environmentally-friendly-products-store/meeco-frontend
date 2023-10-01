@@ -15,9 +15,7 @@ function Order() {
         <h1 className="order__title">Оформление заказа</h1>
       </div>
       <div className="order__content">
-        <div>
-          <Recipient />
-        </div>
+        <Recipient />
         <YourOrder />
       </div>
 

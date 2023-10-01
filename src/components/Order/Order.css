@@ -12,7 +12,7 @@
   flex-direction: row;
 
   justify-content: space-between;
-  align-items: baseline;
+  /* align-items: baseline; */
 }
 
 .order__order {
@@ -53,7 +53,7 @@
   font-weight: 400;
   line-height: 52px; /* 130% */
   letter-spacing: -0.5px;
-  margin: 40px 0 32px 0;
+  margin: 40px 0 44px 0;
 }
 
 .order__button-link {
