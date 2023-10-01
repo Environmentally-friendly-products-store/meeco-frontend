@@ -52,6 +52,7 @@ export const createMakeRequest =
     if (token) {
       options.headers.Authorization = `Bearer ${token}`;
     }
+    // это надо вернуть return fetch(`${baseUrl}${url}`, options)
 
     return fetch(`${baseUrl}${url}`, options)
       .then((response) => {

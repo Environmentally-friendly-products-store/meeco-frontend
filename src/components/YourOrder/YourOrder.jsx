@@ -1,29 +1,19 @@
 import OrderProduct from '../OrderProduct/OrderProduct';
 import './YourOrder.css';
 import image from '../../images/product_card_filler_image_s.jpg';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
+// import calculateTotalPrice from '../../utils/functions/calculateTotalPrice';
 import { useNavigate } from 'react-router-dom';
+import defineImage from '../../utils/functions/defineImage';
+import stylizePrice from '../../utils/functions/stylizePrice';
+
+import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
+import EmptyCart from '../EmptyCart/EmptyCart';
+
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 /* Массив-затычка  из корзины*/
-
-const products = [
-  {
-    id: 1,
-    price: 2313,
-    image,
-    name: `Товар1`,
-    brand: `Бренд1`,
-  },
-  {
-    id: 2,
-    price: 7824,
-    image,
-    name: `Товар2`,
-    brand: `Бренд2`,
-  },
-];
 
 function YourOrder() {
   const navigate = useNavigate();
@@ -31,21 +21,32 @@ function YourOrder() {
   const handleButtonClick = () => {
     navigate('/thanksfororder', { replace: true });
   };
-  const [totalPrice, setTotalPrice] = useState(0);
 
-  const onTotalPriceChange = () => {
-    calculateTotalPrice(setTotalPrice);
+  const {
+    shoppingCart,
+    totalPrice,
+    onIncreaseProductInShoppingCart,
+    onDecreaseProductInShoppingCart,
+    onDeleteProductFromShoppingCart,
+  } = useContext(ShoppingCartContext);
+
+  const onAmountChange = (productId, isIncrease) => {
+    if (isIncrease) {
+      onIncreaseProductInShoppingCart(productId);
+    } else {
+      onDecreaseProductInShoppingCart(productId);
+    }
   };
-
-  useEffect(() => {
-    calculateTotalPrice(setTotalPrice);
-  }, []);
   return (
     <div className="yourorder">
       <h2 className="yourorder__title">Ваш заказ</h2>
       <ul className="yourorder__list">
-        {products.map((product) => (
-          <OrderProduct key={product.id} product={product} />
+        {shoppingCart.map((product) => (
+          <OrderProduct
+            key={product.id}
+            product={product}
+            onAmountChange={onAmountChange}
+          />
         ))}
       </ul>
 

@@ -14,11 +14,12 @@
     'clig' off,
     'liga' off;
   /* Button/Large */
-  font-family: Space Grotesk;
-  font-size: 22px;
+  font-family: Mulish;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 34px;
+  font-weight: 700;
+  line-height: 32px;
+  /* 133.333% */
   margin: 24px 0 0 24px;
 }
 
@@ -29,21 +30,24 @@
 
 .yourorder__total {
   display: flex;
-  margin: 28px 24px 16px 24px;
+  margin: 0px 24px 0px 24px;
   max-width: 500px;
+  height: 32px;
   justify-content: space-between;
 }
 
 .yourorder__total-text {
-  font-family: Inter;
-  font-size: 18px;
+  margin: 0;
+  font-family: Mulish;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 30px;
+  font-weight: 700;
+  line-height: 32px;
   /* 166.667% */
 }
 
 .yourorder__total-summ {
+  margin: 0;
   color: var(--black-900, #121212);
   text-align: right;
   font-feature-settings:
@@ -70,24 +74,21 @@
   font-feature-settings:
     'clig' off,
     'liga' off;
-  /* Button/Large */
-  font-family: Space Grotesk;
-  font-size: 22px;
+  font-family: Mulish;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 34px;
-  /* 154.545% */
-  /* width: 500px; */
+  font-weight: 400;
+  line-height: 32px;
   height: 56px;
   cursor: pointer;
-  margin: 0 24px 0 24px;
+  margin: 20px 24px 12px 24px;
 }
 
 .yourorder__politic {
-  margin: 0px 24px 0px 24px;
+  margin: 0px 24px 24px 24px;
   color: #000;
-  font-family: Space Grotesk;
-  font-size: 12px;
+  font-family: Mulish;
+  font-size: 10px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
@@ -98,11 +99,11 @@
 .yourorder__politic-text {
   text-decoration: none;
   color: #000;
-  font-family: Space Grotesk;
-  font-size: 12px;
+  font-family: Mulish;
+  font-size: 10px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-
+  text-decoration-line: underline;
   /* 166.667% */
 }
