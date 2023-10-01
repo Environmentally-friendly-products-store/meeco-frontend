@@ -49,6 +49,7 @@ import {
   getShoppingCart,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
+import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 
 export default function App() {
@@ -158,6 +159,8 @@ export default function App() {
     shoppingCart: [],
     totalPrice: 0,
   });
+
+  const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
 
   const setShoppingCart = (shoppingCart) => {
     const totalPrice = shoppingCart.reduce(
@@ -292,91 +295,95 @@ export default function App() {
     >
       <ProductsContext.Provider value={productsContext}>
         <CurrentUserContext.Provider value={currentUser}>
-          <div className="app">
-            <Header />
-            <main>
-              <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/catalog" element={<Catalog />} />
-                <Route
-                  path="/product/:id"
-                  element={
-                    <MainProductPage
-                      card={selectedCard}
-                      onButtonAddClick={addProduct}
-                      onButtonDeleteClick={deleteProduct}
-                      onButtonChangeClick={changeProductQuantity}
-                      isLoggedIn={isLoggedIn}
-                      onCardClick={handleCardClick}
-                    />
-                  }
-                />
-                <Route
-                  path="/shopping-cart"
-                  element={
-                    <ProtectedRouteElement
-                      element={ShoppingCart}
-                      isLoggedIn={isLoggedIn}
-                    />
-                  }
-                />
-                <Route path="/delivery" element={<Delivery />} />
-                <Route path="/about-us" element={<AboutUs />} />
-                <Route
-                  path="/order"
-                  element={
-                    <ProtectedRouteElement
-                      element={Order}
-                      isLoggedIn={isLoggedIn}
-                    />
-                  }
-                />
-                <Route
-                  path="/thanksfororder"
-                  element={
-                    <ProtectedRouteElement
-                      element={ThanksForOrder}
-                      isLoggedIn={isLoggedIn}
-                    />
-                  }
-                />{' '}
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRouteElement
-                      element={Profile}
-                      isLoggedIn={isLoggedIn}
-                      onButtonClick={handleConfirmPopup}
-                    />
-                  }
-                />
-                <Route path="/contacts" element={<Contacts />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              </Routes>
-              <TopScrollBtn />
-            </main>
-            <Footer />
-            <Registration
-              isPopupOpen={isRegistrationPopupOpen}
-              onClosePopup={handleClosePopup}
-              onCloseByOverlay={closePopupByOverlay}
-              handleTogglePopup={handleLoginPopup}
-              registerUser={registerUser}
-            />
-            <Login
-              isPopupOpen={isLoginPopupOpen}
-              onClosePopup={handleClosePopup}
-              onCloseByOverlay={closePopupByOverlay}
-              handleTogglePopup={handleRegistrationPopupOpen}
-              loginUser={loginUser}
-            />
-            <ConfirmPopup
-              isPopupOpen={isConfirmPopupOpen}
-              onClosePopup={handleClosePopup}
-              onCloseByOverlay={closePopupByOverlay}
-              onSubmit={logOut}
-            />
-          </div>
+          <IsCatalogButtonClickedContext.Provider
+            value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
+          >
+            <div className="app">
+              <Header />
+              <main>
+                <Routes>
+                  <Route path="/" element={<Main />} />
+                  <Route path="/catalog" element={<Catalog />} />
+                  <Route
+                    path="/product/:id"
+                    element={
+                      <MainProductPage
+                        card={selectedCard}
+                        onButtonAddClick={addProduct}
+                        onButtonDeleteClick={deleteProduct}
+                        onButtonChangeClick={changeProductQuantity}
+                        isLoggedIn={isLoggedIn}
+                        onCardClick={handleCardClick}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/shopping-cart"
+                    element={
+                      <ProtectedRouteElement
+                        element={ShoppingCart}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
+                  />
+                  <Route path="/delivery" element={<Delivery />} />
+                  <Route path="/about-us" element={<AboutUs />} />
+                  <Route
+                    path="/order"
+                    element={
+                      <ProtectedRouteElement
+                        element={Order}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/thanksfororder"
+                    element={
+                      <ProtectedRouteElement
+                        element={ThanksForOrder}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    }
+                  />{' '}
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRouteElement
+                        element={Profile}
+                        isLoggedIn={isLoggedIn}
+                        onButtonClick={handleConfirmPopup}
+                      />
+                    }
+                  />
+                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                </Routes>
+                <TopScrollBtn />
+              </main>
+              <Footer />
+              <Registration
+                isPopupOpen={isRegistrationPopupOpen}
+                onClosePopup={handleClosePopup}
+                onCloseByOverlay={closePopupByOverlay}
+                handleTogglePopup={handleLoginPopup}
+                registerUser={registerUser}
+              />
+              <Login
+                isPopupOpen={isLoginPopupOpen}
+                onClosePopup={handleClosePopup}
+                onCloseByOverlay={closePopupByOverlay}
+                handleTogglePopup={handleRegistrationPopupOpen}
+                loginUser={loginUser}
+              />
+              <ConfirmPopup
+                isPopupOpen={isConfirmPopupOpen}
+                onClosePopup={handleClosePopup}
+                onCloseByOverlay={closePopupByOverlay}
+                onSubmit={logOut}
+              />
+            </div>
+          </IsCatalogButtonClickedContext.Provider>
         </CurrentUserContext.Provider>
       </ProductsContext.Provider>
     </ShoppingCartContext.Provider>
