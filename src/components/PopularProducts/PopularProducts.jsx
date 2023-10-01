@@ -4,7 +4,7 @@ import Carousel from '../Carousel/Carousel';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
 
-function PopularProducts({ onCardClick }) {
+function PopularProducts() {
   const { popular } = useContext(ProductsContext);
 
   return (
@@ -25,7 +25,6 @@ function PopularProducts({ onCardClick }) {
             card={product}
             id={product.id}
             /* isInShoppingCart={product.is_in_shopping_cart} */
-            onCardClick={onCardClick}
           />
         ))}
       </Carousel>
