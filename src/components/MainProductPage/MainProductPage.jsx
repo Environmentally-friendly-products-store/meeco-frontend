@@ -57,7 +57,7 @@ function MainProductPage({
 
   return (
     <>
-      <Breadcrumbs productName={'Твердый шампунь для волос Ecome'} />
+      <Breadcrumbs productName={card.name} />
       <section className="product-page">
         <Link
           to="/catalog"

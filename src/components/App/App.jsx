@@ -80,6 +80,7 @@ export default function App() {
 
   const [selectedCard, setSelectedCard] = useState([]);
   const handleCardClick = (id) => {
+    setSelectedCard({});
     if (isLoggedIn) {
       getCurrentCard(id, token)
         .then((product) => setSelectedCard(product))
