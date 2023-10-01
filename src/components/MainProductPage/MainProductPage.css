@@ -92,6 +92,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 21.15%;
+  gap: 30px;
 }
 
 .product-page__nav-image {

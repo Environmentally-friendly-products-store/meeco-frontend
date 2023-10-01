@@ -1,6 +1,12 @@
 import './App.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
 import Catalog from '../Catalog/Catalog';
@@ -43,6 +49,7 @@ import {
   getShoppingCart,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -72,13 +79,14 @@ export default function App() {
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
 
   const [selectedCard, setSelectedCard] = useState([]);
-  const handleCardClick = (card) => {
+  const handleCardClick = (id) => {
+    setSelectedCard({});
     if (isLoggedIn) {
-      getCurrentCard(card.id, token)
+      getCurrentCard(id, token)
         .then((product) => setSelectedCard(product))
         .catch((err) => console.log(err));
     } else {
-      getCurrentCard(card.id)
+      getCurrentCard(id)
         .then((product) => setSelectedCard(product))
         .catch((err) => console.log(err));
     }
@@ -217,10 +225,6 @@ export default function App() {
   );
 
   useEffect(() => {
-    // Если карты нет, то взять ее в localStorage
-    if (selectedCard.length === 0 && localStorage.getItem('cardPage')) {
-      setSelectedCard(JSON.parse(localStorage.getItem('cardPage')));
-    }
     getNovelties().then((novelties) =>
       setProductsContext((prevState) => ({ ...prevState, novelties }))
     );
@@ -292,16 +296,10 @@ export default function App() {
             <Header />
             <main>
               <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/catalog" element={<Catalog />} />
                 <Route
-                  path="/"
-                  element={<Main onCardClick={handleCardClick} />}
-                />
-                <Route
-                  path="/catalog"
-                  element={<Catalog onCardClick={handleCardClick} />}
-                />
-                <Route
-                  path="/product"
+                  path="/product/:id"
                   element={
                     <MainProductPage
                       card={selectedCard}
@@ -309,20 +307,48 @@ export default function App() {
                       onButtonDeleteClick={deleteProduct}
                       onButtonChangeClick={changeProductQuantity}
                       isLoggedIn={isLoggedIn}
+                      onCardClick={handleCardClick}
                     />
                   }
                 />
-                <Route path="/shopping-cart" element={<ShoppingCart />} />
+                <Route
+                  path="/shopping-cart"
+                  element={
+                    <ProtectedRouteElement
+                      element={ShoppingCart}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  }
+                />
                 <Route path="/delivery" element={<Delivery />} />
                 <Route path="/about-us" element={<AboutUs />} />
-                <Route path="/order" element={<Order />} />
+                <Route
+                  path="/order"
+                  element={
+                    <ProtectedRouteElement
+                      element={Order}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  }
+                />
                 <Route
                   path="/thanksfororder"
-                  element={<ThanksForOrder />}
+                  element={
+                    <ProtectedRouteElement
+                      element={ThanksForOrder}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  }
                 />{' '}
                 <Route
                   path="/profile"
-                  element={<Profile onButtonClick={handleConfirmPopup} />}
+                  element={
+                    <ProtectedRouteElement
+                      element={Profile}
+                      isLoggedIn={isLoggedIn}
+                      onButtonClick={handleConfirmPopup}
+                    />
+                  }
                 />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />

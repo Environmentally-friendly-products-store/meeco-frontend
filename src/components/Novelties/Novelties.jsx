@@ -3,7 +3,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
 
-function Novelties({ onCardClick }) {
+function Novelties() {
   const { novelties } = useContext(ProductsContext);
 
   return (
@@ -18,7 +18,6 @@ function Novelties({ onCardClick }) {
           card={product}
           id={product.id}
           /* isInShoppingCart={product.is_in_shopping_cart} */
-          onCardClick={onCardClick}
         />
       ))}
     </article>
