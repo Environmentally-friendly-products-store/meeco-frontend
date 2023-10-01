@@ -1,8 +1,7 @@
 import OrderProduct from '../OrderProduct/OrderProduct';
 import './YourOrder.css';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 function YourOrder() {
@@ -53,6 +52,7 @@ function YourOrder() {
         <Link
           className="yourorder__politic-text selectable-link"
           to="/privacy-policy"
+          target="_blank"
         >
           Политикой конфиденциальности
         </Link>{' '}
