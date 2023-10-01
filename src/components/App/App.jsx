@@ -46,6 +46,7 @@ import {
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import { createOrder } from '../../utils/ordersApi';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -153,6 +154,7 @@ export default function App() {
   const [shoppingCartContext, setShoppingCartContext] = useState({
     shoppingCart: [],
     totalPrice: 0,
+    orderDetails: {},
   });
 
   const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
@@ -165,6 +167,15 @@ export default function App() {
     setShoppingCartContext({
       shoppingCart,
       totalPrice,
+      orderDetails: {},
+    });
+  };
+
+  const setOrderDetails = (orderDetails) => {
+    setShoppingCartContext({
+      shoppingCart: [],
+      totalPrice: 0,
+      orderDetails,
     });
   };
 
@@ -220,6 +231,20 @@ export default function App() {
       promise.then(() => getShoppingCart(token)).then(setShoppingCart);
     },
     [token, shoppingCartContext]
+  );
+
+  const onCreateOrder = useCallback(
+    (orderData) => {
+      createOrder(orderData, token)
+        .catch((e) => {
+          console.error(e.error);
+        })
+        .then(setOrderDetails)
+        .finally(() => {
+          navigate.current('/thanksfororder', { replace: true });
+        });
+    },
+    [token]
   );
 
   useEffect(() => {
@@ -287,6 +312,7 @@ export default function App() {
         onIncreaseProductInShoppingCart,
         onDecreaseProductInShoppingCart,
         onDeleteProductFromShoppingCart,
+        onCreateOrder,
       }}
     >
       <ProductsContext.Provider value={productsContext}>
