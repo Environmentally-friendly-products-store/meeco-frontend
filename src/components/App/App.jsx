@@ -308,7 +308,6 @@ export default function App() {
                         onButtonAddClick={addProduct}
                         onButtonDeleteClick={deleteProduct}
                         onButtonChangeClick={changeProductQuantity}
-                        isLoggedIn={isLoggedIn}
                         onCardClick={handleCardClick}
                       />
                     }
