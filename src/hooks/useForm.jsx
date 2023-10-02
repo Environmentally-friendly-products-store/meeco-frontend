@@ -1,5 +1,10 @@
 import React from 'react';
-import { REGEX_EMAIL, REGEX_NAME, REGEX_PASSWORD } from '../utils/regEx.js';
+import {
+  REGEX_EMAIL,
+  REGEX_NAME,
+  REGEX_PASSWORD,
+  REGEX_PHONE,
+} from '../utils/regEx.js';
 
 function useForm(inputValues = {}, formClass = '.popup__form') {
   const [values, setValues] = React.useState(inputValues);
@@ -23,6 +28,10 @@ function useForm(inputValues = {}, formClass = '.popup__form') {
       regExp: REGEX_PASSWORD,
       validationError:
         'Пароль должен содержать заглавные и строчные буквы, цифры, специальные символы',
+    },
+    contact_phone_number: {
+      regExp: REGEX_PHONE,
+      validationError: 'Заполните по примеру +7 999-999-99-99',
     },
   };
 

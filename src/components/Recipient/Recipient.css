@@ -43,6 +43,7 @@
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
   column-gap: 32px;
+  row-gap: 24px;
   max-width: 664px;
   margin: 0px 0 -20px 0;
 }
@@ -55,7 +56,7 @@
   border-radius: 12px;
   border: 1px solid rgba(233, 215, 193, 1);
   background: var(--White, #fff);
-  margin: 0px 0 24px 0;
+  margin: 0px 0 0 0;
   padding: 0 0 0 16px;
   outline: 0;
   color: var(--text-black, #21211b);
@@ -73,6 +74,14 @@
 
 .recipient__input:last-child {
   height: 92px;
+}
+
+.recipient__input_error {
+  color: rgba(183, 65, 40, 1);
+}
+
+.recipient__input_error:focus {
+  border: 1px solid rgba(183, 65, 40, 1);
 }
 
 .recipient__comment {
@@ -102,6 +111,10 @@
     top 0.3s,
     transform 0.3s,
     color 0.3s;
+}
+
+.recipient__field-placeholder_error {
+  color: rgba(183, 65, 40, 1);
 }
 
 .recipient__input:focus + .recipient__field-placeholder,
@@ -165,4 +178,16 @@
   font-weight: 400;
   line-height: 20px;
   text-decoration-line: underline;
+}
+
+.recipient__form-error {
+  color: rgba(83, 105, 65, 1);
+  font-weight: 400;
+  line-height: 0.9;
+  min-height: 25px;
+  padding-top: 4px;
+  font-family: Mulish, Arial, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  min-height: 24px;
 }

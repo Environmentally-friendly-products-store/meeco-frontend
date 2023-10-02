@@ -21,6 +21,15 @@ function Recipient() {
 
     onCreateOrder(values);
   };
+
+  const getLabelClassName = (error) =>
+    `recipient__field-placeholder ${
+      error ? 'recipient__field-placeholder_error' : ''
+    }`;
+
+  const getInputClassName = (error) =>
+    `recipient__input ${error ? 'recipient__input_error' : ''}`;
+
   return (
     <div className="recipient">
       <form className="recipient__form" onSubmit={handleSubmit}>
@@ -31,12 +40,14 @@ function Recipient() {
             <input
               type="text"
               name="delivery_address"
-              className="recipient__input"
+              className={getInputClassName(errors.delivery_address)}
               required
               onChange={handleChange}
               value={values.delivery_address || ''}
+              maxLength={512}
+              minLength={8}
             />
-            <label className="recipient__field-placeholder">
+            <label className={getLabelClassName(errors.delivery_address)}>
               Город, улица, дом, квартира
             </label>
             <span className="recipient__form-error">
@@ -74,11 +85,13 @@ function Recipient() {
                 id="phone"
                 name="contact_phone_number"
                 required
-                className="recipient__input"
+                className={getInputClassName(errors.contact_phone_number)}
                 onChange={handleChange}
                 value={values.contact_phone_number || ''}
               />
-              <label className="recipient__field-placeholder">Телефон *</label>
+              <label className={getLabelClassName(errors.contact_phone_number)}>
+                Телефон *
+              </label>
               <span className="recipient__form-error">
                 {errors.contact_phone_number}
               </span>

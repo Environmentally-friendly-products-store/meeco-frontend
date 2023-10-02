@@ -235,14 +235,16 @@ export default function App() {
 
   const onCreateOrder = useCallback(
     (orderData) => {
-      createOrder(orderData, token)
-        .catch((e) => {
-          console.error(e.error);
-        })
-        .then(setOrderDetails)
-        .finally(() => {
-          navigate.current('/thanksfororder', { replace: true });
-        });
+      // createOrder(orderData, token)
+      //   .catch((e) => {
+      //     console.error(e.error);
+      //   })
+      //   .then(setOrderDetails)
+      //   .finally(() => {
+      //     navigate.current('/thanksfororder', { replace: true });
+      //   });
+      setOrderDetails();
+      navigate.current('/thanksfororder', { replace: true });
     },
     [token]
   );
