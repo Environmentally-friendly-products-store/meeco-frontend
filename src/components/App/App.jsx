@@ -19,13 +19,14 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
 import {
-  getCurrentCard,
   addCardToShoppingCart,
-  deleteCardFromShoppingCart,
   changeAmountCardToShoppingCart,
+  deleteCardFromShoppingCart,
+  getCurrentCard,
 } from '../../utils/productPageApi';
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
+  getLocalStorageToken,
   removeLocalStorageToken,
   setLocalStorageToken,
 } from '../../utils/localStorage';
@@ -167,7 +168,7 @@ export default function App() {
     });
   };
 
-  const findProductInShoppingСart = useCallback(
+  const findProductInShoppingCart = useCallback(
     (productId) =>
       shoppingCartContext.shoppingCart.find(
         (product) => product.id === productId
@@ -182,7 +183,7 @@ export default function App() {
         return;
       }
 
-      const productFromCart = findProductInShoppingСart(productId);
+      const productFromCart = findProductInShoppingCart(productId);
       const promise = productFromCart
         ? changeProductQuantityInShoppingCart(
             productId,
@@ -198,7 +199,7 @@ export default function App() {
 
   const onDecreaseProductInShoppingCart = useCallback(
     (productId) => {
-      const productFromCart = findProductInShoppingСart(productId);
+      const productFromCart = findProductInShoppingCart(productId);
       const promise =
         productFromCart.amount > 1
           ? changeProductQuantityInShoppingCart(
@@ -222,6 +223,7 @@ export default function App() {
   );
 
   useEffect(() => {
+    setToken(getLocalStorageToken());
     getNovelties().then((novelties) =>
       setProductsContext((prevState) => ({ ...prevState, novelties }))
     );
@@ -306,7 +308,6 @@ export default function App() {
                         onButtonAddClick={addProduct}
                         onButtonDeleteClick={deleteProduct}
                         onButtonChangeClick={changeProductQuantity}
-                        isLoggedIn={isLoggedIn}
                         onCardClick={handleCardClick}
                       />
                     }
