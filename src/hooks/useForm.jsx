@@ -1,7 +1,12 @@
 import React from 'react';
-import { REGEX_EMAIL, REGEX_NAME, REGEX_PASSWORD } from '../utils/regEx.js';
+import {
+  REGEX_EMAIL,
+  REGEX_NAME,
+  REGEX_PASSWORD,
+  REGEX_PHONE,
+} from '../utils/regEx.js';
 
-function useForm(inputValues = {}) {
+function useForm(inputValues = {}, formClass = '.popup__form') {
   const [values, setValues] = React.useState(inputValues);
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
@@ -23,6 +28,10 @@ function useForm(inputValues = {}) {
       regExp: REGEX_PASSWORD,
       validationError:
         'Пароль должен содержать заглавные и строчные буквы, цифры, специальные символы',
+    },
+    contact_phone_number: {
+      regExp: REGEX_PHONE,
+      validationError: 'Заполните по примеру +7 999-999-99-99',
     },
   };
 
@@ -52,7 +61,7 @@ function useForm(inputValues = {}) {
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: event.target.validationMessage });
     const matchPasswords = checkPasswords({ ...values, [name]: value });
-    const isFormValid = event.target.closest('.popup__form').checkValidity();
+    const isFormValid = event.target.closest(formClass).checkValidity();
     const noErrors = Object.values({
       ...errors,
       [name]: event.target.validationMessage,
