@@ -9,6 +9,7 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   max-width: 1440px;
+  min-height: 100vh;
 }
 
 input:-webkit-autofill {
@@ -32,4 +33,8 @@ input:-webkit-autofill {
 
 .selectable-button:hover {
   opacity: 0.8;
+}
+
+.main {
+  flex: 1 1 auto;
 }

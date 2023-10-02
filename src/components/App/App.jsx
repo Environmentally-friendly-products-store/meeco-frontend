@@ -296,7 +296,7 @@ export default function App() {
           >
             <div className="app">
               <Header />
-              <main>
+              <main className="main">
                 <Routes>
                   <Route path="/" element={<Main />} />
                   <Route path="/catalog" element={<Catalog />} />
@@ -314,39 +314,23 @@ export default function App() {
                   />
                   <Route
                     path="/shopping-cart"
-                    element={
-                      <ProtectedRouteElement
-                        element={ShoppingCart}
-                        isLoggedIn={isLoggedIn}
-                      />
-                    }
+                    element={<ProtectedRouteElement element={ShoppingCart} />}
                   />
                   <Route path="/delivery" element={<Delivery />} />
                   <Route path="/about-us" element={<AboutUs />} />
                   <Route
                     path="/order"
-                    element={
-                      <ProtectedRouteElement
-                        element={Order}
-                        isLoggedIn={isLoggedIn}
-                      />
-                    }
+                    element={<ProtectedRouteElement element={Order} />}
                   />
                   <Route
                     path="/thanksfororder"
-                    element={
-                      <ProtectedRouteElement
-                        element={ThanksForOrder}
-                        isLoggedIn={isLoggedIn}
-                      />
-                    }
+                    element={<ProtectedRouteElement element={ThanksForOrder} />}
                   />{' '}
                   <Route
                     path="/profile"
                     element={
                       <ProtectedRouteElement
                         element={Profile}
-                        isLoggedIn={isLoggedIn}
                         onButtonClick={handleConfirmPopup}
                       />
                     }

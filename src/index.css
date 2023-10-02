@@ -6,4 +6,10 @@ html {
 
 body {
   margin: 0;
+  overflow-y: scroll;
+  min-height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }
