@@ -1,22 +1,47 @@
 import './Recipient.css';
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import useForm from '../../hooks/useForm';
+import { Link } from 'react-router-dom';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
 function Recipient() {
   const currentUser = useContext(CurrentUserContext);
+  const { onCreateOrder } = useContext(ShoppingCartContext);
+  const { values, errors, isValid, handleChange } = useForm(
+    {
+      delivery_address: '',
+      contact_phone_number: '',
+      comment: '',
+    },
+    '.recipient__form'
+  );
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    onCreateOrder(values);
+  };
   return (
     <div className="recipient">
-      <form className="recipient__form">
+      <form className="recipient__form" onSubmit={handleSubmit}>
         <div className="recipient__deliveryadress">
           <h2 className="recipient__title">Адрес доставки</h2>
 
           <div className="recipient__field-container">
-            <input type="text" className="recipient__input" required />
+            <input
+              type="text"
+              name="delivery_address"
+              className="recipient__input"
+              required
+              onChange={handleChange}
+              value={values.delivery_address || ''}
+            />
             <label className="recipient__field-placeholder">
               Город, улица, дом, квартира
             </label>
-            <span className="recipient__form-error"></span>
+            <span className="recipient__form-error">
+              {errors.delivery_address}
+            </span>
           </div>
         </div>
         <div className="recipient__recipient">
@@ -47,12 +72,16 @@ function Recipient() {
               <input
                 type="tel"
                 id="phone"
-                name="phone"
+                name="contact_phone_number"
                 required
                 className="recipient__input"
+                onChange={handleChange}
+                value={values.contact_phone_number || ''}
               />
               <label className="recipient__field-placeholder">Телефон *</label>
-              <span className="recipient__form-error"></span>
+              <span className="recipient__form-error">
+                {errors.contact_phone_number}
+              </span>
             </div>
           </div>
         </div>
@@ -60,12 +89,32 @@ function Recipient() {
         <div className="recipient__comment">
           <h2 className="recipient__title">Комментарий к заказу</h2>
           <div className="recipient__field-container">
-            <input type="text" className="recipient__input" />
+            <input
+              type="text"
+              name="comment"
+              className="recipient__input"
+              onChange={handleChange}
+              value={values.comment || ''}
+            />
             <label className="recipient__field-placeholder">
               Укажите дополнительную информацию к заказу
             </label>
           </div>
         </div>
+
+        <button type="submit" className="recipient__button" disabled={!isValid}>
+          Подтвердить заказ
+        </button>
+        <p className="recipient__politic">
+          Нажимая кнопку, вы соглашаетесь с &nbsp;
+          <Link
+            className="recipient__politic-text selectable-link"
+            to="/privacy-policy"
+            target="_blank"
+          >
+            Политикой конфиденциальности
+          </Link>
+        </p>
       </form>
     </div>
   );
