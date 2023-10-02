@@ -71,6 +71,7 @@
 
 .product-page__main-slider {
   overflow: hidden;
+  width: 100%;
 }
 
 .product-page__nav-slider {
@@ -91,6 +92,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 21.15%;
+  gap: 30px;
 }
 
 .product-page__nav-image {

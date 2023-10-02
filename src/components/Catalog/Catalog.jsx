@@ -1,6 +1,7 @@
 import './Catalog.css';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 
 import { getAllCategories, getProducts } from '../../utils/productsApi';
 
@@ -10,21 +11,44 @@ import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import FiltersSection from '../FiltersSection/FiltersSection';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
-import { PAGE_LIMIT } from '../../utils/constants';
+import { FILTERS_TO_GET_All_PRODUCTS, PAGE_LIMIT } from '../../utils/constants';
+
+import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 
 function Catalog({ onCardClick }) {
   const [counter, setCounter] = useState(1);
 
   const [productsAmount, setProductsAmount] = useState(0);
 
-  const [filters, setFilters] = useState({
-    page: 1,
-    limit: PAGE_LIMIT,
-  });
+  const [filters, setFilters] = useState(FILTERS_TO_GET_All_PRODUCTS);
 
   const [categories, setCategories] = useState([]);
 
   const [products, setProducts] = useState([]);
+
+  const [activeItem, setActiveItem] = useState('');
+
+  const { isCatalogButtonClicked } = useContext(IsCatalogButtonClickedContext);
+
+  const getProductFunc = async (query, counter, item) => {
+    try {
+      if (item) {
+        setItem(item);
+      }
+
+      if (counter) {
+        setCounter(counter);
+      }
+      setFilters(query);
+      const response = await getProducts(query);
+      const newProductsAmount = response.count;
+      setProductsAmount(newProductsAmount);
+      const newProducts = response.results;
+      setProducts(newProducts);
+    } catch (err) {
+      console.log(err.error.detail);
+    }
+  };
 
   const setInitialCategories = async () => {
     try {
@@ -35,50 +59,21 @@ function Catalog({ onCardClick }) {
     }
   };
 
-  const setInitialProducts = async () => {
-    try {
-      const response = await getProducts(filters);
-      const initialProductsAmount = response.count;
-      setProductsAmount(initialProductsAmount);
-      const initialProducts = response.results;
-      setProducts(initialProducts);
-    } catch (err) {
-      console.log(err.error.detail);
-    }
+  const setInitialProducts = (filters) => {
+    return getProductFunc(filters, null, 'Все');
   };
 
-  const onFilterButtonClick = async (name) => {
-    try {
-      setCounter(1);
-      setFilters({ ...filters, category: name });
-      const response = await getProducts({ ...filters, category: name });
-      const newProductsAmount = response.count;
-      setProductsAmount(newProductsAmount);
-      const newProducts = response.results;
-      setProducts(newProducts);
-    } catch (err) {
-      console.log(err.error.detail);
-    }
+  const onFilterButtonClick = (name) => {
+    return getProductFunc({ ...filters, category: name }, 1);
   };
 
   const onResetClick = async () => {
     try {
       setCounter(1);
-      setFilters({
-        page: 1,
-        limit: PAGE_LIMIT,
-      });
-      const response = await getProducts({
-        page: 1,
-        limit: PAGE_LIMIT,
-      });
-
-      const newProductsAmount = response.count;
-      setProductsAmount(newProductsAmount);
-      const allProducts = response.results;
-      setProducts(allProducts);
+      setFilters(FILTERS_TO_GET_All_PRODUCTS);
+      setInitialProducts(FILTERS_TO_GET_All_PRODUCTS);
     } catch (err) {
-      console.log(err.error.detail);
+      console.log(err);
     }
   };
 
@@ -93,34 +88,40 @@ function Catalog({ onCardClick }) {
     }
   };
 
+  const setItem = (item) => {
+    setActiveItem(item);
+  };
+
   useEffect(() => {
     setInitialCategories();
-    setInitialProducts();
-  }, []);
+    setInitialProducts(FILTERS_TO_GET_All_PRODUCTS);
+  }, [isCatalogButtonClicked]);
 
   return (
-    <main className="catalog">
-      <Breadcrumbs />
+    <ActiveItemContext.Provider value={{ activeItem, setItem }}>
+      <main className="catalog">
+        <Breadcrumbs />
 
-      <FiltersSection
-        categories={categories}
-        onFilterButtonClick={onFilterButtonClick}
-        onResetClick={onResetClick}
-      />
-
-      <CardSection isUsedOnMainPage={false}>
-        <CatalogCardSection
-          isUsedOnMainPage={false}
-          requiredLength={PAGE_LIMIT * counter}
-          products={products}
-          onCardClick={onCardClick}
+        <FiltersSection
+          categories={categories}
+          onFilterButtonClick={onFilterButtonClick}
+          onResetClick={onResetClick}
         />
-      </CardSection>
-      {(counter + 1) * PAGE_LIMIT <= productsAmount &&
-        products.length % PAGE_LIMIT === 0 && (
-          <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
-        )}
-    </main>
+
+        <CardSection isUsedOnMainPage={false}>
+          <CatalogCardSection
+            isUsedOnMainPage={false}
+            requiredLength={PAGE_LIMIT * counter}
+            products={products}
+            onCardClick={onCardClick}
+          />
+        </CardSection>
+        {(counter + 1) * PAGE_LIMIT <= productsAmount &&
+          products.length % PAGE_LIMIT === 0 && (
+            <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
+          )}
+      </main>
+    </ActiveItemContext.Provider>
   );
 }
 

@@ -1,32 +1,23 @@
 import './OrderProduct.css';
-import { useState } from 'react';
+import defineImage from '../../utils/functions/defineImage';
 
 function OrderProduct({ product }) {
-  const counter = useState(
-    JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)).counter
-  );
-  const totalItemPrice = useState(
-    JSON.parse(localStorage.getItem(`purchaseItem${product.id}`)).totalItemPrice
-  );
-
-  //  const totalItemPrice =  useState(product.price * counter)
+  const { name, price_per_unit, amount, preview_image } = product;
+  const totalItemPrice = price_per_unit * amount;
 
   return (
     <ul className="orderproduct">
       <li className="orderproduct__product">
         <img
           className="orderproduct__image"
-          src={product.image}
-          alt={product.name}
-        ></img>
-        <p className="odredproduct__count">{counter} шт</p>
-        <p className="orderproduct__name">{product.brand}</p>
-        <p className="orderproduct__description">{'Детали(объем, вес)'}</p>
-        <p className="orderproduct__price">{product.price} ₽</p>
+          src={defineImage(preview_image)}
+          alt={name}
+        />
+        <p className="odredproduct__count">{amount} шт</p>
+        <p className="orderproduct__name">{name}</p>
         <p className="orderproduct__totalprice">{totalItemPrice} ₽</p>
       </li>
-
-      <br className="orderproduct__line"></br>
+      <br></br>
     </ul>
   );
 }

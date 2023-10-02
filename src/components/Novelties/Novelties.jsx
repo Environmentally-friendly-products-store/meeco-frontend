@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
 
 function Novelties() {
-  const { novelties, onCardClick } = useContext(ProductsContext);
+  const { novelties } = useContext(ProductsContext);
 
   return (
     <article className="novelties">
@@ -18,7 +18,6 @@ function Novelties() {
           card={product}
           id={product.id}
           /* isInShoppingCart={product.is_in_shopping_cart} */
-          onCardClick={onCardClick}
         />
       ))}
     </article>

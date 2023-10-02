@@ -1,150 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
-// import { CustomNextArrow, CustomPrevArrow } from '../Carousel/Carousel.jsx';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
-import {
-  addCardToShoppingCart,
-  changeQuantityOfCardInShoppingCart,
-  deleteCardFormShoppingCart,
-} from '../../utils/productPageApi';
+import { serverHost } from '../../utils/constants';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function MainProductPage({ card, onButtonClick }) {
+function MainProductPage({
+  card,
+  onButtonAddClick,
+  onButtonDeleteClick,
+  onButtonChangeClick,
+  onCardClick,
+}) {
   const [mainSlider, setMainSlider] = useState(null);
-  const [counter, setCounter] = useState(card.amount);
   const [isClicked, setIsClicked] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  let isLoggedIn = true;
+  const location = useLocation();
+  const { id } = useParams();
+  const { email } = useContext(CurrentUserContext);
   useEffect(() => {
-    setCounter(card.amount);
-    checkStorage();
-  }, [card]);
-
-  // Для хранения карточки товара в localStorage
-  const checkStorage = () => {
-    if (card.length !== 0) {
-      localStorage.setItem('cardPage', JSON.stringify(card));
+    if (location.pathname.includes('/product')) {
+      onCardClick(id);
     }
-  };
-  const addToShoppingCardClick = () => {
-    if (!isLoggedIn) {
-      onButtonClick();
-      return;
-    }
-    setIsClicked(true);
-    setCounter(1);
-    /* Api добавление товара в корзину:
-    addCardToShoppingCart(card.id)
-      .then((card) => {
-        setCounter(card.amount);
-      })
-      .catch((err)=> console.log(err))
-    */
-  };
+  }, [location.pathname, email]);
 
   const onChangeCounter = (operator) => {
-    if (counter - 1 === 0 && operator === '-') {
-      /* Api удаления товара из корзины:
-      deleteCardFormShoppingCart(card.id)
-        .then(() => setCounter(null))
-        .catch((err) => console.log(err))
-      */
-      setCounter(null);
+    if (card.amount - 1 === 0 && operator === '-') {
+      onButtonDeleteClick(card);
+      setIsClicked(true);
       return;
     }
     switch (operator) {
       case '+':
-        /* Api изменения количества товара в корзине:
-        changeQuantityOfCardInShoppingCart(card.id, counter + 1)
-          .then((res) => setCounter({ amount }))
-          .catch((err) => console.log(err))
-        */
-        return setCounter(counter + 1);
+        onButtonChangeClick(card, card.amount + 1);
+        return;
       case '-':
-        /* Api изменения количества товара в корзине:
-          changeQuantityOfCardInShoppingCart(card.id, counter - 1)
-            .then((res) => setCounter({ amount }))
-            .catch((err) => console.log(err))
-        */
-        return setCounter(counter - 1);
+        onButtonChangeClick(card, card.amount - 1);
+        return;
       default:
         return;
     }
-  };
-
-  // const CustomPrevArrow = ({ onClick }) => {
-  //   return (
-  //     <div
-  //       className="product-page__arrow product-page__arrow_prev"
-  //       onClick={onClick}
-  //     >
-  //       <svg
-  //         width="48"
-  //         height="48"
-  //         viewBox="0 0 48 48"
-  //         fill="none"
-  //         xmlns="http://www.w3.org/2000/svg"
-  //       >
-  //         <path
-  //           fill-rule="evenodd"
-  //           clip-rule="evenodd"
-  //           d="M23.7071 15.2929C24.0976 15.6834 24.0976 16.3166 23.7071 16.7071L17.4142 23H33.6667C34.219 23 34.6667 23.4477 34.6667 24C34.6667 24.5523 34.219 25 33.6667 25H17.4142L23.7071 31.2929C24.0976 31.6834 24.0976 32.3166 23.7071 32.7071C23.3166 33.0976 22.6834 33.0976 22.2929 32.7071L14.2929 24.7071C13.9024 24.3166 13.9024 23.6834 14.2929 23.2929L22.2929 15.2929C22.6834 14.9024 23.3166 14.9024 23.7071 15.2929Z"
-  //           fill="#A5A38F"
-  //         />
-  //       </svg>
-  //     </div>
-  //   );
-  // };
-
-  const CustomNextArrow = ({ onClick }) => {
-    return (
-      <div
-        className="product-page__arrow product-page__arrow_next"
-        onClick={onClick}
-      >
-        <svg
-          width="48"
-          height="48"
-          viewBox="0 0 48 48"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M26.379 15.2929C25.9885 14.9024 25.3553 14.9024 24.9648 15.2929C24.5742 15.6834 24.5742 16.3166 24.9648 16.7071L31.2577 23H15C14.4477 23 14 23.4477 14 24C14 24.5523 14.4477 25 15 25H31.2577L24.9648 31.2929C24.5742 31.6834 24.5742 32.3166 24.9648 32.7071C25.3553 33.0976 25.9885 33.0976 26.379 32.7071L34.379 24.7071C34.7695 24.3166 34.7695 23.6834 34.379 23.2929L26.379 15.2929Z"
-            fill="#A5A38F"
-          />
-        </svg>
-      </div>
-    );
   };
 
   const carouselSettingMain = {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    arrows: true,
     dots: false,
     infinite: true,
     autoplaySpeed: 5000,
     speed: 1000,
-    // prevArrow: <CustomPrevArrow />,
-    // nextArrow: <CustomNextArrow />,
-    beforeChange: (current, next) => setSelectedIndex(next),
-  };
-  // Для того чтобы выделять выбранную картинку
-  const indexes = {
-    0: 0,
-    1: 1,
-    2: 2,
   };
 
   return (
     <>
-      <Breadcrumbs productName={'Твердый шампунь для волос Ecome'} />
+      <Breadcrumbs productName={card.name} />
       <section className="product-page">
         <Link
           to="/catalog"
@@ -169,84 +80,42 @@ function MainProductPage({ card, onButtonClick }) {
         <div className="product-page__main">
           <div className="product-page__sliders">
             <div className="pruduct-page__nav-images">
-              <img
-                key={indexes['0']}
-                onClick={() => {
-                  setSelectedIndex(indexes['0']);
-                  mainSlider.slickGoTo(indexes['0']);
-                }}
-                src={card.image_1_big}
-                alt={'Фотография товара'}
-                className={`product-page__nav-image ${
-                  selectedIndex === indexes['0'] &&
-                  `product-page__nav-image_active`
-                }`}
-              />
-              <img
-                key={indexes['1']}
-                onClick={() => {
-                  mainSlider.slickGoTo(indexes['1']);
-                  setSelectedIndex(indexes['1']);
-                }}
-                src={card.image_1_big}
-                alt={'Фотография товара'}
-                className={`product-page__nav-image ${
-                  selectedIndex === indexes['1'] &&
-                  `product-page__nav-image_active`
-                }`}
-              />
-              <img
-                key={indexes['2']}
-                onClick={() => {
-                  mainSlider.slickGoTo(indexes['2']);
-                  setSelectedIndex(indexes['2']);
-                }}
-                src={card.image_1_big}
-                alt={'Фотография товара'}
-                className={`product-page__nav-image ${
-                  selectedIndex === indexes['2'] &&
-                  `product-page__nav-image_active`
-                }`}
-              />
+              {card.images &&
+                card.images.slice(0, 3).map((image, index) => (
+                  <img
+                    key={index}
+                    src={`${serverHost}${image.preview_image}`}
+                    alt={'Фотография товара'}
+                    onClick={() => {
+                      setSelectedIndex(index);
+                      mainSlider.slickGoTo(index);
+                    }}
+                    className={`product-page__nav-image ${
+                      selectedIndex === index &&
+                      `product-page__nav-image_active`
+                    }`}
+                  />
+                ))}
             </div>
             <Slider
               {...carouselSettingMain}
               ref={(slider) => setMainSlider(slider)}
               className="product-page__main-slider"
             >
-              <div className="product-page__block">
-                <img
-                  src={card.image_1_big}
-                  alt={'Фотография товара'}
-                  className="product-page__main-image"
-                />
-                {/* <button
+              {card.images &&
+                card.images.map((image, index) => (
+                  <div className="product-page__block" key={index}>
+                    <img
+                      src={`${serverHost}${image.big_image}`}
+                      alt={'Фотография товара'}
+                      className="product-page__main-image"
+                    />
+                    {/* <button
               type="button"
               className="product-page__button product-page__button_type_favorite"
             /> */}
-              </div>
-              <div className="product-page__block">
-                <img
-                  src={card.image_1_big}
-                  alt={'Фотография товара'}
-                  className="product-page__main-image"
-                />
-                {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-              </div>
-              <div className="product-page__block">
-                <img
-                  src={card.image_1_big}
-                  alt={'Фотография товара'}
-                  className="product-page__main-image"
-                />
-                {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
-              </div>
+                  </div>
+                ))}
             </Slider>
           </div>
           <div className="product-page__info">
@@ -258,7 +127,8 @@ function MainProductPage({ card, onButtonClick }) {
             <div className="product-page__string">
               <div
                 className={`product-page__counter ${
-                  !counter && `product-page__counter_inactive`
+                  (card.amount === 0 || !card.amount) &&
+                  `product-page__counter_inactive`
                 }`}
               >
                 <button
@@ -266,15 +136,14 @@ function MainProductPage({ card, onButtonClick }) {
                   className="product-page__button product-page__button_type_minus"
                   onClick={() => onChangeCounter('-')}
                 ></button>
-                <span className="product-page__count">{counter}</span>
+                <span className="product-page__count">{card.amount}</span>
                 <button
                   type="button"
                   className="product-page__button product-page__button_type_plus"
                   onClick={() => onChangeCounter('+')}
                 ></button>
               </div>
-              {/* Проверка card.is_in_shopping_cart*/}
-              {counter ? (
+              {card.is_in_shopping_cart ? (
                 <Link
                   to="/shopping-cart"
                   className={`product-page__link product-page__link_type_shopping-cart`}
@@ -286,26 +155,14 @@ function MainProductPage({ card, onButtonClick }) {
                   className={`product-page__button product-page__button_type_shopping-cart selectable-button ${
                     isClicked && `product-page__button_clicked`
                   }`}
-                  onClick={addToShoppingCardClick}
+                  onClick={() => onButtonAddClick(card)}
                 >
                   Добавить в корзину
                 </button>
               )}
             </div>
             <h3 className="product-page__subtitle">Описание</h3>
-            <p className="product-page__description">
-              {/* card.description */}
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
-              ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum
-              dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
-            </p>
+            <p className="product-page__description">{card.description}</p>
           </div>
         </div>
       </section>

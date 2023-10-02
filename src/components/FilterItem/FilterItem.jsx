@@ -1,5 +1,8 @@
 import './FilterItem.css';
 
+import { useContext } from 'react';
+
+import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 /* function FilterItem({ filterItem, onFiltersChange }) {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -28,14 +31,19 @@ import './FilterItem.css';
 } */
 
 function FilterItem({ filterItem, onFilterButtonClick }) {
+  const { activeItem, setItem } = useContext(ActiveItemContext);
+
   const onClick = () => {
     onFilterButtonClick(filterItem.slug);
+    setItem(filterItem);
   };
 
   return (
     <li className="text text_weight_normal">
       <button
-        className="text text_weight_normal filter__list-button selectable-link"
+        className={`text text_weight_normal filter__list-button ${
+          filterItem === activeItem ? 'filter__list-button_active' : ''
+        }`}
         onClick={onClick}
       >
         {filterItem.name}
