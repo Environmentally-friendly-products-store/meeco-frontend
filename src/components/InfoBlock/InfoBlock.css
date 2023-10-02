@@ -5,14 +5,23 @@
   padding-top: 34px;
 }
 
+.infoblock_style_privacy-policy {
+  padding-top: 22px;
+}
+
 .infoblock__title {
   margin: 0;
-  padding-top: 0;
-  font-family: Didact-Gothic, Arial, sans-serif;
+  font-family: 'Didact-Gothic', Arial, sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
   line-height: 1.167;
+}
+
+.infoblock__title_style_privacy-policy {
+  font-family: 'Mulish', Arial, sans-serif;
+  font-size: 16px;
+  margin-bottom: 24px;
 }
 
 .infoblock__image {
