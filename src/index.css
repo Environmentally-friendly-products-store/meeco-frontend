@@ -9,7 +9,3 @@ body {
   overflow-y: scroll;
   min-height: 100%;
 }
-
-::-webkit-scrollbar {
-  width: 0;
-}
