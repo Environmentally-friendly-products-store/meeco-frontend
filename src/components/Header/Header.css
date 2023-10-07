@@ -12,6 +12,7 @@
   padding: 28px 40px;
   position: sticky;
   top: 0;
+  border-bottom: 1px solid #e9d7c1;
   background-color: rgba(256, 256, 256, 1);
   z-index: 1000;
 }
