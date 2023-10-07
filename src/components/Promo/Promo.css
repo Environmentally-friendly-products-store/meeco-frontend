@@ -24,6 +24,7 @@
 }
 
 .promo-brands__container-title {
+  color: #21211b;
   margin: 0;
   font-family: Didact-Gothic, Arial, sans-serif;
   font-size: 24px;
@@ -33,6 +34,7 @@
 }
 
 .promo-brands__container-slogan {
+  color: #21211b;
   margin: 0;
   padding-top: 12px;
   font-family: Didact-Gothic, Arial, sans-serif;
@@ -44,6 +46,7 @@
 }
 
 .promo-brands__container-description {
+  color: #21211b;
   margin: 0;
   padding-top: 25px;
   font-family: Mulish, Arial, sans-serif;
