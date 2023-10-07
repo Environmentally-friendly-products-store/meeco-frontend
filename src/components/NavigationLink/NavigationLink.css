@@ -30,7 +30,7 @@
 }
 
 .navigation-link__text {
-  font-family: Mulish, Arial, sans-serif;
+  font-family: 'Mulish', Arial, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -39,4 +39,5 @@
   white-space: nowrap;
   overflow: hidden;
   width: 100%;
+  color: rgba(64, 63, 50, 1);
 }
