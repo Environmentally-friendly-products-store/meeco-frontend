@@ -18,10 +18,7 @@ export const FILTERS_TO_GET_All_PRODUCTS = {
 };
 
 // Задать baseUrl по умолчанию локально, либо из env-файла: REACT_APP_BASE_URL - название константы в env-файле
-export const {
-  REACT_APP_BASE_URL:
-    baseUrl = 'http://www.ecome.acceleratorpracticum.ru/api/v1',
-} = process.env;
+export const { REACT_APP_BASE_URL: baseUrl = '/api/v1' } = process.env;
 
 const url = baseUrl.startsWith('http') ? new URL(baseUrl) : {};
 

@@ -11,7 +11,7 @@ import EmptyCart from '../EmptyCart/EmptyCart';
 
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
-function ShoppingCart({ onCardClick }) {
+function ShoppingCart() {
   const {
     shoppingCart,
     totalPrice,
@@ -51,7 +51,6 @@ function ShoppingCart({ onCardClick }) {
                   product={product}
                   onAmountChange={onAmountChange}
                   onDeleteFromShoppingCart={onDeleteFromShoppingCart}
-                  onCardClick={onCardClick}
                 />
               ))}
             </ul>
