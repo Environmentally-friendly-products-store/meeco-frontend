@@ -145,7 +145,6 @@ export default function App() {
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
-            localStorage.setItem('cardPage', JSON.stringify(updatedCard));
             return updatedCard;
           });
         })
@@ -163,7 +162,6 @@ export default function App() {
           setSelectedCard((product) => {
             product.amount = 0;
             product.is_in_shopping_cart = false;
-            localStorage.setItem('cardPage', JSON.stringify(product));
             return product;
           })
         )
@@ -180,7 +178,6 @@ export default function App() {
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
-            localStorage.setItem('cardPage', JSON.stringify(updatedCard));
             return updatedCard;
           });
         })

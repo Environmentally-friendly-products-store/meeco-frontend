@@ -4,13 +4,15 @@ import { NavLink } from 'react-router-dom';
 import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
 
-function ShoppingCardItem({
+function ShoppingCartItem({
   product,
   onAmountChange,
   onDeleteFromShoppingCart,
 }) {
   const { name, brand, id, price_per_unit, amount, preview_image } = product;
   const totalItemPrice = price_per_unit * amount;
+
+  console.log(`rendered ${id}`);
 
   return (
     <li className="shopping-cart__product">
@@ -65,4 +67,4 @@ function ShoppingCardItem({
   );
 }
 
-export default ShoppingCardItem;
+export default ShoppingCartItem;

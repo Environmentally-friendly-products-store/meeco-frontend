@@ -1,13 +1,12 @@
 /* import { useContext } from 'react'; */
 import './ShoppingCart.css';
-import '../ShoppingCartItem/ShoppingCardItem';
 
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 
 import stylizePrice from '../../utils/functions/stylizePrice';
 
-import ShoppingCardItem from '../ShoppingCartItem/ShoppingCardItem';
+import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
 import EmptyCart from '../EmptyCart/EmptyCart';
 
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
@@ -47,7 +46,7 @@ function ShoppingCart({ onCardClick }) {
           <section className="shopping-cart__products-block">
             <ul className="shopping-cart__products-list">
               {shoppingCart.map((product) => (
-                <ShoppingCardItem
+                <ShoppingCartItem
                   key={product.id}
                   product={product}
                   onAmountChange={onAmountChange}
