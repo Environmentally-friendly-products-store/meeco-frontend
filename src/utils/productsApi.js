@@ -8,6 +8,13 @@ const makeRequest = createMakeRequest(baseUrl);
 const getResults = (response) => response.results;
 
 /**
+ * Запрашивает конкретный товар по id
+ */
+export const getCurrentCard = (id, token = null) => {
+  return makeRequest(`/products/${id}/`, 'GET', null, token);
+};
+
+/**
  * Запрашивает данные о всех категориях товаров
  */
 export const getAllCategories = () => {

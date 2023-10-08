@@ -18,12 +18,7 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
-import {
-  addCardToShoppingCart,
-  changeAmountCardToShoppingCart,
-  deleteCardFromShoppingCart,
-  getCurrentCard,
-} from '../../utils/productPageApi';
+
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
   getLocalStorageToken,
@@ -36,6 +31,7 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import {
+  getCurrentCard,
   addProductToShoppingCart,
   changeProductQuantityInShoppingCart,
   deleteProductFromShoppingCart,
@@ -94,7 +90,7 @@ export default function App() {
       handleLoginPopup();
       return;
     } else {
-      addCardToShoppingCart(card.id, token)
+      addProductToShoppingCart(card.id, token)
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
@@ -109,7 +105,7 @@ export default function App() {
   };
 
   const deleteProduct = (card) => {
-    deleteCardFromShoppingCart(card.id, token)
+    deleteProductFromShoppingCart(card.id, token)
       .then(() =>
         setSelectedCard((product) => {
           product.amount = 0;
@@ -124,7 +120,7 @@ export default function App() {
   };
 
   const changeProductQuantity = (card, amount) => {
-    changeAmountCardToShoppingCart(card.id, amount, token)
+    changeProductQuantityInShoppingCart(card.id, amount, token)
       .then((res) => {
         setSelectedCard((prev) => {
           const updatedCard = { ...prev, ...res };
