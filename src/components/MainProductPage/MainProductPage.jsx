@@ -3,7 +3,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
-import { serverHost } from '../../utils/constants';
+import defineImage from '../../utils/functions/defineImage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function MainProductPage({
@@ -12,6 +12,7 @@ function MainProductPage({
   onButtonDeleteClick,
   onButtonChangeClick,
   onCardClick,
+  token,
 }) {
   const [mainSlider, setMainSlider] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
@@ -39,10 +40,10 @@ function MainProductPage({
     }
     switch (operator) {
       case '+':
-        onButtonChangeClick(card, card.amount + 1);
+        onButtonChangeClick(card, card.amount + 1, token);
         return;
       case '-':
-        onButtonChangeClick(card, card.amount - 1);
+        onButtonChangeClick(card, card.amount - 1, token);
         return;
       default:
         return;
@@ -91,7 +92,7 @@ function MainProductPage({
                 card.images.slice(0, 3).map((image, index) => (
                   <img
                     key={index}
-                    src={`${serverHost}${image.preview_image}`}
+                    src={defineImage(image.preview_image)}
                     alt={'Фотография товара'}
                     onClick={() => {
                       setSelectedIndex(index);
@@ -113,7 +114,7 @@ function MainProductPage({
                 card.images.map((image, index) => (
                   <div className="product-page__block" key={index}>
                     <img
-                      src={`${serverHost}${image.big_image}`}
+                      src={defineImage(image.big_image)}
                       alt={'Фотография товара'}
                       className="product-page__main-image"
                     />

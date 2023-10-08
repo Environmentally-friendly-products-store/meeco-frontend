@@ -18,12 +18,7 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
-import {
-  addCardToShoppingCart,
-  changeAmountCardToShoppingCart,
-  deleteCardFromShoppingCart,
-  getCurrentCard,
-} from '../../utils/productPageApi';
+
 import { authorize, getUserProfile, register } from '../../utils/userApi.js';
 import {
   getLocalStorageToken,
@@ -36,6 +31,7 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import {
+  getCurrentCard,
   addProductToShoppingCart,
   changeProductQuantityInShoppingCart,
   deleteProductFromShoppingCart,
@@ -89,54 +85,6 @@ export default function App() {
     }
   };
 
-  const addProduct = (card) => {
-    if (!isLoggedIn) {
-      handleLoginPopup();
-      return;
-    } else {
-      addCardToShoppingCart(card.id, token)
-        .then((res) => {
-          setSelectedCard((prev) => {
-            const updatedCard = { ...prev, ...res };
-            localStorage.setItem('cardPage', JSON.stringify(updatedCard));
-            return updatedCard;
-          });
-        })
-        .then(() => getShoppingCart(token))
-        .then(setShoppingCart)
-        .catch((err) => console.log(err));
-    }
-  };
-
-  const deleteProduct = (card) => {
-    deleteCardFromShoppingCart(card.id, token)
-      .then(() =>
-        setSelectedCard((product) => {
-          product.amount = 0;
-          product.is_in_shopping_cart = false;
-          localStorage.setItem('cardPage', JSON.stringify(product));
-          return product;
-        })
-      )
-      .then(() => getShoppingCart(token))
-      .then(setShoppingCart)
-      .catch((err) => console.log(err));
-  };
-
-  const changeProductQuantity = (card, amount) => {
-    changeAmountCardToShoppingCart(card.id, amount, token)
-      .then((res) => {
-        setSelectedCard((prev) => {
-          const updatedCard = { ...prev, ...res };
-          localStorage.setItem('cardPage', JSON.stringify(updatedCard));
-          return updatedCard;
-        });
-      })
-      .then(() => getShoppingCart(token))
-      .then(setShoppingCart)
-      .catch((err) => console.log(err));
-  };
-
   const [currentUser, setCurrentUser] = useState({
     id: '',
     email: '',
@@ -187,6 +135,59 @@ export default function App() {
     [shoppingCartContext]
   );
 
+  const addProduct = useCallback(
+    (card) => {
+      if (!isLoggedIn) {
+        handleLoginPopup();
+        return;
+      }
+      addProductToShoppingCart(card.id, token)
+        .then((res) => {
+          setSelectedCard((prev) => {
+            const updatedCard = { ...prev, ...res };
+            return updatedCard;
+          });
+        })
+        .then(() => getShoppingCart(token))
+        .then(setShoppingCart)
+        .catch((err) => console.log(err));
+    },
+    [isLoggedIn, handleLoginPopup, token]
+  );
+
+  const deleteProduct = useCallback(
+    (card) => {
+      deleteProductFromShoppingCart(card.id, token)
+        .then(() =>
+          setSelectedCard((product) => {
+            product.amount = 0;
+            product.is_in_shopping_cart = false;
+            return product;
+          })
+        )
+        .then(() => getShoppingCart(token))
+        .then(setShoppingCart)
+        .catch((err) => console.log(err));
+    },
+    [token]
+  );
+
+  const changeProductQuantity = useCallback(
+    (card, amount) => {
+      changeProductQuantityInShoppingCart(card.id, amount, token)
+        .then((res) => {
+          setSelectedCard((prev) => {
+            const updatedCard = { ...prev, ...res };
+            return updatedCard;
+          });
+        })
+        .then(() => getShoppingCart(token))
+        .then(setShoppingCart)
+        .catch((err) => console.log(err));
+    },
+    [token]
+  );
+
   const onIncreaseProductInShoppingCart = useCallback(
     (productId) => {
       if (!token) {
@@ -205,7 +206,7 @@ export default function App() {
 
       promise.then(() => getShoppingCart(token)).then(setShoppingCart);
     },
-    [token, shoppingCartContext]
+    [token, findProductInShoppingCart, handleLoginPopup]
   );
 
   const onDecreaseProductInShoppingCart = useCallback(
@@ -222,7 +223,7 @@ export default function App() {
 
       promise.then(() => getShoppingCart(token)).then(setShoppingCart);
     },
-    [token, shoppingCartContext]
+    [token, findProductInShoppingCart]
   );
 
   const onDeleteProductFromShoppingCart = useCallback(
@@ -230,7 +231,7 @@ export default function App() {
       const promise = deleteProductFromShoppingCart(productId, token);
       promise.then(() => getShoppingCart(token)).then(setShoppingCart);
     },
-    [token, shoppingCartContext]
+    [token]
   );
 
   const onCreateOrder = useCallback(
@@ -337,6 +338,7 @@ export default function App() {
                         onButtonDeleteClick={deleteProduct}
                         onButtonChangeClick={changeProductQuantity}
                         onCardClick={handleCardClick}
+                        token={token}
                       />
                     }
                   />
