@@ -12,8 +12,6 @@ function ShoppingCartItem({
   const { name, brand, id, price_per_unit, amount, preview_image } = product;
   const totalItemPrice = price_per_unit * amount;
 
-  console.log(`rendered ${id}`);
-
   return (
     <li className="shopping-cart__product">
       <NavLink
