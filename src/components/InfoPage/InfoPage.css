@@ -9,7 +9,7 @@
   display: flex;
   margin: 0 auto;
   width: calc(100% - 2 * 40px);
-  padding-top: 40px;
+  padding: 40px 0 100px 0;
 }
 
 .infopage__content {
