@@ -10,7 +10,8 @@ export default function PrivacyPolicy() {
         showImage={false}
         title="Политика в отношении обработки персональных данных"
         id="aboutpolicy"
-        hasAlternativeTitleStyles={true}
+        alternativeBlockStyles="infoblock_style_privacy-policy"
+        alternativeTitleStyles="infoblock__title_style_privacy-policy"
       >
         <section className="privacy-policy">
           <ol className="privacy-policy__main-list">

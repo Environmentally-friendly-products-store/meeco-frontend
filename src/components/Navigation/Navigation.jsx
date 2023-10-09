@@ -3,8 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import NavigationLink from '../NavigationLink/NavigationLink';
 import userIcon from '../../images/user.svg';
 /* import favoritePath from '../../images/favorite.svg'; */
-import shoppingCartSvg from '../../images/cart.svg';
-import shoppingCartActiveSvg from '../../images/cart-active.svg';
+import shoppingCartSvg from '../../images/shopping-cart-icon.svg';
 import './Navigation.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
@@ -31,7 +30,7 @@ function Navigation() {
             <NavigationLink
               path={'/shopping-cart'}
               text={'Корзина'}
-              image={count ? shoppingCartActiveSvg : shoppingCartSvg}
+              image={shoppingCartSvg}
               count={count ? count : ''}
             />
           </li>
