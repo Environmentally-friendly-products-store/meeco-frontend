@@ -19,7 +19,7 @@
 }
 
 .order__link {
-  margin: 20px 0 0px 0;
+  margin: 0;
   cursor: pointer;
   max-width: 200px;
   height: 24px;
@@ -52,7 +52,7 @@
   line-height: 52px;
   /* 130% */
   letter-spacing: -0.5px;
-  margin: 40px 0 28px 0;
+  margin: 59px 0 28px 0;
 }
 
 .order__button-link {
@@ -60,5 +60,5 @@
 }
 
 .order__arrow {
-  margin: 0 16px 0 0;
+  margin: 0 0 0 0;
 }

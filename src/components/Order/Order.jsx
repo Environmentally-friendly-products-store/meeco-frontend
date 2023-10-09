@@ -8,9 +8,12 @@ function Order() {
   return (
     <section className="order">
       <div className="order__link">
-        <Link to="/shopping-cart" className="order__link-text selectable-link">
+        <Link
+          to="/shopping-cart"
+          className="product-page__link product-page__link_type_catalog"
+        >
           <img className="order__arrow" src={arrowleft} alt="Стрелка" />
-          Вернуться в корзину
+          <span className="product-page__link-text">Вернуться в корзину</span>
         </Link>
       </div>
       <h1 className="order__title">Оформление заказа</h1>

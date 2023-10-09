@@ -31,7 +31,7 @@ function useForm(inputValues = {}, formClass = '.popup__form') {
     },
     contact_phone_number: {
       regExp: REGEX_PHONE,
-      validationError: 'Заполните по примеру +7 999-999-99-99',
+      validationError: 'Некорректный номер',
     },
   };
 
