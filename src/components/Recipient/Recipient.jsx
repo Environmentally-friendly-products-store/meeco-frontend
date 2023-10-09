@@ -4,6 +4,10 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useForm from '../../hooks/useForm';
 import { Link } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
+import {
+  handleInputPhoneChange,
+  ResetPhoneInput,
+} from '../../hooks/usePhoneMask';
 
 function Recipient() {
   const currentUser = useContext(CurrentUserContext);
@@ -85,9 +89,12 @@ function Recipient() {
                 id="phone"
                 name="contact_phone_number"
                 required
+                maxlength="18"
+                minLength="11"
                 className={getInputClassName(errors.contact_phone_number)}
+                onInput={handleInputPhoneChange}
+                onKeyDown={ResetPhoneInput}
                 onChange={handleChange}
-                value={values.contact_phone_number || ''}
               />
               <label className={getLabelClassName(errors.contact_phone_number)}>
                 Телефон *
@@ -105,7 +112,7 @@ function Recipient() {
             <input
               type="text"
               name="comment"
-              className="recipient__input"
+              className="recipient__input recipient__input_comment"
               onChange={handleChange}
               value={values.comment || ''}
             />
