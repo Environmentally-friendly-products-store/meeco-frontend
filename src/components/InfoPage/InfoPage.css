@@ -1,8 +1,15 @@
-.infopage {
+/* .infopage {
   display: flex;
   margin: 0 auto;
   width: calc(100% - 2 * 40px);
   padding-top: 66px;
+} */
+
+.infopage {
+  display: flex;
+  margin: 0 auto;
+  width: calc(100% - 2 * 40px);
+  padding: 40px 0 100px 0;
 }
 
 .infopage__content {
@@ -13,10 +20,9 @@
 
 .infopage__navpanel {
   display: flex;
-  flex-direction: column;
   max-width: 407px;
   width: 100%;
-  margin-right: 57px;
+  margin: 72px 57px 0 0;
 }
 
 .infopage__content-title {

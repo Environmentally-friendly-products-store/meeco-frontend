@@ -17,6 +17,7 @@
 }
 
 .navigation-link__count_active {
+  font-family: 'Didact-Gothic', Arial, sans-serif;
   text-align: center;
   position: absolute;
   border-radius: 50%;
@@ -26,7 +27,9 @@
   background-color: #726e38;
   color: rgba(251, 250, 235, 1);
   top: -5px;
-  right: 9px;
+  right: 10px;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .navigation-link__text {
