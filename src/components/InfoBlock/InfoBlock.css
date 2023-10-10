@@ -54,14 +54,31 @@
 .infoblock__how-to-order {
   display: flex;
   column-gap: 16px;
-  padding: 47px 24px 47px 10px;
+  padding: 47px 24px;
 }
 
 .infoblock__how-to-order-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 16px;
   align-items: center;
+  width: 200px;
+}
+
+.infoblock__how-to-order-item::after {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 16px;
+  right: -23px;
+  background: transparent url('../../images/arrow-right.svg') 100% / 32px 32px
+    no-repeat;
+}
+
+.infoblock__how-to-order-item:last-child::after {
+  display: none;
 }
 
 .infoblock__how-to-order-image-container {
