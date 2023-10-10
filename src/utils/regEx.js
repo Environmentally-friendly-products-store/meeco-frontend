@@ -6,5 +6,5 @@ export const REGEX_NAME = /^[а-яА-Яa-zA-Z\-]+$/;
 // export const REGEX_PASSWORD =
 //   /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z])/;
 export const REGEX_PASSWORD =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d~!?\@#\$%\^&*_\-+\(\)\[\]\{\}><\/\\|"'.,:;]{8,}$/i;
+  /^[a-zA-Z](?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\S)[a-zA-Z\d\S]+$/;
 export const REGEX_PHONE = /^(8|\+7)\s\(\d{3}\)\s\d{3}\-\d{2}\-\d{2}$/;

@@ -27,7 +27,7 @@ function useForm(inputValues = {}, formClass = '.popup__form') {
     password: {
       regExp: REGEX_PASSWORD,
       validationError:
-        'Пароль должен содержать заглавные и строчные буквы, цифры, специальные символы',
+        'Пароль должен содержать латинские заглавные и строчные буквы, цифры',
     },
     contact_phone_number: {
       regExp: REGEX_PHONE,
