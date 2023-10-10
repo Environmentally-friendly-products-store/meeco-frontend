@@ -82,5 +82,5 @@ export default function Accordion({
       </div>
     </div>
   ); */
-}
+} /* ) */
 //TO DO перенести массив в product и поле text заполнить данными с сервера
