@@ -10,26 +10,6 @@
   transition: all 0.5s ease;
 }
 
-@keyframes IncreasePadding {
-  from {
-    padding: 21px 0 14px 0;
-  }
-
-  to {
-    padding: 24px 0;
-  }
-}
-
-@keyframes IncreasePadding2 {
-  from {
-    padding: 24px 0;
-  }
-
-  to {
-    padding: 21px 0 14px 0;
-  }
-}
-
 .accordion__items {
   display: flex;
   flex-direction: column;
@@ -37,17 +17,13 @@
   row-gap: 8px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e9d7c1;
-  animation: IncreasePadding2 0.8s ease;
+  padding: 21px 0 14px 0;
+  transition: all 0.5s ease;
 }
 
 .accordion__items_active {
   padding: 24px 0;
-  animation: IncreasePadding 0.5s ease;
-}
-
-.accordion__items_inactive {
-  padding: 21px 0 14px 0;
-  animation: IncreasePadding2 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .accordion__item-panel {

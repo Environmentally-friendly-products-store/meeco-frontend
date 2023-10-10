@@ -28,7 +28,7 @@ export default function Accordion({
       <div className="accordion">
         <div
           className={`accordion__items ${
-            isExpanded ? 'accordion__items_active' : 'accordion__items_inactive'
+            isExpanded ? 'accordion__items_active' : ''
           }`}
         >
           <div className="accordion__item" onClick={() => toggle()}>
