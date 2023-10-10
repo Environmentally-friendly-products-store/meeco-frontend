@@ -28,7 +28,7 @@ export default function Accordion({
       <div className="accordion">
         <div
           className={`accordion__items ${
-            isExpanded ? 'accordion__items_active' : ''
+            isExpanded ? 'accordion__items_active' : 'accordion__items_inactive'
           }`}
         >
           <div className="accordion__item" onClick={() => toggle()}>
@@ -82,5 +82,5 @@ export default function Accordion({
       </div>
     </div>
   ); */
-}
+} /* ) */
 //TO DO перенести массив в product и поле text заполнить данными с сервера
