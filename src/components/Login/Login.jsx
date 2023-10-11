@@ -61,7 +61,7 @@ function Login({
         name="email"
         className={getInputClassName(errorsState.email)}
         minLength="8"
-        maxLength="111"
+        maxLength="114"
         required
       />
       <span className="popup__error ">{errorsState.email}</span>

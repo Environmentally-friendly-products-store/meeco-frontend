@@ -35,7 +35,7 @@
 .product-page__link_type_catalog {
   display: flex;
   width: 228px;
-  padding-top: 24px;
+  padding-top: 20px;
   gap: 12px;
   color: #403f32;
   text-decoration: none;
@@ -71,6 +71,7 @@
 
 .product-page__main-slider {
   overflow: hidden;
+  width: 100%;
 }
 
 .product-page__nav-slider {
@@ -91,6 +92,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 21.15%;
+  gap: 30px;
 }
 
 .product-page__nav-image {

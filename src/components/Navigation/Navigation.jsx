@@ -1,16 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import NavigationLink from '../NavigationLink/NavigationLink';
 import userIcon from '../../images/user.svg';
 /* import favoritePath from '../../images/favorite.svg'; */
-import shoppingCart from '../../images/cart.svg';
-import shoppingCartActive from '../../images/cart-active.svg';
+import shoppingCartSvg from '../../images/shopping-cart-icon.svg';
 import './Navigation.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 
-function Navigation({ onClickRegistration, onClickShoppingCart }) {
+function Navigation() {
   const currentUser = useContext(CurrentUserContext);
-  const count = 2;
+  const { shoppingCart } = useContext(ShoppingCartContext);
+  const count = useMemo(
+    () => shoppingCart.reduce((acc, product) => acc + product.amount, 0),
+    [shoppingCart]
+  );
   return (
     <nav className="navigation">
       {currentUser.id ? (
@@ -26,22 +30,21 @@ function Navigation({ onClickRegistration, onClickShoppingCart }) {
             <NavigationLink
               path={'/shopping-cart'}
               text={'Корзина'}
-              image={count ? shoppingCartActive : shoppingCart}
-              count={count}
+              image={shoppingCartSvg}
+              count={count ? count : ''}
             />
           </li>
         </ul>
       ) : (
         <ul className="navigation__list">
-          <li className="navigation__item" onClick={onClickRegistration}>
+          <li
+            className="navigation__item"
+            onClick={currentUser.onClickRegistration}
+          >
             <NavigationLink text="Войти" image={userIcon} />
           </li>
-          <li className="navigation__item" onClick={onClickShoppingCart}>
-            <NavigationLink
-              text={'Корзина'}
-              image={count ? shoppingCartActive : shoppingCart}
-              count={count}
-            />
+          <li className="navigation__item" onClick={currentUser.onClickLogin}>
+            <NavigationLink text={'Корзина'} image={shoppingCartSvg} />
           </li>
         </ul>
       )}

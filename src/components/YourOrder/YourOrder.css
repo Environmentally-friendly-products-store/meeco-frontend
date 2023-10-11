@@ -1,12 +1,14 @@
 .yourorder {
   display: flex;
-  max-width: 432px;
+  width: 548px;
+  flex-basis: auto;
   flex-direction: column;
-  align-items: flex-start;
-  border-radius: 6px;
-  border: 1px solid var(--black-300, #cbcbcb);
+  align-items: stretch;
+  border-radius: 12px;
+  border: 1px solid rgba(233, 215, 193, 1);
   background: var(--White, #fff);
-  margin: -18px 0 40px 0;
+  margin-top: 47px;
+  height: fit-content;
 }
 
 .yourorder__title {
@@ -14,12 +16,11 @@
   font-feature-settings:
     'clig' off,
     'liga' off;
-  /* Button/Large */
-  font-family: Space Grotesk;
-  font-size: 22px;
+  font-family: Mulish;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 34px;
+  font-weight: 700;
+  line-height: 32px;
   margin: 24px 0 0 24px;
 }
 
@@ -29,32 +30,33 @@
 
 .yourorder__total {
   display: flex;
-  margin: 28px 24px 16px 24px;
-  width: 384px;
+  margin: 0 24px 20px 24px;
+  max-width: 500px;
+  height: 32px;
   justify-content: space-between;
-  height: 54px;
 }
 
 .yourorder__total-text {
-  font-family: Inter;
-  font-size: 18px;
+  margin: 0;
+  font-family: Mulish;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 30px;
+  font-weight: 700;
+  line-height: 32px;
   /* 166.667% */
 }
 
 .yourorder__total-summ {
+  margin: 0;
   color: var(--black-900, #121212);
   text-align: right;
   font-feature-settings:
     'clig' off,
     'liga' off;
-  /* Text/18px/Semibold */
-  font-family: Inter;
-  font-size: 18px;
+  font-family: Mulish;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 30px;
+  font-weight: 700;
+  line-height: 32px;
   /* 166.667% */
 }

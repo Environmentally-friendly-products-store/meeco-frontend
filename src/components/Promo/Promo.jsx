@@ -16,13 +16,13 @@ export default function Promo() {
             alt="Изображение товаров новых брендов"
           />
           <div className="promo-brands__container">
-            <h2 className="promo-brands__container-title">Новые бренды</h2>
-            <p className="promo-brands__container-slogan">EcoMe</p>
+            <h2 className="promo-brands__container-title">Выгодные дни</h2>
+            <p className="promo-brands__container-slogan">Веревочные сумки</p>
             <p className="promo-brands__container-description">
-              Экологичные, натуральные, минимум упаковки
+              Скидка 20% на вторую сумку из органического хлопка
             </p>
             <div className="promo-brands__container-button">
-              <ButtonRight text="Перейти" path="/catalog" />
+              <ButtonRight text="Перейти" path="/product/17" />
             </div>
           </div>
         </article>
@@ -33,13 +33,13 @@ export default function Promo() {
             alt={`Изображение товаров новых брендов`}
           />
           <div className="promo-brands__container">
-            <h2 className="promo-brands__container-title">Новые бренды</h2>
-            <p className="promo-brands__container-slogan">EcoMe</p>
+            <h2 className="promo-brands__container-title">Выгодные дни</h2>
+            <p className="promo-brands__container-slogan">3 по цене 2</p>
             <p className="promo-brands__container-description">
-              Экологичные, натуральные, минимум упаковки
+              Биоразлагаемые стаканчики BPA free
             </p>
             <div className="promo-brands__container-button">
-              <ButtonRight text="Перейти" path="/catalog" />
+              <ButtonRight text="Перейти" path="/product/30" />
             </div>
           </div>
         </article>
@@ -50,13 +50,13 @@ export default function Promo() {
             alt={`Изображение товаров новых брендов`}
           />
           <div className="promo-brands__container">
-            <h2 className="promo-brands__container-title">Новые бренды</h2>
-            <p className="promo-brands__container-slogan">EcoMe</p>
+            <h2 className="promo-brands__container-title">Выгодные дни</h2>
+            <p className="promo-brands__container-slogan">Веганское мыло</p>
             <p className="promo-brands__container-description">
-              Экологичные, натуральные, минимум упаковки
+              Свободно от SLS и консервантов
             </p>
             <div className="promo-brands__container-button">
-              <ButtonRight text="Перейти" path="/catalog" />
+              <ButtonRight text="Перейти" path="/product/12" />
             </div>
           </div>
         </article>

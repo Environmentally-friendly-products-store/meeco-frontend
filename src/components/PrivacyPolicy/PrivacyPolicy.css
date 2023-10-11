@@ -1,21 +1,37 @@
-.privacypolicy__item {
-  display: block;
-  margin-bottom: 10px;
+.privacy-policy {
+  font-family: 'Mulish', Arial, sans-serif;
+  max-width: 780px;
+}
+
+.privacy-policy ol {
+  list-style: none;
+  counter-reset: li;
+}
+
+.privacy-policy li:before {
+  counter-increment: li;
+  content: counters(li, '.') '. ';
+}
+
+.privacy-policy__main-list {
   padding: 0;
-  font-weight: 800;
+  margin: 0;
 }
 
-.privacypolicy__item:before {
-  content: counters(item, '.') ' ';
-  counter-increment: item;
-}
-
-.privacypolicy__item-content {
+.privacy-policy__main-item {
+  font-size: 16px;
   font-weight: 400;
-  padding-left: 20px;
+  line-height: 1.5;
+  margin-bottom: 10px;
 }
 
-.privacypolicy__items {
+.privacy-policy__items {
+  margin-top: 10px;
   padding: 0;
-  counter-reset: item;
+}
+
+.privacy-policy__item {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2;
 }

@@ -1,19 +1,25 @@
 import './InfoBlock.css';
-import infoblock from '../../images/termsofuse-frame.png';
 
-export default function InfoBlock({ title, id, children, showImage = true }) {
+export default function InfoBlock({
+  title,
+  id,
+  children,
+  alternativeBlockStyles = '',
+  alternativeTitleStyles = '',
+}) {
   return (
-    <div className="infoblock">
-      <h2 className="infoblock__title" id={id}>
+    <div
+      className={`infoblock
+      ${alternativeBlockStyles}`}
+    >
+      <h2
+        className={`infoblock__title
+          ${alternativeTitleStyles}
+        `}
+        id={id}
+      >
         {title}
       </h2>
-      {showImage && (
-        <img
-          className="infoblock__image"
-          src={infoblock}
-          alt="Изображение иконок заказ, доставка, оплата"
-        />
-      )}
       {children}
     </div>
   );

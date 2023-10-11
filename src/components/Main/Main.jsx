@@ -4,7 +4,7 @@ import Novelties from '../Novelties/Novelties';
 import PopularProducts from '../PopularProducts/PopularProducts';
 import AboutProject from '../AboutProject/AboutProject';
 
-export default function Main({ onCardClick }) {
+export default function Main() {
   return (
     <>
       <Promo />
@@ -13,7 +13,7 @@ export default function Main({ onCardClick }) {
       </CardSection>
       <AboutProject />
       <CardSection title="Популярные товары" isUsedOnMainPage={true}>
-        <PopularProducts requiredLength={5} onCardClick={onCardClick} />
+        <PopularProducts />
       </CardSection>
     </>
   );

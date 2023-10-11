@@ -81,7 +81,6 @@
 
 .product-card__image {
   height: 100%;
-  width: 100%;
   object-fit: cover;
   border-radius: 12px;
 }
@@ -111,11 +110,16 @@
   line-height: 1.5;
   justify-self: start;
   cursor: pointer;
-  transition: opacity 0.2s linear;
+  transition: background-color 0.6s;
 }
 
-.product-card__add-to-cart-button:hover {
-  opacity: 0.9;
+.product-card__add-to-cart-button:hover,
+.product-card__add-to-cart-button:focus {
+  background-color: #726e38;
+}
+
+.product-card__add-to-cart-button:active {
+  background-color: #e3e1b9;
 }
 
 /* product-card__product-item */

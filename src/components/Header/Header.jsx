@@ -4,13 +4,24 @@ import { Link } from 'react-router-dom';
 /* import SearchForm from '../SearchForm/SearchForm'; */
 import Navigation from '../Navigation/Navigation.jsx';
 import catalog from '../../images/catalog.svg';
+import { useContext } from 'react';
 import './Header.css';
 
-function Header({ onClickRegistration, onClickShoppingCart }) {
+import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
+
+function Header() {
+  const { isCatalogButtonClicked, setIsCatalogButtonClicked } = useContext(
+    IsCatalogButtonClickedContext
+  );
+
+  const onClick = () => {
+    setIsCatalogButtonClicked(!isCatalogButtonClicked);
+  };
+
   return (
     <header className="header">
       <div className="header__func">
-        <Link to="/catalog" className="header__link">
+        <Link to="/catalog" className="header__link" onClick={onClick}>
           <img
             className="header__image"
             src={catalog}
@@ -21,10 +32,7 @@ function Header({ onClickRegistration, onClickShoppingCart }) {
         {/* <SearchForm /> */}
       </div>
       <Logo />
-      <Navigation
-        onClickRegistration={onClickRegistration}
-        onClickShoppingCart={onClickShoppingCart}
-      />
+      <Navigation />
     </header>
   );
 }
