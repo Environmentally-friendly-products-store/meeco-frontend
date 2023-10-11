@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import defineImage from '../../utils/functions/defineImage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { trackDetails } from '../../utils/yandexCounter';
 
 function MainProductPage({
   card,
@@ -27,8 +28,11 @@ function MainProductPage({
   }, [location.pathname, email]);
 
   useEffect(() => {
-    if (card && mainSlider) {
-      mainSlider.slickGoTo(0);
+    if (card) {
+      if (mainSlider) {
+        mainSlider.slickGoTo(0);
+      }
+      trackDetails(card);
     }
   }, [card]);
 
