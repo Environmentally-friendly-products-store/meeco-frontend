@@ -3,9 +3,14 @@ import ProductCard from '../ProductCard/ProductCard';
 import Carousel from '../Carousel/Carousel';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
+import { trackPromoView } from '../../utils/yandexCounter';
 
 function PopularProducts() {
   const { popular } = useContext(ProductsContext);
+
+  if (popular.length > 0) {
+    trackPromoView(popular, 'popular');
+  }
 
   return (
     <article className="popular-products">

@@ -6,6 +6,11 @@ import Carousel from '../Carousel/Carousel';
 import ButtonRight from '../ButtonRight/ButtonRight';
 
 export default function Promo() {
+  // TODO: использовать, когда акции будут приходить с сервера
+  // if (promo.length > 0) {
+  //   trackPromoView(promo, 'promo');
+  // }
+
   return (
     <section className="promo">
       <Carousel componentName="promo">
