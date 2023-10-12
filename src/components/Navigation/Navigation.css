@@ -1,0 +1,26 @@
+/* .navigation {
+  display: flex;
+  gap: 300px;
+} */
+
+.navigation {
+  display: flex;
+  gap: 300px;
+  justify-self: end;
+}
+
+.navigation__button {
+  cursor: pointer;
+}
+
+.navigation__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 33px;
+}
+
+.navigation__item-user {
+  max-width: 133px;
+}

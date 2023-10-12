@@ -1,0 +1,20 @@
+.contacts {
+  display: flex;
+  align-items: center;
+  padding-top: 18px;
+  padding-left: 2px;
+}
+
+.contacts + .contacts {
+  padding-top: 9px;
+}
+
+.contacts__text {
+  margin: 0;
+  padding-left: 16px;
+  font-style: normal;
+  font-family: Mulish, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.33;
+}

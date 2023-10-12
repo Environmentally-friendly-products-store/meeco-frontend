@@ -1,0 +1,88 @@
+/*убрать или стилизовать wrapper*/
+
+.accordion__items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(255, 255, 255, 1);
+  border-top: 1px solid #e9d7c1;
+  padding: 20px 0;
+  transition: all 0.5s ease;
+}
+
+.accordion__items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 8px;
+  background: rgba(255, 255, 255, 1);
+  border-top: 1px solid #e9d7c1;
+  padding: 21px 0 14px 0;
+  transition: all 0.5s ease;
+}
+
+.accordion__items_active {
+  padding: 24px 0;
+  transition: all 0.5s ease;
+}
+
+.accordion__item-panel {
+  color: black;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+
+.accordion__item-panel_show {
+  height: auto;
+  max-height: 100px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(1, 0, 1, 0);
+}
+
+.accordion__item {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.accordion__item {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.accordion__item-title {
+  font-family: 'Didact-Gothic', Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.167;
+  margin: 0;
+}
+
+.accordion__item-content {
+  font-family: 'Mulish', Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #21211b;
+  line-height: 1.71;
+  margin: 0;
+}
+
+.accordion__item-chevron {
+  display: block;
+  margin-right: 33px;
+  width: 24px;
+  height: 24px;
+}
+
+.accordion__item-chevron_up {
+  transform: rotate(180deg);
+  transition: all 0.1s linear;
+}

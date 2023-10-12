@@ -1,0 +1,29 @@
+.breadcrumbs {
+  padding: 20px 0 0 40px;
+  display: flex;
+}
+
+.breadcrumb {
+  text-decoration: none;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.1;
+}
+
+.breadcrumb-not-active {
+  color: #a5a38f;
+}
+
+.breadcrumb-active {
+  color: #121212;
+}
+
+.breadcrumb-arrow {
+  color: #21211b;
+  width: 20px;
+  height: 20px;
+  background: transparent url('../../images/chevron-right.svg') 50% 0 / auto
+    no-repeat;
+  margin-right: 4px;
+}

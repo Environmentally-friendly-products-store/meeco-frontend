@@ -1,0 +1,14 @@
+.sociallink {
+  display: flex;
+}
+
+.sociallink__list {
+  padding: 6px 0 0 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+}
+
+.sociallink__item + .sociallink__item {
+  padding-left: 30px;
+}

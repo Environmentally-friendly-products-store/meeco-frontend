@@ -1,0 +1,114 @@
+.orderproduct {
+  list-style-type: none;
+  margin: 24px 24px 0 24px;
+  padding: 0;
+  border-bottom: 1px solid #e9d7c1;
+  /* max-width: 548px; */
+}
+
+.orderproduct__product {
+  display: grid;
+  grid-template-columns: 84px minmax(auto, 276px) auto auto;
+  grid-template-rows: auto 16px;
+  column-gap: 12px;
+  /* max-width: 500px; */
+  height: 84px;
+}
+
+.orderproduct__image {
+  width: 84px;
+  height: 84px;
+  grid-column-start: 1;
+  border-radius: 12px;
+  /* grid-row-start: 1;
+  grid-row-end: 3; */
+}
+
+.orderproduct__name {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  margin: 0 0 0 4px;
+  /* width: 160px; */
+  height: 24px;
+  align-self: center;
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.orderproduct__description {
+  grid-column-start: 2;
+  /* grid-row-start: 2; */
+  margin: 0 0 0 16px;
+  /* width: 160px; */
+  height: 24px;
+  color: var(--black-600, #605f5f);
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* Text/12px/Regular */
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 166.667% */
+  align-self: start;
+}
+
+.odredproduct__count {
+  grid-column-start: 3;
+  /* grid-row-start: 1;
+  grid-row-end: 3; */
+  align-self: center;
+  /* width: 38px; */
+  color: var(--black-900, #121212);
+  text-align: right;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* Text/14px/Semibold */
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 157.143% */
+  /* margin-right: 16px; */
+}
+
+/* .orderproduct__price {
+  grid-column-start: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  align-self: center;
+  width: 58px;
+  color: var(--black-900, #121212);
+  text-align: right;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* Text/14px/Semibold */
+/* font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+} */
+
+.orderproduct__totalprice {
+  grid-column-start: 4;
+  align-self: center;
+  /* width: 58px; */
+  color: var(--black-900, #121212);
+  text-align: right;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  /* Text/14px/Semibold */
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 157.143% */
+}

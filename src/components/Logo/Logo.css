@@ -1,0 +1,8 @@
+.logo {
+  justify-self: center;
+  max-width: 159px;
+}
+
+.logo__image {
+  max-height: 48px;
+}

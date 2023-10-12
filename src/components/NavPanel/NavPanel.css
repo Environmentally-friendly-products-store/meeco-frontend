@@ -1,0 +1,30 @@
+.navpanel__container {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 174px;
+}
+
+.navpanel__links {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0;
+}
+
+.navpanel__link {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+  text-decoration-line: underline;
+  color: #403f32;
+}
+
+.navpanel__link + .navpanel__link {
+  padding-top: 20px;
+}
+
+.navpanel__links + .navpanel__link {
+  color: #a49e4a;
+}

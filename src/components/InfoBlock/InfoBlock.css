@@ -1,0 +1,116 @@
+.infoblock {
+  display: flex;
+  flex-direction: column;
+  max-width: 896px;
+  padding-top: 34px;
+}
+
+.infoblock_style_privacy-policy {
+  padding-top: 22px;
+}
+
+.infoblock_style_delivery {
+  padding-top: 20px;
+}
+
+.infoblock__title {
+  margin: 0;
+  font-family: 'Didact-Gothic', Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.167;
+}
+
+.infoblock__title_style_privacy-policy {
+  font-family: 'Mulish', Arial, sans-serif;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+.infoblock__description {
+  font-family: 'Mulish', Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #21211b;
+  line-height: 1.71;
+  text-align: center;
+  margin: 0;
+}
+
+.infoblock__image {
+  display: block;
+  width: 336px;
+  height: 60px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+
+.infoblock + .infoblock {
+  padding-top: 32px;
+}
+
+.infoblock__how-to-order {
+  display: flex;
+  column-gap: 16px;
+  padding: 47px 24px;
+}
+
+.infoblock__how-to-order-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  align-items: center;
+  width: 200px;
+}
+
+.infoblock__how-to-order-item::after {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 16px;
+  right: -23px;
+  background: transparent url('../../images/arrow-right.svg') 100% / 32px 32px
+    no-repeat;
+}
+
+.infoblock__how-to-order-item:last-child::after {
+  display: none;
+}
+
+.infoblock__how-to-order-image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #a49e4a;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.infoblock__how-to-order-image {
+  width: 24px;
+  height: 24px;
+}
+
+.infoblock__how-to-order-count {
+  font-family: 'Didact-Gothic', Arial, sans-serif;
+  text-align: center;
+  position: absolute;
+  border-radius: 50%;
+  line-height: 17px;
+  width: 20px;
+  height: 20px;
+  background-color: #726e38;
+  color: rgba(251, 250, 235, 1);
+  top: 10px;
+  right: 7px;
+  color: #fbfaeb;
+  font-size: 12px;
+  font-weight: 700;
+}

@@ -1,0 +1,11 @@
+.filter__title {
+  margin: 0;
+}
+
+.filter__list {
+  display: flex;
+  column-gap: 38px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
