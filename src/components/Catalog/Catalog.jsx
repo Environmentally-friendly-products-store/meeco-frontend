@@ -1,6 +1,6 @@
 import './Catalog.css';
 
-import { useState, useEffect, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 
 import { getAllCategories, getProducts } from '../../utils/productsApi';
@@ -10,6 +10,7 @@ import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import FiltersSection from '../FiltersSection/FiltersSection';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
+import { trackCatalog } from '../../utils/yandexCounter';
 
 import { FILTERS_TO_GET_All_PRODUCTS, PAGE_LIMIT } from '../../utils/constants';
 
@@ -45,6 +46,7 @@ function Catalog({ onCardClick }) {
       setProductsAmount(newProductsAmount);
       const newProducts = response.results;
       setProducts(newProducts);
+      trackCatalog(newProducts);
     } catch (err) {
       console.log(err.error.detail);
     }
@@ -83,6 +85,7 @@ function Catalog({ onCardClick }) {
       const response = await getProducts({ ...filters, page: counter + 1 });
       const newProducts = response.results;
       setProducts([...products, ...newProducts]);
+      trackCatalog(newProducts);
     } catch (err) {
       console.log(err.error.detail);
     }

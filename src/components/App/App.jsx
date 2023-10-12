@@ -31,10 +31,10 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import {
-  getCurrentCard,
   addProductToShoppingCart,
   changeProductQuantityInShoppingCart,
   deleteProductFromShoppingCart,
+  getCurrentCard,
   getNovelties,
   getPopularProducts,
   getShoppingCart,
@@ -42,7 +42,7 @@ import {
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
-import { createOrder } from '../../utils/ordersApi';
+import { trackAddToCart } from '../../utils/yandexCounter';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -147,6 +147,9 @@ export default function App() {
             const updatedCard = { ...prev, ...res };
             return updatedCard;
           });
+        })
+        .then(() => {
+          trackAddToCart(selectedCard);
         })
         .then(() => getShoppingCart(token))
         .then(setShoppingCart)

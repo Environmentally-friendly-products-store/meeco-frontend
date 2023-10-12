@@ -2,9 +2,14 @@ import './Novelties.css';
 import ProductCard from '../ProductCard/ProductCard';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
+import { trackPromoView } from '../../utils/yandexCounter';
 
 function Novelties() {
   const { novelties } = useContext(ProductsContext);
+
+  if (novelties.length > 0) {
+    trackPromoView(novelties, 'novelties');
+  }
 
   return (
     <article className="novelties">
