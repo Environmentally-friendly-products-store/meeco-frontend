@@ -1,4 +1,7 @@
 import './Delivery.css';
+
+import { useState } from 'react';
+
 import catalogIcon from '../../images/catalog-icon.svg';
 import shoppingCartIcon from '../../images/shopping-cart-icon.svg';
 import deliveryIcon from '../../images/delivery-icon.svg';
@@ -8,8 +11,18 @@ import InfoBlock from '.././InfoBlock/InfoBlock';
 import Accordion from '../Accordion/Accordion';
 
 export default function Delivery() {
+  const [activeItemId, setActiveItemId] = useState(null);
+
+  const appointActiveItemId = (id) => {
+    setActiveItemId(id);
+  };
+
   return (
-    <InfoPage title="Доставка и оплата" id="deliveryAndPayments">
+    <InfoPage
+      appointActiveItemId={appointActiveItemId}
+      title="Доставка и оплата"
+      id="deliveryAndPayments"
+    >
       <InfoBlock
         title="Как сделать заказ"
         id="aboutOrder"
@@ -61,6 +74,10 @@ export default function Delivery() {
           text={item.text}
           id={item.id}
           key={index}
+          /* activeItem={{
+            appointActiveItemId,
+            isActive: activeItemId === item.id,
+          }} */
         />
       ))}
     </InfoPage>

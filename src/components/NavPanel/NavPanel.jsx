@@ -1,7 +1,7 @@
 import './NavPanel.css';
 import { HashLink } from 'react-router-hash-link';
 
-export default function NavPanel() {
+export default function NavPanel({ appointActiveItemId }) {
   const links = {
     contacts: '/contacts#contacts',
     delivery: {
@@ -33,6 +33,7 @@ export default function NavPanel() {
           className="navpanel__link selectable-link"
           smooth
           to={links.delivery.payment}
+          onClick={() => appointActiveItemId('aboutPayment')}
         >
           Оплата
         </HashLink>
@@ -40,6 +41,7 @@ export default function NavPanel() {
           className="navpanel__link selectable-link"
           smooth
           to={links.delivery.delivery}
+          onClick={() => appointActiveItemId('aboutDelivery')}
         >
           Доставка
         </HashLink>
@@ -47,6 +49,7 @@ export default function NavPanel() {
           className="navpanel__link selectable-link"
           smooth
           to={links.delivery.returns}
+          onClick={() => appointActiveItemId('aboutReturns')}
         >
           Возврат
         </HashLink>

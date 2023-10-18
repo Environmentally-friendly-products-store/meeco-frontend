@@ -1,5 +1,5 @@
 import './Accordion.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import chevron from '../../images/chevron.svg';
 
 export default function Accordion({
@@ -7,21 +7,41 @@ export default function Accordion({
   title,
   text,
   id,
+  activeItem = null,
 }) {
   /* const [expanded, setExpanded] = useState(-1); */
 
-  const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   /* const toggle = (index) => {
-    if (expanded === index) {
+    if (expanded === index) {s
       return setExpanded(-1);
     }
     setExpanded(index);
   }; */
 
-  const toggle = () => {
-    setExpanded(!isExpanded);
+  /* Функции ниже нужны для раскрытия содержимого при клике на соответствующий заголовок в NavPanel. Это используется в компоненте Delivery */
+
+  const simpleToggle = () => {
+    setIsExpanded(!isExpanded);
   };
+
+  const appointActiveItemAndToggle = () => {
+    if (!activeItem.isActive) {
+      activeItem.appointActiveItemId(id);
+    } else {
+      activeItem.appointActiveItemId(null);
+    }
+    simpleToggle();
+  };
+
+  const toggle = activeItem ? appointActiveItemAndToggle : simpleToggle;
+
+  useEffect(() => {
+    if (activeItem) {
+      setIsExpanded(activeItem.isActive);
+    }
+  }, [activeItem, activeItem?.isActive, id]);
 
   return (
     <div className="wrapper">
@@ -83,4 +103,3 @@ export default function Accordion({
     </div>
   ); */
 } /* ) */
-//TO DO перенести массив в product и поле text заполнить данными с сервера
