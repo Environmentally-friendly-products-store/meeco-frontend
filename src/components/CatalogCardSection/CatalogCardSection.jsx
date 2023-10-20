@@ -14,7 +14,7 @@ function CatalogCardSection({ products, requiredLength, onCardClick }) {
           price={product.price_per_unit}
           image={product.preview_image}
           name={product.name}
-          brand={product.brand}
+          brand={product.brand.name}
           card={product}
           id={product.id}
           onCardClick={onCardClick}

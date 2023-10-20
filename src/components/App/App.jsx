@@ -258,9 +258,11 @@ export default function App() {
     getNovelties().then((novelties) =>
       setProductsContext((prevState) => ({ ...prevState, novelties }))
     );
-    getPopularProducts().then((popular) =>
-      setProductsContext((prevState) => ({ ...prevState, popular }))
-    );
+    getPopularProducts()
+      .then((popular) =>
+        setProductsContext((prevState) => ({ ...prevState, popular }))
+      )
+      .catch((error) => console.log(error));
   }, []);
 
   const saveToken = ({ token }) => {
@@ -293,7 +295,9 @@ export default function App() {
       .catch(() => {
         setIsLoggedIn(false);
       });
-    getShoppingCart(token).then(setShoppingCart);
+    getShoppingCart(token)
+      .then(setShoppingCart)
+      .catch((error) => console.log(error));
     // eslint-disable-next-line
   }, [token]);
 
