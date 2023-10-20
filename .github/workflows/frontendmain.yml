@@ -3,6 +3,7 @@ on: [push]
 env:
   # FRONTEND_IMAGE: ${{  secrets.DOCKER_USERNAME  }}/ecome_frontend:v1
   FRONTEND_IMAGE: ${{  secrets.DOCKER_USERNAME  }}/ecome_frontend:test
+
 jobs:
   build_and_push_to_docker_hub:
     name: Push Docker image to Docker Hub
