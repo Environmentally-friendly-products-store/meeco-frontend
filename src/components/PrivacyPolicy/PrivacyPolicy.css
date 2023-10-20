@@ -6,6 +6,8 @@
 .privacy-policy ol {
   list-style: none;
   counter-reset: li;
+  padding: 0;
+  /* Надо создать отдельный класс для ol большой вложенности и указать это обнуление там */
 }
 
 .privacy-policy li:before {
