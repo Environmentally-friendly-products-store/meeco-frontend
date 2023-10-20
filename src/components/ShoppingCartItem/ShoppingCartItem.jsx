@@ -26,7 +26,7 @@ function ShoppingCartItem({
       </NavLink>
 
       <p className="shopping-cart__product-item shopping-cart__product-brand">
-        {brand}
+        {brand.name}
       </p>
       <p className="shopping-cart__product-item shopping-cart__product-name">
         {name}
