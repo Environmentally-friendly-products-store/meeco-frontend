@@ -1,5 +1,5 @@
 .footer {
-  padding: 62px 50px 32px 40px;
+  padding: 62px 40px 32px;
   display: grid;
   grid-template-columns: 1fr auto auto;
   background-color: #fffef6;
@@ -19,6 +19,10 @@
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+}
+
+.footer__menu:last-child {
+  margin-right: 10px;
 }
 
 .footer__menu_style_contacts {
