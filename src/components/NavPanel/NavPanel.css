@@ -9,22 +9,24 @@
 .navpanel__links {
   display: flex;
   flex-direction: column;
-  padding: 28px 0;
+  row-gap: 12px;
+  padding: 16px 0 29px 0;
 }
 
 .navpanel__link {
   font-size: 18px;
   font-style: normal;
   font-weight: 300;
-  line-height: 24px;
-  text-decoration-line: underline;
+  line-height: 1.33;
+  text-decoration: none;
   color: #403f32;
 }
 
-.navpanel__link + .navpanel__link {
-  padding-top: 20px;
-}
-
-.navpanel__links + .navpanel__link {
-  color: #a49e4a;
+.navpanel__link_style_back {
+  max-width: 60px;
+  font-size: 16px;
+  font-weight: normal;
+  padding-left: 36px;
+  background: transparent url('../../images/arrow-left-dark.svg') 0 50% / 24px
+    24px no-repeat;
 }

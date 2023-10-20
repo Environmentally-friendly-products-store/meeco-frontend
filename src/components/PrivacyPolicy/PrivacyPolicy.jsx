@@ -58,10 +58,15 @@ export default function PrivacyPolicy() {
                 {privacyPolicy3.map((item) => (
                   <li key={item.id} className="privacy-policy__item">
                     {item.text}
-                    <ul>
+                    <ul className="privacy-policy__inserted-unordered-items">
                       {item.points &&
                         item.points.map((point, index) => (
-                          <li key={index}>{point}</li>
+                          <li
+                            key={index}
+                            className="privacy-policy__inserted-unordered-item"
+                          >
+                            {point}
+                          </li>
                         ))}
                     </ul>
                   </li>
@@ -75,10 +80,15 @@ export default function PrivacyPolicy() {
                 {privacyPolicy4.map((item) => (
                   <li key={item.id} className="privacy-policy__item">
                     {item.text}
-                    <ul>
+                    <ul className="privacy-policy__inserted-unordered-items">
                       {item.points &&
                         item.points.map((point, index) => (
-                          <li key={index}>{point}</li>
+                          <li
+                            key={index}
+                            className="privacy-policy__inserted-unordered-item"
+                          >
+                            {point}
+                          </li>
                         ))}
                     </ul>
                   </li>
@@ -93,10 +103,15 @@ export default function PrivacyPolicy() {
                 {privacyPolicy5.map((item) => (
                   <li key={item.id} className="privacy-policy__item">
                     {item.text}
-                    <ol>
+                    <ol className="privacy-policy__inserted-ordered-items">
                       {item.points &&
                         item.points.map((point, index) => (
-                          <li key={index}>{point}</li>
+                          <li
+                            key={index}
+                            className="privacy-policy__inserted-ordered-item"
+                          >
+                            {point}
+                          </li>
                         ))}
                     </ol>
                   </li>
@@ -121,10 +136,15 @@ export default function PrivacyPolicy() {
                 {privacyPolicy7.map((item) => (
                   <li key={item.id} className="privacy-policy__item">
                     {item.text}
-                    <ul>
+                    <ul className="privacy-policy__inserted-unordered-items">
                       {item.points &&
                         item.points.map((point, index) => (
-                          <li key={index}>{point}</li>
+                          <li
+                            key={index}
+                            className="privacy-policy__inserted-unordered-item"
+                          >
+                            {point}
+                          </li>
                         ))}
                     </ul>
                   </li>
@@ -138,10 +158,15 @@ export default function PrivacyPolicy() {
                 {privacyPolicy8.map((item) => (
                   <li key={item.id} className="privacy-policy__item">
                     {item.text}
-                    <ul>
+                    <ul className="privacy-policy__inserted-unordered-items">
                       {item.points &&
                         item.points.map((point, index) => (
-                          <li key={index}>{point}</li>
+                          <li
+                            key={index}
+                            className="privacy-policy__inserted-unordered-item"
+                          >
+                            {point}
+                          </li>
                         ))}
                     </ul>
                   </li>

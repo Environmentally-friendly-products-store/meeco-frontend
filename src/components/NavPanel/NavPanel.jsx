@@ -7,8 +7,7 @@ export default function NavPanel() {
     delivery: {
       order: '/delivery#aboutOrder',
       payment: '/delivery#aboutPayment',
-      delivery: '/delivery#aboutDelivery',
-      returns: '/delivery#aboutReturns',
+      deliveryAndReturns: '/delivery#aboutDeliveryAndReturns',
     },
   };
 
@@ -29,30 +28,34 @@ export default function NavPanel() {
         >
           Как сделать заказ
         </HashLink>
-        <HashLink
+        {/* <HashLink
           className="navpanel__link selectable-link"
           smooth
           to={links.delivery.payment}
         >
           Оплата
-        </HashLink>
+        </HashLink> */}
         <HashLink
           className="navpanel__link selectable-link"
           smooth
-          to={links.delivery.delivery}
+          to={links.delivery.deliveryAndReturns}
         >
-          Доставка
+          Доставка и возврат
         </HashLink>
-        <HashLink
+        {/* <HashLink
           className="navpanel__link selectable-link"
           smooth
           to={links.delivery.returns}
         >
           Возврат
-        </HashLink>
+        </HashLink> */}
       </div>
-      <HashLink className="navpanel__link selectable-link" smooth to="/catalog">
-        Вернуться в каталог
+      <HashLink
+        className="navpanel__link navpanel__link_style_back selectable-link"
+        smooth
+        to="/catalog"
+      >
+        Назад
       </HashLink>
     </nav>
   );
