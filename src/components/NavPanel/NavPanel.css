@@ -22,6 +22,10 @@
   color: #403f32;
 }
 
+.navpanel__link_active {
+  text-decoration: underline;
+}
+
 .navpanel__link_style_back {
   max-width: 60px;
   font-size: 16px;
