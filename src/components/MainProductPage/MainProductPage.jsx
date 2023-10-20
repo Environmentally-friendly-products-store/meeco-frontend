@@ -1,11 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import defineImage from '../../utils/functions/defineImage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { trackDetails } from '../../utils/yandexCounter';
+import Accordion from '../Accordion/Accordion';
+
+const productDescription = [
+  {
+    title: 'Описание',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    id: 'description',
+  },
+  {
+    title: 'Состав',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    id: 'composition',
+  },
+];
 
 function MainProductPage({
   card,
@@ -16,16 +30,17 @@ function MainProductPage({
   token,
 }) {
   const [mainSlider, setMainSlider] = useState(null);
-  const [isClicked, setIsClicked] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { email } = useContext(CurrentUserContext);
+
   useEffect(() => {
     if (location.pathname.includes('/product')) {
       onCardClick(id);
     }
-  }, [location.pathname, email]);
+  }, [email, onCardClick, id, location.pathname]);
 
   useEffect(() => {
     if (card) {
@@ -34,12 +49,11 @@ function MainProductPage({
       }
       trackDetails(card);
     }
-  }, [card]);
+  }, [card, mainSlider]);
 
   const onChangeCounter = (operator) => {
     if (card.amount - 1 === 0 && operator === '-') {
       onButtonDeleteClick(card);
-      setIsClicked(true);
       return;
     }
     switch (operator) {
@@ -70,7 +84,7 @@ function MainProductPage({
       <Breadcrumbs productName={card.name} />
       <section className="product-page">
         <Link
-          to="/catalog"
+          onClick={() => navigate(-1)}
           className="product-page__link product-page__link_type_catalog"
         >
           <svg
@@ -87,7 +101,7 @@ function MainProductPage({
               fill="#403F32"
             />
           </svg>
-          <span className="product-page__link-text">Вернуться в каталог</span>
+          <span className="product-page__link-text">Назад</span>
         </Link>
         <div className="product-page__main">
           <div className="product-page__sliders">
@@ -122,33 +136,29 @@ function MainProductPage({
                       alt={'Фотография товара'}
                       className="product-page__main-image"
                     />
-                    {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
                   </div>
                 ))}
             </Slider>
           </div>
           <div className="product-page__info">
-            <p className="product-page__brand">{card.brand}</p>
+            <p className="product-page__brand">
+              {card.brand && card.brand.name}
+            </p>
             <h2 className="product-page__name">{card.name}</h2>
             <p className="product-page__price">
               {card.price_per_unit}&#160;&#8381;
             </p>
             <div className="product-page__string">
-              <div
-                className={`product-page__counter ${
-                  (card.amount === 0 || !card.amount) &&
-                  `product-page__counter_inactive`
-                }`}
-              >
+              <div className="product-page__counter">
                 <button
                   type="button"
                   className="product-page__button product-page__button_type_minus"
                   onClick={() => onChangeCounter('-')}
+                  disabled={email === ''}
                 ></button>
-                <span className="product-page__count">{card.amount}</span>
+                <span className="product-page__count">
+                  {card.amount === 0 ? '1' : card.amount}
+                </span>
                 <button
                   type="button"
                   className="product-page__button product-page__button_type_plus"
@@ -158,23 +168,69 @@ function MainProductPage({
               {card.is_in_shopping_cart ? (
                 <Link
                   to="/shopping-cart"
-                  className={`product-page__link product-page__link_type_shopping-cart`}
+                  className="product-page__link product-page__button_type_shopping-cart"
                 >
                   Перейти в корзину
                 </Link>
               ) : (
                 <button
-                  className={`product-page__button product-page__button_type_shopping-cart selectable-button ${
-                    isClicked && `product-page__button_clicked`
-                  }`}
+                  className="product-page__button product-page__button_type_shopping-cart"
                   onClick={() => onButtonAddClick(card)}
                 >
                   Добавить в корзину
                 </button>
               )}
+              <button className="product-page__button product-page__button_type_favorite">
+                {card.is_favorite ? (
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19.5044 12.5773L12.0083 20L4.51221 12.5773M4.51221 12.5773C4.01777 12.0962 3.62831 11.5181 3.36835 10.8791C3.10839 10.2402 2.98357 9.5544 3.00173 8.86487C3.0199 8.17535 3.18067 7.49705 3.47391 6.8727C3.76715 6.24834 4.18652 5.69146 4.7056 5.23711C5.22468 4.78275 5.83223 4.44078 6.49 4.23272C7.14776 4.02466 7.84149 3.95502 8.5275 4.02819C9.21351 4.10135 9.87693 4.31574 10.476 4.65784C11.0751 4.99995 11.5968 5.46236 12.0083 6.01597C12.4216 5.46638 12.944 5.00801 13.5426 4.66953C14.1413 4.33106 14.8034 4.11977 15.4875 4.04889C16.1715 3.97801 16.8629 4.04907 17.5182 4.25762C18.1736 4.46616 18.7788 4.8077 19.2961 5.26087C19.8134 5.71404 20.2315 6.26907 20.5243 6.89124C20.8172 7.5134 20.9784 8.1893 20.998 8.87664C21.0175 9.56397 20.895 10.2479 20.638 10.8857C20.381 11.5236 19.9951 12.1015 19.5044 12.5833"
+                      fill="#726E38"
+                    />
+                    <path
+                      d="M19.5044 12.5773L12.0083 20L4.51221 12.5773C4.01777 12.0962 3.62831 11.5181 3.36835 10.8791C3.10839 10.2402 2.98357 9.5544 3.00173 8.86487C3.0199 8.17535 3.18067 7.49705 3.47391 6.8727C3.76715 6.24834 4.18652 5.69146 4.7056 5.23711C5.22468 4.78275 5.83223 4.44078 6.49 4.23272C7.14776 4.02466 7.84149 3.95502 8.5275 4.02819C9.21351 4.10135 9.87693 4.31574 10.476 4.65784C11.0751 4.99995 11.5968 5.46236 12.0083 6.01597C12.4216 5.46638 12.944 5.00801 13.5426 4.66953C14.1413 4.33106 14.8034 4.11977 15.4875 4.04889C16.1715 3.97801 16.8629 4.04907 17.5182 4.25762C18.1736 4.46616 18.7788 4.8077 19.2961 5.26087C19.8134 5.71404 20.2315 6.26907 20.5243 6.89124C20.8172 7.5134 20.9784 8.1893 20.998 8.87664C21.0175 9.56397 20.895 10.2479 20.638 10.8857C20.381 11.5236 19.9951 12.1015 19.5044 12.5833"
+                      stroke="#726E38"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19.5044 12.5773L12.0083 20L4.51221 12.5773C4.01777 12.0962 3.62831 11.5181 3.36835 10.8791C3.10839 10.2402 2.98357 9.5544 3.00173 8.86487C3.0199 8.17535 3.18067 7.49705 3.47391 6.8727C3.76715 6.24834 4.18652 5.69146 4.7056 5.23711C5.22468 4.78275 5.83223 4.44078 6.49 4.23272C7.14776 4.02466 7.84149 3.95502 8.5275 4.02819C9.21351 4.10135 9.87693 4.31574 10.476 4.65784C11.0751 4.99995 11.5968 5.46236 12.0083 6.01597C12.4216 5.46638 12.944 5.00801 13.5426 4.66953C14.1413 4.33106 14.8034 4.11977 15.4875 4.04889C16.1715 3.97801 16.8629 4.04907 17.5182 4.25762C18.1736 4.46616 18.7788 4.8077 19.2961 5.26087C19.8134 5.71404 20.2315 6.26907 20.5243 6.89124C20.8172 7.5134 20.9784 8.1893 20.998 8.87664C21.0175 9.56397 20.895 10.2479 20.638 10.8857C20.381 11.5236 19.9951 12.1015 19.5044 12.5833"
+                      stroke="#403F32"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
-            <h3 className="product-page__subtitle">Описание</h3>
-            <p className="product-page__description">{card.description}</p>
+            {/* <h3 className="product-page__subtitle">Описание</h3>
+            <p className="product-page__description">{card.description}</p> */}
+            {productDescription.map((item, index) => (
+              <Accordion
+                isProductPage={true}
+                title={item.title}
+                text={item.text}
+                id={item.id}
+                key={index}
+              />
+            ))}
           </div>
         </div>
       </section>

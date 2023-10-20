@@ -71,19 +71,23 @@ export default function App() {
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
 
-  const [selectedCard, setSelectedCard] = useState([]);
-  const handleCardClick = (id) => {
-    setSelectedCard({});
-    if (isLoggedIn) {
-      getCurrentCard(id, token)
-        .then((product) => setSelectedCard(product))
-        .catch((err) => console.log(err));
-    } else {
-      getCurrentCard(id)
-        .then((product) => setSelectedCard(product))
-        .catch((err) => console.log(err));
-    }
-  };
+  const [selectedCard, setSelectedCard] = useState({});
+
+  const handleCardClick = useCallback(
+    (id) => {
+      setSelectedCard({});
+      if (isLoggedIn) {
+        getCurrentCard(id, token)
+          .then((product) => setSelectedCard(product))
+          .catch((err) => console.log(err));
+      } else {
+        getCurrentCard(id)
+          .then((product) => setSelectedCard(product))
+          .catch((err) => console.log(err));
+      }
+    },
+    [isLoggedIn, token]
+  );
 
   const [currentUser, setCurrentUser] = useState({
     id: '',
