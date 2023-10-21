@@ -30,7 +30,8 @@ export const getCategoryById = (categoryId) => {
 
 /**
  * Запрашивает данные о товарах по указанным параметрам
- * @param data {{event: string, category: string, limit: number, page: number, is_in_shopping_cart: number}} Объект с данными фильтра
+ * @param data {{event: string, category: string, limit: number, page: number, is_in_shopping_cart: number, is_favorite: number}} Объект с данными фильтра
+ * @param token {string}  Авторизационный токен
  */
 export const getProducts = (data, token) => {
   const params = encodeObjToQuery(data);
@@ -90,3 +91,23 @@ export const getPopularProducts = () => {
   };
   return getProducts(data).then(getResults);
 };
+
+/**
+ * Получение избранных товаров
+ */
+export const getFavourites = (token) => {
+  const data = { is_favorite: 1, limit: 99999 };
+  return getProducts(data, token).then(getResults);
+};
+
+/**
+ * Добавление товара в избранное
+ */
+export const addToFavourites = (productId, token) =>
+  makeRequest(`/products/${productId}/favorite/`, 'POST', null, token);
+
+/**
+ * Удаление товара из избранного
+ */
+export const deleteFromFavourites = (productId, token) =>
+  makeRequest(`/products/${productId}/favorite/`, 'DELETE', null, token);

@@ -32,9 +32,12 @@ import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import {
   addProductToShoppingCart,
+  addToFavourites,
   changeProductQuantityInShoppingCart,
+  deleteFromFavourites,
   deleteProductFromShoppingCart,
   getCurrentCard,
+  getFavourites,
   getNovelties,
   getPopularProducts,
   getShoppingCart,
@@ -43,6 +46,8 @@ import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import { trackAddToCart } from '../../utils/yandexCounter';
+import Favourites from '../Favorites/Favorites';
+import { FavouritesContext } from '../../contexts/FavouritesContext';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -109,6 +114,10 @@ export default function App() {
     orderDetails: {},
   });
 
+  const [favouritesContext, setFavouritesContext] = useState({
+    favourites: [],
+  });
+
   const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
 
   const [activeNavPanelItem, setActiveNavPanelItem] = useState(null);
@@ -128,6 +137,31 @@ export default function App() {
       orderDetails: {},
     });
   };
+
+  const isProductInFavourites = useCallback(
+    (productId) =>
+      favouritesContext.favourites.some((product) => product.id === productId),
+    [favouritesContext]
+  );
+
+  const onToggleFavourites = useCallback(
+    (productId) => {
+      if (!token) {
+        handleLoginPopup();
+        return;
+      }
+      const productFromFavourites = isProductInFavourites(productId);
+      const promise = productFromFavourites
+        ? deleteFromFavourites(productId, token)
+        : addToFavourites(productId, token);
+      return promise
+        .then(() => getFavourites(token))
+        .then((favourites) => setFavouritesContext({ favourites }))
+        .catch((error) => console.log(error));
+    },
+    // eslint-disable-next-line
+    [token, isProductInFavourites]
+  );
 
   const setOrderDetails = (orderDetails) => {
     setShoppingCartContext({
@@ -165,7 +199,8 @@ export default function App() {
         .then(setShoppingCart)
         .catch((err) => console.log(err));
     },
-    [isLoggedIn, handleLoginPopup, token]
+    // eslint-disable-next-line
+    [isLoggedIn, token]
   );
 
   const deleteProduct = useCallback(
@@ -219,7 +254,8 @@ export default function App() {
 
       promise.then(() => getShoppingCart(token)).then(setShoppingCart);
     },
-    [token, findProductInShoppingCart, handleLoginPopup]
+    // eslint-disable-next-line
+    [token, findProductInShoppingCart]
   );
 
   const onDecreaseProductInShoppingCart = useCallback(
@@ -265,9 +301,13 @@ export default function App() {
 
   useEffect(() => {
     setToken(getLocalStorageToken());
-    getNovelties().then((novelties) =>
-      setProductsContext((prevState) => ({ ...prevState, novelties }))
-    );
+
+    getNovelties()
+      .then((novelties) =>
+        setProductsContext((prevState) => ({ ...prevState, novelties }))
+      )
+      .catch((error) => console.log(error));
+
     getPopularProducts()
       .then((popular) =>
         setProductsContext((prevState) => ({ ...prevState, popular }))
@@ -297,6 +337,7 @@ export default function App() {
     if (!token) {
       return;
     }
+
     getUserProfile(token)
       .then((user) => {
         setCurrentUser(user);
@@ -305,8 +346,13 @@ export default function App() {
       .catch(() => {
         setIsLoggedIn(false);
       });
+
     getShoppingCart(token)
       .then(setShoppingCart)
+      .catch((error) => console.log(error));
+
+    getFavourites(token)
+      .then((favourites) => setFavouritesContext({ favourites }))
       .catch((error) => console.log(error));
     // eslint-disable-next-line
   }, [token]);
@@ -335,99 +381,110 @@ export default function App() {
         onCreateOrder,
       }}
     >
-      <ProductsContext.Provider value={productsContext}>
-        <CurrentUserContext.Provider value={currentUser}>
-          <IsCatalogButtonClickedContext.Provider
-            value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
-          >
-            <div className="app">
-              <Header />
-              <main className="main">
-                <Routes>
-                  <Route path="/" element={<Main />} />
-                  <Route path="/catalog" element={<Catalog />} />
-                  <Route
-                    path="/product/:id"
-                    element={
-                      <MainProductPage
-                        card={selectedCard}
-                        onButtonAddClick={addProduct}
-                        onButtonDeleteClick={deleteProduct}
-                        onButtonChangeClick={changeProductQuantity}
-                        onCardClick={handleCardClick}
-                        token={token}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/shopping-cart"
-                    element={<ProtectedRouteElement element={ShoppingCart} />}
-                  />
-                  <Route
-                    path="/delivery"
-                    element={
-                      <Delivery
-                        activeNavPanelItem={activeNavPanelItem}
-                        appointActiveNavPanelItem={appointActiveNavPanelItem}
-                      />
-                    }
-                  />
-                  <Route path="/about-us" element={<AboutUs />} />
-                  <Route
-                    path="/order"
-                    element={<ProtectedRouteElement element={Order} />}
-                  />
-                  <Route
-                    path="/thanksfororder"
-                    element={<ProtectedRouteElement element={ThanksForOrder} />}
-                  />{' '}
-                  <Route
-                    path="/profile"
-                    element={
-                      <ProtectedRouteElement
-                        element={Profile}
-                        onButtonClick={handleConfirmPopup}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/contacts"
-                    element={
-                      <Contacts
-                        activeNavPanelItem={activeNavPanelItem}
-                        appointActiveNavPanelItem={appointActiveNavPanelItem}
-                      />
-                    }
-                  />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                </Routes>
-                <TopScrollBtn />
-              </main>
-              <Footer appointActiveNavPanelItem={appointActiveNavPanelItem} />
-              <Registration
-                isPopupOpen={isRegistrationPopupOpen}
-                onClosePopup={handleClosePopup}
-                onCloseByOverlay={closePopupByOverlay}
-                handleTogglePopup={handleLoginPopup}
-                registerUser={registerUser}
-              />
-              <Login
-                isPopupOpen={isLoginPopupOpen}
-                onClosePopup={handleClosePopup}
-                onCloseByOverlay={closePopupByOverlay}
-                handleTogglePopup={handleRegistrationPopupOpen}
-                loginUser={loginUser}
-              />
-              <ConfirmPopup
-                isPopupOpen={isConfirmPopupOpen}
-                onClosePopup={handleClosePopup}
-                onCloseByOverlay={closePopupByOverlay}
-                onSubmit={logOut}
-              />
-            </div>
-          </IsCatalogButtonClickedContext.Provider>
-        </CurrentUserContext.Provider>
-      </ProductsContext.Provider>
+      <FavouritesContext.Provider
+        value={{
+          ...favouritesContext,
+          onToggleFavourites,
+          isProductInFavourites,
+        }}
+      >
+        <ProductsContext.Provider value={productsContext}>
+          <CurrentUserContext.Provider value={currentUser}>
+            <IsCatalogButtonClickedContext.Provider
+              value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
+            >
+              <div className="app">
+                <Header />
+                <main className="main">
+                  <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/catalog" element={<Catalog />} />
+                    <Route
+                      path="/product/:id"
+                      element={
+                        <MainProductPage
+                          card={selectedCard}
+                          onButtonAddClick={addProduct}
+                          onButtonDeleteClick={deleteProduct}
+                          onButtonChangeClick={changeProductQuantity}
+                          onCardClick={handleCardClick}
+                          token={token}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/shopping-cart"
+                      element={<ProtectedRouteElement element={ShoppingCart} />}
+                    />
+                    <Route
+                      path="/delivery"
+                      element={
+                        <Delivery
+                          activeNavPanelItem={activeNavPanelItem}
+                          appointActiveNavPanelItem={appointActiveNavPanelItem}
+                        />
+                      }
+                    />
+                    <Route path="/about-us" element={<AboutUs />} />
+                    <Route
+                      path="/order"
+                      element={<ProtectedRouteElement element={Order} />}
+                    />
+                    <Route
+                      path="/thanksfororder"
+                      element={
+                        <ProtectedRouteElement element={ThanksForOrder} />
+                      }
+                    />{' '}
+                    <Route
+                      path="/profile"
+                      element={
+                        <ProtectedRouteElement
+                          element={Profile}
+                          onButtonClick={handleConfirmPopup}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/contacts"
+                      element={
+                        <Contacts
+                          activeNavPanelItem={activeNavPanelItem}
+                          appointActiveNavPanelItem={appointActiveNavPanelItem}
+                        />
+                      }
+                    />
+                    <Route path="/favourites" element={<Favourites />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  </Routes>
+                  <TopScrollBtn />
+                </main>
+                <Footer appointActiveNavPanelItem={appointActiveNavPanelItem} />
+                <Registration
+                  isPopupOpen={isRegistrationPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  handleTogglePopup={handleLoginPopup}
+                  registerUser={registerUser}
+                />
+                <Login
+                  isPopupOpen={isLoginPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  handleTogglePopup={handleRegistrationPopupOpen}
+                  loginUser={loginUser}
+                />
+                <ConfirmPopup
+                  isPopupOpen={isConfirmPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  onSubmit={logOut}
+                />
+              </div>
+            </IsCatalogButtonClickedContext.Provider>
+          </CurrentUserContext.Provider>
+        </ProductsContext.Provider>
+      </FavouritesContext.Provider>
     </ShoppingCartContext.Provider>
   );
 }

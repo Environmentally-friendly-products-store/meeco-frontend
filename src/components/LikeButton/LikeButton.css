@@ -1,0 +1,19 @@
+.like-button {
+  width: 64px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.2s linear;
+  background: url('../../images/like-button.svg') 50% / auto auto no-repeat;
+}
+
+.like-button_active {
+  background: url('../../images/like-button-active.svg') 50% / auto auto
+    no-repeat;
+}
+
+.like-button:hover {
+  background: url('../../images/like-button-hover.svg') 50% / auto auto
+    no-repeat;
+}
