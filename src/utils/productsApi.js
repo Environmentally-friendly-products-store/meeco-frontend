@@ -85,7 +85,7 @@ export const getNovelties = () => {
 
 export const getPopularProducts = () => {
   const data = {
-    limit: 5,
+    limit: 8,
     event: 'populyarnoe',
   };
   return getProducts(data).then(getResults);

@@ -1,6 +1,5 @@
 import './PopularProducts.css';
 import ProductCard from '../ProductCard/ProductCard';
-import Carousel from '../Carousel/Carousel';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import { trackPromoView } from '../../utils/yandexCounter';
@@ -14,24 +13,17 @@ function PopularProducts() {
 
   return (
     <article className="popular-products">
-      <Carousel
-        slidesToShow={4}
-        slidesToScroll={1}
-        showDots={false}
-        componentName="popular-products"
-      >
-        {popular.map((product) => (
-          <ProductCard
-            key={product.id}
-            price={product.price_per_unit}
-            image={product.preview_image}
-            name={product.name}
-            brand={product.brand.name}
-            card={product}
-            id={product.id}
-          />
-        ))}
-      </Carousel>
+      {popular.map((product) => (
+        <ProductCard
+          key={product.id}
+          price={product.price_per_unit}
+          image={product.preview_image}
+          name={product.name}
+          brand={product.brand.name}
+          card={product}
+          id={product.id}
+        />
+      ))}
     </article>
   );
 }
