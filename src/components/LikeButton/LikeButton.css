@@ -4,7 +4,7 @@
   padding: 0;
   border: 0;
   cursor: pointer;
-  transition: background 0.2s linear;
+  transition: background 0.6s;
   background: url('../../images/like-button.svg') 50% / auto auto no-repeat;
 }
 
