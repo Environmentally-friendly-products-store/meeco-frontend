@@ -8,9 +8,17 @@ import TelegramIcon from '../TelegramIcon/TelegramIcon';
 import VKIcon from '../VKIcon/VKIcon';
 import MailIcon from '../MailIcon/MailIcon';
 
-export default function Contacts() {
+export default function Contacts({
+  activeNavPanelItem,
+  appointActiveNavPanelItem,
+}) {
   return (
-    <InfoPage title="Контакты" id="contacts">
+    <InfoPage
+      title="Контакты"
+      id="contacts"
+      activeNavPanelItem={activeNavPanelItem}
+      appointActiveNavPanelItem={appointActiveNavPanelItem}
+    >
       <InfoBlock title="Круглосуточная техподдержка" showImage={false}>
         <div className="contacts">
           <PhoneIcon />

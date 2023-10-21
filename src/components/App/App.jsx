@@ -111,6 +111,12 @@ export default function App() {
 
   const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
 
+  const [activeNavPanelItem, setActiveNavPanelItem] = useState(null);
+
+  const appointActiveNavPanelItem = (item) => {
+    setActiveNavPanelItem(item);
+  };
+
   const setShoppingCart = (shoppingCart) => {
     const totalPrice = shoppingCart.reduce(
       (acc, product) => acc + product.amount * product.price_per_unit,
@@ -357,7 +363,15 @@ export default function App() {
                     path="/shopping-cart"
                     element={<ProtectedRouteElement element={ShoppingCart} />}
                   />
-                  <Route path="/delivery" element={<Delivery />} />
+                  <Route
+                    path="/delivery"
+                    element={
+                      <Delivery
+                        activeNavPanelItem={activeNavPanelItem}
+                        appointActiveNavPanelItem={appointActiveNavPanelItem}
+                      />
+                    }
+                  />
                   <Route path="/about-us" element={<AboutUs />} />
                   <Route
                     path="/order"
@@ -376,12 +390,20 @@ export default function App() {
                       />
                     }
                   />
-                  <Route path="/contacts" element={<Contacts />} />
+                  <Route
+                    path="/contacts"
+                    element={
+                      <Contacts
+                        activeNavPanelItem={activeNavPanelItem}
+                        appointActiveNavPanelItem={appointActiveNavPanelItem}
+                      />
+                    }
+                  />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 </Routes>
                 <TopScrollBtn />
               </main>
-              <Footer />
+              <Footer appointActiveNavPanelItem={appointActiveNavPanelItem} />
               <Registration
                 isPopupOpen={isRegistrationPopupOpen}
                 onClosePopup={handleClosePopup}
