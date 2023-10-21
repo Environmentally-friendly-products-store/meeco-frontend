@@ -51,6 +51,11 @@ function Login({
   const getInputClassName = (error) =>
     `popup__input ${error ? 'popup__input_error' : ''}`;
 
+  const [isShowPasswordButtonClicked, setIsShowPaswordButtonClicked] =
+    useState(false);
+  const togglePasswordType = () =>
+    setIsShowPaswordButtonClicked(!isShowPasswordButtonClicked);
+
   return (
     <PopupWithForm {...popupWithFormProps}>
       <label className={getLabelClassName(errorsState.email)}>Email</label>
@@ -66,16 +71,22 @@ function Login({
       />
       <span className="popup__error ">{errorsState.email}</span>
       <label className={getLabelClassName(errorsState.password)}>Пароль</label>
-      <input
-        onChange={handleInputChange}
-        value={'' || userState.password}
-        type="password"
-        name="password"
-        className={getInputClassName(errorsState.password)}
-        minLength="8"
-        maxLength="40"
-        required
-      />
+      <div className="popup__password">
+        <input
+          onChange={handleInputChange}
+          value={'' || userState.password}
+          type={isShowPasswordButtonClicked ? 'text' : 'password'}
+          name="password"
+          className={getInputClassName(errorsState.password)}
+          minLength="8"
+          maxLength="40"
+          required
+        />
+        <button
+          className="popup__button popup__button_type_eye"
+          onClick={() => togglePasswordType()}
+        />
+      </div>
       <span className="popup__error">{errorsState.password}</span>
       <span className="popup__server-error">{serverError}</span>
     </PopupWithForm>

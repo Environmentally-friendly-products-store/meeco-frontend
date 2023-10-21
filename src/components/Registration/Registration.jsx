@@ -61,6 +61,18 @@ function Registration({
   const getInputClassName = (error) =>
     `popup__input ${error ? 'popup__input_error' : ''}`;
 
+  const [isShowPasswordButtonClicked, setIsShowPaswordButtonClicked] =
+    useState(false);
+  const [
+    isRepeatedShowPasswordsButtonClicked,
+    setIsRepeatedShowPasswordsButtonClicked,
+  ] = useState(false);
+  const togglePasswordType = () =>
+    setIsShowPaswordButtonClicked(!isShowPasswordButtonClicked);
+  const toggleRepeatedPasswordType = () =>
+    setIsRepeatedShowPasswordsButtonClicked(
+      !isRepeatedShowPasswordsButtonClicked
+    );
   return (
     <PopupWithForm {...popupWithFormProps}>
       <label className={getLabelClassName(errorsState.firstName)}>Имя</label>
@@ -100,30 +112,42 @@ function Registration({
       />
       <span className="popup__error">{errorsState.email}</span>
       <label className={getLabelClassName(errorsState.password)}>Пароль</label>
-      <input
-        onChange={handleInputChange}
-        value={'' || userState.password}
-        type="password"
-        name="password"
-        className={getInputClassName(errorsState.password)}
-        minLength="8"
-        maxLength="40"
-        required
-      />
+      <div className="popup__password">
+        <input
+          onChange={handleInputChange}
+          value={'' || userState.password}
+          type={isShowPasswordButtonClicked ? 'text' : 'password'}
+          name="password"
+          className={getInputClassName(errorsState.password)}
+          minLength="8"
+          maxLength="40"
+          required
+        />
+        <button
+          className="popup__button popup__button_type_eye"
+          onClick={() => togglePasswordType()}
+        />
+      </div>
       <span className="popup__error">{errorsState.password}</span>
       <label className={getLabelClassName(matchPassword)}>
         Повторите пароль
       </label>
-      <input
-        onChange={handleInputChange}
-        value={'' || userState.repeatedPassword}
-        type="password"
-        name="repeatedPassword"
-        className={getInputClassName(matchPassword)}
-        minLength="8"
-        maxLength="40"
-        required
-      />
+      <div className="popup__password">
+        <input
+          onChange={handleInputChange}
+          value={'' || userState.repeatedPassword}
+          type={isRepeatedShowPasswordsButtonClicked ? 'text' : 'password'}
+          name="repeatedPassword"
+          className={getInputClassName(matchPassword)}
+          minLength="8"
+          maxLength="40"
+          required
+        />
+        <button
+          className="popup__button popup__button_type_eye"
+          onClick={() => toggleRepeatedPasswordType()}
+        />
+      </div>
       <span className="popup__error">
         {matchPassword ? 'Пароли не совпадают' : ''}
       </span>
