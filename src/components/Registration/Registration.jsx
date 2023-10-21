@@ -125,6 +125,7 @@ function Registration({
         />
         <button
           className="popup__button popup__button_type_eye"
+          type="button"
           onClick={() => togglePasswordType()}
         />
       </div>
@@ -145,6 +146,7 @@ function Registration({
         />
         <button
           className="popup__button popup__button_type_eye"
+          type="button"
           onClick={() => toggleRepeatedPasswordType()}
         />
       </div>
