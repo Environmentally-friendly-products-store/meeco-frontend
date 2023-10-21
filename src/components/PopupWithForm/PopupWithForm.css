@@ -107,6 +107,7 @@
 }
 
 .popup__input {
+  width: calc(100% - 20px);
   border: 1px solid rgba(233, 215, 193, 1);
   border-radius: 12px;
   padding: 4px 8px;
@@ -273,4 +274,20 @@
   font-style: normal;
   font-weight: 400;
   line-height: 1.71;
+}
+
+.popup__password {
+  position: relative;
+}
+
+.popup__button_type_eye {
+  position: absolute;
+  top: 25%;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background-image: url('../../images/eyeIcon.svg');
+  background-color: transparent;
+  background-size: contain;
+  border: none;
 }
