@@ -13,7 +13,7 @@
 
 .favourites-empty__text {
   margin: 0;
-  font-family: Didact-Gothic;
+  font-family: 'Didact-Gothic', 'Arial', sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -24,11 +24,10 @@
 .favourites-empty__button {
   margin-top: 40px;
   width: 316px;
-  font-family: 'Mulish';
+  font-family: 'Mulish', 'Arial', sans-serif;
   color: rgba(64, 63, 50, 1);
   font-size: 16px;
   line-height: 1.5;
-  border: 0;
   border-radius: 12px;
   border: 1px solid rgba(164, 158, 74, 1);
   background-color: #fff;
