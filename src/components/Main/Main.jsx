@@ -1,5 +1,5 @@
 import Promo from '../Promo/Promo';
-import CardSection from '../CardSection/CardSection';
+import CardSectionWithTitle from '../CardSectionWithTitle/CardSectionWithTitle';
 import Novelties from '../Novelties/Novelties';
 import PopularProducts from '../PopularProducts/PopularProducts';
 import AboutProject from '../AboutProject/AboutProject';
@@ -8,13 +8,19 @@ export default function Main() {
   return (
     <>
       <Promo />
-      <CardSection title="Новинки" isUsedOnMainPage={true}>
+      <CardSectionWithTitle
+        title="Новинки"
+        additionalStyles={'card-section-with-title_style_main'}
+      >
         <Novelties />
-      </CardSection>
+      </CardSectionWithTitle>
       <AboutProject />
-      <CardSection title="Популярные товары" isUsedOnMainPage={true}>
+      <CardSectionWithTitle
+        title="Популярные товары"
+        additionalStyles={'card-section-with-title_style_main'}
+      >
         <PopularProducts />
-      </CardSection>
+      </CardSectionWithTitle>
     </>
   );
 }
