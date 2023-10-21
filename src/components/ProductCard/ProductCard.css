@@ -65,7 +65,7 @@
 
 .product-card__image:hover {
   opacity: 0.8;
-  transform: scale(1.02);
+  transform: scale(1.015);
 }
 
 /* product-card__like-button */
@@ -93,7 +93,7 @@
 
 .product-card__like-button:hover ~ .product-card__link > .product-card__image {
   opacity: 0.8;
-  transform: scale(1.02);
+  transform: scale(1.015);
 }
 
 .product-card__like-button_liked {
