@@ -13,7 +13,7 @@ import useScrollToTop from '../../hooks/useScrollToTop';
 import AboutUs from '../AboutUs/AboutUs';
 import Order from '../Order/Order';
 import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy';
-
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 
 import Profile from '../Profile/Profile';
@@ -400,6 +400,7 @@ export default function App() {
                     }
                   />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
                 <TopScrollBtn />
               </main>
