@@ -46,43 +46,59 @@
 
 /* product-card__card-container */
 
-.product-card__card-container {
+.product-card__container {
   position: relative;
-  display: flex;
-  padding: 16px;
-  flex-direction: column;
-  justify-content: space-between;
   box-sizing: border-box;
-}
-
-/* product-card__like-button */
-
-.product-card__like-button {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  align-self: end;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: opacity 0.2s linear;
-  background: #fff url('../../images/like-icon.svg') 50% / auto auto no-repeat;
-}
-
-.product-card__like-button:hover {
-  opacity: 0.9;
-}
-
-.product-card__like-button_liked {
-  background: #fff url('../../images/liked-icon.svg') 50% / auto auto no-repeat;
 }
 
 /* product-card__image */
 
 .product-card__image {
-  height: 100%;
+  max-width: 268px;
+  max-height: 268px;
   object-fit: cover;
   border-radius: 12px;
+  transition:
+    transform 0.6s,
+    opacity 0.6s;
+}
+
+.product-card__image:hover {
+  opacity: 0.8;
+  transform: scale(1.015);
+}
+
+/* product-card__like-button */
+
+.product-card__like-button {
+  position: absolute;
+  z-index: 1000;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  align-self: end;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.6s;
+  background: url('../../images/favourites-card.svg') 50% / auto auto no-repeat;
+}
+
+.product-card__like-button:hover {
+  background: url('../../images/favourites-card-hover.svg') 50% / auto auto
+    no-repeat;
+}
+
+.product-card__like-button:hover ~ .product-card__link > .product-card__image {
+  opacity: 0.8;
+  transform: scale(1.015);
+}
+
+.product-card__like-button_liked {
+  background: url('../../images/favourites-card-active.svg') 50% / auto auto
+    no-repeat;
 }
 
 /* product-card__info-container */
