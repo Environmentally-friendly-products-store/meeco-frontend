@@ -6,8 +6,9 @@ import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 import { getAllCategories, getProducts } from '../../utils/productsApi';
 
 import CardSection from '../CardSection/CardSection';
+import CategoriesSection from '../CategoriesSection/CategoriesSection';
+import PopupWithFilters from '../PopupWithFilters/PopupWithFilters';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
-import FiltersSection from '../FiltersSection/FiltersSection';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import { trackCatalog } from '../../utils/yandexCounter';
 
@@ -64,7 +65,7 @@ function Catalog({ onCardClick }) {
     return getProductFunc(filters, null, 'Все');
   };
 
-  const onFilterButtonClick = (name) => {
+  const onCategoryButtonClick = (name) => {
     return getProductFunc({ ...filters, category: name }, 1);
   };
 
@@ -104,9 +105,9 @@ function Catalog({ onCardClick }) {
       <main className="catalog">
         <Breadcrumbs />
 
-        <FiltersSection
+        <CategoriesSection
+          onCategoryButtonClick={onCategoryButtonClick}
           categories={categories}
-          onFilterButtonClick={onFilterButtonClick}
           onResetClick={onResetClick}
         />
 
@@ -120,6 +121,8 @@ function Catalog({ onCardClick }) {
             <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
           )}
       </main>
+
+      <PopupWithFilters />
     </ActiveItemContext.Provider>
   );
 }

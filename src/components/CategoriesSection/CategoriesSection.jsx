@@ -1,4 +1,4 @@
-import './FiltersSection.css';
+import './CategoriesSection.css';
 /* import { useState } from 'react'; */
 import Filter from '../Filter/Filter';
 
@@ -59,7 +59,11 @@ import Filter from '../Filter/Filter';
   );
 } */
 
-function FiltersSection({ categories, onFilterButtonClick, onResetClick }) {
+function CategoriesSection({
+  categories,
+  onCategoryButtonClick,
+  onResetClick,
+}) {
   return (
     <section className="filters-section catalog__filters-section">
       <div className="filters-form">
@@ -67,7 +71,7 @@ function FiltersSection({ categories, onFilterButtonClick, onResetClick }) {
           <Filter
             filterItems={categories}
             filterName={'Категории'}
-            onFilterButtonClick={onFilterButtonClick}
+            onCategoryButtonClick={onCategoryButtonClick}
             onResetClick={onResetClick}
           />
         </div>
@@ -76,4 +80,4 @@ function FiltersSection({ categories, onFilterButtonClick, onResetClick }) {
   );
 }
 
-export default FiltersSection;
+export default CategoriesSection;
