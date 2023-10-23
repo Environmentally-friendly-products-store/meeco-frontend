@@ -135,7 +135,7 @@
 
 .product-page__string {
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
   margin-bottom: 79px;
 }
 
@@ -217,17 +217,7 @@
   background-color: #726e38;
 }
 
-.product-page__button_type_favorite {
-  margin: 0 0 0 auto;
-  padding: 0;
-  border-radius: 12px;
-  border: 1px solid #a49e4a;
-  width: 64px;
-  background-size: 24px 24px;
-  transition: all 0.5s ease;
-}
-
-.product-page__button_type_favorite:hover {
-  background-color: #e3e1b9;
-  border: 1px solid #726e38;
+.product-page__container {
+  display: flex;
+  gap: 20px;
 }
