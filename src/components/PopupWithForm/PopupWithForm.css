@@ -226,6 +226,7 @@
   height: 20px;
   top: 4px;
   left: 273px;
+  transition: background-image 0.6s;
 }
 
 .popup__button_type_close:hover {
