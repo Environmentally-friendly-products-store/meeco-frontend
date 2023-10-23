@@ -1,0 +1,16 @@
+.popup__label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.popup__recovery-password {
+  margin: 0;
+  text-decoration: underline;
+  color: rgba(165, 163, 143, 1);
+  font-family: 'Mulish', Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 171.429% */
+}
