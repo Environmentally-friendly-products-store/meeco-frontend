@@ -33,7 +33,8 @@
 }
 
 .carousel-arrows__custom_prev_style_promo {
-  left: 0;
+  right: 80px;
+  top: 406px;
 }
 
 .carousel-arrows__custom_prev_style_popular-products {
@@ -52,7 +53,8 @@
 }
 
 .carousel-arrows__custom_next_style_promo {
-  right: 0;
+  right: 8px;
+  top: 406px;
 }
 
 .carousel-arrows__custom_next_style_popular-products {
