@@ -39,6 +39,39 @@ export const getProducts = (data, token) => {
 };
 
 /**
+ * Запрашивает данные по переданным фильтрам и
+ */
+export const sortProductsInAscendingOrder = (filters) => {
+  const data = {
+    ...filters,
+    is_sorted_in_ascending: 1 /* предположительное название фильтра */,
+  };
+  return getProducts(data).then(getResults);
+};
+
+/**
+ * Запрашивает данные по переданным фильтрам и
+ */
+export const sortProductsInDescendingOrder = (filters) => {
+  const data = {
+    ...filters,
+    is_sorted_in_descending: 1 /* предположительное название фильтра */,
+  };
+  return getProducts(data).then(getResults);
+};
+
+/**
+ * Запрашивает данные по переданным фильтрам и
+ */
+export const sortProductsInAlphabeticalOrder = (filters) => {
+  const data = {
+    ...filters,
+    is_sorted_in_alphabetical_order: 1 /* предположительное название фильтра */,
+  };
+  return getProducts(data).then(getResults);
+};
+
+/**
  * Запрашивает данные о конкретном товаре по id
  */
 export const getProductById = (productId) => {
@@ -86,7 +119,7 @@ export const getNovelties = () => {
 
 export const getPopularProducts = () => {
   const data = {
-    limit: 8,
+    limit: 10,
     event: 'populyarnoe',
   };
   return getProducts(data).then(getResults);

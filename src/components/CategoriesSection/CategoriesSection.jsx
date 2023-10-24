@@ -1,6 +1,6 @@
 import './CategoriesSection.css';
 /* import { useState } from 'react'; */
-import Filter from '../Filter/Filter';
+import Category from '../Category/Category';
 
 /* function FiltersSection({ categories, onFiltersChange, onReset }) {
   const onSubmit = (e) => {
@@ -65,18 +65,17 @@ function CategoriesSection({
   onResetClick,
 }) {
   return (
-    <section className="filters-section catalog__filters-section">
-      <div className="filters-form">
-        <div className="filters">
-          <Filter
-            filterItems={categories}
-            filterName={'Категории'}
+    <aside className="categories-section catalog__categories-section">
+      <div className="categories-form">
+        <div className="categories">
+          <Category
+            categoryItems={categories}
             onCategoryButtonClick={onCategoryButtonClick}
             onResetClick={onResetClick}
           />
         </div>
       </div>
-    </section>
+    </aside>
   );
 }
 

@@ -1,0 +1,41 @@
+.lesser-filters {
+  display: flex;
+  column-gap: 40px;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  align-self: start;
+}
+
+.lesser-filters__open-filters-button {
+  position: relative;
+  font-family: 'Mulish';
+  color: #726e38;
+  font-size: 16px;
+  line-height: 1.5;
+  border: 0;
+  border-radius: 12px;
+  border: 1px solid #726e38;
+  background-color: #fff;
+  padding: 3px 12px 3px 40px;
+  cursor: pointer;
+  transition: background-color 0.6s;
+}
+
+.lesser-filters__open-filters-button::before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 3px;
+  left: 12px;
+  background: url('../../images/filters-button.svg') 50% / contain no-repeat;
+}
+
+.lesser-filters__open-filters-button:hover {
+  background-color: #e3e1b9;
+}
+
+.lesser-filter__chosen-filters {
+  display: flex;
+  column-gap: 16px;
+}

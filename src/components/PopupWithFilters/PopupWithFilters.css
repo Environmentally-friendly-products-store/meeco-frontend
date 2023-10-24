@@ -1,0 +1,48 @@
+/* .popup-with-filters {
+  display: none;
+  position: fixed;
+  top: 109px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+} */
+
+/* .popup-with-filters_open {
+  display: flex;
+} */
+
+/* .popup {
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #121010;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0.5s ease,
+    opacity 0.5s ease;
+}
+
+.popup_active {
+  visibility: visible;
+  opacity: 1;
+} */
+
+/* .popup_type_filters {
+  background-color: #121010;
+}
+ */
+
+/* .popup-with-filters__mask {
+  height: 100%;
+} */
+
+.popup-with-filters__filters {
+  width: 472px;
+  height: 900px;
+  background-color: #fff;
+}

@@ -1,0 +1,8 @@
+.all-filters-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  row-gap: 28px;
+  z-index: 2;
+}
