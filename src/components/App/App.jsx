@@ -301,7 +301,6 @@ export default function App() {
 
   useEffect(() => {
     setToken(getLocalStorageToken());
-
     getNovelties()
       .then((novelties) =>
         setProductsContext((prevState) => ({ ...prevState, novelties }))
