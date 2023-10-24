@@ -45,10 +45,10 @@ function ShoppingCart() {
         <>
           <section className="shopping-cart__products-block">
             <ul className="shopping-cart__products-list">
-              {shoppingCart.map((product) => (
+              {shoppingCart.map((data) => (
                 <ShoppingCartItem
-                  key={product.id}
-                  product={product}
+                  key={data.product.id}
+                  data={data}
                   onAmountChange={onAmountChange}
                   onDeleteFromShoppingCart={onDeleteFromShoppingCart}
                 />
