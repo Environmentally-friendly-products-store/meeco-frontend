@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useForm from '../../hooks/useForm';
 
@@ -43,7 +43,7 @@ function Registration({
     title: 'Регистрация',
     isValid: isFormValid,
     submitButtonTextContent: 'Зарегистрироваться',
-    routerLinkText: 'Я уже зарегистрирован(а). Войти',
+    routerLinkText: 'Я уже зарегистрирован',
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,
     togglePopup: handleTogglePopup,
@@ -51,6 +51,7 @@ function Registration({
   };
 
   const [serverError, setServerError] = useState('');
+
   const matchPassword =
     userState.password !== userState.repeatedPassword &&
     userState.repeatedPassword !== '';
@@ -63,18 +64,34 @@ function Registration({
 
   const [isShowPasswordButtonClicked, setIsShowPaswordButtonClicked] =
     useState(false);
+
   const [
     isRepeatedShowPasswordsButtonClicked,
     setIsRepeatedShowPasswordsButtonClicked,
   ] = useState(false);
+
   const togglePasswordType = () =>
     setIsShowPaswordButtonClicked(!isShowPasswordButtonClicked);
+
   const toggleRepeatedPasswordType = () =>
     setIsRepeatedShowPasswordsButtonClicked(
       !isRepeatedShowPasswordsButtonClicked
     );
+
+  const additionalEyeButtonStylePassword = useMemo(
+    () => (isShowPasswordButtonClicked ? 'popup__button_type_eye-show' : ''),
+    [isShowPasswordButtonClicked]
+  );
+
+  const additionalEyeButtonStyleRepeatPassword = useMemo(
+    () =>
+      isRepeatedShowPasswordsButtonClicked ? 'popup__button_type_eye-show' : '',
+    [isRepeatedShowPasswordsButtonClicked]
+  );
+
   return (
     <PopupWithForm {...popupWithFormProps}>
+      <span className="popup__server-error">{serverError}</span>
       <label className={getLabelClassName(errorsState.firstName)}>Имя</label>
       <input
         onChange={handleInputChange}
@@ -84,6 +101,8 @@ function Registration({
         className={getInputClassName(errorsState.firstName)}
         minLength="2"
         maxLength="32"
+        autoComplete="off"
+        onFocus={(e) => e.target.setAttribute('autoComplete', 'none')}
         required
       />
       <span className="popup__error">{errorsState.firstName}</span>
@@ -96,6 +115,8 @@ function Registration({
         className={getInputClassName(errorsState.lastName)}
         minLength="2"
         maxLength="64"
+        autoComplete="off"
+        onFocus={(e) => e.target.setAttribute('autoComplete', 'none')}
         required
       />
       <span className="popup__error">{errorsState.lastName}</span>
@@ -108,6 +129,7 @@ function Registration({
         className={getInputClassName(errorsState.email)}
         minLength="8"
         maxLength="114"
+        onFocus={(e) => e.target.setAttribute('autoComplete', 'none')}
         required
       />
       <span className="popup__error">{errorsState.email}</span>
@@ -121,10 +143,12 @@ function Registration({
           className={getInputClassName(errorsState.password)}
           minLength="8"
           maxLength="40"
+          onFocus={(e) => e.target.setAttribute('autoComplete', 'none')}
+          autoComplete="off"
           required
         />
         <button
-          className="popup__button popup__button_type_eye"
+          className={`popup__button popup__button_type_eye-not-show ${additionalEyeButtonStylePassword}`}
           type="button"
           onClick={() => togglePasswordType()}
         />
@@ -142,10 +166,11 @@ function Registration({
           className={getInputClassName(matchPassword)}
           minLength="8"
           maxLength="40"
+          autoComplete="off"
           required
         />
         <button
-          className="popup__button popup__button_type_eye"
+          className={`popup__button popup__button_type_eye-not-show ${additionalEyeButtonStyleRepeatPassword}`}
           type="button"
           onClick={() => toggleRepeatedPasswordType()}
         />
@@ -153,7 +178,6 @@ function Registration({
       <span className="popup__error">
         {matchPassword ? 'Пароли не совпадают' : ''}
       </span>
-      <span className="popup__server-error">{serverError}</span>
     </PopupWithForm>
   );
 }

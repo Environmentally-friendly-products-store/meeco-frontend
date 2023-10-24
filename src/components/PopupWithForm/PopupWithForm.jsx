@@ -77,22 +77,20 @@ function PopupWithForm({
               {submitButtonTextContent}
             </button>
           </div>
-          <div className="popup__information">
-            {name === 'registration' && (
-              <>
-                <p className="popup__information-text">
-                  Нажимая на кнопку, вы соглашаетесь
-                </p>
-                <Link
-                  to="/privacy-policy"
-                  target="_blank"
-                  className="popup__link popup__link_type_policy selectable-link"
-                >
+          {name === 'registration' && (
+            <div className="popup__information">
+              <Link
+                to="/privacy-policy"
+                target="_blank"
+                className="popup__link popup__link_type_policy selectable-link"
+              >
+                Нажимая на кнопку, вы соглашаетесь
+                <span className="popup__link_type_policy">
                   c Политикой конфиденциальности
-                </Link>
-              </>
-            )}
-          </div>
+                </span>
+              </Link>
+            </div>
+          )}
         </form>
       </div>
     </div>

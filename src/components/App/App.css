@@ -17,6 +17,13 @@ input:-webkit-autofill {
   transition: all 5000s ease-in-out;
 }
 
+input:focus::-webkit-textfield-decoration-container {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
 .selectable-link {
   transition: opacity 0.3s ease-in-out;
   cursor: pointer;
