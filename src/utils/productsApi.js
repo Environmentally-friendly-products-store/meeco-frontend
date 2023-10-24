@@ -111,3 +111,27 @@ export const addToFavourites = (productId, token) =>
  */
 export const deleteFromFavourites = (productId, token) =>
   makeRequest(`/products/${productId}/favorite/`, 'DELETE', null, token);
+
+export const addProductNotAuth = (productId, quantity, token) => {
+  return makeRequest(
+    '/cart/',
+    'POST',
+    {
+      product: productId,
+      quantity,
+    },
+    token
+  );
+};
+
+export const getShoppingCartNotAuth = (token) => {
+  return makeRequest('/cart/', 'GET', null, token);
+};
+
+export const changeProductQuantityNotAuth = (productId, amount, token) => {
+  return makeRequest(`/cart/${productId}/`, 'PATCH', { amount }, token);
+};
+
+export const deleteProductNotAuth = (productId, token) => {
+  return makeRequest(`/cart/${productId}/`, 'DELETE', null, token);
+};

@@ -41,6 +41,10 @@ import {
   getNovelties,
   getPopularProducts,
   getShoppingCart,
+  addProductNotAuth,
+  getShoppingCartNotAuth,
+  changeProductQuantityNotAuth,
+  deleteProductNotAuth,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
@@ -182,22 +186,35 @@ export default function App() {
   const addProduct = useCallback(
     (card) => {
       if (!isLoggedIn) {
-        handleLoginPopup();
-        return;
+        addProductNotAuth(card.id)
+          .then(() => {
+            setSelectedCard((prev) => {
+              const updatedCard = {
+                ...prev,
+                is_in_shopping_cart: true,
+                amount: 1,
+              };
+              return updatedCard;
+            });
+          })
+          .then(() => getShoppingCartNotAuth())
+          .then(setShoppingCart)
+          .catch((err) => console.log(err));
+      } else {
+        addProductToShoppingCart(card.id, token)
+          .then((res) => {
+            setSelectedCard((prev) => {
+              const updatedCard = { ...prev, ...res };
+              return updatedCard;
+            });
+          })
+          .then(() => {
+            trackAddToCart(selectedCard);
+          })
+          .then(() => getShoppingCart(token))
+          .then(setShoppingCart)
+          .catch((err) => console.log(err));
       }
-      addProductToShoppingCart(card.id, token)
-        .then((res) => {
-          setSelectedCard((prev) => {
-            const updatedCard = { ...prev, ...res };
-            return updatedCard;
-          });
-        })
-        .then(() => {
-          trackAddToCart(selectedCard);
-        })
-        .then(() => getShoppingCart(token))
-        .then(setShoppingCart)
-        .catch((err) => console.log(err));
     },
     // eslint-disable-next-line
     [isLoggedIn, token]
@@ -205,33 +222,64 @@ export default function App() {
 
   const deleteProduct = useCallback(
     (card) => {
-      deleteProductFromShoppingCart(card.id, token)
-        .then(() =>
-          setSelectedCard((product) => {
-            product.amount = 0;
-            product.is_in_shopping_cart = false;
-            return product;
+      if (isLoggedIn) {
+        deleteProductFromShoppingCart(card.id, token)
+          .then(() =>
+            setSelectedCard((product) => {
+              const updatedCard = {
+                ...product,
+                amount: 0,
+                is_in_shopping_cart: false,
+              };
+              return updatedCard;
+            })
+          )
+          .then(() => getShoppingCart(token))
+          .then(setShoppingCart)
+          .catch((err) => console.log(err));
+      } else {
+        deleteProductNotAuth(card.id)
+          .then(() => {
+            setSelectedCard((prev) => {
+              const updatedCard = {
+                ...prev,
+                is_in_shopping_cart: false,
+                amount: 0,
+              };
+              return updatedCard;
+            });
           })
-        )
-        .then(() => getShoppingCart(token))
-        .then(setShoppingCart)
-        .catch((err) => console.log(err));
+          .catch((err) => console.log(err));
+      }
     },
     [token]
   );
 
   const changeProductQuantity = useCallback(
     (card, amount) => {
-      changeProductQuantityInShoppingCart(card.id, amount, token)
-        .then((res) => {
-          setSelectedCard((prev) => {
-            const updatedCard = { ...prev, ...res };
-            return updatedCard;
-          });
-        })
-        .then(() => getShoppingCart(token))
-        .then(setShoppingCart)
-        .catch((err) => console.log(err));
+      if (isLoggedIn) {
+        changeProductQuantityInShoppingCart(card.id, amount, token)
+          .then((res) => {
+            setSelectedCard((prev) => {
+              const updatedCard = { ...prev, ...res };
+              return updatedCard;
+            });
+          })
+          .then(() => getShoppingCart(token))
+          .then(setShoppingCart)
+          .catch((err) => console.log(err));
+      } else {
+        changeProductQuantityNotAuth(card.id, amount)
+          .then(() => {
+            setSelectedCard((prev) => {
+              const updatedCard = { ...prev, amount };
+              return updatedCard;
+            });
+          })
+          .then(() => getShoppingCartNotAuth())
+          .then(setShoppingCart)
+          .catch((err) => console.log(err));
+      }
     },
     [token]
   );

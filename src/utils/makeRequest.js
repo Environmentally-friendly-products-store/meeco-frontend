@@ -55,7 +55,7 @@ export const createMakeRequest =
 
     return fetch(`${baseUrl}${url}`, options)
       .then((response) => {
-        if (response.status === HTTP_NO_CONTENT) {
+        if (response.status === HTTP_NO_CONTENT || response.status === 205) {
           return;
         }
         return response.json().then((body) => {

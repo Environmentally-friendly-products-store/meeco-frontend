@@ -156,15 +156,16 @@ function MainProductPage({
                     type="button"
                     className="product-page__button product-page__button_type_minus"
                     onClick={() => onChangeCounter('-')}
-                    disabled={email === ''}
+                    disabled={!card.is_in_shopping_cart}
                   ></button>
                   <span className="product-page__count">
-                    {card.amount === 0 ? '1' : card.amount}
+                    {card.amount === 0 ? '0' : card.amount}
                   </span>
                   <button
                     type="button"
                     className="product-page__button product-page__button_type_plus"
                     onClick={() => onChangeCounter('+')}
+                    disabled={!card.is_in_shopping_cart}
                   ></button>
                 </div>
                 {card.is_in_shopping_cart ? (
