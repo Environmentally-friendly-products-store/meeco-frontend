@@ -6,7 +6,11 @@ import {
   REGEX_PHONE,
 } from '../utils/regEx.js';
 
-function useForm(inputValues = {}, formClass = '.popup__form') {
+function useForm(
+  inputValues = {},
+  useRegexp = true,
+  formClass = '.popup__form'
+) {
   const [values, setValues] = React.useState(inputValues);
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
@@ -68,7 +72,7 @@ function useForm(inputValues = {}, formClass = '.popup__form') {
     }).every((err) => err.length === 0);
     setIsValid(matchPasswords && isFormValid && noErrors);
 
-    if (!event.target.validationMessage) {
+    if (!event.target.validationMessage && useRegexp) {
       checkValidation(name, value);
     }
   };
