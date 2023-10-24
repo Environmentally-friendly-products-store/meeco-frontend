@@ -18,6 +18,7 @@ function Recipient() {
       contact_phone_number: '',
       comment: '',
     },
+    true,
     '.recipient__form'
   );
   const handleSubmit = (e) => {
