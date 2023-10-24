@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 372px;
+  width: 356px;
   margin: auto;
   background-color: #fff;
   border-radius: 10px;
@@ -32,7 +32,7 @@
 }
 
 .popup__block_type_confirm {
-  padding: 16px 24px 42px;
+  padding: 32px;
 }
 
 .popup__text {
@@ -58,11 +58,12 @@
 }
 
 .popup__title_type_confirm {
-  font-size: 24px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 400;
-  line-height: 28px;
-  padding-top: 33px;
+  line-height: 46px;
+  padding-bottom: 20px;
+  text-align: center;
 }
 
 .popup__toggle {
@@ -183,21 +184,30 @@
 }
 
 .popup__button_type_logout {
-  min-width: 176px;
-  max-height: 48px;
+  min-width: 168px;
   min-height: 0;
   width: 0;
-  border: none;
-  background-color: #b74128;
-  margin-left: 20px;
-  transition: background-color 0.5s ease;
+  margin-right: 24px;
+  border: 1px solid #b74128;
+  background-color: transparent;
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: #b74128;
+  transition: all 0.5s ease;
 }
 
 .popup__button_type_logout:hover {
-  background-color: #c64126;
+  border: 1px solid #c64126;
+  color: #c64126;
+  background-color: transparent;
 }
 
 .popup__button_type_save {
+  margin-top: 20px;
   min-width: 164px;
   max-height: 48px;
   border-radius: 12px;
@@ -234,7 +244,8 @@
 }
 
 .popup__block_type_close-confirm {
-  left: 283px;
+  left: 338px;
+  top: -5px;
 }
 
 .popup__error {

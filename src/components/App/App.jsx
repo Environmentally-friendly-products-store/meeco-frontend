@@ -55,6 +55,7 @@ export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   const [token, setToken] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLocalStorageRead, setIsLocalStorageRead] = useState(false);
 
   useScrollToTop();
 
@@ -239,11 +240,6 @@ export default function App() {
 
   const onIncreaseProductInShoppingCart = useCallback(
     (productId) => {
-      if (!token) {
-        handleLoginPopup();
-        return;
-      }
-
       const productFromCart = findProductInShoppingCart(productId);
       const promise = productFromCart
         ? changeProductQuantityInCart(
@@ -306,7 +302,7 @@ export default function App() {
 
   useEffect(() => {
     setToken(getLocalStorageToken());
-
+    setIsLocalStorageRead(true);
     getNovelties()
       .then((novelties) =>
         setProductsContext((prevState) => ({ ...prevState, novelties }))
@@ -339,28 +335,27 @@ export default function App() {
     });
 
   useEffect(() => {
-    if (!token) {
-      return;
+    if (token) {
+      getUserProfile(token)
+        .then((user) => {
+          setCurrentUser(user);
+          setIsLoggedIn(true);
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+        });
     }
+    if (isLocalStorageRead) {
+      getCart(token)
+        .then(setShoppingCart)
+        .catch((error) => console.log(error));
 
-    getUserProfile(token)
-      .then((user) => {
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-      });
-
-    getCart(token)
-      .then(setShoppingCart)
-      .catch((error) => console.log(error));
-
-    getFavourites(token)
-      .then((favourites) => setFavouritesContext({ favourites }))
-      .catch((error) => console.log(error));
+      getFavourites(token)
+        .then((favourites) => setFavouritesContext({ favourites }))
+        .catch((error) => console.log(error));
+    }
     // eslint-disable-next-line
-  }, [token]);
+  }, [isLocalStorageRead, token]);
 
   const logOut = () => {
     // eslint-disable-next-line no-unused-expressions
@@ -417,9 +412,7 @@ export default function App() {
                         />
                       }
                     />
-                    <Route
-                      path="/shopping-cart"
-                      element={<ProtectedRouteElement element={ShoppingCart} />}
+                    <Route path="/shopping-cart" element={<ShoppingCart />} />
                     />
                     <Route
                       path="/delivery"

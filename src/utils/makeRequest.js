@@ -44,6 +44,7 @@ export const createMakeRequest =
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
     };
 
     if (body) {
