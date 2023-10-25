@@ -10,6 +10,7 @@ import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
 import EmptyCart from '../EmptyCart/EmptyCart';
 
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function ShoppingCart() {
   const {
@@ -19,6 +20,7 @@ function ShoppingCart() {
     onDecreaseProductInShoppingCart,
     onDeleteProductFromShoppingCart,
   } = useContext(ShoppingCartContext);
+  const currentUser = useContext(CurrentUserContext);
 
   const onAmountChange = (productId, isIncrease) => {
     if (isIncrease) {
@@ -63,10 +65,22 @@ function ShoppingCart() {
                 totalPrice
               )} ₽`}</p>
             </div>
-
-            <NavLink className="shopping-cart__place-order-button" to="/order">
-              Оформить заказ
-            </NavLink>
+            {currentUser.id ? (
+              <NavLink
+                className="shopping-cart__place-order-button"
+                to="/order"
+              >
+                Оформить заказ
+              </NavLink>
+            ) : (
+              <NavLink
+                className="shopping-cart__place-order-button"
+                to="/shopping-cart"
+                onClick={currentUser.onClickLogin}
+              >
+                Оформить заказ
+              </NavLink>
+            )}
           </section>
         </>
       )}
