@@ -145,3 +145,9 @@ export const changeProductQuantityInCart = (productId, amount, token) =>
  */
 export const deleteProductFromCart = (productId, token) =>
   makeRequest(`/cart/${productId}/`, 'DELETE', null, token);
+
+/**
+ * Для слияния корзин Cart
+ */
+export const mergeSessionCart = (token) =>
+  makeRequest(`/cart/`, 'PUT', null, token);

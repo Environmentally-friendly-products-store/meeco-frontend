@@ -41,6 +41,7 @@ import {
   getFavourites,
   getNovelties,
   getPopularProducts,
+  mergeSessionCart,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
@@ -325,7 +326,16 @@ export default function App() {
   //Авторизация пользователя
   const loginUser = ({ password, email }) =>
     authorize(email, password)
-      .then(saveToken)
+      .then((responseToken) => {
+        saveToken(responseToken);
+        mergeSessionCart(responseToken.token)
+          .then(() =>
+            getCart(responseToken.token)
+              .then(setShoppingCart)
+              .catch((error) => console.log(`Ошибка запроса корзины ${error}`))
+          )
+          .catch((error) => console.log(`Ошибка мержа корзины ${error}`));
+      })
       .then(() => handleClosePopup());
 
   //Регистрация пользователя
@@ -348,7 +358,7 @@ export default function App() {
     if (isLocalStorageRead) {
       getCart(token)
         .then(setShoppingCart)
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(`Ошибка запроса корзины ${error}`));
 
       getFavourites(token)
         .then((favourites) => setFavouritesContext({ favourites }))
