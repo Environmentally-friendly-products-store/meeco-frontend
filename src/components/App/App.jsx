@@ -49,6 +49,7 @@ import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElemen
 import { trackAddToCart } from '../../utils/yandexCounter';
 import Favourites from '../Favorites/Favorites';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
+import { createOrder } from '../../utils/ordersApi';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -129,7 +130,6 @@ export default function App() {
   };
 
   const setShoppingCart = (shoppingCart) => {
-    console.log(shoppingCart);
     const totalPrice = shoppingCart.reduce(
       (acc, product) => acc + product.total_price,
       0
@@ -287,14 +287,14 @@ export default function App() {
 
   const onCreateOrder = useCallback(
     (orderData) => {
-      // createOrder(orderData, token)
-      //   .catch((e) => {
-      //     console.error(e.error);
-      //   })
-      //   .then(setOrderDetails)
-      //   .finally(() => {
-      //     navigate.current('/thanksfororder', { replace: true });
-      //   });
+      createOrder(orderData, token)
+        .catch((e) => {
+          console.error(e.error);
+        })
+        .then(setOrderDetails)
+        .finally(() => {
+          navigate.current('/thanksfororder', { replace: true });
+        });
       setOrderDetails();
       navigate.current('/thanksfororder', { replace: true });
     },
