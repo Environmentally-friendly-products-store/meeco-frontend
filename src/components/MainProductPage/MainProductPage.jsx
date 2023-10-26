@@ -76,7 +76,7 @@ function MainProductPage({
       setProduct(card);
       findCardInshoppingCart();
     }
-  }, [card, shoppingCart]);
+  }, [card, shoppingCart, location.pathname]);
 
   const onChangeCounter = (operator) => {
     if (product.amount - 1 === 0 && operator === '-') {
