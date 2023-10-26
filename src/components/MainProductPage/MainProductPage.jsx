@@ -41,9 +41,10 @@ function MainProductPage({
   const { shoppingCart } = useContext(ShoppingCartContext);
 
   const findCardInshoppingCart = useCallback(() => {
+    console.log(shoppingCart);
     for (const item of shoppingCart) {
       if (item.product.id === product.id) {
-        return setProduct((prev) => {
+        setProduct((prev) => {
           const updatedProduct = {
             ...prev,
             is_in_shopping_cart: true,
@@ -76,7 +77,7 @@ function MainProductPage({
       setProduct(card);
       findCardInshoppingCart();
     }
-  }, [card, shoppingCart, location.pathname]);
+  }, [card, shoppingCart, findCardInshoppingCart]);
 
   const onChangeCounter = (operator) => {
     if (product.amount - 1 === 0 && operator === '-') {
