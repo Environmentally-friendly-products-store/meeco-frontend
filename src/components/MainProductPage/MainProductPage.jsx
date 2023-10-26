@@ -41,7 +41,6 @@ function MainProductPage({
   const { shoppingCart } = useContext(ShoppingCartContext);
 
   const findCardInshoppingCart = useCallback(() => {
-    console.log(shoppingCart);
     for (const item of shoppingCart) {
       if (item.product.id === product.id) {
         setProduct((prev) => {
