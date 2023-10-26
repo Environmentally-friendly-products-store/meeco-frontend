@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import defineImage from '../../utils/functions/defineImage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { trackDetails } from '../../utils/yandexCounter';
 import Accordion from '../Accordion/Accordion';
 import LikeButton from '../LikeButton/LikeButton';
@@ -30,12 +31,29 @@ function MainProductPage({
   onCardClick,
   token,
 }) {
+  const [product, setProduct] = useState(card);
   const [mainSlider, setMainSlider] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
   const { email } = useContext(CurrentUserContext);
+  const { shoppingCart } = useContext(ShoppingCartContext);
+
+  const findCardInshoppingCart = useCallback(() => {
+    for (const item of shoppingCart) {
+      if (item.product.id === product.id) {
+        return setProduct((prev) => {
+          const updatedProduct = {
+            ...prev,
+            is_in_shopping_cart: true,
+            amount: item.amount,
+          };
+          return updatedProduct;
+        });
+      }
+    }
+  }, [shoppingCart, product.id]);
 
   useEffect(() => {
     if (location.pathname.includes('/product')) {
@@ -52,17 +70,25 @@ function MainProductPage({
     }
   }, [card, mainSlider]);
 
+  useEffect(() => {
+    if (card) {
+      setProduct({});
+      setProduct(card);
+      findCardInshoppingCart();
+    }
+  }, [card, shoppingCart]);
+
   const onChangeCounter = (operator) => {
-    if (card.amount - 1 === 0 && operator === '-') {
-      onButtonDeleteClick(card);
+    if (product.amount - 1 === 0 && operator === '-') {
+      onButtonDeleteClick(product);
       return;
     }
     switch (operator) {
       case '+':
-        onButtonChangeClick(card, card.amount + 1, token);
+        onButtonChangeClick(card, product.amount + 1, token);
         return;
       case '-':
-        onButtonChangeClick(card, card.amount - 1, token);
+        onButtonChangeClick(card, product.amount - 1, token);
         return;
       default:
         return;
@@ -82,7 +108,7 @@ function MainProductPage({
 
   return (
     <>
-      <Breadcrumbs productName={card.name} />
+      <Breadcrumbs productName={product.name} />
       <section className="product-page">
         <Link
           onClick={() => navigate(-1)}
@@ -107,8 +133,8 @@ function MainProductPage({
         <div className="product-page__main">
           <div className="product-page__sliders">
             <div className="pruduct-page__nav-images">
-              {card.images &&
-                card.images.slice(0, 3).map((image, index) => (
+              {product.images &&
+                product.images.slice(0, 3).map((image, index) => (
                   <img
                     key={index}
                     src={defineImage(image.preview_image)}
@@ -129,8 +155,8 @@ function MainProductPage({
               ref={(slider) => setMainSlider(slider)}
               className="product-page__main-slider"
             >
-              {card.images &&
-                card.images.map((image, index) => (
+              {product.images &&
+                product.images.map((image, index) => (
                   <div className="product-page__block" key={index}>
                     <img
                       src={defineImage(image.big_image)}
@@ -143,11 +169,11 @@ function MainProductPage({
           </div>
           <div className="product-page__info">
             <p className="product-page__brand">
-              {card.brand && card.brand.name}
+              {product.brand && product.brand.name}
             </p>
-            <h2 className="product-page__name">{card.name}</h2>
+            <h2 className="product-page__name">{product.name}</h2>
             <p className="product-page__price">
-              {card.price_per_unit}&#160;&#8381;
+              {product.price_per_unit}&#160;&#8381;
             </p>
             <div className="product-page__string">
               <div className="product-page__container">
@@ -156,19 +182,19 @@ function MainProductPage({
                     type="button"
                     className="product-page__button product-page__button_type_minus"
                     onClick={() => onChangeCounter('-')}
-                    disabled={!card.is_in_shopping_cart}
+                    disabled={!product.is_in_shopping_cart}
                   ></button>
                   <span className="product-page__count">
-                    {card.amount === 0 ? '0' : card.amount}
+                    {product.amount === 0 ? '0' : product.amount}
                   </span>
                   <button
                     type="button"
                     className="product-page__button product-page__button_type_plus"
                     onClick={() => onChangeCounter('+')}
-                    disabled={!card.is_in_shopping_cart}
+                    disabled={!product.is_in_shopping_cart}
                   ></button>
                 </div>
-                {card.is_in_shopping_cart ? (
+                {product.is_in_shopping_cart ? (
                   <Link
                     to="/shopping-cart"
                     className="product-page__link product-page__button_type_shopping-cart"
@@ -178,13 +204,13 @@ function MainProductPage({
                 ) : (
                   <button
                     className="product-page__button product-page__button_type_shopping-cart"
-                    onClick={() => onButtonAddClick(card)}
+                    onClick={() => onButtonAddClick(product)}
                   >
                     Добавить в корзину
                   </button>
                 )}
               </div>
-              <LikeButton id={card.id} />
+              <LikeButton id={product.id} />
             </div>
             {/* <h3 className="product-page__subtitle">Описание</h3>
             <p className="product-page__description">{card.description}</p> */}

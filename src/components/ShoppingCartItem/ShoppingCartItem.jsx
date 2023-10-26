@@ -9,7 +9,8 @@ function ShoppingCartItem({
   onAmountChange,
   onDeleteFromShoppingCart,
 }) {
-  const { name, brand, id, price_per_unit, amount, preview_image } = product;
+  const { name, brand, id, price_per_unit, preview_image } = product.product;
+  const { amount } = product;
   const totalItemPrice = price_per_unit * amount;
 
   return (

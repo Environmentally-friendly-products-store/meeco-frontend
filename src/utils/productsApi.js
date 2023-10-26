@@ -125,7 +125,7 @@ export const addProductNotAuth = (productId, quantity, token) => {
 };
 
 export const getShoppingCartNotAuth = (token) => {
-  return makeRequest('/cart/', 'GET', null, token);
+  return makeRequest('/cart/', 'GET', null, token).then((res) => res.data);
 };
 
 export const changeProductQuantityNotAuth = (productId, amount, token) => {
@@ -134,4 +134,8 @@ export const changeProductQuantityNotAuth = (productId, amount, token) => {
 
 export const deleteProductNotAuth = (productId, token) => {
   return makeRequest(`/cart/${productId}/`, 'DELETE', null, token);
+};
+
+export const sendShoppingCardToUser = (token) => {
+  return makeRequest('/cart/', 'PUT', null, token);
 };

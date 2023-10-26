@@ -45,6 +45,7 @@ import {
   getShoppingCartNotAuth,
   changeProductQuantityNotAuth,
   deleteProductNotAuth,
+  sendShoppingCardToUser,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
@@ -186,7 +187,7 @@ export default function App() {
   const addProduct = useCallback(
     (card) => {
       if (!isLoggedIn) {
-        addProductNotAuth(card.id)
+        addProductNotAuth(card.id, 1)
           .then(() => {
             setSelectedCard((prev) => {
               const updatedCard = {
@@ -201,17 +202,18 @@ export default function App() {
           .then(setShoppingCart)
           .catch((err) => console.log(err));
       } else {
-        addProductToShoppingCart(card.id, token)
-          .then((res) => {
+        addProductNotAuth(card.id, 1, token)
+          .then(() => {
             setSelectedCard((prev) => {
-              const updatedCard = { ...prev, ...res };
+              const updatedCard = {
+                ...prev,
+                is_in_shopping_cart: true,
+                amount: 1,
+              };
               return updatedCard;
             });
           })
-          .then(() => {
-            trackAddToCart(selectedCard);
-          })
-          .then(() => getShoppingCart(token))
+          .then(() => getShoppingCartNotAuth(token))
           .then(setShoppingCart)
           .catch((err) => console.log(err));
       }
@@ -223,7 +225,7 @@ export default function App() {
   const deleteProduct = useCallback(
     (card) => {
       if (isLoggedIn) {
-        deleteProductFromShoppingCart(card.id, token)
+        deleteProductNotAuth(card.id, token)
           .then(() =>
             setSelectedCard((product) => {
               const updatedCard = {
@@ -234,7 +236,7 @@ export default function App() {
               return updatedCard;
             })
           )
-          .then(() => getShoppingCart(token))
+          .then(() => getShoppingCartNotAuth(token))
           .then(setShoppingCart)
           .catch((err) => console.log(err));
       } else {
@@ -249,6 +251,8 @@ export default function App() {
               return updatedCard;
             });
           })
+          .then(() => getShoppingCartNotAuth())
+          .then(setShoppingCart)
           .catch((err) => console.log(err));
       }
     },
@@ -258,14 +262,14 @@ export default function App() {
   const changeProductQuantity = useCallback(
     (card, amount) => {
       if (isLoggedIn) {
-        changeProductQuantityInShoppingCart(card.id, amount, token)
+        changeProductQuantityNotAuth(card.id, amount, token)
           .then((res) => {
             setSelectedCard((prev) => {
               const updatedCard = { ...prev, ...res };
               return updatedCard;
             });
           })
-          .then(() => getShoppingCart(token))
+          .then(() => getShoppingCartNotAuth(token))
           .then(setShoppingCart)
           .catch((err) => console.log(err));
       } else {
@@ -366,6 +370,8 @@ export default function App() {
     setLocalStorageToken(token);
     setToken(token);
     setIsLoggedIn(true);
+    sendShoppingCardToUser(token);
+    getShoppingCartNotAuth(token);
   };
 
   //Авторизация пользователя
@@ -382,6 +388,9 @@ export default function App() {
 
   useEffect(() => {
     if (!token) {
+      getShoppingCartNotAuth()
+        .then(setShoppingCart)
+        .catch((err) => console.log(err));
       return;
     }
 
@@ -394,7 +403,7 @@ export default function App() {
         setIsLoggedIn(false);
       });
 
-    getShoppingCart(token)
+    getShoppingCartNotAuth(token)
       .then(setShoppingCart)
       .catch((error) => console.log(error));
 
@@ -459,10 +468,7 @@ export default function App() {
                         />
                       }
                     />
-                    <Route
-                      path="/shopping-cart"
-                      element={<ProtectedRouteElement element={ShoppingCart} />}
-                    />
+                    <Route path="/shopping-cart" element={<ShoppingCart />} />
                     <Route
                       path="/delivery"
                       element={
