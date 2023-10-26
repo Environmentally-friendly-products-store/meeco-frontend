@@ -10,7 +10,6 @@
 .shopping-cart_style_empty {
   grid-template-columns: auto;
   grid-template-rows: repeat(2, auto);
-  padding-top: 64px;
   row-gap: 100px;
 }
 
