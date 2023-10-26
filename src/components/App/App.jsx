@@ -183,12 +183,8 @@ export default function App() {
   );
 
   const addProduct = useCallback(
-    (card, amount) => {
-      if (!isLoggedIn) {
-        handleLoginPopup();
-        return;
-      }
-      addProductToCart(card.id, amount, token)
+    (card) => {
+      addProductToCart(card.id, token)
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
@@ -211,9 +207,12 @@ export default function App() {
       deleteProductFromCart(card.id, token)
         .then(() =>
           setSelectedCard((product) => {
-            product.amount = 0;
-            product.is_in_shopping_cart = false;
-            return product;
+            const updatedProduct = {
+              ...product,
+              amount: 0,
+              is_in_shopping_cart: false,
+            };
+            return updatedProduct;
           })
         )
         .then(() => getCart(token))
@@ -321,8 +320,8 @@ export default function App() {
     setLocalStorageToken(token);
     setToken(token);
     setIsLoggedIn(true);
-    sendShoppingCardToUser(token);
-    getShoppingCartNotAuth(token);
+    // sendShoppingCardToUser(token);
+    // getShoppingCartNotAuth(token);
   };
 
   //Авторизация пользователя
@@ -425,7 +424,6 @@ export default function App() {
                       }
                     />
                     <Route path="/shopping-cart" element={<ShoppingCart />} />
-                    />
                     <Route
                       path="/delivery"
                       element={

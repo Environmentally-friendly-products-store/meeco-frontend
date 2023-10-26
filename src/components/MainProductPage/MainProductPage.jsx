@@ -177,23 +177,6 @@ function MainProductPage({
             </p>
             <div className="product-page__string">
               <div className="product-page__container">
-                <div className="product-page__counter">
-                  <button
-                    type="button"
-                    className="product-page__button product-page__button_type_minus"
-                    onClick={() => onChangeCounter('-')}
-                    disabled={!product.is_in_shopping_cart}
-                  ></button>
-                  <span className="product-page__count">
-                    {!product.amount ? '0' : product.amount}
-                  </span>
-                  <button
-                    type="button"
-                    className="product-page__button product-page__button_type_plus"
-                    onClick={() => onChangeCounter('+')}
-                    disabled={!product.is_in_shopping_cart}
-                  ></button>
-                </div>
                 {product.is_in_shopping_cart ? (
                   <Link
                     to="/shopping-cart"
@@ -204,11 +187,35 @@ function MainProductPage({
                 ) : (
                   <button
                     className="product-page__button product-page__button_type_shopping-cart"
-                    onClick={() => onButtonAddClick(product)}
+                    onClick={() => onButtonAddClick(product, 1)}
                   >
                     Добавить в корзину
                   </button>
                 )}
+              </div>
+              <div
+                className="product-page__counter"
+                style={
+                  product.is_in_shopping_cart
+                    ? { display: 'flex' }
+                    : { display: 'none' }
+                }
+              >
+                <button
+                  type="button"
+                  className="product-page__button product-page__button_type_minus"
+                  onClick={() => onChangeCounter('-')}
+                  disabled={!product.is_in_shopping_cart}
+                ></button>
+                <span className="product-page__count">
+                  {!product.amount ? '0' : product.amount}
+                </span>
+                <button
+                  type="button"
+                  className="product-page__button product-page__button_type_plus"
+                  onClick={() => onChangeCounter('+')}
+                  disabled={!product.is_in_shopping_cart}
+                ></button>
               </div>
               <LikeButton id={product.id} />
             </div>

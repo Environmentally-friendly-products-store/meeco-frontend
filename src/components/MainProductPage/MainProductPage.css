@@ -134,8 +134,10 @@
 }
 
 .product-page__string {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto auto 3fr;
+  justify-items: flex-end;
+  gap: 20px;
   margin-bottom: 79px;
 }
 
