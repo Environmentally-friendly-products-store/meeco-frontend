@@ -142,7 +142,7 @@ dist
 /build
 
 # keys
-ssl
+/ssl
 # misc
 .DS_Store
 .env.local
