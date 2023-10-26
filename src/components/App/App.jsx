@@ -256,16 +256,18 @@ export default function App() {
           .catch((err) => console.log(err));
       }
     },
-    [token]
+    [token, isLoggedIn]
   );
 
   const changeProductQuantity = useCallback(
     (card, amount) => {
+      console.log(isLoggedIn);
       if (isLoggedIn) {
+        console.log('puk');
         changeProductQuantityNotAuth(card.id, amount, token)
-          .then((res) => {
+          .then(() => {
             setSelectedCard((prev) => {
-              const updatedCard = { ...prev, ...res };
+              const updatedCard = { ...prev, amount };
               return updatedCard;
             });
           })
@@ -285,7 +287,7 @@ export default function App() {
           .catch((err) => console.log(err));
       }
     },
-    [token]
+    [token, isLoggedIn]
   );
 
   const onIncreaseProductInShoppingCart = useCallback(

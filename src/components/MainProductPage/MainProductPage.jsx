@@ -185,7 +185,7 @@ function MainProductPage({
                     disabled={!product.is_in_shopping_cart}
                   ></button>
                   <span className="product-page__count">
-                    {product.amount === 0 ? '0' : product.amount}
+                    {!product.amount ? '0' : product.amount}
                   </span>
                   <button
                     type="button"
