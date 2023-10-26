@@ -7,6 +7,8 @@ const makeRequest = createMakeRequest(baseUrl);
 
 const getResults = (response) => response.results;
 
+const getData = (response) => response.data;
+
 /**
  * Запрашивает конкретный товар по id
  */
@@ -69,7 +71,7 @@ export const deleteProductFromShoppingCart = (productId, token) =>
   makeRequest(`/products/${productId}/shopping_cart/`, 'DELETE', null, token);
 
 /**
- * Получение новинок товаров
+ * Получение корзины
  */
 export const getShoppingCart = (token) => {
   const data = { is_in_shopping_cart: 1, limit: 99999 };
@@ -112,30 +114,40 @@ export const addToFavourites = (productId, token) =>
 export const deleteFromFavourites = (productId, token) =>
   makeRequest(`/products/${productId}/favorite/`, 'DELETE', null, token);
 
-export const addProductNotAuth = (productId, quantity, token) => {
-  return makeRequest(
-    '/cart/',
+/**
+ * Получение корзины Cart
+ */
+export const getCart = (token) => {
+  return makeRequest(`/cart/`, 'GET', null, token).then(getData);
+};
+
+/**
+ * Добавляет товар в корзину Cart
+ */
+export const addProductToCart = (productId, token) =>
+  makeRequest(
+    `/cart/`,
     'POST',
     {
       product: productId,
-      quantity,
     },
     token
   );
-};
 
-export const getShoppingCartNotAuth = (token) => {
-  return makeRequest('/cart/', 'GET', null, token).then((res) => res.data);
-};
+/**
+ * Изменяет количество товара в корзине Cart
+ */
+export const changeProductQuantityInCart = (productId, amount, token) =>
+  makeRequest(`/cart/${productId}/`, 'PATCH', { amount }, token);
 
-export const changeProductQuantityNotAuth = (productId, amount, token) => {
-  return makeRequest(`/cart/${productId}/`, 'PATCH', { amount }, token);
-};
+/**
+ * Удаляет товар из корзины Cart
+ */
+export const deleteProductFromCart = (productId, token) =>
+  makeRequest(`/cart/${productId}/`, 'DELETE', null, token);
 
-export const deleteProductNotAuth = (productId, token) => {
-  return makeRequest(`/cart/${productId}/`, 'DELETE', null, token);
-};
-
-export const sendShoppingCardToUser = (token) => {
-  return makeRequest('/cart/', 'PUT', null, token);
-};
+/**
+ * Для слияния корзин Cart
+ */
+export const mergeSessionCart = (token) =>
+  makeRequest(`/cart/`, 'PUT', null, token);

@@ -59,6 +59,14 @@ function PopupWithForm({
         <form className="popup__form" name={`${name}`}>
           {children}
           <div className="popup__buttons">
+            <button
+              disabled={!isValid}
+              type="submit"
+              className={`popup__button popup__button_type_submit ${submitButtonClass} ${submitButtonSize}`}
+              onClick={onSubmit}
+            >
+              {submitButtonTextContent}
+            </button>
             {submitButtonClass && (
               <button
                 type="button"
@@ -68,14 +76,6 @@ function PopupWithForm({
                 Остаться
               </button>
             )}
-            <button
-              disabled={!isValid}
-              type="submit"
-              className={`popup__button popup__button_type_submit ${submitButtonClass} ${submitButtonSize}`}
-              onClick={onSubmit}
-            >
-              {submitButtonTextContent}
-            </button>
           </div>
           {name === 'registration' && (
             <div className="popup__information">
