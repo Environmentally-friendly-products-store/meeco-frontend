@@ -31,16 +31,17 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import {
-  addProductToShoppingCart,
+  addProductToCart,
   addToFavourites,
-  changeProductQuantityInShoppingCart,
+  changeProductQuantityInCart,
   deleteFromFavourites,
-  deleteProductFromShoppingCart,
+  deleteProductFromCart,
+  getCart,
   getCurrentCard,
   getFavourites,
   getNovelties,
   getPopularProducts,
-  getShoppingCart,
+  mergeSessionCart,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
@@ -48,6 +49,7 @@ import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElemen
 import { trackAddToCart } from '../../utils/yandexCounter';
 import Favourites from '../Favorites/Favorites';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
+import { createOrder } from '../../utils/ordersApi';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -55,6 +57,7 @@ export default function App() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   const [token, setToken] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLocalStorageRead, setIsLocalStorageRead] = useState(false);
 
   useScrollToTop();
 
@@ -128,7 +131,7 @@ export default function App() {
 
   const setShoppingCart = (shoppingCart) => {
     const totalPrice = shoppingCart.reduce(
-      (acc, product) => acc + product.amount * product.price_per_unit,
+      (acc, product) => acc + product.total_price,
       0
     );
     setShoppingCartContext({
@@ -174,18 +177,18 @@ export default function App() {
   const findProductInShoppingCart = useCallback(
     (productId) =>
       shoppingCartContext.shoppingCart.find(
-        (product) => product.id === productId
+        (product) => product.product.id === productId
       ),
     [shoppingCartContext]
   );
 
   const addProduct = useCallback(
-    (card) => {
+    (card, amount) => {
       if (!isLoggedIn) {
         handleLoginPopup();
         return;
       }
-      addProductToShoppingCart(card.id, token)
+      addProductToCart(card.id, amount, token)
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
@@ -195,7 +198,7 @@ export default function App() {
         .then(() => {
           trackAddToCart(selectedCard);
         })
-        .then(() => getShoppingCart(token))
+        .then(() => getCart(token))
         .then(setShoppingCart)
         .catch((err) => console.log(err));
     },
@@ -205,7 +208,7 @@ export default function App() {
 
   const deleteProduct = useCallback(
     (card) => {
-      deleteProductFromShoppingCart(card.id, token)
+      deleteProductFromCart(card.id, token)
         .then(() =>
           setSelectedCard((product) => {
             product.amount = 0;
@@ -213,7 +216,7 @@ export default function App() {
             return product;
           })
         )
-        .then(() => getShoppingCart(token))
+        .then(() => getCart(token))
         .then(setShoppingCart)
         .catch((err) => console.log(err));
     },
@@ -222,14 +225,14 @@ export default function App() {
 
   const changeProductQuantity = useCallback(
     (card, amount) => {
-      changeProductQuantityInShoppingCart(card.id, amount, token)
+      changeProductQuantityInCart(card.id, amount, token)
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
             return updatedCard;
           });
         })
-        .then(() => getShoppingCart(token))
+        .then(() => getCart(token))
         .then(setShoppingCart)
         .catch((err) => console.log(err));
     },
@@ -238,21 +241,19 @@ export default function App() {
 
   const onIncreaseProductInShoppingCart = useCallback(
     (productId) => {
-      if (!token) {
-        handleLoginPopup();
-        return;
-      }
-
       const productFromCart = findProductInShoppingCart(productId);
       const promise = productFromCart
-        ? changeProductQuantityInShoppingCart(
+        ? changeProductQuantityInCart(
             productId,
             productFromCart.amount + 1,
             token
           )
-        : addProductToShoppingCart(productId, token);
+        : addProductToCart(productId, token);
 
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+      promise
+        .then(() => getCart(token))
+        .then(setShoppingCart)
+        .catch((error) => console.log(error));
     },
     // eslint-disable-next-line
     [token, findProductInShoppingCart]
@@ -261,38 +262,39 @@ export default function App() {
   const onDecreaseProductInShoppingCart = useCallback(
     (productId) => {
       const productFromCart = findProductInShoppingCart(productId);
+      console.log(productFromCart);
       const promise =
         productFromCart.amount > 1
-          ? changeProductQuantityInShoppingCart(
+          ? changeProductQuantityInCart(
               productId,
               productFromCart.amount - 1,
               token
             )
-          : deleteProductFromShoppingCart(productId, token);
+          : deleteProductFromCart(productId, token);
 
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+      promise.then(() => getCart(token)).then(setShoppingCart);
     },
     [token, findProductInShoppingCart]
   );
 
   const onDeleteProductFromShoppingCart = useCallback(
     (productId) => {
-      const promise = deleteProductFromShoppingCart(productId, token);
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+      const promise = deleteProductFromCart(productId, token);
+      promise.then(() => getCart(token)).then(setShoppingCart);
     },
     [token]
   );
 
   const onCreateOrder = useCallback(
     (orderData) => {
-      // createOrder(orderData, token)
-      //   .catch((e) => {
-      //     console.error(e.error);
-      //   })
-      //   .then(setOrderDetails)
-      //   .finally(() => {
-      //     navigate.current('/thanksfororder', { replace: true });
-      //   });
+      createOrder(orderData, token)
+        .catch((e) => {
+          console.error(e.error);
+        })
+        .then(setOrderDetails)
+        .finally(() => {
+          navigate.current('/thanksfororder', { replace: true });
+        });
       setOrderDetails();
       navigate.current('/thanksfororder', { replace: true });
     },
@@ -301,7 +303,7 @@ export default function App() {
 
   useEffect(() => {
     setToken(getLocalStorageToken());
-
+    setIsLocalStorageRead(true);
     getNovelties()
       .then((novelties) =>
         setProductsContext((prevState) => ({ ...prevState, novelties }))
@@ -324,7 +326,16 @@ export default function App() {
   //Авторизация пользователя
   const loginUser = ({ password, email }) =>
     authorize(email, password)
-      .then(saveToken)
+      .then((responseToken) => {
+        saveToken(responseToken);
+        mergeSessionCart(responseToken.token)
+          .then(() =>
+            getCart(responseToken.token)
+              .then(setShoppingCart)
+              .catch((error) => console.log(`Ошибка запроса корзины ${error}`))
+          )
+          .catch((error) => console.log(`Ошибка мержа корзины ${error}`));
+      })
       .then(() => handleClosePopup());
 
   //Регистрация пользователя
@@ -334,28 +345,27 @@ export default function App() {
     });
 
   useEffect(() => {
-    if (!token) {
-      return;
+    if (token) {
+      getUserProfile(token)
+        .then((user) => {
+          setCurrentUser(user);
+          setIsLoggedIn(true);
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+        });
     }
+    if (isLocalStorageRead) {
+      getCart(token)
+        .then(setShoppingCart)
+        .catch((error) => console.log(`Ошибка запроса корзины ${error}`));
 
-    getUserProfile(token)
-      .then((user) => {
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-      });
-
-    getShoppingCart(token)
-      .then(setShoppingCart)
-      .catch((error) => console.log(error));
-
-    getFavourites(token)
-      .then((favourites) => setFavouritesContext({ favourites }))
-      .catch((error) => console.log(error));
+      getFavourites(token)
+        .then((favourites) => setFavouritesContext({ favourites }))
+        .catch((error) => console.log(error));
+    }
     // eslint-disable-next-line
-  }, [token]);
+  }, [isLocalStorageRead, token]);
 
   const logOut = () => {
     // eslint-disable-next-line no-unused-expressions
@@ -412,9 +422,7 @@ export default function App() {
                         />
                       }
                     />
-                    <Route
-                      path="/shopping-cart"
-                      element={<ProtectedRouteElement element={ShoppingCart} />}
+                    <Route path="/shopping-cart" element={<ShoppingCart />} />
                     />
                     <Route
                       path="/delivery"

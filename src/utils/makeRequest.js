@@ -1,9 +1,10 @@
 // Константы для обработки 500-й ошибки
 import {
   HTTP_BAD_REQUEST,
-  HTTP_NOT_AUTHORIZED,
-  HTTP_SERVER_ERROR,
   HTTP_NO_CONTENT,
+  HTTP_NOT_AUTHORIZED,
+  HTTP_RESET_CONTENT,
+  HTTP_SERVER_ERROR,
   NOT_AUTHORIZED_MESSAGE,
   SERVER_ERROR_MESSAGE,
 } from './constants';
@@ -43,6 +44,7 @@ export const createMakeRequest =
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
     };
 
     if (body) {
@@ -55,7 +57,10 @@ export const createMakeRequest =
 
     return fetch(`${baseUrl}${url}`, options)
       .then((response) => {
-        if (response.status === HTTP_NO_CONTENT) {
+        if (
+          response.status === HTTP_NO_CONTENT ||
+          response.status === HTTP_RESET_CONTENT
+        ) {
           return;
         }
         return response.json().then((body) => {
