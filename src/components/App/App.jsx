@@ -463,7 +463,10 @@ export default function App() {
                         />
                       }
                     />
-                    <Route path="/favourites" element={<Favourites />} />
+                    <Route
+                      path="/favourites"
+                      element={<ProtectedRouteElement element={Favourites} />}
+                    />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="*" element={<NotFoundPage />} />
                   </Routes>
