@@ -50,6 +50,8 @@ import { trackAddToCart } from '../../utils/yandexCounter';
 import Favourites from '../Favorites/Favorites';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
 import { createOrder } from '../../utils/ordersApi';
+import PasswordChanger from '../PasswordChanger/PasswordChanger';
+import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -67,6 +69,8 @@ export default function App() {
     setIsLoginPopupOpen(false);
     setIsRegistrationPopupOpen(false);
     setIsConfirmPopupOpen(false);
+    setIsPasswordPopupOpen(false);
+    setIsInfoPopupOpen(false);
   };
   const closePopupByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
@@ -78,6 +82,11 @@ export default function App() {
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
+  const [isPasswordPopupOpen, setIsPasswordPopupOpen] = useState(false);
+  const handlePasswordPopup = () =>
+    setIsPasswordPopupOpen(!isPasswordPopupOpen);
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
+  const handleInfoPopupOpen = () => setIsInfoPopupOpen(!isInfoPopupOpen);
 
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -450,6 +459,7 @@ export default function App() {
                         <ProtectedRouteElement
                           element={Profile}
                           onButtonClick={handleConfirmPopup}
+                          onOpenPasswordPopup={handlePasswordPopup}
                         />
                       }
                     />
@@ -488,6 +498,16 @@ export default function App() {
                   onClosePopup={handleClosePopup}
                   onCloseByOverlay={closePopupByOverlay}
                   onSubmit={logOut}
+                />
+                <PasswordChanger
+                  isPopupOpen={isPasswordPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                />
+                <PopupWithInfo
+                  isPopupOpen={isInfoPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
                 />
               </div>
             </IsCatalogButtonClickedContext.Provider>

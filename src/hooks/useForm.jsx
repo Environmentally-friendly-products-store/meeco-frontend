@@ -33,6 +33,11 @@ function useForm(
       validationError:
         'Пароль должен содержать латинские заглавные и строчные буквы, цифры',
     },
+    newPassword: {
+      regExp: REGEX_PASSWORD,
+      validationError:
+        'Пароль должен содержать латинские заглавные и строчные буквы, цифры',
+    },
     contact_phone_number: {
       regExp: REGEX_PHONE,
       validationError: 'Некорректный номер',
@@ -43,8 +48,8 @@ function useForm(
     if (!values.repeatedPassword) {
       return true;
     }
-    const { password, repeatedPassword } = values;
-    return password === repeatedPassword;
+    const { password, newPassword, repeatedPassword } = values;
+    return password === repeatedPassword || newPassword === repeatedPassword;
   };
 
   const checkValidation = (name, value) => {
@@ -70,6 +75,7 @@ function useForm(
       ...errors,
       [name]: event.target.validationMessage,
     }).every((err) => err.length === 0);
+    console.log(matchPasswords, isFormValid, noErrors);
     setIsValid(matchPasswords && isFormValid && noErrors);
 
     if (!event.target.validationMessage && useRegexp) {

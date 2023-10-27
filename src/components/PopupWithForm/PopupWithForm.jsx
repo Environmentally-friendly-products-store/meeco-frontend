@@ -39,6 +39,10 @@ function PopupWithForm({
             type="button"
             className={`popup__button popup__button_type_close ${
               name === 'confirm' ? 'popup__block_type_close-confirm' : ''
+            } ${
+              name === 'passwordChanger'
+                ? 'popup__button_type_close-password'
+                : ''
             } selectable-button`}
             aria-label="Кнопка закрытия окна"
           />
@@ -62,7 +66,9 @@ function PopupWithForm({
             <button
               disabled={!isValid}
               type="submit"
-              className={`popup__button popup__button_type_submit ${submitButtonClass} ${submitButtonSize}`}
+              className={`popup__button popup__button_type_submit ${submitButtonClass} ${submitButtonSize} ${
+                name === 'passwordChanger' ? 'popup__button_type_password' : ''
+              }`}
               onClick={onSubmit}
             >
               {submitButtonTextContent}
