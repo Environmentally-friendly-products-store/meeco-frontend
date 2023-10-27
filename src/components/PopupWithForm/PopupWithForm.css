@@ -112,6 +112,13 @@
   width: 100%;
 }
 
+.popup__form_type_profile {
+  margin-top: 20px;
+  display: flex;
+  width: 432px;
+  flex-direction: column;
+}
+
 .popup__input {
   width: calc(100% - 20px);
   border: 1px solid rgba(233, 215, 193, 1);

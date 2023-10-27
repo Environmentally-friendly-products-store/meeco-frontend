@@ -75,7 +75,6 @@ function useForm(
       ...errors,
       [name]: event.target.validationMessage,
     }).every((err) => err.length === 0);
-    console.log(matchPasswords, isFormValid, noErrors);
     setIsValid(matchPasswords && isFormValid && noErrors);
 
     if (!event.target.validationMessage && useRegexp) {

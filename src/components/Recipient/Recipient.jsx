@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import {
   handleInputPhoneChange,
-  ResetPhoneInput,
+  resetPhoneInput,
 } from '../../hooks/usePhoneMask';
 
 function Recipient() {
@@ -92,7 +92,7 @@ function Recipient() {
                 minLength="11"
                 className={getInputClassName(errors.contact_phone_number)}
                 onInput={handleInputPhoneChange}
-                onKeyDown={ResetPhoneInput}
+                onKeyDown={resetPhoneInput}
                 onChange={handleChange}
               />
               <label className={getLabelClassName(errors.contact_phone_number)}>

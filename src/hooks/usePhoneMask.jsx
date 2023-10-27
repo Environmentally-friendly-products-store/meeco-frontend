@@ -37,7 +37,7 @@ export const handleInputPhoneChange = (e) => {
   e.target.value = formatedValue;
 };
 
-export const ResetPhoneInput = (e) => {
+export const resetPhoneInput = (e) => {
   const phoneValue = InputNumbers(e.target.value);
   if (e.keyCode === 8 && phoneValue.length === 1) {
     return (e.target.value = '');

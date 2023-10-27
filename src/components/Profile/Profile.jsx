@@ -1,5 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import useForm from '../../hooks/useForm';
+import {
+  handleInputPhoneChange,
+  resetPhoneInput,
+} from '../../hooks/usePhoneMask';
 import './Profile.css';
 import InfoPage from '../InfoPage/InfoPage';
 import chevron from '../../images/chevron.svg';
@@ -10,6 +15,21 @@ function Profile({ onButtonClick, onOpenPasswordPopup }) {
   const handleInputsActive = () => setInputsActive(!inputsActive);
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => setIsClicked(!isClicked);
+  const {
+    values: userState,
+    handleChange: handleInputChange,
+    errors: errorsState,
+    setErrors,
+    isValid: isFormValid,
+  } = useForm({
+    firstName: currentUser.first_name,
+    lastName: currentUser.last_name,
+    contact_phone_number: currentUser.phone,
+    adress: currentUser.delivery_address,
+  });
+
+  console.log(userState, errorsState);
+
   return (
     <InfoPage title="Профиль" id="profile">
       <div className="profile__row">
@@ -26,43 +46,51 @@ function Profile({ onButtonClick, onOpenPasswordPopup }) {
         </button>
       </div>
       <div className="profile__data-content">
-        <form className="profile__form">
+        <form className="popup__form popup__form_type_profile profile__form">
           <div className="profile__field">
             <label className="profile__label">Имя</label>
             <input
+              name="firstName"
               type="text"
               minLength="2"
               maxLength="32"
               disabled={!inputsActive}
-              value={currentUser.first_name || ''}
+              onChange={handleInputChange}
+              // value={userState.first_name || ''}
               placeholder={currentUser.first_name || ''}
               className={`profile__input ${
                 inputsActive ? 'profile__input_active' : ''
               }`}
             />
           </div>
-          <span className="profile__error"></span>
+          <span className="profile__error">{errorsState.firstName}</span>
           <div className="profile__field">
             <label className="profile__label">Фамилия</label>
             <input
+              name="lastName"
               type="text"
               minLength="2"
               maxLength="64"
               disabled={!inputsActive}
-              value={currentUser.last_name || ''}
+              onChange={handleInputChange}
+              // value={userState.last_name || ''}
               placeholder={currentUser.last_name || ''}
               className={`profile__input ${
                 inputsActive ? 'profile__input_active' : ''
               }`}
             />
           </div>
-          <span className="profile__error"></span>
+          <span className="profile__error">{errorsState.lastName}</span>
           <div className="profile__field">
             <label className="profile__label">Телефон</label>
             <input
+              name="phone"
               type="tel"
               disabled={!inputsActive}
-              value={currentUser.phone || ''}
+              // value={!inputsActive && userState.phone || ''}
+              onChange={handleInputChange}
+              onInput={handleInputPhoneChange}
+              onKeyDown={resetPhoneInput}
               placeholder={currentUser.phone || ''}
               minLength="11"
               maxLength="18"
@@ -71,16 +99,18 @@ function Profile({ onButtonClick, onOpenPasswordPopup }) {
               }`}
             />
           </div>
-          <span className="profile__error"></span>
+          <span className="profile__error">{errorsState.phone}</span>
           <div className="profile__field">
             <label className="profile__label">Адрес</label>
             <textarea
+              name="adress"
               type="text"
               minLength="8"
               maxLength="512"
-              value={currentUser.delivery_address || ''}
+              // value={userState.adress || ''}
               disabled={!inputsActive}
-              placeholder={currentUser.delivery_address || ''}
+              onChange={handleInputChange}
+              placeholder={currentUser.adress || ''}
               className={`profile__input profile__input_type_adress ${
                 inputsActive
                   ? 'profile__input_active profile__input_type_adress-active'
@@ -88,12 +118,13 @@ function Profile({ onButtonClick, onOpenPasswordPopup }) {
               }`}
             />
           </div>
-          <span className="profile__error"></span>
+          <span className="profile__error">{errorsState.adress}</span>
           <button
             type="submit"
             className={`profile__button profile__button_type_submit ${
               !inputsActive ? 'profile__button_inactive' : ''
             }`}
+            disabled={!isFormValid}
           >
             Сохранить изменения
           </button>
