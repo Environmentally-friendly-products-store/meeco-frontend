@@ -3,7 +3,7 @@ import CardSection from '../CardSection/CardSection';
 import { useContext } from 'react';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
 import CardSectionWithTitle from '../CardSectionWithTitle/CardSectionWithTitle';
-import { NavLink } from 'react-router-dom';
+import ToCatalogButton from '../ToCatalogButton/ToCatalogButton';
 
 export default function Favourites() {
   const { favourites } = useContext(FavouritesContext);
@@ -17,9 +17,7 @@ export default function Favourites() {
               Добавьте понравившиеся вам товары, чтобы вернуться к ним позже.
               Просто нажмите сердечко на карточке товара.
             </p>
-            <NavLink to="/catalog" className="favourites-empty__button">
-              Перейти в каталог
-            </NavLink>
+            <ToCatalogButton />
           </div>
         ) : (
           <CardSection products={favourites} requiredLength={99999} />

@@ -360,10 +360,11 @@ export default function App() {
       getCart(token)
         .then(setShoppingCart)
         .catch((error) => console.log(`Ошибка запроса корзины ${error}`));
-
-      getFavourites(token)
-        .then((favourites) => setFavouritesContext({ favourites }))
-        .catch((error) => console.log(error));
+      if (token) {
+        getFavourites(token)
+          .then((favourites) => setFavouritesContext({ favourites }))
+          .catch((error) => console.log(error));
+      }
     }
     // eslint-disable-next-line
   }, [isLocalStorageRead, token]);
@@ -462,7 +463,10 @@ export default function App() {
                         />
                       }
                     />
-                    <Route path="/favourites" element={<Favourites />} />
+                    <Route
+                      path="/favourites"
+                      element={<ProtectedRouteElement element={Favourites} />}
+                    />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="*" element={<NotFoundPage />} />
                   </Routes>
