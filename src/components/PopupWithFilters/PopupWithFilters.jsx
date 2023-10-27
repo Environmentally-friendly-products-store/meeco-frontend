@@ -20,8 +20,6 @@ function PopupWithFilters({
 }) {
   const [formValues, setFormValues] = useState(requestParams);
 
-  console.log(formValues);
-
   const addFormValue = (filterItem, parentkey, parentbody) => {
     let newFormValues;
     if (Array.isArray(parentbody)) {

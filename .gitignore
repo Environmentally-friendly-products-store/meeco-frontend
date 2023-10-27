@@ -141,6 +141,8 @@ dist
 # production
 /build
 
+# keys
+/ssl
 # misc
 .DS_Store
 .env.local

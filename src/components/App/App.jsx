@@ -33,16 +33,17 @@ import Registration from '../Registration/Registration';
 import Login from '../Login/Login';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import {
-  addProductToShoppingCart,
+  addProductToCart,
   addToFavourites,
-  changeProductQuantityInShoppingCart,
+  changeProductQuantityInCart,
   deleteFromFavourites,
-  deleteProductFromShoppingCart,
+  deleteProductFromCart,
+  getCart,
   getCurrentCard,
   getFavourites,
   getNovelties,
   getPopularProducts,
-  getShoppingCart,
+  mergeSessionCart,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
@@ -51,13 +52,15 @@ import { trackAddToCart } from '../../utils/yandexCounter';
 import Favourites from '../Favorites/Favorites';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
 import PopupWithFilters from '../PopupWithFilters/PopupWithFilters';
-import { FiltersContext } from '../../contexts/FiltersContext';
+import { createOrder } from '../../utils/ordersApi';
+
 export default function App() {
   const navigate = useRef(useNavigate());
 
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
   const [token, setToken] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLocalStorageRead, setIsLocalStorageRead] = useState(false);
 
   useScrollToTop();
 
@@ -171,7 +174,7 @@ export default function App() {
 
   const setShoppingCart = (shoppingCart) => {
     const totalPrice = shoppingCart.reduce(
-      (acc, product) => acc + product.amount * product.price_per_unit,
+      (acc, product) => acc + product.total_price,
       0
     );
     setShoppingCartContext({
@@ -217,18 +220,14 @@ export default function App() {
   const findProductInShoppingCart = useCallback(
     (productId) =>
       shoppingCartContext.shoppingCart.find(
-        (product) => product.id === productId
+        (product) => product.product.id === productId
       ),
     [shoppingCartContext]
   );
 
   const addProduct = useCallback(
     (card) => {
-      if (!isLoggedIn) {
-        handleLoginPopup();
-        return;
-      }
-      addProductToShoppingCart(card.id, token)
+      addProductToCart(card.id, token)
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
@@ -238,7 +237,7 @@ export default function App() {
         .then(() => {
           trackAddToCart(selectedCard);
         })
-        .then(() => getShoppingCart(token))
+        .then(() => getCart(token))
         .then(setShoppingCart)
         .catch((err) => console.log(err));
     },
@@ -248,54 +247,55 @@ export default function App() {
 
   const deleteProduct = useCallback(
     (card) => {
-      deleteProductFromShoppingCart(card.id, token)
+      deleteProductFromCart(card.id, token)
         .then(() =>
           setSelectedCard((product) => {
-            product.amount = 0;
-            product.is_in_shopping_cart = false;
-            return product;
+            const updatedProduct = {
+              ...product,
+              amount: 0,
+              is_in_shopping_cart: false,
+            };
+            return updatedProduct;
           })
         )
-        .then(() => getShoppingCart(token))
+        .then(() => getCart(token))
         .then(setShoppingCart)
         .catch((err) => console.log(err));
     },
-    [token]
+    [token, isLoggedIn]
   );
 
   const changeProductQuantity = useCallback(
     (card, amount) => {
-      changeProductQuantityInShoppingCart(card.id, amount, token)
+      changeProductQuantityInCart(card.id, amount, token)
         .then((res) => {
           setSelectedCard((prev) => {
             const updatedCard = { ...prev, ...res };
             return updatedCard;
           });
         })
-        .then(() => getShoppingCart(token))
+        .then(() => getCart(token))
         .then(setShoppingCart)
         .catch((err) => console.log(err));
     },
-    [token]
+    [token, isLoggedIn]
   );
 
   const onIncreaseProductInShoppingCart = useCallback(
     (productId) => {
-      if (!token) {
-        handleLoginPopup();
-        return;
-      }
-
       const productFromCart = findProductInShoppingCart(productId);
       const promise = productFromCart
-        ? changeProductQuantityInShoppingCart(
+        ? changeProductQuantityInCart(
             productId,
             productFromCart.amount + 1,
             token
           )
-        : addProductToShoppingCart(productId, token);
+        : addProductToCart(productId, token);
 
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+      promise
+        .then(() => getCart(token))
+        .then(setShoppingCart)
+        .catch((error) => console.log(error));
     },
     // eslint-disable-next-line
     [token, findProductInShoppingCart]
@@ -304,38 +304,39 @@ export default function App() {
   const onDecreaseProductInShoppingCart = useCallback(
     (productId) => {
       const productFromCart = findProductInShoppingCart(productId);
+      console.log(productFromCart);
       const promise =
         productFromCart.amount > 1
-          ? changeProductQuantityInShoppingCart(
+          ? changeProductQuantityInCart(
               productId,
               productFromCart.amount - 1,
               token
             )
-          : deleteProductFromShoppingCart(productId, token);
+          : deleteProductFromCart(productId, token);
 
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+      promise.then(() => getCart(token)).then(setShoppingCart);
     },
     [token, findProductInShoppingCart]
   );
 
   const onDeleteProductFromShoppingCart = useCallback(
     (productId) => {
-      const promise = deleteProductFromShoppingCart(productId, token);
-      promise.then(() => getShoppingCart(token)).then(setShoppingCart);
+      const promise = deleteProductFromCart(productId, token);
+      promise.then(() => getCart(token)).then(setShoppingCart);
     },
     [token]
   );
 
   const onCreateOrder = useCallback(
     (orderData) => {
-      // createOrder(orderData, token)
-      //   .catch((e) => {
-      //     console.error(e.error);
-      //   })
-      //   .then(setOrderDetails)
-      //   .finally(() => {
-      //     navigate.current('/thanksfororder', { replace: true });
-      //   });
+      createOrder(orderData, token)
+        .catch((e) => {
+          console.error(e.error);
+        })
+        .then(setOrderDetails)
+        .finally(() => {
+          navigate.current('/thanksfororder', { replace: true });
+        });
       setOrderDetails();
       navigate.current('/thanksfororder', { replace: true });
     },
@@ -344,7 +345,7 @@ export default function App() {
 
   useEffect(() => {
     setToken(getLocalStorageToken());
-
+    setIsLocalStorageRead(true);
     getNovelties()
       .then((novelties) =>
         setProductsContext((prevState) => ({ ...prevState, novelties }))
@@ -362,12 +363,23 @@ export default function App() {
     setLocalStorageToken(token);
     setToken(token);
     setIsLoggedIn(true);
+    // sendShoppingCardToUser(token);
+    // getShoppingCartNotAuth(token);
   };
 
   //Авторизация пользователя
   const loginUser = ({ password, email }) =>
     authorize(email, password)
-      .then(saveToken)
+      .then((responseToken) => {
+        saveToken(responseToken);
+        mergeSessionCart(responseToken.token)
+          .then(() =>
+            getCart(responseToken.token)
+              .then(setShoppingCart)
+              .catch((error) => console.log(`Ошибка запроса корзины ${error}`))
+          )
+          .catch((error) => console.log(`Ошибка мержа корзины ${error}`));
+      })
       .then(() => handleClosePopup());
 
   //Регистрация пользователя
@@ -377,28 +389,28 @@ export default function App() {
     });
 
   useEffect(() => {
-    if (!token) {
-      return;
+    if (token) {
+      getUserProfile(token)
+        .then((user) => {
+          setCurrentUser(user);
+          setIsLoggedIn(true);
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+        });
     }
-
-    getUserProfile(token)
-      .then((user) => {
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-      });
-
-    getShoppingCart(token)
-      .then(setShoppingCart)
-      .catch((error) => console.log(error));
-
-    getFavourites(token)
-      .then((favourites) => setFavouritesContext({ favourites }))
-      .catch((error) => console.log(error));
+    if (isLocalStorageRead) {
+      getCart(token)
+        .then(setShoppingCart)
+        .catch((error) => console.log(`Ошибка запроса корзины ${error}`));
+      if (token) {
+        getFavourites(token)
+          .then((favourites) => setFavouritesContext({ favourites }))
+          .catch((error) => console.log(error));
+      }
+    }
     // eslint-disable-next-line
-  }, [token]);
+  }, [isLocalStorageRead, token]);
 
   const logOut = () => {
     // eslint-disable-next-line no-unused-expressions
@@ -415,160 +427,138 @@ export default function App() {
   };
 
   return (
-    <FiltersContext.Provider
+    <ShoppingCartContext.Provider
       value={{
-        requestParams,
-        changeRequestParams,
-        chosenFiltersOnPanel,
-        addFilterToPanel,
-        deleteFilterFromPanel,
-        onFiltersPopupOpen,
+        ...shoppingCartContext,
+        onIncreaseProductInShoppingCart,
+        onDecreaseProductInShoppingCart,
+        onDeleteProductFromShoppingCart,
+        onCreateOrder,
       }}
     >
-      <ShoppingCartContext.Provider
+      <FavouritesContext.Provider
         value={{
-          ...shoppingCartContext,
-          onIncreaseProductInShoppingCart,
-          onDecreaseProductInShoppingCart,
-          onDeleteProductFromShoppingCart,
-          onCreateOrder,
+          ...favouritesContext,
+          onToggleFavourites,
+          isProductInFavourites,
         }}
       >
-        <FavouritesContext.Provider
-          value={{
-            ...favouritesContext,
-            onToggleFavourites,
-            isProductInFavourites,
-          }}
-        >
-          <ProductsContext.Provider value={productsContext}>
-            <CurrentUserContext.Provider value={currentUser}>
-              <IsCatalogButtonClickedContext.Provider
-                value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
-              >
-                <div className="app">
-                  <Header />
-                  <main className="main">
-                    <Routes>
-                      <Route path="/" element={<Main />} />
-                      <Route
-                        path="/catalog"
-                        element={
-                          <Catalog
-                            requestParams={requestParams}
-                            changeRequestParams={changeRequestParams}
-                            chosenFiltersOnPanel={chosenFiltersOnPanel}
-                            deleteFilterFromPanel={deleteFilterFromPanel}
-                            onFiltersPopupOpen={onFiltersPopupOpen}
-                          />
-                        }
-                      />
-                      <Route
-                        path="/product/:id"
-                        element={
-                          <MainProductPage
-                            card={selectedCard}
-                            onButtonAddClick={addProduct}
-                            onButtonDeleteClick={deleteProduct}
-                            onButtonChangeClick={changeProductQuantity}
-                            onCardClick={handleCardClick}
-                            token={token}
-                          />
-                        }
-                      />
-                      <Route
-                        path="/shopping-cart"
-                        element={
-                          <ProtectedRouteElement element={ShoppingCart} />
-                        }
-                      />
-                      <Route
-                        path="/delivery"
-                        element={
-                          <Delivery
-                            activeNavPanelItem={activeNavPanelItem}
-                            appointActiveNavPanelItem={
-                              appointActiveNavPanelItem
-                            }
-                          />
-                        }
-                      />
-                      <Route path="/about-us" element={<AboutUs />} />
-                      <Route
-                        path="/order"
-                        element={<ProtectedRouteElement element={Order} />}
-                      />
-                      <Route
-                        path="/thanksfororder"
-                        element={
-                          <ProtectedRouteElement element={ThanksForOrder} />
-                        }
-                      />{' '}
-                      <Route
-                        path="/profile"
-                        element={
-                          <ProtectedRouteElement
-                            element={Profile}
-                            onButtonClick={handleConfirmPopup}
-                          />
-                        }
-                      />
-                      <Route
-                        path="/contacts"
-                        element={
-                          <Contacts
-                            activeNavPanelItem={activeNavPanelItem}
-                            appointActiveNavPanelItem={
-                              appointActiveNavPanelItem
-                            }
-                          />
-                        }
-                      />
-                      <Route path="/favourites" element={<Favourites />} />
-                      <Route
-                        path="/privacy-policy"
-                        element={<PrivacyPolicy />}
-                      />
-                      <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                    <TopScrollBtn />
-                  </main>
-                  <Footer
-                    appointActiveNavPanelItem={appointActiveNavPanelItem}
-                  />
-                  <Registration
-                    isPopupOpen={isRegistrationPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                    handleTogglePopup={handleLoginPopup}
-                    registerUser={registerUser}
-                  />
-                  <Login
-                    isPopupOpen={isLoginPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                    handleTogglePopup={handleRegistrationPopupOpen}
-                    loginUser={loginUser}
-                  />
-                  <ConfirmPopup
-                    isPopupOpen={isConfirmPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                    onSubmit={logOut}
-                  />
-                  <PopupWithFilters
-                    isPopupOpen={isFiltersPopupOpen}
-                    onClosePopup={onFiltersPopupOpen}
-                    onCloseByOverlay={closePopupByOverlay}
-                    requestParams={requestParams}
-                    changeRequestParams={changeRequestParams}
-                  />
-                </div>
-              </IsCatalogButtonClickedContext.Provider>
-            </CurrentUserContext.Provider>
-          </ProductsContext.Provider>
-        </FavouritesContext.Provider>
-      </ShoppingCartContext.Provider>
-    </FiltersContext.Provider>
+        <ProductsContext.Provider value={productsContext}>
+          <CurrentUserContext.Provider value={currentUser}>
+            <IsCatalogButtonClickedContext.Provider
+              value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
+            >
+              <div className="app">
+                <Header />
+                <main className="main">
+                  <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route
+                      path="/catalog"
+                      element={
+                        <Catalog
+                          requestParams={requestParams}
+                          changeRequestParams={changeRequestParams}
+                          chosenFiltersOnPanel={chosenFiltersOnPanel}
+                          deleteFilterFromPanel={deleteFilterFromPanel}
+                          onFiltersPopupOpen={onFiltersPopupOpen}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/product/:id"
+                      element={
+                        <MainProductPage
+                          card={selectedCard}
+                          onButtonAddClick={addProduct}
+                          onButtonDeleteClick={deleteProduct}
+                          onButtonChangeClick={changeProductQuantity}
+                          onCardClick={handleCardClick}
+                          token={token}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/shopping-cart"
+                      element={<ProtectedRouteElement element={ShoppingCart} />}
+                    />
+                    <Route
+                      path="/delivery"
+                      element={
+                        <Delivery
+                          activeNavPanelItem={activeNavPanelItem}
+                          appointActiveNavPanelItem={appointActiveNavPanelItem}
+                        />
+                      }
+                    />
+                    <Route path="/about-us" element={<AboutUs />} />
+                    <Route
+                      path="/order"
+                      element={<ProtectedRouteElement element={Order} />}
+                    />
+                    <Route
+                      path="/thanksfororder"
+                      element={
+                        <ProtectedRouteElement element={ThanksForOrder} />
+                      }
+                    />{' '}
+                    <Route
+                      path="/profile"
+                      element={
+                        <ProtectedRouteElement
+                          element={Profile}
+                          onButtonClick={handleConfirmPopup}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/contacts"
+                      element={
+                        <Contacts
+                          activeNavPanelItem={activeNavPanelItem}
+                          appointActiveNavPanelItem={appointActiveNavPanelItem}
+                        />
+                      }
+                    />
+                    <Route path="/favourites" element={<Favourites />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
+                  <TopScrollBtn />
+                </main>
+                <Footer appointActiveNavPanelItem={appointActiveNavPanelItem} />
+                <Registration
+                  isPopupOpen={isRegistrationPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  handleTogglePopup={handleLoginPopup}
+                  registerUser={registerUser}
+                />
+                <Login
+                  isPopupOpen={isLoginPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  handleTogglePopup={handleRegistrationPopupOpen}
+                  loginUser={loginUser}
+                />
+                <ConfirmPopup
+                  isPopupOpen={isConfirmPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  onSubmit={logOut}
+                />
+                <PopupWithFilters
+                  isPopupOpen={isFiltersPopupOpen}
+                  onClosePopup={onFiltersPopupOpen}
+                  onCloseByOverlay={closePopupByOverlay}
+                  requestParams={requestParams}
+                  changeRequestParams={changeRequestParams}
+                />
+              </div>
+            </IsCatalogButtonClickedContext.Provider>
+          </CurrentUserContext.Provider>
+        </ProductsContext.Provider>
+      </FavouritesContext.Provider>
+    </ShoppingCartContext.Provider>
   );
 }
