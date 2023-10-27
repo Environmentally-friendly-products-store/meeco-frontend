@@ -3,7 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import NavigationLink from '../NavigationLink/NavigationLink';
 import userIcon from '../../images/user.svg';
 import shoppingCartSvg from '../../images/shopping-cart-icon.svg';
-import favouriteIcon from '../../images/favourites-header.svg';
+import favouriteIcon from '../../images/favourites-default.svg';
 import './Navigation.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
