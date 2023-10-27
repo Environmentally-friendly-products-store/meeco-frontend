@@ -1,0 +1,8 @@
+.filter__filter-list {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  row-gap: 20px;
+  margin: 0;
+  padding: 0;
+}

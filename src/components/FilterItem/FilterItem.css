@@ -1,0 +1,33 @@
+.filter__filter-item {
+  list-style: none;
+}
+
+.filter-item__checkbox-label {
+  display: flex;
+  column-gap: 8px;
+}
+
+.filter-item__invisible-checkbox {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(0 0 0 0);
+}
+
+.filter-item__visible-checkbox {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid#A5A38F;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filter-item__invisible-checkbox:checked + .filter-item__visible-checkbox {
+  background: #e3e1b9 url('../../images/checkbox-checked.svg') 50% / 100%
+    no-repeat;
+  border: 1px solid #726e38;
+}

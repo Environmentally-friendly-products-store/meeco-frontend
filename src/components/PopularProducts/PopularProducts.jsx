@@ -16,23 +16,11 @@ function PopularProducts() {
   return (
     <article className="popular-products">
       <Carousel
-        slidesToShow={4}
+        slidesToShow={5}
         slidesToScroll={1}
         showDots={false}
         componentName="popular-products"
       >
-        {popular.map((product) => (
-          <ProductCard
-            key={product.id}
-            price={product.price_per_unit}
-            image={product.preview_image}
-            name={product.name}
-            brand={product.brand.name}
-            card={product}
-            id={product.id}
-          />
-        ))}
-
         {popular.map((product) => (
           <ProductCard
             key={product.id}

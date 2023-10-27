@@ -131,11 +131,39 @@ export default function App() {
   const [activeNavPanelItem, setActiveNavPanelItem] = useState(null);
 
   /* Пробую внедрить фильтры как контекст */
-  const [requestParams, setRequestParams] = useState(
-    FILTERS_TO_GET_All_PRODUCTS
-  );
+  const [requestParams, setRequestParams] = useState({
+    ...FILTERS_TO_GET_All_PRODUCTS,
+    brand: [],
+    min_price: null,
+    max_price: null,
+  });
 
-  /*  */
+  const [chosenFiltersOnPanel, setChosenFiltersOnPanel] = useState([]);
+
+  const changeRequestParams = (newParams) => {
+    setRequestParams(newParams);
+  };
+
+  const addParamsToRequest = (newParams) => {
+    changeRequestParams(...requestParams, ...newParams);
+  };
+
+  /* const deleteParamsFromRequest = (paramsToRemove) => {
+    changeRequestParams(
+      requestParams.filter((param) => param !== paramsToRemove)
+    );
+  }; */
+
+  const addFilterToPanel = (filterToAdd) => {
+    setChosenFiltersOnPanel([...chosenFiltersOnPanel, filterToAdd]);
+    changeRequestParams([...chosenFiltersOnPanel, filterToAdd]);
+  };
+
+  const deleteFilterFromPanel = (filterToRemove) => {
+    setChosenFiltersOnPanel(
+      chosenFiltersOnPanel.filter((filter) => filter !== filterToRemove)
+    );
+  };
 
   const appointActiveNavPanelItem = (item) => {
     setActiveNavPanelItem(item);
@@ -387,7 +415,16 @@ export default function App() {
   };
 
   return (
-    <FiltersContext.Provider value={{ requestParams, onFiltersPopupOpen }}>
+    <FiltersContext.Provider
+      value={{
+        requestParams,
+        changeRequestParams,
+        chosenFiltersOnPanel,
+        addFilterToPanel,
+        deleteFilterFromPanel,
+        onFiltersPopupOpen,
+      }}
+    >
       <ShoppingCartContext.Provider
         value={{
           ...shoppingCartContext,
@@ -414,7 +451,18 @@ export default function App() {
                   <main className="main">
                     <Routes>
                       <Route path="/" element={<Main />} />
-                      <Route path="/catalog" element={<Catalog />} />
+                      <Route
+                        path="/catalog"
+                        element={
+                          <Catalog
+                            requestParams={requestParams}
+                            changeRequestParams={changeRequestParams}
+                            chosenFiltersOnPanel={chosenFiltersOnPanel}
+                            deleteFilterFromPanel={deleteFilterFromPanel}
+                            onFiltersPopupOpen={onFiltersPopupOpen}
+                          />
+                        }
+                      />
                       <Route
                         path="/product/:id"
                         element={
@@ -512,6 +560,8 @@ export default function App() {
                     isPopupOpen={isFiltersPopupOpen}
                     onClosePopup={onFiltersPopupOpen}
                     onCloseByOverlay={closePopupByOverlay}
+                    requestParams={requestParams}
+                    changeRequestParams={changeRequestParams}
                   />
                 </div>
               </IsCatalogButtonClickedContext.Provider>

@@ -1,6 +1,6 @@
-import './CategoriesSection.css';
+import './CategoriesFilters.css';
 /* import { useState } from 'react'; */
-import Category from '../Category/Category';
+import Categories from '../Categories/Categories';
 
 /* function FiltersSection({ categories, onFiltersChange, onReset }) {
   const onSubmit = (e) => {
@@ -59,7 +59,7 @@ import Category from '../Category/Category';
   );
 } */
 
-function CategoriesSection({
+function CategoriesFilters({
   categories,
   onCategoryButtonClick,
   onResetClick,
@@ -68,8 +68,8 @@ function CategoriesSection({
     <aside className="categories-section catalog__categories-section">
       <div className="categories-form">
         <div className="categories">
-          <Category
-            categoryItems={categories}
+          <Categories
+            categories={categories}
             onCategoryButtonClick={onCategoryButtonClick}
             onResetClick={onResetClick}
           />
@@ -79,4 +79,4 @@ function CategoriesSection({
   );
 }
 
-export default CategoriesSection;
+export default CategoriesFilters;

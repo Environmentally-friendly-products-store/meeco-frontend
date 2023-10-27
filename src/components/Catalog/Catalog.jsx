@@ -1,10 +1,10 @@
 import './Catalog.css';
 
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 
 import {
-  getAllCategories,
+  getCategoriesList,
   getProducts,
   sortProductsInAscendingOrder,
   sortProductsInDescendingOrder,
@@ -13,35 +13,54 @@ import {
 
 import CardSection from '../CardSection/CardSection';
 import AllFiltersSection from '../AllFiltersSection/AllFiltersSection';
-import CategoriesFilters from '../CategoriesSection/CategoriesSection';
+import CategoriesFilters from '../CategoriesFilters/CategoriesFilters';
 import LesserFilters from '../LesserFilters/LesserFilters';
 import ProductsSortingFilters from '../ProductsSortingFilters/ProductsSortingFilters';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
+import { FiltersContext } from '../../contexts/FiltersContext';
+
 import { trackCatalog } from '../../utils/yandexCounter';
 
 import { FILTERS_TO_GET_All_PRODUCTS, PAGE_LIMIT } from '../../utils/constants';
 
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 
-function Catalog() {
+function Catalog({
+  requestParams,
+  changeRequestParams,
+  chosenFiltersOnPanel,
+  deleteFilterFromPanel,
+  onFiltersPopupOpen,
+}) {
+  /* Остается в этом компоненте */
+
   const [counter, setCounter] = useState(1);
+
+  /* Остается в этом компоненте */
+
+  /* const { requestParams, changeRequestParams } = useContext(FiltersContext); */
 
   const [productsAmount, setProductsAmount] = useState(0);
 
-  const [requestParams, setRequestParams] = useState(
-    FILTERS_TO_GET_All_PRODUCTS
-  );
+  /* Пока под вопросом */
 
   const [categories, setCategories] = useState([]);
 
+  /* Остается в этом компоненте */
+
   const [products, setProducts] = useState([]);
+
+  /* Остается в этом компоненте */
 
   const [activeItem, setActiveItem] = useState('');
 
+  /* Остается в этом компоненте */
+
   const { isCatalogButtonClicked } = useContext(IsCatalogButtonClickedContext);
 
-  const getProductFunc = async (query, counter, item) => {
+  /* Скорее всего придется перенести в App, чтобы передать через контекст в PopupWithFilters */
+  const getProductsByParams = async (query, counter, item) => {
     try {
       if (item) {
         setItem(item);
@@ -50,7 +69,10 @@ function Catalog() {
       if (counter) {
         setCounter(counter);
       }
-      setRequestParams(query);
+
+      if (query !== FILTERS_TO_GET_All_PRODUCTS) {
+        changeRequestParams(query);
+      }
       const response = await getProducts(query);
       const newProductsAmount = response.count;
       setProductsAmount(newProductsAmount);
@@ -58,42 +80,46 @@ function Catalog() {
       setProducts(newProducts);
       trackCatalog(newProducts);
     } catch (err) {
-      console.log(err.error.detail);
+      console.log(err);
     }
   };
 
-  const setInitialCategories = async () => {
+  /* Пока под вопросом */
+  const setCategoriesList = async () => {
     try {
-      const categories = await getAllCategories();
+      const categories = await getCategoriesList();
       setCategories(categories);
     } catch (err) {
-      console.log(err.error.detail);
+      console.log(err);
     }
   };
 
+  /* Пока под вопросом */
   const setInitialProducts = (requestParams) => {
-    return getProductFunc(requestParams, null, 'Все');
+    return getProductsByParams(requestParams, null, 'Все');
   };
 
+  /* Скорее всего придется перенести в App и переименовать , чтобы передать через контекст в PopupWithFilters */
+
   const onCategoryButtonClick = (name) => {
-    return getProductFunc({ ...requestParams, category: name }, 1);
+    return getProductsByParams({ ...requestParams, category: name }, 1);
   };
 
   const onLesserFiltersButtonClick = (newRequestParams) => {
-    setRequestParams({
+    changeRequestParams({
       ...requestParams,
       newRequestParams,
     });
   };
 
   const onApplyLesserFilters = (newRequestParams) => {
-    return getProductFunc({ ...requestParams, newRequestParams }, 1);
+    return getProductsByParams({ ...requestParams, newRequestParams }, 1);
   };
 
   const onResetClick = async () => {
     try {
       setCounter(1);
-      setRequestParams(FILTERS_TO_GET_All_PRODUCTS);
+      changeRequestParams(FILTERS_TO_GET_All_PRODUCTS);
       setInitialProducts(FILTERS_TO_GET_All_PRODUCTS);
     } catch (err) {
       console.log(err);
@@ -120,9 +146,9 @@ function Catalog() {
   };
 
   useEffect(() => {
-    setInitialCategories();
-    setInitialProducts(FILTERS_TO_GET_All_PRODUCTS);
-  }, [isCatalogButtonClicked]);
+    setCategoriesList();
+    setInitialProducts(requestParams);
+  }, [isCatalogButtonClicked, requestParams]);
 
   return (
     <ActiveItemContext.Provider value={{ activeItem, setItem }}>
@@ -145,8 +171,11 @@ function Catalog() {
 
           <LesserFilters
             requestParams={requestParams}
-            onLesserFiltersButtonClick={onLesserFiltersButtonClick}
+            changeRequestParams={changeRequestParams}
             onApplyLesserFilters={onApplyLesserFilters}
+            chosenFiltersOnPanel={chosenFiltersOnPanel}
+            deleteFilterFromPanel={deleteFilterFromPanel}
+            onFiltersPopupOpen={onFiltersPopupOpen}
           />
         </AllFiltersSection>
 

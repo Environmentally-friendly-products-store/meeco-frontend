@@ -12,17 +12,6 @@
 .text {
   font-size: 16px;
   font-style: normal;
+  font-weight: normal;
   line-height: 1.5;
-}
-
-.text_weight_normal {
-  font-weight: 400;
-}
-
-.text_weight_medium {
-  font-weight: 500;
-}
-
-.text_weight_bold {
-  font-weight: 700;
 }

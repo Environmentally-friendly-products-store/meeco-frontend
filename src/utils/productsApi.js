@@ -17,8 +17,15 @@ export const getCurrentCard = (id, token = null) => {
 /**
  * Запрашивает данные о всех категориях товаров
  */
-export const getAllCategories = () => {
+export const getCategoriesList = () => {
   return makeRequest('/categories/', 'GET');
+};
+
+/**
+ * Запрашивает данные о всех категориях товаров
+ */
+export const getBrandsList = () => {
+  return makeRequest('/brands/', 'GET');
 };
 
 /**
@@ -30,7 +37,7 @@ export const getCategoryById = (categoryId) => {
 
 /**
  * Запрашивает данные о товарах по указанным параметрам
- * @param data {{event: string, category: string, limit: number, page: number, is_in_shopping_cart: number, is_favorite: number}} Объект с данными фильтра
+ * @param data {{event: string, category: string, brand: string, limit: number, page: number, is_in_shopping_cart: number, is_favorite: number}} Объект с данными фильтра
  * @param token {string}  Авторизационный токен
  */
 export const getProducts = (data, token) => {
