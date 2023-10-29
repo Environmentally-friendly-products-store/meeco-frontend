@@ -82,6 +82,10 @@
   resize: none;
 }
 
+.profile__user-data_type_address {
+  height: 57px;
+}
+
 .profile__input_active {
   padding: 4px 8px;
   box-sizing: border-box;

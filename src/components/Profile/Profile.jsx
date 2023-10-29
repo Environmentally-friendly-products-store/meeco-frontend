@@ -31,6 +31,7 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
     const userData = {};
     for (const key in userState) {
       if (userState[key].length > 0) {
+        console.log(key);
         if (key === 'phone') {
           userData[key] = userState[key].replace(/\D/g, '');
         } else {
@@ -145,7 +146,7 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
               <>
                 <label className="profile__label">Адрес</label>
                 <textarea
-                  name="adress"
+                  name="address"
                   type="text"
                   minLength="8"
                   disabled={!inputsActive}
@@ -161,13 +162,13 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
             ) : (
               <>
                 <label className="profile__label">Адрес</label>
-                <p className="profile__user-data">
+                <p className="profile__user-data profile__user-data_type_address">
                   {currentUser.delivery_address}
                 </p>
               </>
             )}
           </div>
-          <span className="profile__error">{errorsState.adress}</span>
+          <span className="profile__error">{errorsState.address}</span>
           <button
             type="submit"
             className={`profile__button profile__button_type_submit ${
