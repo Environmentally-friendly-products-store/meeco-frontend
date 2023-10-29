@@ -19,7 +19,12 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
 
-import { authorize, getUserProfile, register } from '../../utils/userApi.js';
+import {
+  authorize,
+  changeUserDataById,
+  getUserProfile,
+  register,
+} from '../../utils/userApi.js';
 import {
   getLocalStorageToken,
   removeLocalStorageToken,
@@ -49,9 +54,10 @@ import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElemen
 import { trackAddToCart } from '../../utils/yandexCounter';
 import Favourites from '../Favorites/Favorites';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
-import { createOrder } from '../../utils/ordersApi';
+import { createOrder, getOrders } from '../../utils/ordersApi';
 import PasswordChanger from '../PasswordChanger/PasswordChanger';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
+import { OrdersContext } from '../../contexts/OrdersContext';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -128,6 +134,10 @@ export default function App() {
 
   const [favouritesContext, setFavouritesContext] = useState({
     favourites: [],
+  });
+
+  const [ordersContext, setOrderContext] = useState({
+    orders: [],
   });
 
   const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
@@ -299,6 +309,7 @@ export default function App() {
         .catch((e) => {
           console.error(e.error);
         })
+        .then(setOrderContext)
         .then(setOrderDetails)
         .finally(() => {
           navigate.current('/thanksfororder', { replace: true });
@@ -364,6 +375,7 @@ export default function App() {
         .catch(() => {
           setIsLoggedIn(false);
         });
+      getOrders(token).then(setOrderContext);
     }
     if (isLocalStorageRead) {
       getCart(token)
@@ -391,6 +403,12 @@ export default function App() {
     navigate.current('/', { replace: true });
   };
 
+  const changeUserData = (id, userData) => {
+    changeUserDataById(id, userData, token)
+      .then((res) => setCurrentUser(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -410,107 +428,119 @@ export default function App() {
       >
         <ProductsContext.Provider value={productsContext}>
           <CurrentUserContext.Provider value={currentUser}>
-            <IsCatalogButtonClickedContext.Provider
-              value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
-            >
-              <div className="app">
-                <Header />
-                <main className="main">
-                  <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/catalog" element={<Catalog />} />
-                    <Route
-                      path="/product/:id"
-                      element={
-                        <MainProductPage
-                          card={selectedCard}
-                          onButtonAddClick={addProduct}
-                          onButtonDeleteClick={deleteProduct}
-                          onButtonChangeClick={changeProductQuantity}
-                          onCardClick={handleCardClick}
-                          token={token}
-                        />
-                      }
-                    />
-                    <Route path="/shopping-cart" element={<ShoppingCart />} />
-                    <Route
-                      path="/delivery"
-                      element={
-                        <Delivery
-                          activeNavPanelItem={activeNavPanelItem}
-                          appointActiveNavPanelItem={appointActiveNavPanelItem}
-                        />
-                      }
-                    />
-                    <Route path="/about-us" element={<AboutUs />} />
-                    <Route
-                      path="/order"
-                      element={<ProtectedRouteElement element={Order} />}
-                    />
-                    <Route
-                      path="/thanksfororder"
-                      element={
-                        <ProtectedRouteElement element={ThanksForOrder} />
-                      }
-                    />{' '}
-                    <Route
-                      path="/profile"
-                      element={
-                        <ProtectedRouteElement
-                          element={Profile}
-                          onButtonClick={handleConfirmPopup}
-                          onOpenPasswordPopup={handlePasswordPopup}
-                        />
-                      }
-                    />
-                    <Route
-                      path="/contacts"
-                      element={
-                        <Contacts
-                          activeNavPanelItem={activeNavPanelItem}
-                          appointActiveNavPanelItem={appointActiveNavPanelItem}
-                        />
-                      }
-                    />
-                    <Route path="/favourites" element={<Favourites />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                  </Routes>
-                  <TopScrollBtn />
-                </main>
-                <Footer appointActiveNavPanelItem={appointActiveNavPanelItem} />
-                <Registration
-                  isPopupOpen={isRegistrationPopupOpen}
-                  onClosePopup={handleClosePopup}
-                  onCloseByOverlay={closePopupByOverlay}
-                  handleTogglePopup={handleLoginPopup}
-                  registerUser={registerUser}
-                />
-                <Login
-                  isPopupOpen={isLoginPopupOpen}
-                  onClosePopup={handleClosePopup}
-                  onCloseByOverlay={closePopupByOverlay}
-                  handleTogglePopup={handleRegistrationPopupOpen}
-                  loginUser={loginUser}
-                />
-                <ConfirmPopup
-                  isPopupOpen={isConfirmPopupOpen}
-                  onClosePopup={handleClosePopup}
-                  onCloseByOverlay={closePopupByOverlay}
-                  onSubmit={logOut}
-                />
-                <PasswordChanger
-                  isPopupOpen={isPasswordPopupOpen}
-                  onClosePopup={handleClosePopup}
-                  onCloseByOverlay={closePopupByOverlay}
-                />
-                <PopupWithInfo
-                  isPopupOpen={isInfoPopupOpen}
-                  onClosePopup={handleClosePopup}
-                  onCloseByOverlay={closePopupByOverlay}
-                />
-              </div>
-            </IsCatalogButtonClickedContext.Provider>
+            <OrdersContext.Provider value={ordersContext}>
+              <IsCatalogButtonClickedContext.Provider
+                value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
+              >
+                <div className="app">
+                  <Header />
+                  <main className="main">
+                    <Routes>
+                      <Route path="/" element={<Main />} />
+                      <Route path="/catalog" element={<Catalog />} />
+                      <Route
+                        path="/product/:id"
+                        element={
+                          <MainProductPage
+                            card={selectedCard}
+                            onButtonAddClick={addProduct}
+                            onButtonDeleteClick={deleteProduct}
+                            onButtonChangeClick={changeProductQuantity}
+                            onCardClick={handleCardClick}
+                            token={token}
+                          />
+                        }
+                      />
+                      <Route path="/shopping-cart" element={<ShoppingCart />} />
+                      <Route
+                        path="/delivery"
+                        element={
+                          <Delivery
+                            activeNavPanelItem={activeNavPanelItem}
+                            appointActiveNavPanelItem={
+                              appointActiveNavPanelItem
+                            }
+                          />
+                        }
+                      />
+                      <Route path="/about-us" element={<AboutUs />} />
+                      <Route
+                        path="/order"
+                        element={<ProtectedRouteElement element={Order} />}
+                      />
+                      <Route
+                        path="/thanksfororder"
+                        element={
+                          <ProtectedRouteElement element={ThanksForOrder} />
+                        }
+                      />{' '}
+                      <Route
+                        path="/profile"
+                        element={
+                          <ProtectedRouteElement
+                            element={Profile}
+                            onButtonClick={handleConfirmPopup}
+                            onOpenPasswordPopup={handlePasswordPopup}
+                            handleSubmit={changeUserData}
+                          />
+                        }
+                      />
+                      <Route
+                        path="/contacts"
+                        element={
+                          <Contacts
+                            activeNavPanelItem={activeNavPanelItem}
+                            appointActiveNavPanelItem={
+                              appointActiveNavPanelItem
+                            }
+                          />
+                        }
+                      />
+                      <Route path="/favourites" element={<Favourites />} />
+                      <Route
+                        path="/privacy-policy"
+                        element={<PrivacyPolicy />}
+                      />
+                      <Route path="*" element={<NotFoundPage />} />
+                    </Routes>
+                    <TopScrollBtn />
+                  </main>
+                  <Footer
+                    appointActiveNavPanelItem={appointActiveNavPanelItem}
+                  />
+                  <Registration
+                    isPopupOpen={isRegistrationPopupOpen}
+                    onClosePopup={handleClosePopup}
+                    onCloseByOverlay={closePopupByOverlay}
+                    handleTogglePopup={handleLoginPopup}
+                    registerUser={registerUser}
+                  />
+                  <Login
+                    isPopupOpen={isLoginPopupOpen}
+                    onClosePopup={handleClosePopup}
+                    onCloseByOverlay={closePopupByOverlay}
+                    handleTogglePopup={handleRegistrationPopupOpen}
+                    loginUser={loginUser}
+                  />
+                  <ConfirmPopup
+                    isPopupOpen={isConfirmPopupOpen}
+                    onClosePopup={handleClosePopup}
+                    onCloseByOverlay={closePopupByOverlay}
+                    onSubmit={logOut}
+                  />
+                  <PasswordChanger
+                    isPopupOpen={isPasswordPopupOpen}
+                    onClosePopup={handleClosePopup}
+                    onCloseByOverlay={closePopupByOverlay}
+                  />
+                  <PopupWithInfo
+                    isPopupOpen={isInfoPopupOpen}
+                    onClosePopup={handleClosePopup}
+                    onCloseByOverlay={closePopupByOverlay}
+                  />
+                </div>
+              </IsCatalogButtonClickedContext.Provider>
+            </OrdersContext.Provider>
           </CurrentUserContext.Provider>
         </ProductsContext.Provider>
       </FavouritesContext.Provider>
