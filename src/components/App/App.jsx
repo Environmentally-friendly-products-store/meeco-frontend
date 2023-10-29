@@ -93,7 +93,6 @@ export default function App() {
   const handlePasswordPopup = () =>
     setIsPasswordPopupOpen(!isPasswordPopupOpen);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-  const handleInfoPopupOpen = () => setIsInfoPopupOpen(!isInfoPopupOpen);
 
   const [selectedCard, setSelectedCard] = useState({});
 

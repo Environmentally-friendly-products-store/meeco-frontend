@@ -8,7 +8,6 @@ import {
   handleInputPhoneChange,
   resetPhoneInput,
 } from '../../hooks/usePhoneMask';
-import { useEffect } from 'react';
 
 function Recipient() {
   const currentUser = useContext(CurrentUserContext);

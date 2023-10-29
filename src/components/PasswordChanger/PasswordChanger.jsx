@@ -8,12 +8,10 @@ export default function PasswordChanger({
   onCloseByOverlay,
   onSubmit,
 }) {
-  const [serverError, setServerError] = useState('');
   const {
     values: userState,
     handleChange: handleInputChange,
     errors: errorsState,
-    setErrors,
     isValid: isFormValid,
   } = useForm({
     password: '',
@@ -62,9 +60,7 @@ export default function PasswordChanger({
 
   return (
     <PopupWithForm {...popupWithFormProps}>
-      <span className="popup__server-error popup__server-error_type_password">
-        {serverError}
-      </span>
+      <span className="popup__server-error popup__server-error_type_password"></span>
       <label className={getLabelClassName(errorsState.password)}>
         Введите пароль:
       </label>
