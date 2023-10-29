@@ -65,12 +65,13 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  transition: all 0.7s ease;
+  transition: all 1.2s ease;
 }
 
 .profile__details_clicked {
+  transition: all 1s ease;
   padding: 0 0 8px;
-  max-height: 100px;
+  max-height: 250px;
 }
 
 .profile__image_type_chevron {

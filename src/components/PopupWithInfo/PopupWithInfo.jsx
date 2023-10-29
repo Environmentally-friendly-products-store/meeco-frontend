@@ -16,7 +16,11 @@ function PopupWithInfo({ isPopupOpen, onClosePopup, onCloseByOverlay }) {
           className="popup__button popup__button_type_close popup__button_type_close-info"
           aria-label="Кнопка закрытия окна"
         />
-        <button className="popup__button popup__button_type_submit popup__button_type_return">
+        <button
+          type="button"
+          onClick={onClosePopup}
+          className="popup__button popup__button_type_submit popup__button_type_return"
+        >
           Вернуться в личный кабинет
         </button>
       </div>

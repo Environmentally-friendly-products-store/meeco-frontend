@@ -57,3 +57,11 @@ export const changeUserDataById = (userId, userData, token) =>
     },
     token
   );
+
+export const changeUserPassword = (newPassword, currentPassword, token) =>
+  makeRequest(
+    '/users/set_password/',
+    'POST',
+    { new_password: newPassword, current_password: currentPassword },
+    token
+  );

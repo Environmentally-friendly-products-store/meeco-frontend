@@ -7,7 +7,6 @@ export default function PasswordChanger({
   onClosePopup,
   onCloseByOverlay,
   onSubmit,
-  handleTogglePopup,
 }) {
   const [serverError, setServerError] = useState('');
   const {
@@ -21,6 +20,11 @@ export default function PasswordChanger({
     newPassword: '',
     repeatedPassword: '',
   });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(userState.newPassword, userState.password);
+  };
 
   const matchPassword =
     userState.newPassword !== userState.repeatedPassword &&
@@ -40,8 +44,7 @@ export default function PasswordChanger({
     submitButtonTextContent: 'Изменить пароль',
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,
-    togglePopup: handleTogglePopup,
-    onSubmit,
+    onSubmit: handleSubmit,
   };
 
   const [isShowPasswordButtonClicked, setIsShowPaswordButtonClicked] =

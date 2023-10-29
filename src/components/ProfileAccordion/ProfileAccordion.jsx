@@ -4,6 +4,7 @@ import ProfileAccordionItem from '../ProfileAccordionItem/ProfileAccordionItem';
 import './ProfileAccordion.css';
 
 export default function ProfileAccordion({ order, isLastOne }) {
+  const date = new Date();
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => setIsClicked(!isClicked);
   return (
@@ -14,9 +15,11 @@ export default function ProfileAccordion({ order, isLastOne }) {
       onClick={handleClick}
     >
       <div className="profile__main-info">
-        <h3 className="profile__order-title">Заказ № {order.id}</h3>
+        <h3 className="profile__order-title">
+          Заказ № {order.id} от {date.getDate()}&#160;октября{' '}
+        </h3>
         <p className="profile__order-status">{order.status}</p>
-        <p className="profile__order-date">24.10.2023</p>
+        <p className="profile__order-date">04.11.2023</p>
         <p className="prodile__order-summary">{order.price_total}&#160;₽</p>
         <img
           className={`profile__image profile__image_type_chevron ${

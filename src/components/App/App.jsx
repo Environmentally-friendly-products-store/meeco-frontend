@@ -24,6 +24,7 @@ import {
   changeUserDataById,
   getUserProfile,
   register,
+  changeUserPassword,
 } from '../../utils/userApi.js';
 import {
   getLocalStorageToken,
@@ -402,10 +403,17 @@ export default function App() {
     });
     navigate.current('/', { replace: true });
   };
-
+  // Изменение данный пользователя
   const changeUserData = (id, userData) => {
     changeUserDataById(id, userData, token)
       .then((res) => setCurrentUser(res))
+      .catch((err) => console.log(err));
+  };
+
+  const changePassword = (newPassword, currentPassword) => {
+    changeUserPassword(newPassword, currentPassword, token)
+      .then(() => handleClosePopup())
+      .then(() => setIsInfoPopupOpen(true))
       .catch((err) => console.log(err));
   };
 
@@ -532,6 +540,7 @@ export default function App() {
                     isPopupOpen={isPasswordPopupOpen}
                     onClosePopup={handleClosePopup}
                     onCloseByOverlay={closePopupByOverlay}
+                    onSubmit={changePassword}
                   />
                   <PopupWithInfo
                     isPopupOpen={isInfoPopupOpen}

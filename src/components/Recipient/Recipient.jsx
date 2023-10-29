@@ -8,14 +8,15 @@ import {
   handleInputPhoneChange,
   resetPhoneInput,
 } from '../../hooks/usePhoneMask';
+import { useEffect } from 'react';
 
 function Recipient() {
   const currentUser = useContext(CurrentUserContext);
   const { onCreateOrder } = useContext(ShoppingCartContext);
   const { values, errors, isValid, handleChange } = useForm(
     {
-      address: '',
-      contact_phone_number: '',
+      address: currentUser.delivery_address,
+      contact_phone_number: currentUser.phone,
       comment: '',
     },
     true,
@@ -94,6 +95,7 @@ function Recipient() {
                 onInput={handleInputPhoneChange}
                 onKeyDown={resetPhoneInput}
                 onChange={handleChange}
+                value={values.contact_phone_number || ''}
               />
               <label className={getLabelClassName(errors.contact_phone_number)}>
                 Телефон *

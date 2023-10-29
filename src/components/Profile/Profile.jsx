@@ -26,9 +26,6 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
     phone: '',
     address: '',
   });
-
-  console.log(currentUser);
-
   const onSubmit = (e) => {
     e.preventDefault();
     const userData = {};
@@ -36,8 +33,9 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
       if (userState[key].length > 0) {
         if (key === 'phone') {
           userData[key] = userState[key].replace(/\D/g, '');
+        } else {
+          userData[key] = userState[key];
         }
-        userData[key] = userState[key];
       }
     }
     handleSubmit(currentUser.id, userData);
@@ -65,75 +63,109 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
           onSubmit={onSubmit}
         >
           <div className="profile__field">
-            <label className="profile__label">Имя</label>
-            <input
-              name="firstName"
-              type="text"
-              minLength="2"
-              maxLength="32"
-              defaultValue={inputsActive ? '' : currentUser.first_name}
-              disabled={!inputsActive}
-              onChange={handleInputChange}
-              placeholder={currentUser.first_name || ''}
-              className={`profile__input ${
-                inputsActive ? 'profile__input_active' : ''
-              }`}
-            />
+            {inputsActive ? (
+              <>
+                <label className="profile__label">Имя</label>
+                <input
+                  name="firstName"
+                  type="text"
+                  minLength="2"
+                  maxLength="32"
+                  disabled={!inputsActive}
+                  onChange={handleInputChange}
+                  placeholder={currentUser.first_name || ''}
+                  className={`profile__input ${
+                    inputsActive ? 'profile__input_active' : ''
+                  }`}
+                />
+              </>
+            ) : (
+              <>
+                <label className="profile__label">Имя</label>
+                <p className="profile__user-data">{currentUser.first_name}</p>
+              </>
+            )}
           </div>
           <span className="profile__error">{errorsState.firstName}</span>
           <div className="profile__field">
-            <label className="profile__label">Фамилия</label>
-            <input
-              name="lastName"
-              type="text"
-              minLength="2"
-              maxLength="64"
-              defaultValue={inputsActive ? '' : currentUser.last_name}
-              disabled={!inputsActive}
-              onChange={handleInputChange}
-              placeholder={currentUser.last_name || ''}
-              className={`profile__input ${
-                inputsActive ? 'profile__input_active' : ''
-              }`}
-            />
+            {inputsActive ? (
+              <>
+                <label className="profile__label">Фамилия</label>
+                <input
+                  name="lastName"
+                  type="text"
+                  minLength="2"
+                  maxLength="64"
+                  disabled={!inputsActive}
+                  onChange={handleInputChange}
+                  placeholder={currentUser.last_name || ''}
+                  className={`profile__input ${
+                    inputsActive ? 'profile__input_active' : ''
+                  }`}
+                />
+              </>
+            ) : (
+              <>
+                <label className="profile__label">Фамилия</label>
+                <p className="profile__user-data">{currentUser.last_name}</p>
+              </>
+            )}
           </div>
           <span className="profile__error">{errorsState.lastName}</span>
           <div className="profile__field">
-            <label className="profile__label">Телефон</label>
-            <input
-              name="phone"
-              type="tel"
-              disabled={!inputsActive}
-              defaultValue={inputsActive ? '' : currentUser.phone}
-              onChange={handleInputChange}
-              onInput={handleInputPhoneChange}
-              onKeyDown={resetPhoneInput}
-              placeholder="+7 (___) _______"
-              minLength="11"
-              maxLength="18"
-              className={`profile__input ${
-                inputsActive ? 'profile__input_active' : ''
-              }`}
-            />
+            {inputsActive ? (
+              <>
+                <label className="profile__label">Телефон</label>
+                <input
+                  name="phone"
+                  type="tel"
+                  value={userState.phone || ''}
+                  disabled={!inputsActive}
+                  onChange={handleInputChange}
+                  onInput={handleInputPhoneChange}
+                  onKeyDown={resetPhoneInput}
+                  placeholder="+7 (___) _______"
+                  minLength="11"
+                  maxLength="18"
+                  className={`profile__input ${
+                    inputsActive ? 'profile__input_active' : ''
+                  }`}
+                />
+              </>
+            ) : (
+              <>
+                <label className="profile__label">Телефон</label>
+                <p className="profile__user-data">{currentUser.phone}</p>
+              </>
+            )}
           </div>
           <span className="profile__error">{errorsState.phone}</span>
           <div className="profile__field">
-            <label className="profile__label">Адрес</label>
-            <textarea
-              name="adress"
-              type="text"
-              minLength="8"
-              maxLength="512"
-              defaultValue={inputsActive ? '' : currentUser.delivery_address}
-              disabled={!inputsActive}
-              onChange={handleInputChange}
-              placeholder="Удобный адрес для доставки эко товаров"
-              className={`profile__input profile__input_type_adress ${
-                inputsActive
-                  ? 'profile__input_active profile__input_type_adress-active'
-                  : ''
-              }`}
-            />
+            {inputsActive ? (
+              <>
+                <label className="profile__label">Адрес</label>
+                <textarea
+                  name="adress"
+                  type="text"
+                  minLength="8"
+                  disabled={!inputsActive}
+                  onChange={handleInputChange}
+                  placeholder="Удобный адрес для доставки эко товаров"
+                  className={`profile__input profile__input_type_adress ${
+                    inputsActive
+                      ? 'profile__input_active profile__input_type_adress-active'
+                      : ''
+                  }`}
+                />
+              </>
+            ) : (
+              <>
+                <label className="profile__label">Адрес</label>
+                <p className="profile__user-data">
+                  {currentUser.delivery_address}
+                </p>
+              </>
+            )}
           </div>
           <span className="profile__error">{errorsState.adress}</span>
           <button
@@ -168,7 +200,11 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
           </div>
         </div>
       </div>
-      <div className="profile__orders-content">
+      <div
+        className={`profile__orders-content ${
+          inputsActive ? 'profile__orders-content_inputs' : ''
+        }`}
+      >
         <h3 className="profile__subtitle">Мои заказы</h3>
         {orders.length > 0 &&
           orders.map((order, index) => (
