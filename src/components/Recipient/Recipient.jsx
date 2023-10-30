@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import {
   handleInputPhoneChange,
-  ResetPhoneInput,
+  resetPhoneInput,
 } from '../../hooks/usePhoneMask';
 
 function Recipient() {
@@ -14,10 +14,11 @@ function Recipient() {
   const { onCreateOrder } = useContext(ShoppingCartContext);
   const { values, errors, isValid, handleChange } = useForm(
     {
-      delivery_address: '',
-      contact_phone_number: '',
+      address: currentUser.delivery_address,
+      contact_phone_number: currentUser.phone,
       comment: '',
     },
+    true,
     '.recipient__form'
   );
   const handleSubmit = (e) => {
@@ -43,20 +44,18 @@ function Recipient() {
           <div className="recipient__field-container">
             <input
               type="text"
-              name="delivery_address"
-              className={getInputClassName(errors.delivery_address)}
+              name="address"
+              className={getInputClassName(errors.address)}
               required
               onChange={handleChange}
-              value={values.delivery_address || ''}
+              value={values.address || ''}
               maxLength={512}
               minLength={8}
             />
-            <label className={getLabelClassName(errors.delivery_address)}>
+            <label className={getLabelClassName(errors.address)}>
               Город, улица, дом, квартира
             </label>
-            <span className="recipient__form-error">
-              {errors.delivery_address}
-            </span>
+            <span className="recipient__form-error">{errors.address}</span>
           </div>
         </div>
         <div className="recipient__recipient">
@@ -93,8 +92,9 @@ function Recipient() {
                 minLength="11"
                 className={getInputClassName(errors.contact_phone_number)}
                 onInput={handleInputPhoneChange}
-                onKeyDown={ResetPhoneInput}
+                onKeyDown={resetPhoneInput}
                 onChange={handleChange}
+                value={values.contact_phone_number || ''}
               />
               <label className={getLabelClassName(errors.contact_phone_number)}>
                 Телефон *

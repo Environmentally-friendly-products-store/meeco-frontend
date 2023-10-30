@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../Logo/Logo.jsx';
 import { Link } from 'react-router-dom';
-/* import SearchForm from '../SearchForm/SearchForm'; */
+import SearchForm from '../SearchForm/SearchForm';
 import Navigation from '../Navigation/Navigation.jsx';
 import catalog from '../../images/catalog.svg';
 import { useContext } from 'react';
@@ -20,6 +20,7 @@ function Header() {
 
   return (
     <header className="header">
+      <Logo />
       <div className="header__func">
         <Link to="/catalog" className="header__link" onClick={onClick}>
           <img
@@ -29,9 +30,8 @@ function Header() {
           ></img>
           <span className="header__text">Каталог</span>
         </Link>
-        {/* <SearchForm /> */}
+        <SearchForm />
       </div>
-      <Logo />
       <Navigation />
     </header>
   );

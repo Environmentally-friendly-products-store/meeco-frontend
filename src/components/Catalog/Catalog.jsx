@@ -6,7 +6,6 @@ import { ActiveItemContext } from '../../contexts/ActiveItemContext';
 import { getAllCategories, getProducts } from '../../utils/productsApi';
 
 import CardSection from '../CardSection/CardSection';
-import CatalogCardSection from '../CatalogCardSection/CatalogCardSection';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import FiltersSection from '../FiltersSection/FiltersSection';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
@@ -111,14 +110,11 @@ function Catalog({ onCardClick }) {
           onResetClick={onResetClick}
         />
 
-        <CardSection isUsedOnMainPage={false}>
-          <CatalogCardSection
-            isUsedOnMainPage={false}
-            requiredLength={PAGE_LIMIT * counter}
-            products={products}
-            onCardClick={onCardClick}
-          />
-        </CardSection>
+        <CardSection
+          requiredLength={PAGE_LIMIT * counter}
+          products={products}
+          onCardClick={onCardClick}
+        />
         {(counter + 1) * PAGE_LIMIT <= productsAmount &&
           products.length % PAGE_LIMIT === 0 && (
             <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />

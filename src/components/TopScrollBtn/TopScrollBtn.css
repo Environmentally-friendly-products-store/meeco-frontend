@@ -10,7 +10,6 @@
   border-radius: 50%;
   background: url('../../images/top-to-scroll-button.svg') 100% / auto auto
     no-repeat;
-  box-shadow: 1px 5px 5px 0 rgba(0, 0, 0, 0.2);
   visibility: hidden;
   transition: background 0.6s;
   z-index: 1500;

@@ -1,11 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import './MainProductPage.css';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import defineImage from '../../utils/functions/defineImage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { trackDetails } from '../../utils/yandexCounter';
+import Accordion from '../Accordion/Accordion';
+import LikeButton from '../LikeButton/LikeButton';
+
+const productDescription = [
+  {
+    title: 'Описание',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    id: 'description',
+  },
+  {
+    title: 'Состав',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    id: 'composition',
+  },
+];
 
 function MainProductPage({
   card,
@@ -15,17 +31,35 @@ function MainProductPage({
   onCardClick,
   token,
 }) {
+  const [product, setProduct] = useState(card);
   const [mainSlider, setMainSlider] = useState(null);
-  const [isClicked, setIsClicked] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { email } = useContext(CurrentUserContext);
+  const { shoppingCart } = useContext(ShoppingCartContext);
+
+  const findCardInshoppingCart = useCallback(() => {
+    for (const item of shoppingCart) {
+      if (item.product.id === product.id) {
+        setProduct((prev) => {
+          const updatedProduct = {
+            ...prev,
+            is_in_shopping_cart: true,
+            amount: item.amount,
+          };
+          return updatedProduct;
+        });
+      }
+    }
+  }, [shoppingCart, product.id]);
+
   useEffect(() => {
     if (location.pathname.includes('/product')) {
       onCardClick(id);
     }
-  }, [location.pathname, email]);
+  }, [email, onCardClick, id, location.pathname]);
 
   useEffect(() => {
     if (card) {
@@ -34,20 +68,27 @@ function MainProductPage({
       }
       trackDetails(card);
     }
-  }, [card]);
+  }, [card, mainSlider]);
+
+  useEffect(() => {
+    if (card) {
+      setProduct({});
+      setProduct(card);
+      findCardInshoppingCart();
+    }
+  }, [card, shoppingCart, findCardInshoppingCart]);
 
   const onChangeCounter = (operator) => {
-    if (card.amount - 1 === 0 && operator === '-') {
-      onButtonDeleteClick(card);
-      setIsClicked(true);
+    if (product.amount - 1 === 0 && operator === '-') {
+      onButtonDeleteClick(product);
       return;
     }
     switch (operator) {
       case '+':
-        onButtonChangeClick(card, card.amount + 1, token);
+        onButtonChangeClick(card, product.amount + 1, token);
         return;
       case '-':
-        onButtonChangeClick(card, card.amount - 1, token);
+        onButtonChangeClick(card, product.amount - 1, token);
         return;
       default:
         return;
@@ -67,10 +108,10 @@ function MainProductPage({
 
   return (
     <>
-      <Breadcrumbs productName={card.name} />
+      <Breadcrumbs productName={product.name} />
       <section className="product-page">
         <Link
-          to="/catalog"
+          onClick={() => navigate(-1)}
           className="product-page__link product-page__link_type_catalog"
         >
           <svg
@@ -87,13 +128,13 @@ function MainProductPage({
               fill="#403F32"
             />
           </svg>
-          <span className="product-page__link-text">Вернуться в каталог</span>
+          <span className="product-page__link-text">Назад</span>
         </Link>
         <div className="product-page__main">
           <div className="product-page__sliders">
             <div className="pruduct-page__nav-images">
-              {card.images &&
-                card.images.slice(0, 3).map((image, index) => (
+              {product.images &&
+                product.images.slice(0, 3).map((image, index) => (
                   <img
                     key={index}
                     src={defineImage(image.preview_image)}
@@ -114,67 +155,81 @@ function MainProductPage({
               ref={(slider) => setMainSlider(slider)}
               className="product-page__main-slider"
             >
-              {card.images &&
-                card.images.map((image, index) => (
+              {product.images &&
+                product.images.map((image, index) => (
                   <div className="product-page__block" key={index}>
                     <img
                       src={defineImage(image.big_image)}
                       alt={'Фотография товара'}
                       className="product-page__main-image"
                     />
-                    {/* <button
-              type="button"
-              className="product-page__button product-page__button_type_favorite"
-            /> */}
                   </div>
                 ))}
             </Slider>
           </div>
           <div className="product-page__info">
-            <p className="product-page__brand">{card.brand}</p>
-            <h2 className="product-page__name">{card.name}</h2>
+            <p className="product-page__brand">
+              {product.brand && product.brand.name}
+            </p>
+            <h2 className="product-page__name">{product.name}</h2>
             <p className="product-page__price">
-              {card.price_per_unit}&#160;&#8381;
+              {product.price_per_unit}&#160;&#8381;
             </p>
             <div className="product-page__string">
+              <div className="product-page__container">
+                {product.is_in_shopping_cart ? (
+                  <Link
+                    to="/shopping-cart"
+                    className="product-page__link product-page__button_type_shopping-cart"
+                  >
+                    Перейти в корзину
+                  </Link>
+                ) : (
+                  <button
+                    className="product-page__button product-page__button_type_shopping-cart"
+                    onClick={() => onButtonAddClick(product, 1)}
+                  >
+                    Добавить в корзину
+                  </button>
+                )}
+              </div>
               <div
-                className={`product-page__counter ${
-                  (card.amount === 0 || !card.amount) &&
-                  `product-page__counter_inactive`
-                }`}
+                className="product-page__counter"
+                style={
+                  product.is_in_shopping_cart
+                    ? { display: 'flex' }
+                    : { display: 'none' }
+                }
               >
                 <button
                   type="button"
                   className="product-page__button product-page__button_type_minus"
                   onClick={() => onChangeCounter('-')}
+                  disabled={!product.is_in_shopping_cart}
                 ></button>
-                <span className="product-page__count">{card.amount}</span>
+                <span className="product-page__count">
+                  {!product.amount ? '0' : product.amount}
+                </span>
                 <button
                   type="button"
                   className="product-page__button product-page__button_type_plus"
                   onClick={() => onChangeCounter('+')}
+                  disabled={!product.is_in_shopping_cart}
                 ></button>
               </div>
-              {card.is_in_shopping_cart ? (
-                <Link
-                  to="/shopping-cart"
-                  className={`product-page__link product-page__link_type_shopping-cart`}
-                >
-                  Перейти в корзину
-                </Link>
-              ) : (
-                <button
-                  className={`product-page__button product-page__button_type_shopping-cart selectable-button ${
-                    isClicked && `product-page__button_clicked`
-                  }`}
-                  onClick={() => onButtonAddClick(card)}
-                >
-                  Добавить в корзину
-                </button>
-              )}
+              <LikeButton id={product.id} />
             </div>
-            <h3 className="product-page__subtitle">Описание</h3>
-            <p className="product-page__description">{card.description}</p>
+            {/* <h3 className="product-page__subtitle">Описание</h3>
+            <p className="product-page__description">{card.description}</p> */}
+            {productDescription.map((item, index) => (
+              <Accordion
+                isProductPage={true}
+                title={item.title}
+                text={item.text}
+                id={item.id}
+                key={index}
+              />
+            ))}
           </div>
         </div>
       </section>

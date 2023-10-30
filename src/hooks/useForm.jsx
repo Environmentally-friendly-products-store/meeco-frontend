@@ -6,7 +6,11 @@ import {
   REGEX_PHONE,
 } from '../utils/regEx.js';
 
-function useForm(inputValues = {}, formClass = '.popup__form') {
+function useForm(
+  inputValues = {},
+  useRegexp = true,
+  formClass = '.popup__form'
+) {
   const [values, setValues] = React.useState(inputValues);
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
@@ -29,6 +33,11 @@ function useForm(inputValues = {}, formClass = '.popup__form') {
       validationError:
         'Пароль должен содержать латинские заглавные и строчные буквы, цифры',
     },
+    newPassword: {
+      regExp: REGEX_PASSWORD,
+      validationError:
+        'Пароль должен содержать латинские заглавные и строчные буквы, цифры',
+    },
     contact_phone_number: {
       regExp: REGEX_PHONE,
       validationError: 'Некорректный номер',
@@ -39,8 +48,8 @@ function useForm(inputValues = {}, formClass = '.popup__form') {
     if (!values.repeatedPassword) {
       return true;
     }
-    const { password, repeatedPassword } = values;
-    return password === repeatedPassword;
+    const { password, newPassword, repeatedPassword } = values;
+    return password === repeatedPassword || newPassword === repeatedPassword;
   };
 
   const checkValidation = (name, value) => {
@@ -68,7 +77,7 @@ function useForm(inputValues = {}, formClass = '.popup__form') {
     }).every((err) => err.length === 0);
     setIsValid(matchPasswords && isFormValid && noErrors);
 
-    if (!event.target.validationMessage) {
+    if (!event.target.validationMessage && useRegexp) {
       checkValidation(name, value);
     }
   };

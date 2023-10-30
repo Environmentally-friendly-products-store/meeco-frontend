@@ -3,14 +3,24 @@
   max-width: 780px;
 }
 
-.privacy-policy ol {
+.privacy-policy__main-list,
+.privacy-policy__items,
+.privacy-policy__inserted-unordered-items,
+.privacy-policy__inserted-ordered-items {
   list-style: none;
   counter-reset: li;
+  padding: 0;
 }
 
-.privacy-policy li:before {
+.privacy-policy__main-item:before,
+.privacy-policy__item:before,
+.privacy-policy__inserted-ordered-item:before {
   counter-increment: li;
   content: counters(li, '.') '. ';
+}
+
+.privacy-policy__inserted-unordered-item:before {
+  content: '— ';
 }
 
 .privacy-policy__main-list {
@@ -22,7 +32,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 }
 
 .privacy-policy__items {
@@ -33,5 +43,5 @@
 .privacy-policy__item {
   font-size: 10px;
   font-weight: 400;
-  line-height: 2;
+  line-height: 1.4;
 }
