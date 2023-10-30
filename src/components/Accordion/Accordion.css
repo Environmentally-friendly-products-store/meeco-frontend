@@ -24,7 +24,7 @@
 .accordion__items_type_product-page {
   padding: 0 0 28px 0;
   row-gap: 0px;
-  border-top: 0;
+  border-top: none;
 }
 
 .accordion__items_active {
@@ -60,7 +60,7 @@
 
 .accordion__item_type_product-page {
   padding-bottom: 8px;
-  border-bottom: 1px solid #cbcbcb;
+  border-bottom: 1px solid #e9d7c1;
 }
 
 .accordion__item-title {

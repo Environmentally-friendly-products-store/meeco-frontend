@@ -7,7 +7,12 @@
   background-color: #a49e4a;
 }
 
+.search-form_active {
+  background-color: #726e38;
+}
+
 .search-form__input-field {
+  position: relative;
   background-color: #fff;
   box-sizing: border-box;
   border: 2px solid #a49e4a;
@@ -15,6 +20,10 @@
   max-width: 400px;
   height: 100%;
   width: 100%;
+}
+
+.search-form__input-field_active {
+  border: 2px solid #726e38;
 }
 
 .search-form__input {
@@ -26,7 +35,7 @@
   max-height: 24px;
   border: none;
   outline: none;
-  color: #a5a38f;
+  color: #21211b;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -45,6 +54,10 @@
   border-bottom-right-radius: 16px;
 }
 
+.search-form__button-field_active {
+  background-color: #726e38;
+}
+
 .search-form__button {
   padding: 0;
   border: none;
@@ -54,4 +67,15 @@
   background-size: contain;
   min-width: 24px;
   min-height: 24px;
+}
+
+.search-form__button_type_close {
+  position: absolute;
+  top: 14px;
+  right: 11px;
+  min-width: 14px;
+  min-height: 14px;
+  background-image: url('../../images/close-button_theme_pale.svg');
+  background-color: transparent;
+  background-size: cover;
 }

@@ -9,7 +9,7 @@ import './Header.css';
 
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 
-function Header() {
+function Header({ onSearch }) {
   const { isCatalogButtonClicked, setIsCatalogButtonClicked } = useContext(
     IsCatalogButtonClickedContext
   );
@@ -30,7 +30,7 @@ function Header() {
           ></img>
           <span className="header__text">Каталог</span>
         </Link>
-        <SearchForm />
+        <SearchForm onSearch={onSearch} />
       </div>
       <Navigation />
     </header>

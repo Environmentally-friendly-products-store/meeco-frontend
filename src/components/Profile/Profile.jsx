@@ -169,15 +169,25 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
             )}
           </div>
           <span className="profile__error">{errorsState.address}</span>
-          <button
-            type="submit"
-            className={`profile__button profile__button_type_submit ${
-              !inputsActive ? 'profile__button_inactive' : ''
-            }`}
-            disabled={!isFormValid}
-          >
-            Сохранить изменения
-          </button>
+          <div className="profile__buttons">
+            <button
+              type="button"
+              className={`profile__button profile__button_type_exit ${
+                !inputsActive ? 'profile__button_inactive' : ''
+              }`}
+            >
+              Отменить
+            </button>
+            <button
+              type="submit"
+              className={`profile__button profile__button_type_submit ${
+                !inputsActive ? 'profile__button_inactive' : ''
+              }`}
+              disabled={!isFormValid}
+            >
+              Сохранить
+            </button>
+          </div>
         </form>
         <div className="profile__registration-data">
           <div className="profile__registration-content">
