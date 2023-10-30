@@ -1,7 +1,14 @@
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+}
+
 .empty-cart__text {
   color: #21211b;
   text-align: center;
-  margin: 0 auto 40px;
+  margin: 0 auto;
   font-family: Didact-Gothic, Arial, sans-serif;
   font-size: 24px;
   font-style: normal;
@@ -9,19 +16,11 @@
   line-height: 1.67;
 }
 
-.empty-cart__button {
-  color: #fbfaeb;
-  display: flex;
-  width: 199px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  background: #a49e4a;
-  text-decoration: none;
-  box-sizing: border-box;
-  padding: 12px 16px;
+.empty-cart__text_small {
+  margin: 0 auto;
   font-family: Mulish, Arial, sans-serif;
   font-size: 16px;
+  padding: 12px 0 0 0;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;

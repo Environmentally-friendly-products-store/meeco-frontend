@@ -3,9 +3,23 @@ import { NavLink } from 'react-router-dom';
 
 import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
+import { useContext, useMemo } from 'react';
+import { FavouritesContext } from '../../contexts/FavouritesContext';
 
 function ShoppingCartItem({ data, onAmountChange, onDeleteFromShoppingCart }) {
   const { amount, total_price, product } = data;
+  const { onToggleFavourites, isProductInFavourites } =
+    useContext(FavouritesContext);
+  const onLikeButtonClick = () => {
+    onToggleFavourites(product.id);
+  };
+  const additionalLikeButtonStyle = useMemo(
+    () =>
+      isProductInFavourites(product.id)
+        ? 'shopping-card__like-button_liked'
+        : '',
+    [isProductInFavourites, product.id]
+  );
 
   return (
     <li className="shopping-cart__product">
@@ -26,9 +40,17 @@ function ShoppingCartItem({ data, onAmountChange, onDeleteFromShoppingCart }) {
       <p className="shopping-cart__product-item shopping-cart__product-name">
         {product.name}
       </p>
-
+      <button
+        type="button"
+        className={`shopping-card__like-button ${additionalLikeButtonStyle}`}
+        onClick={onLikeButtonClick}
+      ></button>
+      <button
+        className="shopping-cart__delete-button"
+        onClick={() => onDeleteFromShoppingCart(product.id)}
+      ></button>
       <p className="shopping-cart__product-item shopping-card__product-price shopping-cart__product-item_style_unit">
-        {`${stylizePrice(product.price_per_unit)} ₽`}
+        {`${stylizePrice(product.price_per_unit)} ₽ / шт`}
       </p>
 
       <div className="shopping-card__product-quantity-switch">
@@ -51,11 +73,6 @@ function ShoppingCartItem({ data, onAmountChange, onDeleteFromShoppingCart }) {
       <p className="shopping-cart__product-item shopping-card__product-price shopping-card__product-price_style_sum">
         {`${stylizePrice(total_price)} ₽`}
       </p>
-
-      <button
-        className="shopping-cart__delete-button"
-        onClick={() => onDeleteFromShoppingCart(product.id)}
-      ></button>
     </li>
   );
 }

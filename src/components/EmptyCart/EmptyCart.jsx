@@ -1,18 +1,16 @@
 import './EmptyCart.css';
-import { NavLink } from 'react-router-dom';
+import ToCatalogButton from '../ToCatalogButton/ToCatalogButton';
 
 function EmptyCart() {
   return (
     <div className="empty-cart">
-      <p className="empty-cart__text">
-        Пока корзина пуста, наполним ее экологичными товарами
-      </p>
-      <NavLink
-        className="empty-cart__text empty-cart__button selectable-link"
-        to="/catalog"
-      >
-        Перейти в каталог
-      </NavLink>
+      <h2 className="empty-cart__text">
+        Вы можете добавить в корзину нужные товары
+      </h2>
+      <h3 className="empty-cart__text empty-cart__text_small">
+        Чтобы их найти, загляните в раздел с акциями или каталог
+      </h3>
+      <ToCatalogButton />
     </div>
   );
 }
