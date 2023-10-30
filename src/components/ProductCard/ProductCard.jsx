@@ -73,9 +73,7 @@ function ProductCard({ id, price, image, name, brand }) {
        product-card__switch-button_minus"
             onClick={() => onAmountChange(id, false)}
           ></button>
-          <p className="shopping-cart__product-item shopping-card__product-quantity-switch-counter">
-            {amountInCart}
-          </p>
+          <p className="product-card__switch-counter">{amountInCart}</p>
           <button
             className="product-card__switch-button
        product-card__switch-button_plus"
