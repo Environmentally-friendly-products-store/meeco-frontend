@@ -204,10 +204,12 @@
 
 .product-card__switch-button_minus {
   background: url('../../images/minus-icon.svg') 50% / 100% no-repeat;
+  transition: background 0.6s;
 }
 
 .product-card__switch-button_plus {
   background: url('../../images/plus-icon.svg') 50% / 100% no-repeat;
+  transition: background 0.6s;
 }
 
 .product-card__switch-button_minus:hover {
