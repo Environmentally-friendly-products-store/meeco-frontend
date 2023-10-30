@@ -136,9 +136,7 @@ export default function App() {
     favourites: [],
   });
 
-  const [ordersContext, setOrderContext] = useState({
-    orders: [],
-  });
+  const [ordersContext, setOrderContext] = useState([]);
 
   const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
 
@@ -309,13 +307,13 @@ export default function App() {
         .catch((e) => {
           console.error(e.error);
         })
-        .then(setOrderContext)
-        .then(setOrderDetails)
+        .then((orderDetails) => {
+          setOrderDetails(orderDetails);
+          setOrderContext((prevState) => [...prevState, orderDetails]);
+        })
         .finally(() => {
           navigate.current('/thanksfororder', { replace: true });
         });
-      setOrderDetails();
-      navigate.current('/thanksfororder', { replace: true });
     },
     [token]
   );
