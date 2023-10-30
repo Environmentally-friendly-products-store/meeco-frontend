@@ -1,14 +1,212 @@
-.profile__text {
+.profile__row {
+  margin-top: 37px;
+  display: flex;
+  gap: 20px;
+}
+
+.profile__subtitle {
   margin: 0;
-  padding-top: 30px;
-  font-size: 16px;
+  font-family: Didact-Gothic;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  color: #21211b;
+}
+
+.profile__button_type_edit {
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Mulish';
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
+  text-decoration: underline;
+  color: #d8a566;
+  background-color: transparent;
+  border: none;
 }
 
-.profile__button {
-  margin-top: 30px;
+.profile__data-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 148px;
+}
+
+.profile__form {
+  margin-top: 20px;
+  display: flex;
+  width: 432px;
+  flex-direction: column;
+}
+
+.profile__field {
+  display: flex;
+  gap: 32px;
+}
+
+.profile__label {
+  min-width: 84px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #a5a38f;
+}
+
+.profile__input {
+  width: 100%;
+  border: none;
+  padding: 0;
+  font-family: 'Mulish';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  background-color: transparent;
+  color: #403f32;
+}
+
+.profile__user-data {
+  margin: 0;
+  color: #403f32;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.profile__input_type_adress {
+  height: 57px;
+  resize: none;
+}
+
+.profile__user-data_type_address {
+  height: 57px;
+}
+
+.profile__input_active {
+  padding: 4px 8px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid #e9d7c1;
+}
+
+.profile__input_active:focus {
+  outline: none;
+}
+
+.profile__input_type_adress-active {
+  padding: 12px 18px;
+  min-height: 72px;
+}
+
+.profile__error {
+  margin-left: 116px;
+  min-height: 20px;
+  color: rgba(183, 65, 40, 1);
+  font-weight: 400;
+  line-height: 0.9;
+  font-size: 10px;
+  font-style: normal;
+}
+
+.profile__button_type_submit {
+  cursor: pointer;
+  padding: 8px 20px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+  font-family: 'Mulish';
+  color: #fbfaeb;
+  background: #a49e4a;
+  border: none;
+  border-radius: 12px;
+  max-width: 268px;
+  transition: all 0.5s ease;
+}
+
+.profile__buttom_type_submit:hover {
+  border: 1px solid rgba(114, 110, 56, 1);
+  background-color: rgba(114, 110, 56, 1);
+  color: rgba(251, 250, 235, 1);
+}
+
+.profile__button_type_submit:disabled {
+  cursor: inherit;
+  border: 1px solid rgba(205, 205, 198, 1);
+  background-color: rgba(250, 250, 250, 1);
+  color: rgba(205, 205, 198, 1);
+}
+
+.profile__registration-data {
+  margin-top: -30px;
+  padding: 25px 20px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  border: 1px solid #e9d7c1;
+  width: 316px;
+}
+
+.profile__registration-content {
+  width: 208px;
+  margin: 0 auto;
+}
+
+.profile___registration-subtitle {
+  text-align: center;
+  margin: 0;
+  margin-bottom: 16px;
+  font-family: Didact-Gothic;
+  color: #21211b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.profile__text {
+  margin: 0;
+  color: #a5a38f;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.profile__text:first-of-type {
+  margin-bottom: 5px;
+}
+
+.profile__span {
+  color: #403f32;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin-left: 20px;
+}
+
+.profile__button_type_password {
+  cursor: pointer;
+  margin-left: 20px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-family: 'Mulish';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  text-decoration: underline;
+  color: #a49e4a;
+}
+
+.profile__button_type_logout {
+  cursor: pointer;
+  margin-top: 20px;
   border: 1px solid #b74128;
   background-color: transparent;
   border-radius: 12px;
@@ -22,7 +220,28 @@
   transition: all 0.5s ease;
 }
 
-.profile__button:hover {
+.profile__button_type_logout:hover {
   border: 1px solid #c64126;
   color: #c64126;
+}
+
+.profile__button_inactive {
+  display: none;
+}
+
+.profile__orders-content {
+  margin-top: 18px;
+}
+
+.profile__orders-content_inputs {
+  margin-top: 35px;
+}
+
+.profile__info {
+  padding-top: 40px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #a5a38f;
 }

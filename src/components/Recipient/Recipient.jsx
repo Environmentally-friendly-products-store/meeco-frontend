@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import {
   handleInputPhoneChange,
-  ResetPhoneInput,
+  resetPhoneInput,
 } from '../../hooks/usePhoneMask';
 
 function Recipient() {
@@ -14,8 +14,8 @@ function Recipient() {
   const { onCreateOrder } = useContext(ShoppingCartContext);
   const { values, errors, isValid, handleChange } = useForm(
     {
-      address: '',
-      contact_phone_number: '',
+      address: currentUser.delivery_address,
+      contact_phone_number: currentUser.phone,
       comment: '',
     },
     true,
@@ -92,8 +92,9 @@ function Recipient() {
                 minLength="11"
                 className={getInputClassName(errors.contact_phone_number)}
                 onInput={handleInputPhoneChange}
-                onKeyDown={ResetPhoneInput}
+                onKeyDown={resetPhoneInput}
                 onChange={handleChange}
+                value={values.contact_phone_number || ''}
               />
               <label className={getLabelClassName(errors.contact_phone_number)}>
                 Телефон *

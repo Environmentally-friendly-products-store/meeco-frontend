@@ -5,7 +5,7 @@ import encodeObjToQuery from './functions/encodeObjToQuery';
 // отправляет запрос на сервер по baseUrl
 const makeRequest = createMakeRequest(baseUrl);
 
-const getResults = (response) => response.results;
+export const getResults = (response) => response.results;
 
 const getData = (response) => response.data;
 
