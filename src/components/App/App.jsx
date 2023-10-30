@@ -22,9 +22,9 @@ import Contacts from '../Contacts/Contacts';
 import {
   authorize,
   changeUserDataById,
+  changeUserPassword,
   getUserProfile,
   register,
-  changeUserPassword,
 } from '../../utils/userApi.js';
 import {
   getLocalStorageToken,
@@ -425,6 +425,7 @@ export default function App() {
         onDecreaseProductInShoppingCart,
         onDeleteProductFromShoppingCart,
         onCreateOrder,
+        findProductInShoppingCart,
       }}
     >
       <FavouritesContext.Provider
