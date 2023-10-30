@@ -8,11 +8,19 @@ import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
 
-function ProductCard({ price, image, name, brand, id }) {
-  const { onIncreaseProductInShoppingCart } = useContext(ShoppingCartContext);
+function ProductCard({ id, price, image, name, brand }) {
+  const {
+    onIncreaseProductInShoppingCart,
+    onDecreaseProductInShoppingCart,
+    findProductInShoppingCart,
+  } = useContext(ShoppingCartContext);
   const { onToggleFavourites, isProductInFavourites } =
     useContext(FavouritesContext);
 
+  const amountInCart = useMemo(
+    () => findProductInShoppingCart(id)?.amount,
+    [findProductInShoppingCart, id]
+  );
   const onLikeButtonClick = () => {
     onToggleFavourites(id);
   };
@@ -23,6 +31,14 @@ function ProductCard({ price, image, name, brand, id }) {
 
   const onAddToShoppingCart = () => {
     onIncreaseProductInShoppingCart(id);
+  };
+
+  const onAmountChange = (productId, isIncrease) => {
+    if (isIncrease) {
+      onIncreaseProductInShoppingCart(productId);
+    } else {
+      onDecreaseProductInShoppingCart(productId);
+    }
   };
 
   return (
@@ -47,18 +63,34 @@ function ProductCard({ price, image, name, brand, id }) {
       <p className="product-card__product-item product-card__product-name">
         {name}
       </p>
-
       <p className="product-card__product-item product-card__product-price">
         {`${stylizePrice(price)} ₽`}
       </p>
-
-      <button
-        type="button"
-        className="product-card__product-item  product-card__add-to-cart-button"
-        onClick={onAddToShoppingCart}
-      >
-        В корзину
-      </button>
+      {amountInCart ? (
+        <div className="product-card__switch">
+          <button
+            className="product-card__switch-button
+       product-card__switch-button_minus"
+            onClick={() => onAmountChange(id, false)}
+          ></button>
+          <p className="shopping-cart__product-item shopping-card__product-quantity-switch-counter">
+            {amountInCart}
+          </p>
+          <button
+            className="product-card__switch-button
+       product-card__switch-button_plus"
+            onClick={() => onAmountChange(id, true)}
+          ></button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          className="product-card__product-item  product-card__add-to-cart-button"
+          onClick={onAddToShoppingCart}
+        >
+          В корзину
+        </button>
+      )}
     </article>
   );
 }
