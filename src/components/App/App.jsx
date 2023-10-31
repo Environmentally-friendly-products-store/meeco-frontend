@@ -51,6 +51,7 @@ import {
   getPopularProducts,
   mergeSessionCart,
   getProductsBySearch,
+  getProducts,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
@@ -166,6 +167,15 @@ export default function App() {
     useState(chosenFiltersOnPanel);
 
   const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const [initialMinAndMaxPrice, setInitialMinAndMaxPrice] = useState([]);
+
+  const getInitialMinAndMaxPrices = async () => {
+    const response = await getProducts({ page: 1, limit: 99999 });
+    const allProducts = response.results;
+    const minAndMaxPrices = getMinAndMaxPricesFromPricesArray(allProducts);
+    setInitialMinAndMaxPrice(minAndMaxPrices);
+  };
 
   const [minAndMaxPrices, setMinAndMaxPrices] = useState([0, 10000]);
 
@@ -429,6 +439,10 @@ export default function App() {
     },
     [token]
   );
+
+  useEffect(() => {
+    getInitialMinAndMaxPrices();
+  }, []);
 
   useEffect(() => {
     setToken(getLocalStorageToken());
@@ -722,6 +736,7 @@ export default function App() {
                   filteredProducts={filteredProducts}
                   minAndMaxPrices={minAndMaxPrices}
                   getMinAndMaxPrices={getMinAndMaxPrices}
+                  initialMinAndMaxPrice={initialMinAndMaxPrice}
                 />
               </div>
             </OrdersContext.Provider>

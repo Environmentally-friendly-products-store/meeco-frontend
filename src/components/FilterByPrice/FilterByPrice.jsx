@@ -6,6 +6,7 @@ function FilterByPrice({
   minPrice,
   maxPrice,
   parentkeyRu,
+  initialMinAndMaxPrice,
 }) {
   const onPriceChange = (newPriceValues) => {
     setPriceValues(newPriceValues);
@@ -65,8 +66,8 @@ function FilterByPrice({
         </div>
 
         <ReactSlider
-          min={minPrice === Infinity ? 0 : minPrice}
-          max={maxPrice === -Infinity ? 10000 : maxPrice}
+          min={initialMinAndMaxPrice[0]}
+          max={initialMinAndMaxPrice[1]}
           value={[priceValues.min_price, priceValues.max_price]}
           onChange={(values) =>
             onPriceChange({ min_price: values[0], max_price: values[1] })
