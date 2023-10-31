@@ -1,0 +1,11 @@
+.category__title {
+  margin: 0;
+}
+
+.category__list {
+  display: flex;
+  column-gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

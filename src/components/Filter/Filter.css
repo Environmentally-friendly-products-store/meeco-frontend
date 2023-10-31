@@ -1,11 +1,8 @@
-.filter__title {
-  margin: 0;
-}
-
-.filter__list {
+.filter__filter-list {
   display: flex;
-  column-gap: 38px;
+  flex-direction: column;
+  align-items: start;
+  row-gap: 20px;
   margin: 0;
   padding: 0;
-  list-style: none;
 }

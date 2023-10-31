@@ -71,7 +71,7 @@
 .profile__details_clicked {
   transition: all 1s ease;
   padding: 0 0 8px;
-  max-height: 250px;
+  max-height: 1000px;
 }
 
 .profile__image_type_chevron {

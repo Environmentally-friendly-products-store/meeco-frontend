@@ -19,6 +19,8 @@ import ThanksForOrder from '../ThanksForOrder/ThanksForOrder';
 import Profile from '../Profile/Profile';
 import Contacts from '../Contacts/Contacts';
 
+import { FILTERS_TO_GET_All_PRODUCTS } from '../../utils/constants';
+import { getMinAndMaxPricesFromPricesArray } from '../../utils/functions/getMinAndMaxPricesFromPricesArray';
 import {
   authorize,
   changeUserDataById,
@@ -48,17 +50,19 @@ import {
   getNovelties,
   getPopularProducts,
   mergeSessionCart,
+  getProductsBySearch,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
-import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import { trackAddToCart } from '../../utils/yandexCounter';
 import Favourites from '../Favorites/Favorites';
 import { FavouritesContext } from '../../contexts/FavouritesContext';
+import PopupWithFilters from '../PopupWithFilters/PopupWithFilters';
 import { createOrder, getOrders } from '../../utils/ordersApi';
 import PasswordChanger from '../PasswordChanger/PasswordChanger';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 import { OrdersContext } from '../../contexts/OrdersContext';
+import SearchCardSection from '../SearchCardSection/SearchCardSection';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -76,6 +80,7 @@ export default function App() {
     setIsLoginPopupOpen(false);
     setIsRegistrationPopupOpen(false);
     setIsConfirmPopupOpen(false);
+    setIsFiltersPopupOpen(false);
     setIsPasswordPopupOpen(false);
     setIsInfoPopupOpen(false);
   };
@@ -89,13 +94,22 @@ export default function App() {
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
+
+  const [isFiltersPopupOpen, setIsFiltersPopupOpen] = useState(false);
+  const onFiltersPopupOpen = () => {
+    setIsFiltersPopupOpen(!isFiltersPopupOpen);
+  };
   const [isPasswordPopupOpen, setIsPasswordPopupOpen] = useState(false);
   const handlePasswordPopup = () =>
     setIsPasswordPopupOpen(!isPasswordPopupOpen);
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchList, setSearchList] = useState([]);
 
+  // Переделать функцию позже
   const handleCardClick = useCallback(
     (id) => {
       setSelectedCard({});
@@ -138,14 +152,112 @@ export default function App() {
 
   const [ordersContext, setOrderContext] = useState([]);
 
-  const [isCatalogButtonClicked, setIsCatalogButtonClicked] = useState(false);
-
   const [activeNavPanelItem, setActiveNavPanelItem] = useState(null);
+
+  const [requestParams, setRequestParams] = useState(
+    FILTERS_TO_GET_All_PRODUCTS
+  );
+
+  const [activeCategoryItems, setActiveCategoryItems] = useState([]);
+
+  const [chosenFiltersOnPanel, setChosenFiltersOnPanel] = useState([]);
+
+  const [temporaryFiltersToSetToPanel, setTemporaryFiltersToSetToPanel] =
+    useState(chosenFiltersOnPanel);
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const [minAndMaxPrices, setMinAndMaxPrices] = useState([0, 10000]);
+
+  const [temporaryRequestParams, setTemporaryRequestParams] =
+    useState(requestParams);
+
+  const getMinAndMaxPrices = () => {
+    setMinAndMaxPrices(getMinAndMaxPricesFromPricesArray(filteredProducts));
+  };
+
+  const updateFilteredProducts = (newFilteredProducts) => {
+    setFilteredProducts(newFilteredProducts);
+  };
+
+  const changeRequestParams = (newParams) => {
+    setRequestParams(newParams);
+  };
+
+  const setNewFiltersToPanel = (newFilters) => {
+    setChosenFiltersOnPanel(newFilters);
+  };
+
+  const setNewTemporaryRequestParams = (newParams) => {
+    setTemporaryRequestParams(newParams);
+  };
+
+  const setNewTemporaryFiltersToSetToPanel = (newFilters) => {
+    setTemporaryFiltersToSetToPanel(newFilters);
+  };
+
+  const resetFilters = () => {
+    changeRequestParams(FILTERS_TO_GET_All_PRODUCTS);
+    setNewTemporaryRequestParams(FILTERS_TO_GET_All_PRODUCTS);
+    setNewFiltersToPanel([]);
+    setNewTemporaryFiltersToSetToPanel([]);
+    setActiveCategoryItems([]);
+  };
+
+  const deleteFilterFromPanel = (filterToRemove, parentkeyEn) => {
+    const requestParamsCopy = { ...requestParams };
+    const newValues = requestParamsCopy[parentkeyEn].filter(
+      (item) => item !== filterToRemove.slug
+    );
+    requestParamsCopy[parentkeyEn] = newValues;
+    changeRequestParams({ ...requestParams, ...requestParamsCopy });
+    setNewTemporaryRequestParams({ ...requestParams, ...requestParamsCopy });
+    setChosenFiltersOnPanel(
+      chosenFiltersOnPanel.filter(
+        (filter) => filter.slug !== filterToRemove.slug
+      )
+    );
+    setNewTemporaryFiltersToSetToPanel(
+      chosenFiltersOnPanel.filter(
+        (filter) => filter.slug !== filterToRemove.slug
+      )
+    );
+  };
+
+  const deletePriceFromPanel = (parentkeyRu, sortingType) => {
+    const requestParamsCopy = {};
+    let newLocalFiltersToSetToPanel;
+
+    if (!sortingType) {
+      for (let [key, value] of Object.entries(requestParams)) {
+        if (key !== 'min_price' && key !== 'max_price') {
+          requestParamsCopy[key] = value;
+        }
+      }
+      newLocalFiltersToSetToPanel = chosenFiltersOnPanel.filter(
+        (filter) => !filter.hasOwnProperty('max_price')
+      );
+    } else {
+      for (let [key, value] of Object.entries(requestParams)) {
+        if (key !== 'ordering' && value !== sortingType) {
+          requestParamsCopy[key] = value;
+        }
+      }
+      newLocalFiltersToSetToPanel = chosenFiltersOnPanel.filter(
+        (filter) => !filter.hasOwnProperty('sortingType')
+      );
+    }
+
+    changeRequestParams(requestParamsCopy);
+    setNewTemporaryRequestParams(requestParamsCopy);
+    setChosenFiltersOnPanel(newLocalFiltersToSetToPanel);
+    setNewTemporaryFiltersToSetToPanel(newLocalFiltersToSetToPanel);
+  };
 
   const appointActiveNavPanelItem = (item) => {
     setActiveNavPanelItem(item);
   };
-
+  /*  */
   const setShoppingCart = (shoppingCart) => {
     const totalPrice = shoppingCart.reduce(
       (acc, product) => acc + product.total_price,
@@ -338,8 +450,6 @@ export default function App() {
     setLocalStorageToken(token);
     setToken(token);
     setIsLoggedIn(true);
-    // sendShoppingCardToUser(token);
-    // getShoppingCartNotAuth(token);
   };
 
   //Авторизация пользователя
@@ -415,6 +525,25 @@ export default function App() {
       .catch((err) => console.log(err));
   };
 
+  const searchProducts = (value) => {
+    getProductsBySearch(value)
+      .then((products) => {
+        setSearchValue(value);
+        setSearchedProducts(products);
+        setSearchList([]);
+        navigate.current('/search', { replace: true });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getSearchList = (value) => {
+    getProductsBySearch(value)
+      .then((products) => {
+        setSearchList(products.slice(0, 4));
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -436,121 +565,165 @@ export default function App() {
         <ProductsContext.Provider value={productsContext}>
           <CurrentUserContext.Provider value={currentUser}>
             <OrdersContext.Provider value={ordersContext}>
-              <IsCatalogButtonClickedContext.Provider
-                value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
-              >
-                <div className="app">
-                  <Header />
-                  <main className="main">
-                    <Routes>
-                      <Route path="/" element={<Main />} />
-                      <Route path="/catalog" element={<Catalog />} />
-                      <Route
-                        path="/product/:id"
-                        element={
-                          <MainProductPage
-                            card={selectedCard}
-                            onButtonAddClick={addProduct}
-                            onButtonDeleteClick={deleteProduct}
-                            onButtonChangeClick={changeProductQuantity}
-                            onCardClick={handleCardClick}
-                            token={token}
-                          />
-                        }
-                      />
-                      <Route path="/shopping-cart" element={<ShoppingCart />} />
-                      <Route
-                        path="/delivery"
-                        element={
-                          <Delivery
-                            activeNavPanelItem={activeNavPanelItem}
-                            appointActiveNavPanelItem={
-                              appointActiveNavPanelItem
-                            }
-                          />
-                        }
-                      />
-                      <Route path="/about-us" element={<AboutUs />} />
-                      <Route
-                        path="/order"
-                        element={<ProtectedRouteElement element={Order} />}
-                      />
-                      <Route
-                        path="/thanksfororder"
-                        element={
-                          <ProtectedRouteElement element={ThanksForOrder} />
-                        }
-                      />{' '}
-                      <Route
-                        path="/profile"
-                        element={
-                          <ProtectedRouteElement
-                            element={Profile}
-                            onButtonClick={handleConfirmPopup}
-                            onOpenPasswordPopup={handlePasswordPopup}
-                            handleSubmit={changeUserData}
-                          />
-                        }
-                      />
-                      <Route
-                        path="/contacts"
-                        element={
-                          <Contacts
-                            activeNavPanelItem={activeNavPanelItem}
-                            appointActiveNavPanelItem={
-                              appointActiveNavPanelItem
-                            }
-                          />
-                        }
-                      />
-                      <Route
-                        path="/favourites"
-                        element={<ProtectedRouteElement element={Favourites} />}
-                      />
-                      <Route
-                        path="/privacy-policy"
-                        element={<PrivacyPolicy />}
-                      />
-                      <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                    <TopScrollBtn />
-                  </main>
-                  <Footer
-                    appointActiveNavPanelItem={appointActiveNavPanelItem}
-                  />
-                  <Registration
-                    isPopupOpen={isRegistrationPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                    handleTogglePopup={handleLoginPopup}
-                    registerUser={registerUser}
-                  />
-                  <Login
-                    isPopupOpen={isLoginPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                    handleTogglePopup={handleRegistrationPopupOpen}
-                    loginUser={loginUser}
-                  />
-                  <ConfirmPopup
-                    isPopupOpen={isConfirmPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                    onSubmit={logOut}
-                  />
-                  <PasswordChanger
-                    isPopupOpen={isPasswordPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                    onSubmit={changePassword}
-                  />
-                  <PopupWithInfo
-                    isPopupOpen={isInfoPopupOpen}
-                    onClosePopup={handleClosePopup}
-                    onCloseByOverlay={closePopupByOverlay}
-                  />
-                </div>
-              </IsCatalogButtonClickedContext.Provider>
+              <div className="app">
+                <Header
+                  resetFilters={resetFilters}
+                  onSearch={searchProducts}
+                  onChange={getSearchList}
+                  searchList={searchList}
+                />
+                <main className="main">
+                  <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route
+                      path="/catalog"
+                      element={
+                        <Catalog
+                          filteredProducts={filteredProducts}
+                          updateFilteredProducts={updateFilteredProducts}
+                          activeCategoryItems={activeCategoryItems}
+                          setActiveCategoryItems={setActiveCategoryItems}
+                          requestParams={requestParams}
+                          changeRequestParams={changeRequestParams}
+                          chosenFiltersOnPanel={chosenFiltersOnPanel}
+                          setNewFiltersToPanel={setNewFiltersToPanel}
+                          deleteFilterFromPanel={deleteFilterFromPanel}
+                          deletePriceFromPanel={deletePriceFromPanel}
+                          setNewTemporaryRequestParams={
+                            setNewTemporaryRequestParams
+                          }
+                          setNewTemporaryFiltersToSetToPanel={
+                            setNewTemporaryFiltersToSetToPanel
+                          }
+                          resetFilters={resetFilters}
+                          onFiltersPopupOpen={onFiltersPopupOpen}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/product/:id"
+                      element={
+                        <MainProductPage
+                          card={selectedCard}
+                          onButtonAddClick={addProduct}
+                          onButtonDeleteClick={deleteProduct}
+                          onButtonChangeClick={changeProductQuantity}
+                          onCardClick={handleCardClick}
+                          token={token}
+                        />
+                      }
+                    />
+                    <Route path="/shopping-cart" element={<ShoppingCart />} />
+                    <Route
+                      path="/delivery"
+                      element={
+                        <Delivery
+                          activeNavPanelItem={activeNavPanelItem}
+                          appointActiveNavPanelItem={appointActiveNavPanelItem}
+                        />
+                      }
+                    />
+                    <Route path="/about-us" element={<AboutUs />} />
+                    <Route
+                      path="/order"
+                      element={<ProtectedRouteElement element={Order} />}
+                    />
+                    <Route
+                      path="/thanksfororder"
+                      element={
+                        <ProtectedRouteElement element={ThanksForOrder} />
+                      }
+                    />{' '}
+                    <Route
+                      path="/profile"
+                      element={
+                        <ProtectedRouteElement
+                          element={Profile}
+                          onButtonClick={handleConfirmPopup}
+                          onOpenPasswordPopup={handlePasswordPopup}
+                          handleSubmit={changeUserData}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/contacts"
+                      element={
+                        <Contacts
+                          activeNavPanelItem={activeNavPanelItem}
+                          appointActiveNavPanelItem={appointActiveNavPanelItem}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/favourites"
+                      element={<ProtectedRouteElement element={Favourites} />}
+                    />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route
+                      path="/search"
+                      element={
+                        <SearchCardSection
+                          value={searchValue}
+                          products={searchedProducts}
+                        />
+                      }
+                    />
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
+                  <TopScrollBtn />
+                </main>
+                <Footer appointActiveNavPanelItem={appointActiveNavPanelItem} />
+                <Registration
+                  isPopupOpen={isRegistrationPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  handleTogglePopup={handleLoginPopup}
+                  registerUser={registerUser}
+                />
+                <Login
+                  isPopupOpen={isLoginPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  handleTogglePopup={handleRegistrationPopupOpen}
+                  loginUser={loginUser}
+                />
+                <ConfirmPopup
+                  isPopupOpen={isConfirmPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  onSubmit={logOut}
+                />
+                <PasswordChanger
+                  isPopupOpen={isPasswordPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                  onSubmit={changePassword}
+                />
+                <PopupWithInfo
+                  isPopupOpen={isInfoPopupOpen}
+                  onClosePopup={handleClosePopup}
+                  onCloseByOverlay={closePopupByOverlay}
+                />
+                <PopupWithFilters
+                  isPopupOpen={isFiltersPopupOpen}
+                  onClosePopup={onFiltersPopupOpen}
+                  onCloseByOverlay={closePopupByOverlay}
+                  requestParams={requestParams}
+                  changeRequestParams={changeRequestParams}
+                  temporaryRequestParams={temporaryRequestParams}
+                  setNewTemporaryRequestParams={setNewTemporaryRequestParams}
+                  chosenFiltersOnPanel={chosenFiltersOnPanel}
+                  setNewFiltersToPanel={setNewFiltersToPanel}
+                  temporaryFiltersToSetToPanel={temporaryFiltersToSetToPanel}
+                  setNewTemporaryFiltersToSetToPanel={
+                    setNewTemporaryFiltersToSetToPanel
+                  }
+                  resetFilters={resetFilters}
+                  filteredProducts={filteredProducts}
+                  minAndMaxPrices={minAndMaxPrices}
+                  getMinAndMaxPrices={getMinAndMaxPrices}
+                />
+              </div>
             </OrdersContext.Provider>
           </CurrentUserContext.Provider>
         </ProductsContext.Provider>

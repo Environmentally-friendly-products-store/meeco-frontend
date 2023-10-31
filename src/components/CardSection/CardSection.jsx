@@ -3,12 +3,14 @@ import ProductCard from '../ProductCard/ProductCard';
 
 import { sortProducts } from '../../utils/functions/sortProducts';
 
-function CardSection({ products, requiredLength }) {
-  const sortedProducts = sortProducts(products, requiredLength);
+function CardSection({ products, requiredLength = null }) {
+  const productsToRender = !requiredLength
+    ? products
+    : sortProducts(products, requiredLength);
 
   return (
     <article className="card-section">
-      {sortedProducts.map((product) => (
+      {productsToRender.map((product) => (
         <ProductCard
           key={product.id}
           price={product.price_per_unit}

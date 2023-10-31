@@ -4,18 +4,11 @@ import { Link } from 'react-router-dom';
 import SearchForm from '../SearchForm/SearchForm';
 import Navigation from '../Navigation/Navigation.jsx';
 import catalog from '../../images/catalog.svg';
-import { useContext } from 'react';
 import './Header.css';
 
-import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
-
-function Header() {
-  const { isCatalogButtonClicked, setIsCatalogButtonClicked } = useContext(
-    IsCatalogButtonClickedContext
-  );
-
+function Header({ resetFilters, onSearch, onChange, searchList }) {
   const onClick = () => {
-    setIsCatalogButtonClicked(!isCatalogButtonClicked);
+    resetFilters();
   };
 
   return (
@@ -30,7 +23,11 @@ function Header() {
           ></img>
           <span className="header__text">Каталог</span>
         </Link>
-        <SearchForm />
+        <SearchForm
+          onSearch={onSearch}
+          onChange={onChange}
+          searchList={searchList}
+        />
       </div>
       <Navigation />
     </header>

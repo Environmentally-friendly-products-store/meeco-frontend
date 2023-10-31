@@ -1,4 +1,4 @@
-/* .filters-section__reset-button {
+/* .categories-section__reset-button {
   display: flex;
   height: 56px;
   padding: 12px 16px;
@@ -11,22 +11,22 @@
   transition: opacity 0.2s linear;
 }
 
-.filters-section__reset-button:hover {
+.categories-section__reset-button:hover {
   opacity: 0.7;
 }
 
-.filter-range {
+.category-range {
   display: flex;
   column-gap: 20px;
 }
 
-.filter-range__item {
+.category-range__item {
   display: flex;
   column-gap: 16px;
   align-items: center;
 }
 
-.filter-range__label {
+.category-range__label {
   margin: 0;
 }
 

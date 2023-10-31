@@ -1,0 +1,76 @@
+.products-sorting-filters {
+  position: absolute;
+  top: 4px;
+  justify-self: end;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  padding: 0 11px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 16px;
+  border: 1px solid #726e38;
+  background-color: #fff;
+  min-width: 192px;
+  box-sizing: border-box;
+  transition: all 0.2s linear;
+}
+
+.products-sorting-filters_expanded {
+  padding: 11px;
+  row-gap: 8px;
+}
+
+.products-sorting-filters__title-container {
+  min-width: 170px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.products-sorting-filters__title {
+  margin: 0;
+  font-family: 'Mulish';
+  color: #726e38;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.5;
+  padding-left: 4px;
+}
+
+.products-sorting-filters__chevron {
+  background: url('../../images/chevron-products-sorting-filters.svg') 50% /
+    24px 24px no-repeat;
+  border: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.products-sorting-filters__chevron_expanded {
+  transform: rotate(180deg);
+}
+
+.products-sorting-filters__filters {
+  display: none;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.products-sorting-filters__filters_expanded {
+  display: flex;
+}
+
+.products-sorting-filters__filter {
+  border: none;
+  background-color: #fff;
+  text-align: left;
+  padding: 0 9px;
+  color: #21211b;
+  font-family: 'Mulish';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.43;
+  cursor: pointer;
+}
