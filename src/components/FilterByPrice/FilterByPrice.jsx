@@ -16,6 +16,10 @@ function FilterByPrice({
     const name = target.name;
     const value = target.value;
 
+    if (isNaN(+value)) {
+      return;
+    }
+
     setPriceValues({ ...priceValues, [name]: +value });
     onFormValuesChange({ ...priceValues, [name]: +value }, null, parentkeyRu);
   };
@@ -26,6 +30,9 @@ function FilterByPrice({
   });
 
   useEffect(() => {
+    if (minPrice === Infinity || maxPrice === -Infinity) {
+      return;
+    }
     setPriceValues({
       min_price: minPrice,
       max_price: maxPrice,

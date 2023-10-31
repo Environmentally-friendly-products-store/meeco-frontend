@@ -10,6 +10,10 @@
   padding: 40px 40px 100px 40px;
 }
 
+.card-section-with-title_style_catalog {
+  padding: 0;
+}
+
 .card-section-with-title__title {
   font-family: 'Didact-Gothic';
   font-size: 40px;
@@ -17,7 +21,6 @@
   line-height: 1.3;
   letter-spacing: -0.5px;
   margin: 0;
-  /* padding-left: 40px; */
   color: #21211b;
 }
 

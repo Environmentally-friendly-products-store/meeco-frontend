@@ -254,23 +254,6 @@ export default function App() {
     setNewTemporaryFiltersToSetToPanel(newLocalFiltersToSetToPanel);
   };
 
-  /* const deleteSortingByPriceFromPanel = (parentkeyRu, sortingType) => {
-    const requestParamsCopy = {};
-
-    for (let [key, value] of Object.entries(requestParams)) {
-      if (key !== 'ordering' && sortingType !== '+') {
-        requestParamsCopy[key] = value;
-      }
-    }
-    console.log(chosenFiltersOnPanel);
-    changeRequestParams(requestParamsCopy);
-    setChosenFiltersOnPanel(
-      chosenFiltersOnPanel.filter(
-        (filter) => filter.parentkeyRu !== parentkeyRu
-      )
-    );
-  }; */
-
   const appointActiveNavPanelItem = (item) => {
     setActiveNavPanelItem(item);
   };

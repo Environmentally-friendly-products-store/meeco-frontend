@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { getCategoriesList, getProducts } from '../../utils/productsApi';
 
+import CardSectionWithTitle from '../CardSectionWithTitle/CardSectionWithTitle';
 import CardSection from '../CardSection/CardSection';
 import AllFiltersSection from '../AllFiltersSection/AllFiltersSection';
 import CategoriesFilters from '../CategoriesFilters/CategoriesFilters';
@@ -32,6 +33,8 @@ function Catalog({
   resetFilters,
   onFiltersPopupOpen,
 }) {
+  console.log(filteredProducts, chosenFiltersOnPanel);
+
   const [counter, setCounter] = useState(1);
 
   const [productsAmount, setProductsAmount] = useState(0);
@@ -179,7 +182,6 @@ function Catalog({
   return (
     <main className="catalog" onMouseDown={onCloseByOverlayClick}>
       <Breadcrumbs />
-
       <AllFiltersSection>
         <CategoriesFilters
           activeCategoryItems={activeCategoryItems}
@@ -214,12 +216,25 @@ function Catalog({
         />
       </AllFiltersSection>
 
-      <CardSection
-        requiredLength={PAGE_LIMIT * counter}
-        products={filteredProducts}
-      />
-      {counter * PAGE_LIMIT < productsAmount && (
-        <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
+      {filteredProducts.length === 0 && chosenFiltersOnPanel.length > 0 ? (
+        <CardSectionWithTitle
+          title={'По вашему запросу товаров не найдено'}
+          additionalStyles={'card-section-with-title_style_catalog'}
+        >
+          <p className="search__text">
+            Попробуйте отменить некоторые фильтры или сбросить все
+          </p>
+        </CardSectionWithTitle>
+      ) : (
+        <>
+          <CardSection
+            requiredLength={PAGE_LIMIT * counter}
+            products={filteredProducts}
+          />
+          {counter * PAGE_LIMIT < productsAmount && (
+            <ShowMoreButton onShowMoreButtonClick={onShowMoreButtonClick} />
+          )}
+        </>
       )}
     </main>
   );
