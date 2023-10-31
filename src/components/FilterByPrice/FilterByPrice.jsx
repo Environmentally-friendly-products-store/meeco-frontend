@@ -1,4 +1,4 @@
-import { /* useCallback, */ useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactSlider from 'react-slider';
 
 function FilterByPrice({
