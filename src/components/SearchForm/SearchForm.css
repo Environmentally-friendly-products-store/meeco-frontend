@@ -24,6 +24,7 @@
 
 .search-form__wrapper_minor_disactive {
   position: static;
+  width: 458px;
 }
 
 .search-form {
