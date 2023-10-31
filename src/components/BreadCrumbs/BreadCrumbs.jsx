@@ -1,7 +1,11 @@
 import './BreadCrumbs.css';
 import { Link } from 'react-router-dom';
 
-export default function Breadcrumbs({ productName, isNotFoundPage }) {
+export default function Breadcrumbs({
+  productName,
+  isNotFoundPage,
+  isSearchPage,
+}) {
   const breadcrumbClass = (isActive) =>
     isActive
       ? 'breadcrumb breadcrumb-active'
@@ -16,10 +20,10 @@ export default function Breadcrumbs({ productName, isNotFoundPage }) {
       <div className="breadcrumb-arrow"></div>
       {!isNotFoundPage && (
         <Link
-          to="/catalog"
+          to={`${isSearchPage ? '/search' : '/catalog'}`}
           className={`${breadcrumbClass(!productName)} selectable-link`}
         >
-          Каталог
+          {isSearchPage ? 'Результаты поиска' : 'Каталог'}
         </Link>
       )}
       {productName && (

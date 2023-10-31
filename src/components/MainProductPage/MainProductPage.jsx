@@ -10,19 +10,6 @@ import { trackDetails } from '../../utils/yandexCounter';
 import Accordion from '../Accordion/Accordion';
 import LikeButton from '../LikeButton/LikeButton';
 
-const productDescription = [
-  {
-    title: 'Описание',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    id: 'description',
-  },
-  {
-    title: 'Состав',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    id: 'composition',
-  },
-];
-
 function MainProductPage({
   card,
   onButtonAddClick,
@@ -40,7 +27,7 @@ function MainProductPage({
   const { email } = useContext(CurrentUserContext);
   const { shoppingCart } = useContext(ShoppingCartContext);
 
-  const findCardInshoppingCart = useCallback(() => {
+  const findCardInShoppingCart = useCallback(() => {
     for (const item of shoppingCart) {
       if (item.product.id === product.id) {
         setProduct((prev) => {
@@ -74,9 +61,9 @@ function MainProductPage({
     if (card) {
       setProduct({});
       setProduct(card);
-      findCardInshoppingCart();
+      findCardInShoppingCart();
     }
-  }, [card, shoppingCart, findCardInshoppingCart]);
+  }, [card, shoppingCart, findCardInShoppingCart]);
 
   const onChangeCounter = (operator) => {
     if (product.amount - 1 === 0 && operator === '-') {
@@ -171,7 +158,7 @@ function MainProductPage({
             <p className="product-page__brand">
               {product.brand && product.brand.name}
             </p>
-            <h2 className="product-page__name">{product.name}</h2>
+            <h2 className="product-page__name">{product.long_name}</h2>
             <p className="product-page__price">
               {product.price_per_unit}&#160;&#8381;
             </p>
@@ -219,17 +206,18 @@ function MainProductPage({
               </div>
               <LikeButton id={product.id} />
             </div>
-            {/* <h3 className="product-page__subtitle">Описание</h3>
-            <p className="product-page__description">{card.description}</p> */}
-            {productDescription.map((item, index) => (
-              <Accordion
-                isProductPage={true}
-                title={item.title}
-                text={item.text}
-                id={item.id}
-                key={index}
-              />
-            ))}
+            <Accordion
+              isProductPage={true}
+              title={'Описание'}
+              text={product.description}
+              id={'description'}
+            />
+            <Accordion
+              isProductPage={true}
+              title={'Состав'}
+              text={product.structure}
+              id={'structure'}
+            />
           </div>
         </div>
       </section>

@@ -6,7 +6,7 @@ import Navigation from '../Navigation/Navigation.jsx';
 import catalog from '../../images/catalog.svg';
 import './Header.css';
 
-function Header({ resetFilters }) {
+function Header({ resetFilters, onSearch, onChange, searchList }) {
   const onClick = () => {
     resetFilters();
   };
@@ -23,7 +23,11 @@ function Header({ resetFilters }) {
           ></img>
           <span className="header__text">Каталог</span>
         </Link>
-        <SearchForm />
+        <SearchForm
+          onSearch={onSearch}
+          onChange={onChange}
+          searchList={searchList}
+        />
       </div>
       <Navigation />
     </header>

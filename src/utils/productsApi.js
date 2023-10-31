@@ -5,7 +5,7 @@ import encodeObjToQuery from './functions/encodeObjToQuery';
 // отправляет запрос на сервер по baseUrl
 const makeRequest = createMakeRequest(baseUrl);
 
-const getResults = (response) => response.results;
+export const getResults = (response) => response.results;
 
 const getData = (response) => response.data;
 
@@ -158,3 +158,12 @@ export const deleteProductFromCart = (productId, token) =>
  */
 export const mergeSessionCart = (token) =>
   makeRequest(`/cart/`, 'PUT', null, token);
+
+/**
+ * Запрос для поиска товаров по названию
+ */
+
+export const getProductsBySearch = (value, token) => {
+  const data = { search: value };
+  return getProducts(data, token).then(getResults);
+};

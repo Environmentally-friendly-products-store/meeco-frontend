@@ -104,6 +104,7 @@
 
 .shopping-card__product-quantity-switch-minus {
   background: url('../../images/minus-icon.svg') 50% / 100% no-repeat;
+  transition: background 0.6s;
 }
 
 .shopping-card__product-quantity-switch-minus:disabled {
@@ -112,6 +113,15 @@
 
 .shopping-card__product-quantity-switch-plus {
   background: url('../../images/plus-icon.svg') 50% / 100% no-repeat;
+  transition: background 0.6s;
+}
+
+.shopping-card__product-quantity-switch-minus:hover {
+  background: url('../../images/minus-hover.svg') 50% / 100% no-repeat;
+}
+
+.shopping-card__product-quantity-switch-plus:hover {
+  background: url('../../images/plus-hover.svg') 50% / 100% no-repeat;
 }
 
 .shopping-card__product-price {

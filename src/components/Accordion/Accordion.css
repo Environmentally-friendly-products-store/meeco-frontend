@@ -12,7 +12,7 @@
 .accordion__items_type_product-page {
   padding: 0 0 28px 0;
   row-gap: 0px;
-  border-top: 0;
+  border-top: none;
 }
 
 .accordion__items_active {
@@ -33,7 +33,7 @@
 
 .accordion__item-panel_show {
   height: auto;
-  max-height: 100px;
+  max-height: 250px;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(1, 0, 1, 0);
 }
@@ -48,7 +48,7 @@
 
 .accordion__item_type_product-page {
   padding-bottom: 8px;
-  border-bottom: 1px solid #cbcbcb;
+  border-bottom: 1px solid #e9d7c1;
 }
 
 .accordion__item-title {

@@ -41,3 +41,27 @@ export const authorize = (email, password) =>
  */
 export const getUserProfile = (token) =>
   makeRequest('/users/me/', 'GET', null, token);
+
+/**
+ * Изменение данных пользователя
+ */
+export const changeUserDataById = (userId, userData, token) =>
+  makeRequest(
+    `/users/${userId}/`,
+    'PATCH',
+    {
+      first_name: userData.firstName,
+      last_name: userData.lastName,
+      phone: userData.phone,
+      delivery_address: userData.address,
+    },
+    token
+  );
+
+export const changeUserPassword = (newPassword, currentPassword, token) =>
+  makeRequest(
+    '/users/set_password/',
+    'POST',
+    { new_password: newPassword, current_password: currentPassword },
+    token
+  );
