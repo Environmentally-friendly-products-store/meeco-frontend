@@ -1,7 +1,26 @@
 .popular-products {
   display: grid;
   grid-template-columns: repeat(4, auto);
-  gap: 32px;
   justify-content: center;
   margin-bottom: 100px;
+}
+
+.popular-products .slick-slide {
+  display: flex !important;
+  justify-content: center !important;
+  width: 348px !important;
+}
+
+.popular-products .slick-slide > div {
+  width: 100%;
+}
+
+.popular-products .slick-list {
+  max-width: 1390px;
+  margin: 0 auto;
+}
+
+.popular-products .slick-slide > div > div {
+  display: flex !important;
+  justify-content: center !important;
 }

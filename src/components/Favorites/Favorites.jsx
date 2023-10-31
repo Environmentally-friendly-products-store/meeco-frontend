@@ -20,7 +20,7 @@ export default function Favourites() {
             <ToCatalogButton />
           </div>
         ) : (
-          <CardSection products={favourites} requiredLength={99999} />
+          <CardSection products={favourites} />
         )}
       </CardSectionWithTitle>
     </section>

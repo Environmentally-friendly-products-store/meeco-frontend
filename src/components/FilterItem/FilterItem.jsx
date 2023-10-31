@@ -1,54 +1,58 @@
 import './FilterItem.css';
 
-import { useContext } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-import { ActiveItemContext } from '../../contexts/ActiveItemContext';
-/* function FilterItem({ filterItem, onFiltersChange }) {
-  const [isChecked, setIsChecked] = useState(false);
+function FilterItem({
+  filterItem,
+  onFormValuesChange,
+  parentkeyEn,
+  parentkeyRu,
+  parentbody,
+  requestParams,
+}) {
+  const isFilterItemInRequest = useCallback(() => {
+    return requestParams[parentkeyEn].includes(filterItem.slug);
+  }, [filterItem.slug, parentkeyEn, requestParams]);
 
-  const onCheckboxChange = (name, isChecked) => {
+  const [isChecked, setIsChecked] = useState(isFilterItemInRequest());
+
+  const onCheckboxChange = (isChecked) => {
     setIsChecked(isChecked);
-    onFiltersChange(name, isChecked);
+    onFormValuesChange(
+      filterItem,
+      parentkeyEn,
+      parentkeyRu,
+      parentbody,
+      isChecked
+    );
   };
+
+  useEffect(() => {
+    setIsChecked(isFilterItemInRequest());
+  }, [isFilterItemInRequest]);
 
   return (
     <li
-      className="filter__list-item text text_weight_normal"
+      className="filter__filter-item filter-item filter-item__list-item filter-text"
       key={filterItem.id}
     >
-      <label className="filter__checkbox-label">
+      <label className="filter-item__checkbox-label">
         <input
-          className="filter__invisible-checkbox"
+          className="filter-item__invisible-checkbox"
+          name={filterItem.name}
           type="checkbox"
           checked={isChecked}
-          onChange={(e) => onCheckboxChange(filterItem.name, e.target.checked)}
+          onChange={(e) => onCheckboxChange(e.target.checked)}
         />
-        <span className="filter__visible-checkbox"></span>
+        <span
+          className={`filter-item__visible-checkbox ${
+            isChecked ? 'filter-item__visible-checkbox_checked' : ''
+          }`}
+        ></span>
         <span>{filterItem.name}</span>
       </label>
     </li>
   );
-} */
-
-function FilterItem({ filterItem, onFilterButtonClick }) {
-  const { activeItem, setItem } = useContext(ActiveItemContext);
-
-  const onClick = () => {
-    onFilterButtonClick(filterItem.slug);
-    setItem(filterItem);
-  };
-
-  return (
-    <li className="text text_weight_normal">
-      <button
-        className={`text text_weight_normal filter__list-button ${
-          filterItem === activeItem ? 'filter__list-button_active' : ''
-        }`}
-        onClick={onClick}
-      >
-        {filterItem.name}
-      </button>
-    </li>
-  );
 }
+
 export default FilterItem;
