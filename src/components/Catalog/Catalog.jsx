@@ -33,8 +33,6 @@ function Catalog({
   resetFilters,
   onFiltersPopupOpen,
 }) {
-  console.log(filteredProducts, chosenFiltersOnPanel);
-
   const [counter, setCounter] = useState(1);
 
   const [productsAmount, setProductsAmount] = useState(0);
@@ -154,7 +152,6 @@ function Catalog({
     } else {
       newActiveItems = addItemToActiveItems(itemName);
     }
-    console.log(newActiveItems);
     setActiveCategoryItems(newActiveItems);
   };
 
