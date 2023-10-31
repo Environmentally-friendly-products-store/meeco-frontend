@@ -17,6 +17,8 @@ export const PAGE_LIMIT = 12;
 export const FILTERS_TO_GET_All_PRODUCTS = {
   page: 1,
   limit: PAGE_LIMIT,
+  category: [],
+  brand: [],
 };
 
 // Задать baseUrl по умолчанию локально, либо из env-файла: REACT_APP_BASE_URL - название константы в env-файле

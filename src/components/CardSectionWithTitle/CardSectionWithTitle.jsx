@@ -8,19 +8,15 @@ function CardSectionWithTitle({ children, title, additionalStyles, span }) {
       }`}
     >
       {' '}
-      {additionalStyles === 'card-section-with-title_style_search' ? (
+      {additionalStyles ? (
         <div
           className={`card-section-with-title__header ${
-            additionalStyles === 'card-section-with-title_style_search'
-              ? 'card-section-with-title__header-title'
-              : ''
+            additionalStyles ? 'card-section-with-title__header-title' : ''
           }`}
         >
           <h2
             className={`card-section-with-title__title ${
-              additionalStyles === 'card-section-with-title_style_search'
-                ? 'card-section-with-title__search-title'
-                : ''
+              additionalStyles ? 'card-section-with-title__search-title' : ''
             }`}
           >
             {title}

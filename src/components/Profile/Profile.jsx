@@ -175,6 +175,7 @@ function Profile({ onButtonClick, onOpenPasswordPopup, handleSubmit }) {
               className={`profile__button profile__button_type_exit ${
                 !inputsActive ? 'profile__button_inactive' : ''
               }`}
+              onClick={() => setInputsActive(false)}
             >
               Отменить
             </button>

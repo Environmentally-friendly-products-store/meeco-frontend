@@ -16,7 +16,7 @@ export default function SearchCardSection({ value, products }) {
           additionalStyles={'card-section-with-title_style_search'}
           span={value}
         >
-          <CardSection products={products} requiredLength={9999} />
+          <CardSection products={products} />
         </CardSectionWithTitle>
       ) : (
         <CardSectionWithTitle

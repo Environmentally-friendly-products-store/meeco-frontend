@@ -1,8 +1,7 @@
 .catalog {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   row-gap: 40px;
-  grid-template-columns: auto;
-  grid-template-rows: 20px auto auto auto;
   padding: 20px 40px 100px;
 }
 
@@ -13,17 +12,6 @@
 .text {
   font-size: 16px;
   font-style: normal;
+  font-weight: normal;
   line-height: 1.5;
-}
-
-.text_weight_normal {
-  font-weight: 400;
-}
-
-.text_weight_medium {
-  font-weight: 500;
-}
-
-.text_weight_bold {
-  font-weight: 700;
 }
