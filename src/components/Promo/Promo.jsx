@@ -27,7 +27,7 @@ export default function Promo() {
               Скидка 20% на вторую сумку из органического хлопка
             </p>
             <div className="promo-brands__container-button">
-              <ButtonRight text="Перейти" path="/product/17" />
+              <ButtonRight text="Перейти" path="/product/16" />
             </div>
           </div>
         </article>
@@ -44,7 +44,7 @@ export default function Promo() {
               Биоразлагаемые стаканчики BPA free
             </p>
             <div className="promo-brands__container-button">
-              <ButtonRight text="Перейти" path="/product/30" />
+              <ButtonRight text="Перейти" path="/product/29" />
             </div>
           </div>
         </article>
@@ -61,7 +61,7 @@ export default function Promo() {
               Свободно от SLS и консервантов
             </p>
             <div className="promo-brands__container-button">
-              <ButtonRight text="Перейти" path="/product/12" />
+              <ButtonRight text="Перейти" path="/product/11" />
             </div>
           </div>
         </article>
