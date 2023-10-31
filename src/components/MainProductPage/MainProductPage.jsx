@@ -158,7 +158,7 @@ function MainProductPage({
             <p className="product-page__brand">
               {product.brand && product.brand.name}
             </p>
-            <h2 className="product-page__name">{product.name}</h2>
+            <h2 className="product-page__name">{product.long_name}</h2>
             <p className="product-page__price">
               {product.price_per_unit}&#160;&#8381;
             </p>

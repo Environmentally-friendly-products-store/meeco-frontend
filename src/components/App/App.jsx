@@ -99,6 +99,7 @@ export default function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [searchList, setSearchList] = useState([]);
 
   // Переделать функцию позже
   const handleCardClick = useCallback(
@@ -420,12 +421,21 @@ export default function App() {
       .catch((err) => console.log(err));
   };
 
-  const searchProducts = (value, token) => {
-    getProductsBySearch(value, token)
+  const searchProducts = (value) => {
+    getProductsBySearch(value)
       .then((products) => {
         setSearchValue(value);
         setSearchedProducts(products);
+        setSearchList([]);
         navigate.current('/search', { replace: true });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getSearchList = (value) => {
+    getProductsBySearch(value)
+      .then((products) => {
+        setSearchList(products.slice(0, 4));
       })
       .catch((err) => console.log(err));
   };
@@ -454,16 +464,15 @@ export default function App() {
                 value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
               >
                 <div className="app">
-                  <Header onSearch={searchProducts} />
+                  <Header
+                    onSearch={searchProducts}
+                    onChange={getSearchList}
+                    searchList={searchList}
+                  />
                   <main className="main">
                     <Routes>
                       <Route path="/" element={<Main />} />
-                      <Route
-                        path="/catalog"
-                        element={
-                          <Catalog searchedProducts={searchedProducts} />
-                        }
-                      />
+                      <Route path="/catalog" element={<Catalog />} />
                       <Route
                         path="/product/:id"
                         element={
