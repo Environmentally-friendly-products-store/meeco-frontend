@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { /* useCallback, */ useEffect, useState } from 'react';
 import ReactSlider from 'react-slider';
 
-function FilterByPrice({ onFormValuesChange }) {
+function FilterByPrice({
+  onFormValuesChange,
+  minPrice,
+  maxPrice,
+  parentkeyRu,
+}) {
   const onPriceChange = (newPriceValues) => {
     setPriceValues(newPriceValues);
-    onFormValuesChange(newPriceValues);
+    onFormValuesChange(newPriceValues, null, parentkeyRu);
   };
 
   const onInputPriceChange = (target) => {
@@ -12,19 +17,20 @@ function FilterByPrice({ onFormValuesChange }) {
     const value = target.value;
 
     setPriceValues({ ...priceValues, [name]: +value });
-    onFormValuesChange({ ...priceValues, [name]: +value });
+    onFormValuesChange({ ...priceValues, [name]: +value }, null, parentkeyRu);
   };
-  /* Написать функцию для фильтрации массива products по цене */
-
-  /* эти данные нужно брать с базы данных после прохода по массиву products */
-
-  const minPrice = 100;
-  const maxPrice = 10000;
 
   const [priceValues, setPriceValues] = useState({
     min_price: minPrice,
     max_price: maxPrice,
   });
+
+  useEffect(() => {
+    setPriceValues({
+      min_price: minPrice,
+      max_price: maxPrice,
+    });
+  }, [minPrice, maxPrice]);
 
   return (
     <div className="filter filter_style_price">
@@ -52,8 +58,8 @@ function FilterByPrice({ onFormValuesChange }) {
         </div>
 
         <ReactSlider
-          min={minPrice}
-          max={maxPrice}
+          min={minPrice === Infinity ? 0 : minPrice}
+          max={maxPrice === -Infinity ? 10000 : maxPrice}
           value={[priceValues.min_price, priceValues.max_price]}
           onChange={(values) =>
             onPriceChange({ min_price: values[0], max_price: values[1] })

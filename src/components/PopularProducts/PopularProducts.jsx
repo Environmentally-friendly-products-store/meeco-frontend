@@ -16,7 +16,7 @@ function PopularProducts() {
   return (
     <article className="popular-products">
       <Carousel
-        slidesToShow={5}
+        slidesToShow={4}
         slidesToScroll={1}
         showDots={false}
         componentName="popular-products"

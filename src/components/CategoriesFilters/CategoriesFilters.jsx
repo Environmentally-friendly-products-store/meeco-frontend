@@ -60,9 +60,12 @@ import Categories from '../Categories/Categories';
 } */
 
 function CategoriesFilters({
+  activeCategoryItems,
+  setActiveCategoryItems,
   categories,
   onCategoryButtonClick,
   onResetClick,
+  handleCategoryItemClick,
 }) {
   return (
     <aside className="categories-section catalog__categories-section">
@@ -72,6 +75,9 @@ function CategoriesFilters({
             categories={categories}
             onCategoryButtonClick={onCategoryButtonClick}
             onResetClick={onResetClick}
+            activeCategoryItems={activeCategoryItems}
+            setActiveCategoryItems={setActiveCategoryItems}
+            handleCategoryItemClick={handleCategoryItemClick}
           />
         </div>
       </div>

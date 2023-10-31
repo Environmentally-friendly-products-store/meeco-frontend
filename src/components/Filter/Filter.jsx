@@ -5,9 +5,11 @@ import FilterItem from '../FilterItem/FilterItem';
 function Filter({
   filterName,
   filterItems,
-  parentkey,
+  parentkeyEn,
+  parentkeyRu,
   parentbody,
   onFormValuesChange,
+  requestParams,
 }) {
   return (
     <div className="filter">
@@ -17,9 +19,11 @@ function Filter({
           <FilterItem
             filterItem={filterItem}
             key={filterItem.id}
-            parentkey={parentkey}
+            parentkeyEn={parentkeyEn}
+            parentkeyRu={parentkeyRu}
             parentbody={parentbody}
             onFormValuesChange={onFormValuesChange}
+            requestParams={requestParams}
           />
         ))}
       </ul>

@@ -1,9 +1,10 @@
 import './PopupWithFilters.css';
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 
 import { getBrandsList } from '../../utils/productsApi';
-import { FiltersContext } from '../../contexts/FiltersContext';
+
+import { FILTERS_TO_GET_All_PRODUCTS } from '../../utils/constants';
 
 import Filter from '../Filter/Filter';
 import FilterByPrice from '../FilterByPrice/FilterByPrice';
@@ -14,47 +15,100 @@ function PopupWithFilters({
   onCloseByOverlay,
   requestParams,
   changeRequestParams,
-  chosenFiltersOnPanel,
-  addFilterToPanel,
-  deleteFilterFromPanel,
+  temporaryRequestParams,
+  setNewTemporaryRequestParams,
+  setNewFiltersToPanel,
+  temporaryFiltersToSetToPanel,
+  setNewTemporaryFiltersToSetToPanel,
+  resetFilters,
+  filteredProducts,
+  minAndMaxPrices,
+  getMinAndMaxPrices,
 }) {
-  const [formValues, setFormValues] = useState(requestParams);
-
-  const addFormValue = (filterItem, parentkey, parentbody) => {
+  const addFormValue = (filterItem, parentkeyEn, parentkeyRu, parentbody) => {
     let newFormValues;
     if (Array.isArray(parentbody)) {
-      if (parentbody.includes(filterItem)) {
+      if (parentbody.includes(filterItem.slug)) {
         return;
       }
       newFormValues = {
-        ...formValues,
-        [parentkey]: [...parentbody, filterItem],
+        ...temporaryRequestParams,
+        [parentkeyEn]: [...parentbody, filterItem.slug],
       };
     } else {
-      newFormValues = { ...formValues, [parentkey]: filterItem };
+      newFormValues = {
+        ...temporaryRequestParams,
+        [parentkeyEn]: filterItem.slug,
+      };
     }
-    setFormValues(newFormValues);
-    changeRequestParams({ ...requestParams, ...newFormValues });
+    setNewTemporaryRequestParams({
+      ...temporaryRequestParams,
+      ...newFormValues,
+    });
+
+    setNewTemporaryFiltersToSetToPanel([
+      ...temporaryFiltersToSetToPanel,
+      {
+        parentkeyEn,
+        parentkeyRu,
+        ...filterItem,
+      },
+    ]);
   };
 
-  const updateFormValue = (filterItem) => {
-    setFormValues({ ...formValues, ...filterItem });
-    changeRequestParams({ ...requestParams, ...filterItem });
+  const updateFormValue = (filterItem, parentkeyEn, parentkeyRu) => {
+    setNewTemporaryRequestParams({ ...temporaryRequestParams, ...filterItem });
+
+    let newLocalFiltersToSetToPanel;
+
+    if (
+      temporaryFiltersToSetToPanel.find(
+        (filter) =>
+          filter.hasOwnProperty('min_price') ||
+          filter.hasOwnProperty('max_price')
+      )
+    ) {
+      newLocalFiltersToSetToPanel = temporaryFiltersToSetToPanel.map(
+        (filter) => {
+          return filter.hasOwnProperty('min_price') ||
+            filter.hasOwnProperty('max_price')
+            ? { parentkeyRu, ...filterItem }
+            : filter;
+        }
+      );
+    } else {
+      newLocalFiltersToSetToPanel = [
+        ...temporaryFiltersToSetToPanel,
+        { parentkeyRu, ...filterItem },
+      ];
+    }
+
+    setNewTemporaryFiltersToSetToPanel(newLocalFiltersToSetToPanel);
   };
 
-  const deleteFormValue = (filterItem, parentkey) => {
-    const formValuesCopy = { ...formValues };
-    const newFormValues = formValuesCopy[parentkey].filter(
-      (item) => item !== filterItem
+  const deleteFormValue = (filterItem, parentkeyEn) => {
+    const temporaryRequestParamsCopy = { ...temporaryRequestParams };
+    const newRequestParams = temporaryRequestParamsCopy[parentkeyEn].filter(
+      (item) => item !== filterItem.slug
     );
-    formValuesCopy[parentkey] = newFormValues;
-    setFormValues(formValuesCopy);
-    changeRequestParams({ ...requestParams, ...formValuesCopy });
+    temporaryRequestParamsCopy[parentkeyEn] = newRequestParams;
+
+    setNewTemporaryRequestParams({
+      ...temporaryRequestParams,
+      ...temporaryRequestParamsCopy,
+    });
+
+    setNewTemporaryFiltersToSetToPanel(
+      temporaryFiltersToSetToPanel.filter(
+        (filter) => filter.slug !== filterItem.slug
+      )
+    );
   };
 
   const onFormValuesChange = (
     filterItem,
-    parentkey,
+    parentkeyEn,
+    parentkeyRu,
     parentbody,
     isChecked = null
   ) => {
@@ -68,16 +122,19 @@ function PopupWithFilters({
       changeFormValues = deleteFormValue;
     }
 
-    changeFormValues(filterItem, parentkey, parentbody);
+    changeFormValues(filterItem, parentkeyEn, parentkeyRu, parentbody);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    changeRequestParams(temporaryRequestParams);
+    setNewFiltersToPanel(temporaryFiltersToSetToPanel);
+    onClosePopup();
   };
 
   const onReset = () => {
-    /* Лучше будет этот объект присвоить переменной, но нужно проследить, чтобы объект всегда был в актуальном состоянии. Возможно, лучше будет использовать 'let'. В min_price и max_price должны приходить соответствующие данные из массива products. */
-    setFormValues(requestParams);
+    resetFilters();
+    onClosePopup();
   };
 
   const [brands, setBrands] = useState([]);
@@ -94,6 +151,10 @@ function PopupWithFilters({
   useEffect(() => {
     setBrandsList();
   }, []);
+
+  useEffect(() => {
+    getMinAndMaxPrices();
+  }, [filteredProducts]);
   return (
     <aside
       className={`popup-with-filters popup_type_filters popup ${
@@ -117,12 +178,20 @@ function PopupWithFilters({
             <Filter
               filterItems={brands}
               filterName={'Бренды'}
-              parentbody={formValues.brand}
-              parentkey={'brand'}
+              parentbody={temporaryRequestParams.brand}
+              parentkeyEn={'brand'}
+              parentkeyRu={'Бренд'}
               onFormValuesChange={onFormValuesChange}
+              requestParams={requestParams}
             />
 
-            <FilterByPrice onFormValuesChange={onFormValuesChange} />
+            <FilterByPrice
+              minPrice={minAndMaxPrices[0]}
+              maxPrice={minAndMaxPrices[1]}
+              parentkeyRu={'Цена'}
+              onFormValuesChange={onFormValuesChange}
+              requestParams={requestParams}
+            />
           </div>
 
           <div className="filters-form__buttons-section">

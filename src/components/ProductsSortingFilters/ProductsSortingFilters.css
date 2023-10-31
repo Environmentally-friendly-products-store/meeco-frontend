@@ -1,5 +1,6 @@
 .products-sorting-filters {
   position: absolute;
+  top: 4px;
   justify-self: end;
   grid-column: 2/3;
   grid-row: 2/3;
