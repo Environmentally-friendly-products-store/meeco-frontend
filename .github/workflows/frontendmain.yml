@@ -1,14 +1,14 @@
 name: ecome frontend workflow
 on: [push]
 env:
-  # FRONTEND_IMAGE: ${{  secrets.DOCKER_USERNAME  }}/ecome_frontend:v1
-  FRONTEND_IMAGE: ${{  secrets.DOCKER_USERNAME  }}/ecome_frontend:test
+  FRONTEND_IMAGE: ${{  secrets.DOCKER_USERNAME  }}/ecome_frontend:v1
+  # FRONTEND_IMAGE: ${{  secrets.DOCKER_USERNAME  }}/ecome_frontend:test
 jobs:
   build_and_push_to_docker_hub:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    # if: github.ref == 'refs/heads/develop'
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
