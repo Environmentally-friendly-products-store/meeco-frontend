@@ -172,32 +172,28 @@
   border-radius: 12px;
   padding: 12px 10px;
   cursor: pointer;
-  transition:
-    opacity 0.2s linear,
-    background-color 0.2s linear;
-}
-
-.filters-form__button:hover {
-  opacity: 0.9;
+  transition: background-color 0.6s;
 }
 
 .filters-form__button_style_submit {
+  color: #fff;
+  background-color: #a49e4a;
+}
+
+.filters-form__button_style_reset {
   color: #21211b;
   border: 1px solid #a49e4a;
   background-color: #fff;
 }
 
-.filters-form__button_style_reset {
-  color: #fbfaeb;
-  background-color: #a49e4a;
-}
-
-.filters-form__button_style_submit:focus,
 .filters-form__button_style_submit:hover {
-  background-color: #e3e1b9;
+  background-color: #726e38;
 }
 
-.filters-form__button_style_reset:focus,
-.filters-form__button_style_reset:hover {
+.filters-form__button_style_submit:active {
   background-color: #726e38;
+}
+
+.filters-form__button_style_reset:hover {
+  background-color: #e3e1b9;
 }
