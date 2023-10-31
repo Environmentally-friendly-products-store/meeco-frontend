@@ -26,6 +26,7 @@ function PopupWithFilters({
   initialMinPrice,
   initialMaxPrice,
   getMinAndMaxPrices,
+  initialMinAndMaxPrice,
 }) {
   const addFormValue = (filterItem, parentkeyEn, parentkeyRu, parentbody) => {
     let newFormValues;
@@ -188,12 +189,11 @@ function PopupWithFilters({
             />
 
             <FilterByPrice
-              initialMinPrice={initialMinPrice}
-              initialMaxPrice={initialMaxPrice}
               minPrice={minAndMaxPrices[0]}
               maxPrice={minAndMaxPrices[1]}
               parentkeyRu={'Цена'}
               onFormValuesChange={onFormValuesChange}
+              initialMinAndMaxPrice={initialMinAndMaxPrice}
             />
           </div>
 
