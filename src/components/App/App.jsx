@@ -48,6 +48,7 @@ import {
   getNovelties,
   getPopularProducts,
   mergeSessionCart,
+  getProductsBySearch,
 } from '../../utils/productsApi';
 import { ShoppingCartContext } from '../../contexts/ShoppingCartContext';
 import { IsCatalogButtonClickedContext } from '../../contexts/IsCatalogButtonClickedContext';
@@ -59,6 +60,7 @@ import { createOrder, getOrders } from '../../utils/ordersApi';
 import PasswordChanger from '../PasswordChanger/PasswordChanger';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo';
 import { OrdersContext } from '../../contexts/OrdersContext';
+import SearchCardSection from '../SearchCardSection/SearchCardSection';
 
 export default function App() {
   const navigate = useRef(useNavigate());
@@ -95,7 +97,11 @@ export default function App() {
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchList, setSearchList] = useState([]);
 
+  // Переделать функцию позже
   const handleCardClick = useCallback(
     (id) => {
       setSelectedCard({});
@@ -338,8 +344,6 @@ export default function App() {
     setLocalStorageToken(token);
     setToken(token);
     setIsLoggedIn(true);
-    // sendShoppingCardToUser(token);
-    // getShoppingCartNotAuth(token);
   };
 
   //Авторизация пользователя
@@ -415,6 +419,25 @@ export default function App() {
       .catch((err) => console.log(err));
   };
 
+  const searchProducts = (value) => {
+    getProductsBySearch(value)
+      .then((products) => {
+        setSearchValue(value);
+        setSearchedProducts(products);
+        setSearchList([]);
+        navigate.current('/search', { replace: true });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getSearchList = (value) => {
+    getProductsBySearch(value)
+      .then((products) => {
+        setSearchList(products.slice(0, 4));
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -440,7 +463,11 @@ export default function App() {
                 value={{ isCatalogButtonClicked, setIsCatalogButtonClicked }}
               >
                 <div className="app">
-                  <Header />
+                  <Header
+                    onSearch={searchProducts}
+                    onChange={getSearchList}
+                    searchList={searchList}
+                  />
                   <main className="main">
                     <Routes>
                       <Route path="/" element={<Main />} />
@@ -510,6 +537,15 @@ export default function App() {
                       <Route
                         path="/privacy-policy"
                         element={<PrivacyPolicy />}
+                      />
+                      <Route
+                        path="/search"
+                        element={
+                          <SearchCardSection
+                            value={searchValue}
+                            products={searchedProducts}
+                          />
+                        }
                       />
                       <Route path="*" element={<NotFoundPage />} />
                     </Routes>

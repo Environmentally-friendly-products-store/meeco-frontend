@@ -38,7 +38,7 @@
 .header__func {
   display: flex;
   align-items: center;
-  max-width: 620px;
+  max-width: 623px;
   width: 100%;
   gap: 32px;
 }

@@ -151,3 +151,12 @@ export const deleteProductFromCart = (productId, token) =>
  */
 export const mergeSessionCart = (token) =>
   makeRequest(`/cart/`, 'PUT', null, token);
+
+/**
+ * Запрос для поиска товаров по названию
+ */
+
+export const getProductsBySearch = (value, token) => {
+  const data = { search: value };
+  return getProducts(data, token).then(getResults);
+};
