@@ -39,6 +39,10 @@ function PopupWithForm({
             type="button"
             className={`popup__button popup__button_type_close ${
               name === 'confirm' ? 'popup__block_type_close-confirm' : ''
+            } ${
+              name === 'passwordChanger'
+                ? 'popup__button_type_close-password'
+                : ''
             } selectable-button`}
             aria-label="Кнопка закрытия окна"
           />
@@ -59,6 +63,16 @@ function PopupWithForm({
         <form className="popup__form" name={`${name}`}>
           {children}
           <div className="popup__buttons">
+            <button
+              disabled={!isValid}
+              type="submit"
+              className={`popup__button popup__button_type_submit ${submitButtonClass} ${submitButtonSize} ${
+                name === 'passwordChanger' ? 'popup__button_type_password' : ''
+              }`}
+              onClick={onSubmit}
+            >
+              {submitButtonTextContent}
+            </button>
             {submitButtonClass && (
               <button
                 type="button"
@@ -68,31 +82,21 @@ function PopupWithForm({
                 Остаться
               </button>
             )}
-            <button
-              disabled={!isValid}
-              type="submit"
-              className={`popup__button popup__button_type_submit ${submitButtonClass} ${submitButtonSize}`}
-              onClick={onSubmit}
-            >
-              {submitButtonTextContent}
-            </button>
           </div>
-          <div className="popup__information">
-            {name === 'registration' && (
-              <>
-                <p className="popup__information-text">
-                  Нажимая на кнопку, вы соглашаетесь
-                </p>
-                <Link
-                  to="/privacy-policy"
-                  target="_blank"
-                  className="popup__link popup__link_type_policy selectable-link"
-                >
+          {name === 'registration' && (
+            <div className="popup__information">
+              <Link
+                to="/privacy-policy"
+                target="_blank"
+                className="popup__link popup__link_type_policy selectable-link"
+              >
+                Нажимая на кнопку, вы соглашаетесь
+                <span className="popup__link_type_policy">
                   c Политикой конфиденциальности
-                </Link>
-              </>
-            )}
-          </div>
+                </span>
+              </Link>
+            </div>
+          )}
         </form>
       </div>
     </div>

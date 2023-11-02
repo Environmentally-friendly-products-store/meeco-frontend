@@ -1,21 +1,20 @@
 import './OrderProduct.css';
 import defineImage from '../../utils/functions/defineImage';
 
-function OrderProduct({ product }) {
-  const { name, price_per_unit, amount, preview_image } = product;
-  const totalItemPrice = price_per_unit * amount;
+function OrderProduct({ data }) {
+  const { amount, total_price, product } = data;
 
   return (
     <ul className="orderproduct">
       <li className="orderproduct__product">
         <img
           className="orderproduct__image"
-          src={defineImage(preview_image)}
-          alt={name}
+          src={defineImage(product.preview_image)}
+          alt={product.name}
         />
         <p className="odredproduct__count">{amount} шт</p>
-        <p className="orderproduct__name">{name}</p>
-        <p className="orderproduct__totalprice">{totalItemPrice} ₽</p>
+        <p className="orderproduct__name">{product.name}</p>
+        <p className="orderproduct__totalprice">{total_price} ₽</p>
       </li>
       <br></br>
     </ul>

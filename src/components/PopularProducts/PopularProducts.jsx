@@ -1,9 +1,10 @@
 import './PopularProducts.css';
 import ProductCard from '../ProductCard/ProductCard';
-import Carousel from '../Carousel/Carousel';
 import { useContext } from 'react';
 import { ProductsContext } from '../../contexts/ProductsContext';
 import { trackPromoView } from '../../utils/yandexCounter';
+
+import Carousel from '../Carousel/Carousel';
 
 function PopularProducts() {
   const { popular } = useContext(ProductsContext);

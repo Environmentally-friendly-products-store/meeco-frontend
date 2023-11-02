@@ -10,8 +10,8 @@ function YourOrder() {
     <div className="yourorder">
       <h2 className="yourorder__title">Ваш заказ</h2>
       <ul className="yourorder__list">
-        {shoppingCart.map((product) => (
-          <OrderProduct key={product.id} product={product} />
+        {shoppingCart.map((data) => (
+          <OrderProduct key={data.product.id} data={data} />
         ))}
       </ul>
       <div className="yourorder__total">

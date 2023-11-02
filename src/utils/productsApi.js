@@ -5,7 +5,9 @@ import encodeObjToQuery from './functions/encodeObjToQuery';
 // отправляет запрос на сервер по baseUrl
 const makeRequest = createMakeRequest(baseUrl);
 
-const getResults = (response) => response.results;
+export const getResults = (response) => response.results;
+
+const getData = (response) => response.data;
 
 /**
  * Запрашивает конкретный товар по id
@@ -17,8 +19,15 @@ export const getCurrentCard = (id, token = null) => {
 /**
  * Запрашивает данные о всех категориях товаров
  */
-export const getAllCategories = () => {
+export const getCategoriesList = () => {
   return makeRequest('/categories/', 'GET');
+};
+
+/**
+ * Запрашивает данные о всех категориях товаров
+ */
+export const getBrandsList = () => {
+  return makeRequest('/brands/', 'GET');
 };
 
 /**
@@ -30,7 +39,8 @@ export const getCategoryById = (categoryId) => {
 
 /**
  * Запрашивает данные о товарах по указанным параметрам
- * @param data {{event: string, category: string, limit: number, page: number, is_in_shopping_cart: number}} Объект с данными фильтра
+ * @param data {{event: string, category: string, brand: string, limit: number, page: number, is_in_shopping_cart: number, is_favorite: number}} Объект с данными фильтра
+ * @param token {string}  Авторизационный токен
  */
 export const getProducts = (data, token) => {
   const params = encodeObjToQuery(data);
@@ -68,7 +78,7 @@ export const deleteProductFromShoppingCart = (productId, token) =>
   makeRequest(`/products/${productId}/shopping_cart/`, 'DELETE', null, token);
 
 /**
- * Получение новинок товаров
+ * Получение корзины
  */
 export const getShoppingCart = (token) => {
   const data = { is_in_shopping_cart: 1, limit: 99999 };
@@ -85,8 +95,75 @@ export const getNovelties = () => {
 
 export const getPopularProducts = () => {
   const data = {
-    limit: 5,
+    limit: 10,
     event: 'populyarnoe',
   };
   return getProducts(data).then(getResults);
+};
+
+/**
+ * Получение избранных товаров
+ */
+export const getFavourites = (token) => {
+  const data = { is_favorite: 1, limit: 99999 };
+  return getProducts(data, token).then(getResults);
+};
+
+/**
+ * Добавление товара в избранное
+ */
+export const addToFavourites = (productId, token) =>
+  makeRequest(`/products/${productId}/favorite/`, 'POST', null, token);
+
+/**
+ * Удаление товара из избранного
+ */
+export const deleteFromFavourites = (productId, token) =>
+  makeRequest(`/products/${productId}/favorite/`, 'DELETE', null, token);
+
+/**
+ * Получение корзины Cart
+ */
+export const getCart = (token) => {
+  return makeRequest(`/cart/`, 'GET', null, token).then(getData);
+};
+
+/**
+ * Добавляет товар в корзину Cart
+ */
+export const addProductToCart = (productId, token) =>
+  makeRequest(
+    `/cart/`,
+    'POST',
+    {
+      product: productId,
+    },
+    token
+  );
+
+/**
+ * Изменяет количество товара в корзине Cart
+ */
+export const changeProductQuantityInCart = (productId, amount, token) =>
+  makeRequest(`/cart/${productId}/`, 'PATCH', { amount }, token);
+
+/**
+ * Удаляет товар из корзины Cart
+ */
+export const deleteProductFromCart = (productId, token) =>
+  makeRequest(`/cart/${productId}/`, 'DELETE', null, token);
+
+/**
+ * Для слияния корзин Cart
+ */
+export const mergeSessionCart = (token) =>
+  makeRequest(`/cart/`, 'PUT', null, token);
+
+/**
+ * Запрос для поиска товаров по названию
+ */
+
+export const getProductsBySearch = (value, token) => {
+  const data = { search: value };
+  return getProducts(data, token).then(getResults);
 };

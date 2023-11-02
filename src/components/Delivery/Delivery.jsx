@@ -7,9 +7,19 @@ import InfoPage from '../InfoPage/InfoPage';
 import InfoBlock from '.././InfoBlock/InfoBlock';
 import Accordion from '../Accordion/Accordion';
 
-export default function Delivery() {
+import accordionDeliveryContent from '../../utils/accordionDeliveryContent';
+
+export default function Delivery({
+  activeNavPanelItem,
+  appointActiveNavPanelItem,
+}) {
   return (
-    <InfoPage title="Доставка и оплата" id="deliveryAndPayments">
+    <InfoPage
+      title="Доставка и оплата"
+      id="deliveryAndPayments"
+      activeNavPanelItem={activeNavPanelItem}
+      appointActiveNavPanelItem={appointActiveNavPanelItem}
+    >
       <InfoBlock
         title="Как сделать заказ"
         id="aboutOrder"
@@ -55,7 +65,7 @@ export default function Delivery() {
         </div>
       </InfoBlock>
 
-      {accordionContent.map((item, index) => (
+      {accordionDeliveryContent.map((item, index) => (
         <Accordion
           title={item.title}
           text={item.text}
@@ -66,21 +76,3 @@ export default function Delivery() {
     </InfoPage>
   );
 }
-
-const accordionContent = [
-  {
-    title: 'Оплата',
-    text: 'Оплата производится наличными или банковской картой при получении заказа',
-    id: 'aboutPayment',
-  },
-  {
-    title: 'Доставка',
-    text: 'Доставка производится из Москвы транспортными компаниями: CDEK, Деловые Линии, Пэк и Почтой России. В зависимости от удалённости от Москвы стандартный срок составляет 2–8 дней, если вам необходима срочная доставка — оставьте, пожалуйста, комментарий к заказу при оформлении',
-    id: 'aboutDelivery',
-  },
-  {
-    title: 'Возврат',
-    text: 'Вернуть купленные товары можно сделав заявку по телефону 8 800 900-90-90',
-    id: 'aboutReturns',
-  },
-];

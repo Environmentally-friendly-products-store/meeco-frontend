@@ -1,6 +1,6 @@
-import './FiltersSection.css';
+import './CategoriesFilters.css';
 /* import { useState } from 'react'; */
-import Filter from '../Filter/Filter';
+import Categories from '../Categories/Categories';
 
 /* function FiltersSection({ categories, onFiltersChange, onReset }) {
   const onSubmit = (e) => {
@@ -59,21 +59,30 @@ import Filter from '../Filter/Filter';
   );
 } */
 
-function FiltersSection({ categories, onFilterButtonClick, onResetClick }) {
+function CategoriesFilters({
+  activeCategoryItems,
+  setActiveCategoryItems,
+  categories,
+  onCategoryButtonClick,
+  onResetClick,
+  handleCategoryItemClick,
+}) {
   return (
-    <section className="filters-section catalog__filters-section">
-      <div className="filters-form">
-        <div className="filters">
-          <Filter
-            filterItems={categories}
-            filterName={'Категории'}
-            onFilterButtonClick={onFilterButtonClick}
+    <aside className="categories-section catalog__categories-section">
+      <div className="categories-form">
+        <div className="categories">
+          <Categories
+            categories={categories}
+            onCategoryButtonClick={onCategoryButtonClick}
             onResetClick={onResetClick}
+            activeCategoryItems={activeCategoryItems}
+            setActiveCategoryItems={setActiveCategoryItems}
+            handleCategoryItemClick={handleCategoryItemClick}
           />
         </div>
       </div>
-    </section>
+    </aside>
   );
 }
 
-export default FiltersSection;
+export default CategoriesFilters;

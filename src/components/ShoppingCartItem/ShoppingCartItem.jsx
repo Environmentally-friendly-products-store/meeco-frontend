@@ -3,44 +3,61 @@ import { NavLink } from 'react-router-dom';
 
 import stylizePrice from '../../utils/functions/stylizePrice';
 import defineImage from '../../utils/functions/defineImage';
+import { useContext, useMemo } from 'react';
+import { FavouritesContext } from '../../contexts/FavouritesContext';
 
-function ShoppingCartItem({
-  product,
-  onAmountChange,
-  onDeleteFromShoppingCart,
-}) {
-  const { name, brand, id, price_per_unit, amount, preview_image } = product;
-  const totalItemPrice = price_per_unit * amount;
+function ShoppingCartItem({ data, onAmountChange, onDeleteFromShoppingCart }) {
+  const { amount, total_price, product } = data;
+  const { onToggleFavourites, isProductInFavourites } =
+    useContext(FavouritesContext);
+  const onLikeButtonClick = () => {
+    onToggleFavourites(product.id);
+  };
+  const additionalLikeButtonStyle = useMemo(
+    () =>
+      isProductInFavourites(product.id)
+        ? 'shopping-card__like-button_liked'
+        : '',
+    [isProductInFavourites, product.id]
+  );
 
   return (
     <li className="shopping-cart__product">
       <NavLink
         className="shopping-cart__link selectable-button"
-        to={`/product/${id}`}
+        to={`/product/${product.id}`}
       >
         <img
           className="shopping-cart__product-image"
-          src={defineImage(preview_image)}
-          alt={name}
+          src={defineImage(product.preview_image)}
+          alt={product.name}
         />
       </NavLink>
 
       <p className="shopping-cart__product-item shopping-cart__product-brand">
-        {brand}
+        {product.brand}
       </p>
       <p className="shopping-cart__product-item shopping-cart__product-name">
-        {name}
+        {product.name}
       </p>
-
+      <button
+        type="button"
+        className={`shopping-card__like-button ${additionalLikeButtonStyle}`}
+        onClick={onLikeButtonClick}
+      ></button>
+      <button
+        className="shopping-cart__delete-button"
+        onClick={() => onDeleteFromShoppingCart(product.id)}
+      ></button>
       <p className="shopping-cart__product-item shopping-card__product-price shopping-cart__product-item_style_unit">
-        {`${stylizePrice(price_per_unit)} ₽`}
+        {`${stylizePrice(product.price_per_unit)} ₽ / шт`}
       </p>
 
       <div className="shopping-card__product-quantity-switch">
         <button
           className="shopping-card__product-quantity-switch-button
         shopping-card__product-quantity-switch-minus selectable-button"
-          onClick={() => onAmountChange(id, false)}
+          onClick={() => onAmountChange(product.id, false)}
           disabled={amount === 1}
         ></button>
         <p className="shopping-cart__product-item shopping-card__product-quantity-switch-counter">
@@ -49,18 +66,13 @@ function ShoppingCartItem({
         <button
           className="shopping-card__product-quantity-switch-button
         shopping-card__product-quantity-switch-plus selectable-button"
-          onClick={() => onAmountChange(id, true)}
+          onClick={() => onAmountChange(product.id, true)}
         ></button>
       </div>
 
       <p className="shopping-cart__product-item shopping-card__product-price shopping-card__product-price_style_sum">
-        {`${stylizePrice(totalItemPrice)} ₽`}
+        {`${stylizePrice(total_price)} ₽`}
       </p>
-
-      <button
-        className="shopping-cart__delete-button"
-        onClick={() => onDeleteFromShoppingCart(id)}
-      ></button>
     </li>
   );
 }

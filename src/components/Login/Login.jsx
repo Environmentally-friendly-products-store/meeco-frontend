@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import './Login.css';
+import React, { useMemo, useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import useForm from '../../hooks/useForm';
 
@@ -14,10 +15,13 @@ function Login({
     handleChange: handleInputChange,
     errors: errorsState,
     isValid: isFormValid,
-  } = useForm({
-    email: '',
-    password: '',
-  });
+  } = useForm(
+    {
+      email: '',
+      password: '',
+    },
+    false
+  );
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +40,7 @@ function Login({
     title: 'Авторизация',
     isValid: isFormValid,
     submitButtonTextContent: 'Войти',
-    routerLinkText: 'Я еще не зарегистрирован(а)',
+    routerLinkText: 'Я еще не зарегистрирован',
     onClose: onClosePopup,
     onCloseByOverlay: onCloseByOverlay,
     togglePopup: handleTogglePopup,
@@ -51,33 +55,51 @@ function Login({
   const getInputClassName = (error) =>
     `popup__input ${error ? 'popup__input_error' : ''}`;
 
+  const [isShowPasswordButtonClicked, setIsShowPaswordButtonClicked] =
+    useState(false);
+
+  const togglePasswordType = () =>
+    setIsShowPaswordButtonClicked(!isShowPasswordButtonClicked);
+
+  const additionalEyeButtonStyle = useMemo(
+    () => (isShowPasswordButtonClicked ? 'popup__button_type_eye-show' : ''),
+    [isShowPasswordButtonClicked]
+  );
+
   return (
     <PopupWithForm {...popupWithFormProps}>
+      <span className="popup__server-error">{serverError}</span>
       <label className={getLabelClassName(errorsState.email)}>Email</label>
       <input
         onChange={handleInputChange}
         value={'' || userState.email}
-        type="email"
         name="email"
         className={getInputClassName(errorsState.email)}
-        minLength="8"
-        maxLength="114"
         required
       />
       <span className="popup__error ">{errorsState.email}</span>
-      <label className={getLabelClassName(errorsState.password)}>Пароль</label>
-      <input
-        onChange={handleInputChange}
-        value={'' || userState.password}
-        type="password"
-        name="password"
-        className={getInputClassName(errorsState.password)}
-        minLength="8"
-        maxLength="40"
-        required
-      />
+      <div className="popup__label-container">
+        <label className={getLabelClassName(errorsState.password)}>
+          Пароль
+        </label>
+        <p className="popup__recovery-password">Забыли пароль?</p>
+      </div>
+      <div className="popup__password">
+        <input
+          onChange={handleInputChange}
+          value={'' || userState.password}
+          type={isShowPasswordButtonClicked ? 'text' : 'password'}
+          name="password"
+          className={getInputClassName(errorsState.password)}
+          required
+        />
+        <button
+          className={`popup__button popup__button_type_eye-not-show ${additionalEyeButtonStyle}`}
+          type="button"
+          onClick={() => togglePasswordType()}
+        />
+      </div>
       <span className="popup__error">{errorsState.password}</span>
-      <span className="popup__server-error">{serverError}</span>
     </PopupWithForm>
   );
 }

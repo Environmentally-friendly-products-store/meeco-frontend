@@ -1,75 +1,27 @@
 import './CardSection.css';
-/* import { NavLink } from 'react-router-dom'; */
+import ProductCard from '../ProductCard/ProductCard';
 
-/* function CardSection({
-  children,
-  isUsedOnMainPage,
-  title,
-  quantity,
-  filters = [],
-  onReset,
-  onFilterDelete,
-}) {
-  console.log(filters.categories[0]);
+import { sortProducts } from '../../utils/functions/sortProducts';
+
+function CardSection({ products, requiredLength = null }) {
+  const productsToRender = !requiredLength
+    ? products
+    : sortProducts(products, requiredLength);
 
   return (
-    <section
-      className={`card-section ${
-        isUsedOnMainPage ? 'card-section_style_main' : ''
-      }`}
-    >
-      {!isUsedOnMainPage && (
-        <div className="card-section__filter-header">
-          <p className="card-section__quantity text text_weight_normal">
-            {quantity} товаров
-          </p>
-
-          {filters.categories.length > 0 && (
-            <div className="card-section__filters-block">
-              {filters.categories.map((filter, index) => (
-                <button
-                  className="card-section__filter card-section__filter card-section__filter_style_item"
-                  key={index}
-                >
-                  {filter}
-                </button>
-              ))}
-              <button
-                className="card-section__filter card-section__filter_style_reset"
-                onClick={onReset}
-              >
-                Очистить всё
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {isUsedOnMainPage && (
-        <div className="card-section__header">
-          <h2 className="card-section__title">{title}</h2>
-          <NavLink className="card-section__link" to="/catalog">
-            Смотреть всё
-          </NavLink>
-        </div>
-      )}
-
-      {children}
-    </section>
-  );
-} */
-
-function CardSection({ children, title, isUsedOnMainPage }) {
-  return (
-    <section className="card-section">
-      {isUsedOnMainPage && (
-        <div className="card-section__header">
-          <h2 className="card-section__title">{title}</h2>
-        </div>
-      )}
-
-      {children}
-    </section>
+    <article className="card-section">
+      {productsToRender.map((product) => (
+        <ProductCard
+          key={product.id}
+          price={product.price_per_unit}
+          image={product.preview_image}
+          name={product.name}
+          brand={product.brand.name}
+          card={product}
+          id={product.id}
+        />
+      ))}
+    </article>
   );
 }
 

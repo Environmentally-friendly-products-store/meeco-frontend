@@ -1,0 +1,40 @@
+.profile__detail-item {
+  max-width: 780px;
+  display: grid;
+  grid-template-columns: 548px 84px 84px;
+  gap: 32px;
+}
+
+.profile__product-name {
+  margin: 0;
+  margin-left: 8px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  max-width: 432px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #403f32;
+}
+
+.profile__product_quantity {
+  margin: 0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #403f32;
+  justify-self: flex-end;
+}
+
+.profile__product-cost {
+  margin: 0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: #403f32;
+  justify-self: flex-end;
+}

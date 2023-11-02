@@ -1,35 +1,29 @@
 import './Filter.css';
+
 import FilterItem from '../FilterItem/FilterItem';
 
-import { useContext } from 'react';
-import { ActiveItemContext } from '../../contexts/ActiveItemContext';
-
-function Filter({ filterItems, onFilterButtonClick, onResetClick }) {
-  const { activeItem, setItem } = useContext(ActiveItemContext);
-
-  const onClick = () => {
-    onResetClick();
-    setItem('Все');
-  };
-
+function Filter({
+  filterName,
+  filterItems,
+  parentkeyEn,
+  parentkeyRu,
+  parentbody,
+  onFormValuesChange,
+  requestParams,
+}) {
   return (
-    <div className="filter filter_style_general">
-      <ul className="filter__list">
-        <li className="text text_weight_normal">
-          <button
-            className={`text text_weight_normal filter__list-button ${
-              activeItem === 'Все' ? 'filter__list-button_active' : ''
-            }`}
-            onClick={onClick}
-          >
-            Все
-          </button>
-        </li>
+    <div className="filter">
+      <h3 className="filter__title">{filterName}</h3>
+      <ul className="filter__filter-list">
         {filterItems.map((filterItem) => (
           <FilterItem
             filterItem={filterItem}
             key={filterItem.id}
-            onFilterButtonClick={onFilterButtonClick}
+            parentkeyEn={parentkeyEn}
+            parentkeyRu={parentkeyRu}
+            parentbody={parentbody}
+            onFormValuesChange={onFormValuesChange}
+            requestParams={requestParams}
           />
         ))}
       </ul>
