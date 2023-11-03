@@ -14,43 +14,6 @@ function LesserFilters({
       >
         Фильтры
       </button>
-      {/* <ul className="lesser-filter__chosen-filters">
-        {chosenFiltersOnPanel.map((filter, index) => (
-          <li
-            key={index}
-            className="lesser-filter__chosen-filter"
-            onClick={() => deleteFilterFromPanel(filter)}
-          >
-            {`${filter.parentkey}: ${filter.name}`}
-          </li>
-        ))}
-      </ul> */}
-
-      {/* <ul className="lesser-filter__chosen-filters">
-        {chosenFiltersOnPanel.map((filter, index) => (
-          <li key={index} className="lesser-filter__chosen-filter">
-            {filter.parentkeyRu === 'Цена' ? (
-              <button
-                className="lesser-filter__chosen-filter-button selectable-button"
-                type="button"
-                onClick={deletePriceFromPanel}
-              >
-                {`${filter.parentkeyRu}: от ${filter.min_price} до ${filter.max_price}`}
-              </button>
-            ) : (
-              <button
-                className="lesser-filter__chosen-filter-button selectable-button"
-                type="button"
-                onClick={() =>
-                  deleteFilterFromPanel(filter, filter.parentkeyEn)
-                }
-              >
-                {`${filter.parentkeyRu}: ${filter.name}`}
-              </button>
-            )}
-          </li>
-        ))}
-      </ul> */}
 
       <ul className="lesser-filter__chosen-filters">
         {chosenFiltersOnPanel.map((filter, index) => (

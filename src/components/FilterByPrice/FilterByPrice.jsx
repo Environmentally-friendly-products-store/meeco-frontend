@@ -30,14 +30,19 @@ function FilterByPrice({
     max_price: maxPrice,
   });
 
+  /* const [priceValues, setPriceValues] = useState({}); */
+
   useEffect(() => {
     if (minPrice === Infinity || maxPrice === -Infinity) {
       return;
     }
+
+    /* if (minPrice === 0) { */
     setPriceValues({
       min_price: minPrice,
       max_price: maxPrice,
     });
+    /* } */
   }, [minPrice, maxPrice]);
 
   return (
@@ -66,8 +71,10 @@ function FilterByPrice({
         </div>
 
         <ReactSlider
-          min={initialMinAndMaxPrice[0]}
-          max={initialMinAndMaxPrice[1]}
+          /* min={initialMinAndMaxPrice[0]}
+          max={initialMinAndMaxPrice[1]} */
+          min={minPrice}
+          max={maxPrice}
           value={[priceValues.min_price, priceValues.max_price]}
           onChange={(values) =>
             onPriceChange({ min_price: values[0], max_price: values[1] })

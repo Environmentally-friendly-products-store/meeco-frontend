@@ -17,16 +17,17 @@ function PopupWithFilters({
   changeRequestParams,
   temporaryRequestParams,
   setNewTemporaryRequestParams,
+  chosenFiltersOnPanel,
   setNewFiltersToPanel,
   temporaryFiltersToSetToPanel,
   setNewTemporaryFiltersToSetToPanel,
   resetFilters,
-  filteredProducts,
+  /* filteredProducts, */
   minAndMaxPrices,
-  initialMinPrice,
+  /* initialMinPrice,
   initialMaxPrice,
-  getMinAndMaxPrices,
-  initialMinAndMaxPrice,
+  getMinAndMaxPrices, */
+  /* initialMinAndMaxPrice, */
 }) {
   const addFormValue = (filterItem, parentkeyEn, parentkeyRu, parentbody) => {
     let newFormValues;
@@ -155,9 +156,6 @@ function PopupWithFilters({
     setBrandsList();
   }, []);
 
-  useEffect(() => {
-    getMinAndMaxPrices();
-  }, [filteredProducts]);
   return (
     <aside
       className={`popup-with-filters popup_type_filters popup ${
@@ -185,7 +183,7 @@ function PopupWithFilters({
               parentkeyEn={'brand'}
               parentkeyRu={'Бренд'}
               onFormValuesChange={onFormValuesChange}
-              requestParams={requestParams}
+              temporaryRequestParams={temporaryRequestParams}
             />
 
             <FilterByPrice
@@ -193,7 +191,6 @@ function PopupWithFilters({
               maxPrice={minAndMaxPrices[1]}
               parentkeyRu={'Цена'}
               onFormValuesChange={onFormValuesChange}
-              initialMinAndMaxPrice={initialMinAndMaxPrice}
             />
           </div>
 

@@ -85,11 +85,12 @@ export default function App() {
     setIsPasswordPopupOpen(false);
     setIsInfoPopupOpen(false);
   };
-  const closePopupByOverlay = (event) => {
+  /* const closePopupByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
+
       handleClosePopup();
     }
-  };
+  }; */
 
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
@@ -168,23 +169,18 @@ export default function App() {
 
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const [initialMinAndMaxPrice, setInitialMinAndMaxPrice] = useState([]);
+  const [minAndMaxPrices, setMinAndMaxPrices] = useState([0, 10000]);
 
   const getInitialMinAndMaxPrices = async () => {
     const response = await getProducts({ page: 1, limit: 99999 });
     const allProducts = response.results;
     const minAndMaxPrices = getMinAndMaxPricesFromPricesArray(allProducts);
-    setInitialMinAndMaxPrice(minAndMaxPrices);
+    setMinAndMaxPrices(minAndMaxPrices);
   };
 
-  const [minAndMaxPrices, setMinAndMaxPrices] = useState([0, 10000]);
-
-  const [temporaryRequestParams, setTemporaryRequestParams] =
-    useState(requestParams);
-
-  const getMinAndMaxPrices = () => {
-    setMinAndMaxPrices(getMinAndMaxPricesFromPricesArray(filteredProducts));
-  };
+  const [temporaryRequestParams, setTemporaryRequestParams] = useState(
+    FILTERS_TO_GET_All_PRODUCTS
+  );
 
   const updateFilteredProducts = (newFilteredProducts) => {
     setFilteredProducts(newFilteredProducts);
@@ -212,6 +208,14 @@ export default function App() {
     setNewFiltersToPanel([]);
     setNewTemporaryFiltersToSetToPanel([]);
     setActiveCategoryItems([]);
+  };
+
+  const closePopupByOverlay = (event) => {
+    if (event.target.classList.contains('popup_active')) {
+      handleClosePopup();
+      setNewTemporaryRequestParams(requestParams);
+      setNewTemporaryFiltersToSetToPanel(chosenFiltersOnPanel);
+    }
   };
 
   const deleteFilterFromPanel = (filterToRemove, parentkeyEn) => {
@@ -267,7 +271,7 @@ export default function App() {
   const appointActiveNavPanelItem = (item) => {
     setActiveNavPanelItem(item);
   };
-  /*  */
+
   const setShoppingCart = (shoppingCart) => {
     const totalPrice = shoppingCart.reduce(
       (acc, product) => acc + product.total_price,
@@ -440,9 +444,11 @@ export default function App() {
     [token]
   );
 
+  console.log(requestParams, temporaryRequestParams);
+
   useEffect(() => {
-    getInitialMinAndMaxPrices();
-  }, []);
+    if (minAndMaxPrices[0] === 0) getInitialMinAndMaxPrices();
+  }, [minAndMaxPrices]);
 
   useEffect(() => {
     setToken(getLocalStorageToken());
@@ -735,8 +741,6 @@ export default function App() {
                   resetFilters={resetFilters}
                   filteredProducts={filteredProducts}
                   minAndMaxPrices={minAndMaxPrices}
-                  getMinAndMaxPrices={getMinAndMaxPrices}
-                  initialMinAndMaxPrice={initialMinAndMaxPrice}
                 />
               </div>
             </OrdersContext.Provider>
