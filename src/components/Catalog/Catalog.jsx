@@ -19,19 +19,19 @@ import { FILTERS_TO_GET_All_PRODUCTS, PAGE_LIMIT } from '../../utils/constants';
 
 function Catalog({
   filteredProducts,
-  updateFilteredProducts,
+  setFilteredProducts,
   activeCategoryItems,
   setActiveCategoryItems,
   requestParams,
-  changeRequestParams,
+  setRequestParams,
   chosenFiltersOnPanel,
-  setNewFiltersToPanel,
+  setChosenFiltersOnPanel,
   deleteFilterFromPanel,
   deletePriceFromPanel,
-  setNewTemporaryRequestParams,
-  setNewTemporaryFiltersToSetToPanel,
+  setTemporaryRequestParams,
+  setTemporaryFiltersToSetToPanel,
   resetFilters,
-  onFiltersPopupOpen,
+  onClosePopupWithFilters,
 }) {
   const [counter, setCounter] = useState(1);
 
@@ -67,14 +67,14 @@ function Catalog({
   const getProductsByParams = async (query) => {
     try {
       if (query !== FILTERS_TO_GET_All_PRODUCTS) {
-        changeRequestParams(query);
-        setNewTemporaryRequestParams(query);
+        setRequestParams(query);
+        setTemporaryRequestParams(query);
       }
       const response = await getProducts(query);
       const newProductsAmount = response.count;
       setProductsAmount(newProductsAmount);
       const newProducts = response.results;
-      updateFilteredProducts(newProducts);
+      setFilteredProducts(newProducts);
       trackCatalog(newProducts);
     } catch (err) {
       console.log(err);
@@ -120,11 +120,11 @@ function Catalog({
   };
 
   const sortProductsInAscendingOrder = (requestParams) => {
-    changeRequestParams({ ...requestParams, ordering: '-price_per_unit' });
+    setRequestParams({ ...requestParams, ordering: '-price_per_unit' });
   };
 
   const sortProductsInDescendingOrder = (requestParams) => {
-    changeRequestParams({ ...requestParams, ordering: 'price_per_unit' });
+    setRequestParams({ ...requestParams, ordering: 'price_per_unit' });
   };
 
   const onResetClick = async () => {
@@ -163,7 +163,7 @@ function Catalog({
         page: counter + 1,
       });
       const newProducts = response.results;
-      updateFilteredProducts([...filteredProducts, ...newProducts]);
+      setFilteredProducts([...filteredProducts, ...newProducts]);
       trackCatalog(newProducts);
     } catch (err) {
       console.log(err.error.detail);
@@ -195,21 +195,19 @@ function Catalog({
           toggleSortingVisability={toggleSortingVisability}
           requestParams={requestParams}
           chosenFiltersOnPanel={chosenFiltersOnPanel}
-          setNewFiltersToPanel={setNewFiltersToPanel}
-          setNewTemporaryFiltersToSetToPanel={
-            setNewTemporaryFiltersToSetToPanel
-          }
+          setChosenFiltersOnPanel={setChosenFiltersOnPanel}
+          setTemporaryFiltersToSetToPanel={setTemporaryFiltersToSetToPanel}
           sortProductsInAscendingOrder={sortProductsInAscendingOrder}
           sortProductsInDescendingOrder={sortProductsInDescendingOrder}
         />
 
         <LesserFilters
           requestParams={requestParams}
-          changeRequestParams={changeRequestParams}
+          setRequestParams={setRequestParams}
           chosenFiltersOnPanel={chosenFiltersOnPanel}
           deleteFilterFromPanel={deleteFilterFromPanel}
           deletePriceFromPanel={deletePriceFromPanel}
-          onFiltersPopupOpen={onFiltersPopupOpen}
+          onClosePopupWithFilters={onClosePopupWithFilters}
         />
       </AllFiltersSection>
 

@@ -85,12 +85,11 @@ export default function App() {
     setIsPasswordPopupOpen(false);
     setIsInfoPopupOpen(false);
   };
-  /* const closePopupByOverlay = (event) => {
+  const closePopupByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
-
       handleClosePopup();
     }
-  }; */
+  };
 
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const handleLoginPopup = () => setIsLoginPopupOpen(!isLoginPopupOpen);
@@ -98,7 +97,7 @@ export default function App() {
   const handleConfirmPopup = () => setIsConfirmPopupOpen(!isConfirmPopupOpen);
 
   const [isFiltersPopupOpen, setIsFiltersPopupOpen] = useState(false);
-  const onFiltersPopupOpen = () => {
+  const onClosePopupWithFilters = () => {
     setIsFiltersPopupOpen(!isFiltersPopupOpen);
   };
   const [isPasswordPopupOpen, setIsPasswordPopupOpen] = useState(false);
@@ -182,40 +181,29 @@ export default function App() {
     FILTERS_TO_GET_All_PRODUCTS
   );
 
-  const updateFilteredProducts = (newFilteredProducts) => {
-    setFilteredProducts(newFilteredProducts);
-  };
-
-  const changeRequestParams = (newParams) => {
-    setRequestParams(newParams);
-  };
-
-  const setNewFiltersToPanel = (newFilters) => {
-    setChosenFiltersOnPanel(newFilters);
-  };
-
-  const setNewTemporaryRequestParams = (newParams) => {
-    setTemporaryRequestParams(newParams);
-  };
-
-  const setNewTemporaryFiltersToSetToPanel = (newFilters) => {
-    setTemporaryFiltersToSetToPanel(newFilters);
-  };
-
   const resetFilters = () => {
-    changeRequestParams(FILTERS_TO_GET_All_PRODUCTS);
-    setNewTemporaryRequestParams(FILTERS_TO_GET_All_PRODUCTS);
-    setNewFiltersToPanel([]);
-    setNewTemporaryFiltersToSetToPanel([]);
+    setRequestParams(FILTERS_TO_GET_All_PRODUCTS);
+    setTemporaryRequestParams(FILTERS_TO_GET_All_PRODUCTS);
+    setChosenFiltersOnPanel([]);
+    setTemporaryFiltersToSetToPanel([]);
     setActiveCategoryItems([]);
   };
 
-  const closePopupByOverlay = (event) => {
+  const resetFiltersForm = () => {
+    setTemporaryRequestParams(requestParams);
+    setTemporaryFiltersToSetToPanel(chosenFiltersOnPanel);
+  };
+
+  const handleClosePopupWithFiltersByOverlay = (event) => {
     if (event.target.classList.contains('popup_active')) {
-      handleClosePopup();
-      setNewTemporaryRequestParams(requestParams);
-      setNewTemporaryFiltersToSetToPanel(chosenFiltersOnPanel);
+      onClosePopupWithFilters();
+      resetFiltersForm();
     }
+  };
+
+  const handleClosePopupWithFiltersByCrossClick = () => {
+    onClosePopupWithFilters();
+    resetFiltersForm();
   };
 
   const deleteFilterFromPanel = (filterToRemove, parentkeyEn) => {
@@ -224,14 +212,14 @@ export default function App() {
       (item) => item !== filterToRemove.slug
     );
     requestParamsCopy[parentkeyEn] = newValues;
-    changeRequestParams({ ...requestParams, ...requestParamsCopy });
-    setNewTemporaryRequestParams({ ...requestParams, ...requestParamsCopy });
+    setRequestParams({ ...requestParams, ...requestParamsCopy });
+    setTemporaryRequestParams({ ...requestParams, ...requestParamsCopy });
     setChosenFiltersOnPanel(
       chosenFiltersOnPanel.filter(
         (filter) => filter.slug !== filterToRemove.slug
       )
     );
-    setNewTemporaryFiltersToSetToPanel(
+    setTemporaryFiltersToSetToPanel(
       chosenFiltersOnPanel.filter(
         (filter) => filter.slug !== filterToRemove.slug
       )
@@ -262,10 +250,10 @@ export default function App() {
       );
     }
 
-    changeRequestParams(requestParamsCopy);
-    setNewTemporaryRequestParams(requestParamsCopy);
+    setRequestParams(requestParamsCopy);
+    setTemporaryRequestParams(requestParamsCopy);
     setChosenFiltersOnPanel(newLocalFiltersToSetToPanel);
-    setNewTemporaryFiltersToSetToPanel(newLocalFiltersToSetToPanel);
+    setTemporaryFiltersToSetToPanel(newLocalFiltersToSetToPanel);
   };
 
   const appointActiveNavPanelItem = (item) => {
@@ -444,8 +432,6 @@ export default function App() {
     [token]
   );
 
-  console.log(requestParams, temporaryRequestParams);
-
   useEffect(() => {
     if (minAndMaxPrices[0] === 0) getInitialMinAndMaxPrices();
   }, [minAndMaxPrices]);
@@ -600,23 +586,21 @@ export default function App() {
                       element={
                         <Catalog
                           filteredProducts={filteredProducts}
-                          updateFilteredProducts={updateFilteredProducts}
+                          setFilteredProducts={setFilteredProducts}
                           activeCategoryItems={activeCategoryItems}
                           setActiveCategoryItems={setActiveCategoryItems}
                           requestParams={requestParams}
-                          changeRequestParams={changeRequestParams}
+                          setRequestParams={setRequestParams}
                           chosenFiltersOnPanel={chosenFiltersOnPanel}
-                          setNewFiltersToPanel={setNewFiltersToPanel}
+                          setChosenFiltersOnPanel={setChosenFiltersOnPanel}
                           deleteFilterFromPanel={deleteFilterFromPanel}
                           deletePriceFromPanel={deletePriceFromPanel}
-                          setNewTemporaryRequestParams={
-                            setNewTemporaryRequestParams
-                          }
-                          setNewTemporaryFiltersToSetToPanel={
-                            setNewTemporaryFiltersToSetToPanel
+                          setTemporaryRequestParams={setTemporaryRequestParams}
+                          setTemporaryFiltersToSetToPanel={
+                            setTemporaryFiltersToSetToPanel
                           }
                           resetFilters={resetFilters}
-                          onFiltersPopupOpen={onFiltersPopupOpen}
+                          onClosePopupWithFilters={onClosePopupWithFilters}
                         />
                       }
                     />
@@ -726,17 +710,22 @@ export default function App() {
                 />
                 <PopupWithFilters
                   isPopupOpen={isFiltersPopupOpen}
-                  onClosePopup={onFiltersPopupOpen}
-                  onCloseByOverlay={closePopupByOverlay}
+                  onClosePopupWithFilters={onClosePopupWithFilters}
+                  handleClosePopupWithFiltersByCrossClick={
+                    handleClosePopupWithFiltersByCrossClick
+                  }
+                  handleClosePopupWithFiltersByOverlay={
+                    handleClosePopupWithFiltersByOverlay
+                  }
                   requestParams={requestParams}
-                  changeRequestParams={changeRequestParams}
+                  setRequestParams={setRequestParams}
                   temporaryRequestParams={temporaryRequestParams}
-                  setNewTemporaryRequestParams={setNewTemporaryRequestParams}
+                  setTemporaryRequestParams={setTemporaryRequestParams}
                   chosenFiltersOnPanel={chosenFiltersOnPanel}
-                  setNewFiltersToPanel={setNewFiltersToPanel}
+                  setChosenFiltersOnPanel={setChosenFiltersOnPanel}
                   temporaryFiltersToSetToPanel={temporaryFiltersToSetToPanel}
-                  setNewTemporaryFiltersToSetToPanel={
-                    setNewTemporaryFiltersToSetToPanel
+                  setTemporaryFiltersToSetToPanel={
+                    setTemporaryFiltersToSetToPanel
                   }
                   resetFilters={resetFilters}
                   filteredProducts={filteredProducts}

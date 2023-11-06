@@ -4,30 +4,22 @@ import { useState, useEffect } from 'react';
 
 import { getBrandsList } from '../../utils/productsApi';
 
-import { FILTERS_TO_GET_All_PRODUCTS } from '../../utils/constants';
-
 import Filter from '../Filter/Filter';
 import FilterByPrice from '../FilterByPrice/FilterByPrice';
 
 function PopupWithFilters({
   isPopupOpen,
-  onClosePopup,
-  onCloseByOverlay,
-  requestParams,
-  changeRequestParams,
+  onClosePopupWithFilters,
+  handleClosePopupWithFiltersByCrossClick,
+  handleClosePopupWithFiltersByOverlay,
+  setRequestParams,
   temporaryRequestParams,
-  setNewTemporaryRequestParams,
-  chosenFiltersOnPanel,
-  setNewFiltersToPanel,
+  setTemporaryRequestParams,
+  setChosenFiltersOnPanel,
   temporaryFiltersToSetToPanel,
-  setNewTemporaryFiltersToSetToPanel,
+  setTemporaryFiltersToSetToPanel,
   resetFilters,
-  /* filteredProducts, */
   minAndMaxPrices,
-  /* initialMinPrice,
-  initialMaxPrice,
-  getMinAndMaxPrices, */
-  /* initialMinAndMaxPrice, */
 }) {
   const addFormValue = (filterItem, parentkeyEn, parentkeyRu, parentbody) => {
     let newFormValues;
@@ -45,12 +37,12 @@ function PopupWithFilters({
         [parentkeyEn]: filterItem.slug,
       };
     }
-    setNewTemporaryRequestParams({
+    setTemporaryRequestParams({
       ...temporaryRequestParams,
       ...newFormValues,
     });
 
-    setNewTemporaryFiltersToSetToPanel([
+    setTemporaryFiltersToSetToPanel([
       ...temporaryFiltersToSetToPanel,
       {
         parentkeyEn,
@@ -61,7 +53,7 @@ function PopupWithFilters({
   };
 
   const updateFormValue = (filterItem, parentkeyEn, parentkeyRu) => {
-    setNewTemporaryRequestParams({ ...temporaryRequestParams, ...filterItem });
+    setTemporaryRequestParams({ ...temporaryRequestParams, ...filterItem });
 
     let newLocalFiltersToSetToPanel;
 
@@ -87,7 +79,7 @@ function PopupWithFilters({
       ];
     }
 
-    setNewTemporaryFiltersToSetToPanel(newLocalFiltersToSetToPanel);
+    setTemporaryFiltersToSetToPanel(newLocalFiltersToSetToPanel);
   };
 
   const deleteFormValue = (filterItem, parentkeyEn) => {
@@ -97,12 +89,12 @@ function PopupWithFilters({
     );
     temporaryRequestParamsCopy[parentkeyEn] = newRequestParams;
 
-    setNewTemporaryRequestParams({
+    setTemporaryRequestParams({
       ...temporaryRequestParams,
       ...temporaryRequestParamsCopy,
     });
 
-    setNewTemporaryFiltersToSetToPanel(
+    setTemporaryFiltersToSetToPanel(
       temporaryFiltersToSetToPanel.filter(
         (filter) => filter.slug !== filterItem.slug
       )
@@ -131,14 +123,14 @@ function PopupWithFilters({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    changeRequestParams(temporaryRequestParams);
-    setNewFiltersToPanel(temporaryFiltersToSetToPanel);
-    onClosePopup();
+    setRequestParams(temporaryRequestParams);
+    setChosenFiltersOnPanel(temporaryFiltersToSetToPanel);
+    onClosePopupWithFilters();
   };
 
   const onReset = () => {
     resetFilters();
-    onClosePopup();
+    onClosePopupWithFilters();
   };
 
   const [brands, setBrands] = useState([]);
@@ -161,13 +153,13 @@ function PopupWithFilters({
       className={`popup-with-filters popup_type_filters popup ${
         isPopupOpen ? 'popup_active' : ''
       }`}
-      onMouseDown={onCloseByOverlay}
+      onMouseDown={handleClosePopupWithFiltersByOverlay}
     >
       <article className="popup-with-filters__filters">
         <button
           className="popup-with-filters__close-button selectable-button"
           type="button"
-          onClick={onClosePopup}
+          onClick={handleClosePopupWithFiltersByCrossClick}
         ></button>
         <form
           className="popup-with-filters__form form-with-filters"
@@ -189,8 +181,10 @@ function PopupWithFilters({
             <FilterByPrice
               minPrice={minAndMaxPrices[0]}
               maxPrice={minAndMaxPrices[1]}
+              parentkeyEn={'min_price'}
               parentkeyRu={'Цена'}
               onFormValuesChange={onFormValuesChange}
+              temporaryRequestParams={temporaryRequestParams}
             />
           </div>
 

@@ -1,13 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactSlider from 'react-slider';
 
 function FilterByPrice({
   onFormValuesChange,
   minPrice,
   maxPrice,
+  parentkeyEn,
   parentkeyRu,
-  initialMinAndMaxPrice,
+  temporaryRequestParams,
 }) {
+  const checkIfPriceIsInReques = useCallback(() => {
+    return temporaryRequestParams.hasOwnProperty(parentkeyEn);
+  }, [temporaryRequestParams, parentkeyEn]);
+
+  const isPriceSet = checkIfPriceIsInReques();
+
   const onPriceChange = (newPriceValues) => {
     setPriceValues(newPriceValues);
     onFormValuesChange(newPriceValues, null, parentkeyRu);
@@ -43,7 +50,14 @@ function FilterByPrice({
       max_price: maxPrice,
     });
     /* } */
-  }, [minPrice, maxPrice]);
+  }, [minPrice, maxPrice, isPriceSet]);
+
+  /* useEffect(() => {
+    setPriceValues({
+      min_price: minPrice,
+      max_price: maxPrice,
+    });
+  }, [isPriceSet]); */
 
   return (
     <div className="filter filter_style_price">

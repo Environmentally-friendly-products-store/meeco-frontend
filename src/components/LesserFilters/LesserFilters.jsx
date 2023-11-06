@@ -4,13 +4,13 @@ function LesserFilters({
   chosenFiltersOnPanel,
   deleteFilterFromPanel,
   deletePriceFromPanel,
-  onFiltersPopupOpen,
+  onClosePopupWithFilters,
 }) {
   return (
     <aside className="lesser-filters">
       <button
         className="lesser-filters__open-filters-button"
-        onClick={onFiltersPopupOpen}
+        onClick={onClosePopupWithFilters}
       >
         Фильтры
       </button>
