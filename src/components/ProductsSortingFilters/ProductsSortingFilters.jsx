@@ -7,7 +7,7 @@ function ProductsSortingFilters({
   requestParams,
   chosenFiltersOnPanel,
   setChosenFiltersOnPanel,
-  setNewTemporaryFiltersToSetToPanel,
+  setTemporaryFiltersToSetToPanel,
   sortProductsInAscendingOrder,
   sortProductsInDescendingOrder,
 }) {
@@ -37,7 +37,7 @@ function ProductsSortingFilters({
         { parentkeyRu, sortingType, text },
       ];
     }
-    setNewTemporaryFiltersToSetToPanel(newChosenFilters);
+    setTemporaryFiltersToSetToPanel(newChosenFilters);
     setChosenFiltersOnPanel(newChosenFilters);
     setIsSortingExpanded(false);
   };
