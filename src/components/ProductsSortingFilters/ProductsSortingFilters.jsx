@@ -1,24 +1,16 @@
 import './ProductsSortingFilters.css';
 
-/* import { useState } from 'react'; */
-
 function ProductsSortingFilters({
   isSortingExpanded,
   setIsSortingExpanded,
   toggleSortingVisability,
   requestParams,
   chosenFiltersOnPanel,
-  setNewFiltersToPanel,
-  setNewTemporaryFiltersToSetToPanel,
+  setChosenFiltersOnPanel,
+  setTemporaryFiltersToSetToPanel,
   sortProductsInAscendingOrder,
   sortProductsInDescendingOrder,
 }) {
-  /* const [isSortingExpanded, setIsSortingExpanded] = useState(false);
-
-  const toggleSortingVisability = () => {
-    setIsSortingExpanded(!isSortingExpanded);
-  }; */
-
   const onSortingButtonClick = (sortingType, parentkeyRu, text) => {
     if (sortingType === '-') {
       sortProductsInAscendingOrder(requestParams);
@@ -45,8 +37,8 @@ function ProductsSortingFilters({
         { parentkeyRu, sortingType, text },
       ];
     }
-    setNewTemporaryFiltersToSetToPanel(newChosenFilters);
-    setNewFiltersToPanel(newChosenFilters);
+    setTemporaryFiltersToSetToPanel(newChosenFilters);
+    setChosenFiltersOnPanel(newChosenFilters);
     setIsSortingExpanded(false);
   };
 

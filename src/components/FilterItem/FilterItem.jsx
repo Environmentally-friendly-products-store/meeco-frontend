@@ -8,11 +8,11 @@ function FilterItem({
   parentkeyEn,
   parentkeyRu,
   parentbody,
-  requestParams,
+  temporaryRequestParams,
 }) {
   const isFilterItemInRequest = useCallback(() => {
-    return requestParams[parentkeyEn].includes(filterItem.slug);
-  }, [filterItem.slug, parentkeyEn, requestParams]);
+    return temporaryRequestParams[parentkeyEn].includes(filterItem.slug);
+  }, [filterItem.slug, parentkeyEn, temporaryRequestParams]);
 
   const [isChecked, setIsChecked] = useState(isFilterItemInRequest());
 

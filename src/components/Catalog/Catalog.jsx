@@ -1,6 +1,6 @@
 import './Catalog.css';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { getCategoriesList, getProducts } from '../../utils/productsApi';
 
@@ -19,19 +19,19 @@ import { FILTERS_TO_GET_All_PRODUCTS, PAGE_LIMIT } from '../../utils/constants';
 
 function Catalog({
   filteredProducts,
-  updateFilteredProducts,
+  setFilteredProducts,
   activeCategoryItems,
   setActiveCategoryItems,
   requestParams,
-  changeRequestParams,
+  setRequestParams,
   chosenFiltersOnPanel,
-  setNewFiltersToPanel,
+  setChosenFiltersOnPanel,
   deleteFilterFromPanel,
   deletePriceFromPanel,
-  setNewTemporaryRequestParams,
-  setNewTemporaryFiltersToSetToPanel,
+  setTemporaryRequestParams,
+  setTemporaryFiltersToSetToPanel,
   resetFilters,
-  onFiltersPopupOpen,
+  onClosePopupWithFilters,
 }) {
   const [counter, setCounter] = useState(1);
 
@@ -64,22 +64,25 @@ function Catalog({
     }
   };
 
-  const getProductsByParams = async (query) => {
-    try {
-      if (query !== FILTERS_TO_GET_All_PRODUCTS) {
-        changeRequestParams(query);
-        setNewTemporaryRequestParams(query);
+  const getProductsByParams = useCallback(
+    async (query) => {
+      try {
+        if (query !== FILTERS_TO_GET_All_PRODUCTS) {
+          setRequestParams(query);
+          setTemporaryRequestParams(query);
+        }
+        const response = await getProducts(query);
+        const newProductsAmount = response.count;
+        setProductsAmount(newProductsAmount);
+        const newProducts = response.results;
+        setFilteredProducts(newProducts);
+        trackCatalog(newProducts);
+      } catch (err) {
+        console.log(err);
       }
-      const response = await getProducts(query);
-      const newProductsAmount = response.count;
-      setProductsAmount(newProductsAmount);
-      const newProducts = response.results;
-      updateFilteredProducts(newProducts);
-      trackCatalog(newProducts);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    },
+    [setFilteredProducts, setRequestParams, setTemporaryRequestParams]
+  );
 
   const setCategoriesList = async () => {
     try {
@@ -90,9 +93,12 @@ function Catalog({
     }
   };
 
-  const renderProducts = (requestParams) => {
-    return getProductsByParams(requestParams);
-  };
+  const renderProducts = useCallback(
+    (requestParams) => {
+      return getProductsByParams(requestParams);
+    },
+    [getProductsByParams]
+  );
 
   const onCategoryButtonClick = (categoryName) => {
     if (requestParams.category.includes(categoryName)) {
@@ -120,11 +126,11 @@ function Catalog({
   };
 
   const sortProductsInAscendingOrder = (requestParams) => {
-    changeRequestParams({ ...requestParams, ordering: '-price_per_unit' });
+    setRequestParams({ ...requestParams, ordering: '-price_per_unit' });
   };
 
   const sortProductsInDescendingOrder = (requestParams) => {
-    changeRequestParams({ ...requestParams, ordering: 'price_per_unit' });
+    setRequestParams({ ...requestParams, ordering: 'price_per_unit' });
   };
 
   const onResetClick = async () => {
@@ -163,7 +169,7 @@ function Catalog({
         page: counter + 1,
       });
       const newProducts = response.results;
-      updateFilteredProducts([...filteredProducts, ...newProducts]);
+      setFilteredProducts([...filteredProducts, ...newProducts]);
       trackCatalog(newProducts);
     } catch (err) {
       console.log(err.error.detail);
@@ -174,7 +180,7 @@ function Catalog({
     setCounter(1);
     setCategoriesList();
     renderProducts(requestParams);
-  }, [requestParams]);
+  }, [requestParams, renderProducts]);
 
   return (
     <main className="catalog" onMouseDown={onCloseByOverlayClick}>
@@ -195,21 +201,19 @@ function Catalog({
           toggleSortingVisability={toggleSortingVisability}
           requestParams={requestParams}
           chosenFiltersOnPanel={chosenFiltersOnPanel}
-          setNewFiltersToPanel={setNewFiltersToPanel}
-          setNewTemporaryFiltersToSetToPanel={
-            setNewTemporaryFiltersToSetToPanel
-          }
+          setChosenFiltersOnPanel={setChosenFiltersOnPanel}
+          setTemporaryFiltersToSetToPanel={setTemporaryFiltersToSetToPanel}
           sortProductsInAscendingOrder={sortProductsInAscendingOrder}
           sortProductsInDescendingOrder={sortProductsInDescendingOrder}
         />
 
         <LesserFilters
           requestParams={requestParams}
-          changeRequestParams={changeRequestParams}
+          setRequestParams={setRequestParams}
           chosenFiltersOnPanel={chosenFiltersOnPanel}
           deleteFilterFromPanel={deleteFilterFromPanel}
           deletePriceFromPanel={deletePriceFromPanel}
-          onFiltersPopupOpen={onFiltersPopupOpen}
+          onClosePopupWithFilters={onClosePopupWithFilters}
         />
       </AllFiltersSection>
 

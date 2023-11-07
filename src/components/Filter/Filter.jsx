@@ -9,7 +9,7 @@ function Filter({
   parentkeyRu,
   parentbody,
   onFormValuesChange,
-  requestParams,
+  temporaryRequestParams,
 }) {
   return (
     <div className="filter">
@@ -23,7 +23,7 @@ function Filter({
             parentkeyRu={parentkeyRu}
             parentbody={parentbody}
             onFormValuesChange={onFormValuesChange}
-            requestParams={requestParams}
+            temporaryRequestParams={temporaryRequestParams}
           />
         ))}
       </ul>
