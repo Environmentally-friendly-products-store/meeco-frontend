@@ -1,6 +1,6 @@
 import './Catalog.css';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { getCategoriesList, getProducts } from '../../utils/productsApi';
 
@@ -64,22 +64,25 @@ function Catalog({
     }
   };
 
-  const getProductsByParams = async (query) => {
-    try {
-      if (query !== FILTERS_TO_GET_All_PRODUCTS) {
-        setRequestParams(query);
-        setTemporaryRequestParams(query);
+  const getProductsByParams = useCallback(
+    async (query) => {
+      try {
+        if (query !== FILTERS_TO_GET_All_PRODUCTS) {
+          setRequestParams(query);
+          setTemporaryRequestParams(query);
+        }
+        const response = await getProducts(query);
+        const newProductsAmount = response.count;
+        setProductsAmount(newProductsAmount);
+        const newProducts = response.results;
+        setFilteredProducts(newProducts);
+        trackCatalog(newProducts);
+      } catch (err) {
+        console.log(err);
       }
-      const response = await getProducts(query);
-      const newProductsAmount = response.count;
-      setProductsAmount(newProductsAmount);
-      const newProducts = response.results;
-      setFilteredProducts(newProducts);
-      trackCatalog(newProducts);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    },
+    [setFilteredProducts, setRequestParams, setTemporaryRequestParams]
+  );
 
   const setCategoriesList = async () => {
     try {
@@ -90,9 +93,12 @@ function Catalog({
     }
   };
 
-  const renderProducts = (requestParams) => {
-    return getProductsByParams(requestParams);
-  };
+  const renderProducts = useCallback(
+    (requestParams) => {
+      return getProductsByParams(requestParams);
+    },
+    [getProductsByParams]
+  );
 
   const onCategoryButtonClick = (categoryName) => {
     if (requestParams.category.includes(categoryName)) {
@@ -174,7 +180,7 @@ function Catalog({
     setCounter(1);
     setCategoriesList();
     renderProducts(requestParams);
-  }, [requestParams]);
+  }, [requestParams, renderProducts]);
 
   return (
     <main className="catalog" onMouseDown={onCloseByOverlayClick}>
